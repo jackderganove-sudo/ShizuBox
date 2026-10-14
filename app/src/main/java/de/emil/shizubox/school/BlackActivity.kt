@@ -1,6 +1,7 @@
 package de.emil.shizubox.school
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -10,6 +11,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.window.OnBackInvokedDispatcher
+import android.window.SplashScreen
 import java.lang.ref.WeakReference
 
 /**
@@ -38,6 +40,11 @@ class BlackActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
+        // A launch that raced with the exit must not leave a black screen behind.
+        if (!SchoolService.covering) {
+            finishAndRemoveTask()
+            return
+        }
         hideBars()
     }
 
@@ -62,12 +69,17 @@ class BlackActivity : Activity() {
         private var current: WeakReference<BlackActivity>? = null
 
         fun show(context: Context) {
+            if (!SchoolService.covering) return
+            // Solid color splash: otherwise Android briefly shows the app icon on every launch.
+            val options = ActivityOptions.makeBasic()
+                .setSplashScreenStyle(SplashScreen.SPLASH_SCREEN_STYLE_SOLID_COLOR)
             context.startActivity(
                 Intent(context, BlackActivity::class.java).addFlags(
                     Intent.FLAG_ACTIVITY_NEW_TASK or
                         Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
                         Intent.FLAG_ACTIVITY_NO_ANIMATION,
                 ),
+                options.toBundle(),
             )
         }
 

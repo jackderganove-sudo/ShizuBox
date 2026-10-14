@@ -11,7 +11,10 @@ import android.content.IntentFilter
 import android.content.pm.ServiceInfo
 import android.graphics.Color
 import android.graphics.PixelFormat
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.os.PowerManager
 import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
@@ -35,16 +38,50 @@ class SchoolService : Service() {
     private var exiting = false
     private val mainScope = MainScope()
 
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var powerManager: PowerManager
+    private lateinit var wakeLock: PowerManager.WakeLock
+    private var interactive = true
+    private var pollUntil = 0L
+
+    /**
+     * SCREEN_ON/OFF broadcasts arrive up to ~0.7 s late (measured on the Pixel), which makes
+     * quick presses impossible to time. So after any broadcast we poll the real interactive
+     * state for a few seconds; the broadcast only wakes us up.
+     */
     private val screenReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            when (intent.action) {
-                Intent.ACTION_SCREEN_OFF, Intent.ACTION_SCREEN_ON -> {
-                    // Re-cover the screen right away, so it is already black when it turns on.
-                    BlackActivity.show(this@SchoolService)
-                    onScreenTransition()
-                }
-                Intent.ACTION_USER_PRESENT -> BlackActivity.show(this@SchoolService)
+            if (exiting) return
+            if (intent.action != Intent.ACTION_USER_PRESENT) startPolling()
+            // Re-cover the screen right away, so it is already black when it turns on.
+            BlackActivity.show(this@SchoolService)
+        }
+    }
+
+    private val poll = object : Runnable {
+        override fun run() {
+            checkInteractive()
+            if (!exiting && SystemClock.elapsedRealtime() < pollUntil) {
+                handler.postDelayed(this, POLL_INTERVAL_MS)
+            } else if (wakeLock.isHeld) {
+                wakeLock.release()
             }
+        }
+    }
+
+    private fun startPolling() {
+        checkInteractive()
+        val wasPolling = SystemClock.elapsedRealtime() < pollUntil
+        pollUntil = SystemClock.elapsedRealtime() + POLL_DURATION_MS
+        wakeLock.acquire(POLL_DURATION_MS + 500)
+        if (!wasPolling) handler.post(poll)
+    }
+
+    private fun checkInteractive() {
+        val now = powerManager.isInteractive
+        if (now != interactive) {
+            interactive = now
+            onScreenTransition()
         }
     }
 
@@ -58,6 +95,10 @@ class SchoolService : Service() {
             ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE,
         )
         startedAt = SystemClock.elapsedRealtime()
+        covering = true
+        powerManager = getSystemService(PowerManager::class.java)
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ShizuBox:powerPresses")
+        interactive = powerManager.isInteractive
         registerReceiver(
             screenReceiver,
             IntentFilter().apply {
@@ -83,6 +124,7 @@ class SchoolService : Service() {
     }
 
     private fun onScreenTransition() {
+        if (exiting) return
         val now = SystemClock.elapsedRealtime()
         // Ignore the screen-off right after activation.
         if (now - startedAt < START_GRACE_MS) return
@@ -97,6 +139,7 @@ class SchoolService : Service() {
     private fun exit() {
         if (exiting) return
         exiting = true
+        covering = false
         Log.i(TAG, "exit requested")
         removeOverlay()
         BlackActivity.dismiss()
@@ -113,6 +156,9 @@ class SchoolService : Service() {
     }
 
     override fun onDestroy() {
+        covering = false
+        handler.removeCallbacks(poll)
+        if (wakeLock.isHeld) wakeLock.release()
         mainScope.cancel()
         unregisterReceiver(screenReceiver)
         removeOverlay()
@@ -176,11 +222,18 @@ class SchoolService : Service() {
 
         /**
          * 3 screen changes = 3 power presses. 5 would be the emergency SOS, so stay well below.
-         * Tested: pressing power "to check" has ~1 s gaps, a deliberate quick triple ~0.2–0.4 s.
+         * Tested: pressing power "to check" has ~1 s gaps, a deliberate quick triple ~0.1–0.45 s.
          */
         private const val EXIT_PRESSES = 3
-        private const val EXIT_WINDOW_MS = 1500L
-        private const val EXIT_MAX_GAP_MS = 800L
+        private const val EXIT_WINDOW_MS = 2000L
+        private const val EXIT_MAX_GAP_MS = 700L
+        private const val POLL_INTERVAL_MS = 25L
+        private const val POLL_DURATION_MS = 3000L
+
+        /** True while the black screen should be shown; the activity checks this. */
+        @Volatile
+        var covering = false
+            private set
         private const val START_GRACE_MS = 2000L
 
         fun start(context: Context) {
