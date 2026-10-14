@@ -131,6 +131,21 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                     else -> error("unreachable")
                 }
                 item { AppHeader(info) }
+                if (s !is Stage.Done) {
+                    item {
+                        VirusTotalCard(
+                            key = uri,
+                            open = { context.contentResolver.openInputStream(uri) },
+                            asFile = {
+                                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                                    val f = java.io.File(context.cacheDir, "vt_upload_${ApkParser.fileName(context, uri)}")
+                                    context.contentResolver.openInputStream(uri)?.use { i -> f.outputStream().use { i.copyTo(it) } }
+                                    f
+                                }
+                            },
+                        )
+                    }
+                }
                 if (info.signatureMismatch == true) {
                     item {
                         GlassCard(Modifier.fillMaxWidth(), tint = MaterialTheme.colorScheme.errorContainer) {

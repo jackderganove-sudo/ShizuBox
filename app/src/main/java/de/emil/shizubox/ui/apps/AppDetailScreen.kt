@@ -191,6 +191,28 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                 }
             }
         }
+        if (e.installed) {
+            item {
+                var check by remember { mutableStateOf(false) }
+                if (!check) {
+                    GlassCard(Modifier.fillMaxWidth(), onClick = { check = true }) {
+                        Text("VirusTotal prüfen", style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            "Prüft die installierte APK${if (e.isSplit) " (Basis-APK)" else ""} anhand ihrer Prüfsumme.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                } else {
+                    val base = remember(pkg) { Apps.apkPaths(pkg).first() }
+                    de.emil.shizubox.ui.system.VirusTotalCard(
+                        key = pkg,
+                        open = { java.io.File(base).inputStream() },
+                        asFile = { java.io.File(base) },
+                    )
+                }
+            }
+        }
         if (profiles.isNotEmpty()) {
             item {
                 GlassCard(Modifier.fillMaxWidth()) {

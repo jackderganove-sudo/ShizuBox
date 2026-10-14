@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ShizuBox</string>
+    <string name="installer_label">ShizuBox Installer</string>
 </resources>
