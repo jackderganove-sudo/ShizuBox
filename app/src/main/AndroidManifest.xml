@@ -38,6 +38,7 @@
 
         <activity
             android:name=".school.BlackActivity"
+            android:directBootAware="true"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity="de.emil.shizubox.black"
@@ -47,12 +48,14 @@
 
         <activity
             android:name=".school.ExitGuideActivity"
+            android:directBootAware="true"
             android:excludeFromRecents="true"
             android:taskAffinity="de.emil.shizubox.exit"
             android:theme="@style/Theme.ShizuBox" />
 
         <service
             android:name=".school.SchoolService"
+            android:directBootAware="true"
             android:exported="false"
             android:foregroundServiceType="specialUse">
             <property
@@ -73,6 +76,7 @@
 
         <receiver
             android:name=".school.BootReceiver"
+            android:directBootAware="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
@@ -82,10 +86,12 @@
 
         <receiver
             android:name=".school.AutoEndReceiver"
+            android:directBootAware="true"
             android:exported="false" />
 
         <receiver
             android:name=".school.AdbExitReceiver"
+            android:directBootAware="true"
             android:exported="true"
             android:permission="android.permission.DUMP" />
 

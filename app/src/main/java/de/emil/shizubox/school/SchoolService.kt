@@ -135,7 +135,7 @@ class SchoolService : Service() {
         if (transitions.isNotEmpty() && now - transitions.last() > EXIT_MAX_GAP_MS) transitions.clear()
         transitions.addLast(now)
         while (transitions.isNotEmpty() && now - transitions.first() > EXIT_WINDOW_MS) transitions.removeFirst()
-        Log.d(TAG, "screen transition, ${transitions.size} in sequence")
+        SchoolLog.log(TAG, "screen ${if (interactive) "on" else "off"}, ${transitions.size} in sequence")
         if (transitions.size >= EXIT_PRESSES) exit()
     }
 
