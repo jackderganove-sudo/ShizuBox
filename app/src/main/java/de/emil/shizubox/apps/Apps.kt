@@ -1,5 +1,7 @@
 package de.emil.shizubox.apps
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
@@ -37,10 +39,13 @@ data class PermissionEntry(val name: String, val label: String, val granted: Boo
 
 data class AppOpEntry(val op: String, val mode: String)
 
-enum class BatteryMode(val label: String, val hint: String) {
-    Unrestricted("Uneingeschränkt", "Darf im Hintergrund alles, keine Akku-Optimierung"),
-    Optimized("Optimiert", "Android-Standard"),
-    Restricted("Eingeschränkt", "Keine Hintergrundaktivität"),
+enum class BatteryMode(private val labelRes: Int, private val hintRes: Int) {
+    Unrestricted(R.string.bm_unrestricted, R.string.bm_unrestricted_sub),
+    Optimized(R.string.bm_optimized, R.string.bm_optimized_sub),
+    Restricted(R.string.bm_restricted, R.string.bm_restricted_sub),
+    ;
+    val label get() = t(labelRes)
+    val hint get() = t(hintRes)
 }
 
 data class AppDetails(
@@ -194,13 +199,13 @@ object Apps {
 }
 
 fun bucketLabel(bucket: Int?) = when (bucket) {
-    5 -> "Ausgenommen"
-    10 -> "Aktiv"
-    20 -> "Arbeitssatz"
-    30 -> "Häufig"
-    40 -> "Selten"
-    45 -> "Eingeschränkt"
-    50 -> "Nie"
+    5 -> t(R.string.bk_exempt)
+    10 -> t(R.string.bk_active)
+    20 -> t(R.string.bk_working)
+    30 -> t(R.string.bk_frequent)
+    40 -> t(R.string.bk_rare)
+    45 -> t(R.string.bk_restricted)
+    50 -> t(R.string.bk_never)
     null -> "?"
     else -> bucket.toString()
 }

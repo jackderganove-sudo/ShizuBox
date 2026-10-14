@@ -1,5 +1,8 @@
 package de.emil.shizubox.ui.updates
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
+import de.emil.shizubox.tp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -96,12 +99,12 @@ private fun SelectApps(onBack: () -> Unit) {
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     androidx.compose.material3.IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück")
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back))
                     }
-                    Text("Apps auswählen", style = MaterialTheme.typography.headlineMedium)
+                    Text(t(R.string.select_apps), style = MaterialTheme.typography.headlineMedium)
                 }
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("Benutzer-Apps", "System-Apps", "Alle").forEachIndexed { i, l ->
+                    listOf(t(R.string.user_apps), t(R.string.system_apps), t(R.string.all)).forEachIndexed { i, l ->
                         FilterChip(selected = filter == i, onClick = { filter = i }, label = { Text(l) })
                     }
                 }
@@ -114,17 +117,17 @@ private fun SelectApps(onBack: () -> Unit) {
                             leadingIcon = { SourceBadge(s, 18) },
                         )
                     }
-                    FilterChip(selected = skipTracked, onClick = { skipTracked = !skipTracked }, label = { Text("Schon überwachte Apps überspringen") })
+                    FilterChip(selected = skipTracked, onClick = { skipTracked = !skipTracked }, label = { Text(t(R.string.skip_tracked)) })
                 }
                 OutlinedTextField(
                     value = query, onValueChange = { query = it }, singleLine = true,
-                    leadingIcon = { Icon(Icons.Rounded.Search, null) }, placeholder = { Text("Suchen") },
+                    leadingIcon = { Icon(Icons.Rounded.Search, null) }, placeholder = { Text(t(R.string.search)) },
                     shape = RoundedCornerShape(28.dp), modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 )
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
-                    Text("Ausgewählt: ${chosen.size}/${visible.size}", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
-                    TextButton(onClick = { chosen = chosen + visible.map { it.pkg } }) { Text("Alle auswählen") }
-                    TextButton(onClick = { chosen = emptySet() }) { Text("Auswahl aufheben") }
+                    Text(t(R.string.selected_n, chosen.size, visible.size), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+                    TextButton(onClick = { chosen = chosen + visible.map { it.pkg } }) { Text(t(R.string.select_all)) }
+                    TextButton(onClick = { chosen = emptySet() }) { Text(t(R.string.select_none)) }
                 }
             }
             items(visible, key = { it.pkg }) { app ->
@@ -150,7 +153,7 @@ private fun SelectApps(onBack: () -> Unit) {
                         BulkImport.start(list, sources)
                     },
                     icon = { Icon(Icons.Rounded.Search, null) },
-                    text = { Text("Suchen") },
+                    text = { Text(t(R.string.search)) },
                 )
             }
         }
@@ -166,9 +169,9 @@ private fun SearchProgress() {
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         item {
-            Text("Überprüfe …", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 16.dp))
+            Text(t(R.string.checking_dots), style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(top = 16.dp))
             Text(
-                state.current?.let { "Überprüfe ${it.substringBefore(':')} …" } ?: "",
+                state.current?.let { t(R.string.checking_source, it.substringBefore(':')) } ?: "",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 24.dp).fillMaxWidth(),
             )
@@ -181,8 +184,8 @@ private fun SearchProgress() {
                     Text(p.source, style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
                     when {
                         p.finished -> Icon(Icons.Rounded.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
-                        p.total == 0 -> Text("Ausstehend", style = MaterialTheme.typography.labelMedium)
-                        else -> Text("${p.done}/${p.total} durchsucht", style = MaterialTheme.typography.labelMedium)
+                        p.total == 0 -> Text(t(R.string.pending), style = MaterialTheme.typography.labelMedium)
+                        else -> Text(t(R.string.searched_n, p.done, p.total), style = MaterialTheme.typography.labelMedium)
                     }
                 }
                 if (!p.finished && p.total > 0) {
@@ -191,7 +194,7 @@ private fun SearchProgress() {
             }
         }
         item {
-            OutlinedButton(onClick = { BulkImport.cancel() }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { Text("Suche abbrechen") }
+            OutlinedButton(onClick = { BulkImport.cancel() }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { Text(t(R.string.cancel_search)) }
         }
     }
 }
@@ -217,22 +220,22 @@ private fun Results(onDone: () -> Unit) {
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     androidx.compose.material3.IconButton(onClick = { BulkImport.reset(); onDone() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück")
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back))
                     }
-                    Text("Ergebnisse importieren", style = MaterialTheme.typography.headlineMedium)
+                    Text(t(R.string.import_results), style = MaterialTheme.typography.headlineMedium)
                 }
                 ObCard(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
                     Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
-                        Counter(state.hits.size, "Gefunden")
-                        Counter(state.notFound.size, "Nicht gefunden")
-                        Counter(state.cancelled, "Abgebrochen")
+                        Counter(state.hits.size, t(R.string.found))
+                        Counter(state.notFound.size, t(R.string.not_found_cap))
+                        Counter(state.cancelled, t(R.string.cancelled))
                     }
                 }
-                Text("Gefunden (${state.hits.size})", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(start = 4.dp, top = 4.dp))
+                Text(t(R.string.found_n, state.hits.size), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(start = 4.dp, top = 4.dp))
             }
             items(state.hits, key = { it.pkg }) { hit -> HitRow(hit, labels[hit.pkg] ?: hit.pkg, hit.pkg in chosen) { chosen = if (it) chosen + hit.pkg else chosen - hit.pkg } }
             if (state.notFound.isNotEmpty()) {
-                item { GroupHeader("Nicht gefunden", state.notFound.size, showMissing) { showMissing = !showMissing } }
+                item { GroupHeader(t(R.string.not_found_cap), state.notFound.size, showMissing) { showMissing = !showMissing } }
                 if (showMissing) {
                     items(state.notFound, key = { "nf$it" }) { pkg ->
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
@@ -258,7 +261,7 @@ private fun Results(onDone: () -> Unit) {
                 }
             },
             icon = { Icon(Icons.Rounded.CheckCircle, null) },
-            text = { Text(if (adding) "Füge hinzu …" else "Füge ${chosen.size} gefundene Apps hinzu") },
+            text = { Text(if (adding) t(R.string.adding) else tp(R.plurals.add_found, chosen.size, chosen.size)) },
             modifier = Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(20.dp),
         )
     }

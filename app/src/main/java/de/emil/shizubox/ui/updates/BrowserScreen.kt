@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.updates
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.annotation.SuppressLint
 import android.webkit.CookieManager
 import android.webkit.URLUtil
@@ -59,11 +61,11 @@ fun BrowserScreen(startUrl: String, onClose: () -> Unit) {
 
     Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onClose) { Icon(Icons.Rounded.Close, "Schließen") }
+            IconButton(onClick = onClose) { Icon(Icons.Rounded.Close, t(R.string.close)) }
             Text(title, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
         }
         download?.let {
-            Text("Lade herunter …", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(horizontal = 16.dp))
+            Text(t(R.string.downloading), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(horizontal = 16.dp))
             LinearProgressIndicator(progress = { it }, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp))
         }
         error?.let { Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(horizontal = 16.dp)) }
@@ -115,7 +117,7 @@ fun BrowserScreen(startUrl: String, onClose: () -> Unit) {
                                 onClose()
                             }.onFailure {
                                 download = null
-                                error = "Download fehlgeschlagen: ${it.message}"
+                                error = t(R.string.download_failed, it.message)
                             }
                         }
                     }

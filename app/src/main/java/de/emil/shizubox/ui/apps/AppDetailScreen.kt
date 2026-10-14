@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.apps
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -72,7 +74,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
         if (target != null) {
             scope.launch {
                 message = runCatching { ApkExport.extract(context, d.entry, target) }
-                    .fold({ "Gespeichert ✓" }, { "Extrahieren fehlgeschlagen: ${it.message}" })
+                    .fold({ t(R.string.saved_ok) }, { t(R.string.extract_failed, it.message) })
             }
         }
     }
@@ -96,12 +98,12 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
     ) {
         item {
             IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) {
-                Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück")
+                Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back))
             }
         }
         val d = details
         if (d == null) {
-            item { Text("Lade …", modifier = Modifier.padding(8.dp)) }
+            item { Text(t(R.string.loading), modifier = Modifier.padding(8.dp)) }
             return@LazyColumn
         }
         val e = d.entry
@@ -112,7 +114,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                 Column(Modifier.weight(1f)) {
                     Text(e.label, style = MaterialTheme.typography.headlineSmall)
                     Text(
-                        "$pkg${e.versionName?.let { " · $it" } ?: ""}${if (e.isSystem) " · System" else ""}",
+                        "$pkg${e.versionName?.let { " · $it" } ?: ""}${if (e.isSystem) " · " + t(R.string.system) else ""}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -123,24 +125,24 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(
                     when {
-                        !e.installed -> "Für diesen Nutzer entfernt"
-                        e.frozen -> "Eingefroren – die App ist deaktiviert und unsichtbar"
-                        else -> "Aktiv"
+                        !e.installed -> t(R.string.removed_for_user)
+                        e.frozen -> t(R.string.frozen_desc)
+                        else -> t(R.string.active)
                     },
                     style = MaterialTheme.typography.titleMedium,
                 )
                 Spacer(Modifier.height(12.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (!e.installed) {
-                        FilledTonalButton(enabled = shizukuReady, onClick = { act { Apps.reinstall(pkg) } }) { Text("Wiederherstellen") }
+                        FilledTonalButton(enabled = shizukuReady, onClick = { act { Apps.reinstall(pkg) } }) { Text(t(R.string.restore)) }
                     } else {
                         FilledTonalButton(
                             enabled = shizukuReady && pkg != context.packageName,
                             onClick = { act { if (e.frozen) Apps.unfreeze(listOf(pkg)) else Apps.freeze(listOf(pkg)) } },
-                        ) { Text(if (e.frozen) "Auftauen" else "Einfrieren") }
-                        OutlinedButton(enabled = shizukuReady, onClick = { act { Apps.forceStop(pkg) } }) { Text("Beenden") }
+                        ) { Text(if (e.frozen) t(R.string.unfreeze) else t(R.string.freeze)) }
+                        OutlinedButton(enabled = shizukuReady, onClick = { act { Apps.forceStop(pkg) } }) { Text(t(R.string.force_stop)) }
                         if (!e.isSystem && pkg != context.packageName) {
-                            OutlinedButton(enabled = shizukuReady, onClick = { confirmUninstall = true }) { Text("Deinstallieren") }
+                            OutlinedButton(enabled = shizukuReady, onClick = { confirmUninstall = true }) { Text(t(R.string.uninstall)) }
                         }
                     }
                     OutlinedButton(onClick = {
@@ -148,7 +150,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", pkg, null))
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         )
-                    }) { Text("App-Info") }
+                    }) { Text(t(R.string.app_info)) }
                 }
                 if (e.installed && !e.frozen) {
                     Spacer(Modifier.height(8.dp))
@@ -164,17 +166,17 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                             }) { Text(ApkExport.storeLabel(e)) }
                         }
                         OutlinedButton(onClick = { scope.launch { runCatching { ApkExport.share(context, e) }.onFailure { message = it.message } } }) {
-                            Text("APK teilen")
+                            Text(t(R.string.share_apk))
                         }
-                        OutlinedButton(onClick = { extractLauncher.launch(ApkExport.fileName(e)) }) { Text("Extrahieren") }
+                        OutlinedButton(onClick = { extractLauncher.launch(ApkExport.fileName(e)) }) { Text(t(R.string.extract)) }
                         if (!e.isSystem) {
-                            OutlinedButton(enabled = shizukuReady, onClick = { act { Apps.reinstallFromApks(pkg) } }) { Text("Neu installieren") }
+                            OutlinedButton(enabled = shizukuReady, onClick = { act { Apps.reinstallFromApks(pkg) } }) { Text(t(R.string.reinstall)) }
                         }
                     }
                 }
                 if (e.isSystem) {
                     Text(
-                        "System-Apps lassen sich unter Android 17 ohne Root nur einfrieren, nicht entfernen.",
+                        t(R.string.system_freeze_only),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 8.dp),
@@ -196,9 +198,9 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                 var check by remember { mutableStateOf(false) }
                 if (!check) {
                     GlassCard(Modifier.fillMaxWidth(), onClick = { check = true }) {
-                        Text("VirusTotal prüfen", style = MaterialTheme.typography.titleMedium)
+                        Text(t(R.string.vt_check), style = MaterialTheme.typography.titleMedium)
                         Text(
-                            "Prüft die installierte APK${if (e.isSplit) " (Basis-APK)" else ""} anhand ihrer Prüfsumme.",
+                            if (e.isSplit) t(R.string.vt_check_sub_split) else t(R.string.vt_check_sub),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -216,7 +218,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
         if (profiles.isNotEmpty()) {
             item {
                 GlassCard(Modifier.fillMaxWidth()) {
-                    Text("In Profilen", style = MaterialTheme.typography.titleMedium)
+                    Text(t(R.string.in_profiles), style = MaterialTheme.typography.titleMedium)
                     Spacer(Modifier.height(8.dp))
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         profiles.forEach { p ->
@@ -228,9 +230,9 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Akku", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.battery), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "${d.battery.hint} · Standby-Gruppe: ${bucketLabel(d.standbyBucket)}",
+                    t(R.string.standby_group, d.battery.hint, bucketLabel(d.standbyBucket)),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -249,9 +251,9 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Berechtigungen", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.permissions), style = MaterialTheme.typography.titleMedium)
                 if (d.permissions.isEmpty()) {
-                    Text("Keine änderbaren Berechtigungen", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(t(R.string.no_perms), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 d.permissions.forEach { p ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -272,10 +274,10 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("AppOps", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-                    TextButton(onClick = { showAllOps = !showAllOps }) { Text(if (showAllOps) "Weniger" else "Alle ${d.appOps.size}") }
+                    TextButton(onClick = { showAllOps = !showAllOps }) { Text(if (showAllOps) t(R.string.less) else t(R.string.all_n, d.appOps.size)) }
                 }
                 Text(
-                    "Feinere Rechte unterhalb der Berechtigungen. allow = erlaubt, ignore = still verweigert.",
+                    t(R.string.appops_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -302,8 +304,8 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
     if (confirmUninstall) {
         AlertDialog(
             onDismissRequest = { confirmUninstall = false },
-            title = { Text("Deinstallieren?") },
-            text = { Text("${details?.entry?.label} wird mit allen Daten entfernt.") },
+            title = { Text(t(R.string.uninstall_q)) },
+            text = { Text(t(R.string.uninstall_hint, details?.entry?.label)) },
             confirmButton = {
                 TextButton(onClick = {
                     confirmUninstall = false
@@ -311,9 +313,9 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                         val r = Apps.uninstall(pkg)
                         if (r.ok) onBack() else message = r.err.ifBlank { r.out }
                     }
-                }) { Text("Deinstallieren") }
+                }) { Text(t(R.string.uninstall)) }
             },
-            dismissButton = { TextButton(onClick = { confirmUninstall = false }) { Text("Abbrechen") } },
+            dismissButton = { TextButton(onClick = { confirmUninstall = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }

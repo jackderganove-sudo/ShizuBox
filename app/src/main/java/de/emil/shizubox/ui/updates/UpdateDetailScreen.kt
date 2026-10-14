@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.updates
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
@@ -70,7 +72,7 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item {
-            IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück") }
+            IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back)) }
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 8.dp, top = 16.dp)) {
                 if (realVersion != null) {
                     AppIcon(app.id, 64)
@@ -79,7 +81,7 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                 Column {
                     Text(app.name, style = MaterialTheme.typography.headlineSmall)
                     Text(
-                        "von ${app.author} · ${Source.forUrl(app.url)?.label ?: "nicht unterstützte Quelle"}",
+                        t(R.string.by_author_source, app.author, Source.forUrl(app.url)?.label ?: t(R.string.unsupported_source)),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -90,15 +92,15 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
             ObCard(Modifier.fillMaxWidth()) {
                 Text(
                     when (state) {
-                        UpdateState.Update -> "Update verfügbar"
-                        UpdateState.UpToDate -> "Aktuell"
-                        UpdateState.NotInstalled -> "Nicht installiert"
-                        UpdateState.Unknown -> "Version nicht vergleichbar"
+                        UpdateState.Update -> t(R.string.st_update)
+                        UpdateState.UpToDate -> t(R.string.st_uptodate)
+                        UpdateState.NotInstalled -> t(R.string.st_notinstalled)
+                        UpdateState.Unknown -> t(R.string.st_unknown)
                     },
                     style = MaterialTheme.typography.titleMedium,
                 )
-                Text("Neueste: ${app.latestVersion ?: "?"}" + if (app.releaseDate > 0) " (${SimpleDateFormat("d. MMM yyyy", Locale.GERMAN).format(Date(app.releaseDate))})" else "", style = MaterialTheme.typography.bodyMedium)
-                Text("Installiert: ${realVersion ?: "–"}", style = MaterialTheme.typography.bodyMedium)
+                Text(t(R.string.latest_v, app.latestVersion ?: "?") + if (app.releaseDate > 0) " (${java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM).format(Date(app.releaseDate))})" else "", style = MaterialTheme.typography.bodyMedium)
+                Text(t(R.string.installed_v, realVersion ?: "–"), style = MaterialTheme.typography.bodyMedium)
                 app.error?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
                 progress?.let {
                     LinearProgressIndicator(progress = { it }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
@@ -107,7 +109,7 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                 val trackOnly = Source.forUrl(app.url)?.trackOnly == true
                 if (trackOnly) {
                     Text(
-                        "APKMirror erlaubt keine automatischen Downloads: Im Browser die passende Variante antippen – ShizuBox installiert sie dann direkt.",
+                        t(R.string.apkmirror_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 4.dp),
@@ -115,7 +117,7 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                 }
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (trackOnly) {
-                        Button(onClick = { onOpenBrowser(app.releaseUrl ?: app.url) }) { Text("Auf APKMirror laden") }
+                        Button(onClick = { onOpenBrowser(app.releaseUrl ?: app.url) }) { Text(t(R.string.load_apkmirror)) }
                     } else Button(
                         enabled = progress == null && app.chosenApk != null,
                         onClick = {
@@ -127,16 +129,16 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                                 progress = null
                             }
                         },
-                    ) { Text(if (state == UpdateState.NotInstalled) "Installieren" else if (state == UpdateState.Update) "Aktualisieren" else "Neu installieren") }
+                    ) { Text(if (state == UpdateState.NotInstalled) t(R.string.install) else if (state == UpdateState.Update) t(R.string.update) else t(R.string.reinstall)) }
                     OutlinedButton(enabled = !checking, onClick = {
                         checking = true
                         scope.launch { Updates.check(app); checking = false }
-                    }) { Text(if (checking) "Prüfe …" else "Prüfen") }
+                    }) { Text(if (checking) t(R.string.checking) else t(R.string.check)) }
                     OutlinedButton(onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(app.releaseUrl ?: app.url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                    }) { Text("Quelle öffnen") }
+                    }) { Text(t(R.string.open_source)) }
                     if (state == UpdateState.Update || state == UpdateState.Unknown) {
-                        OutlinedButton(onClick = { Updates.markInstalled(app) }) { Text("Als aktuell markieren") }
+                        OutlinedButton(onClick = { Updates.markInstalled(app) }) { Text(t(R.string.mark_current)) }
                     }
                 }
             }
@@ -144,7 +146,7 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
         if (app.apks.size > 1) {
             item {
                 ObCard(Modifier.fillMaxWidth()) {
-                    Text("APK-Auswahl", style = MaterialTheme.typography.titleMedium)
+                    Text(t(R.string.apk_choice), style = MaterialTheme.typography.titleMedium)
                     app.apks.forEachIndexed { i, a ->
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(selected = app.chosenApk == a, onClick = { Updates.update(app.copy(preferredApk = i)) })
@@ -157,7 +159,7 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
         app.changeLog?.let { log ->
             item {
                 ObCard(Modifier.fillMaxWidth(), onClick = { showLog = !showLog }) {
-                    Text("Änderungen", style = MaterialTheme.typography.titleMedium)
+                    Text(t(R.string.changes), style = MaterialTheme.typography.titleMedium)
                     Text(
                         log.trim(),
                         style = MaterialTheme.typography.bodySmall,
@@ -169,30 +171,30 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
         }
         item {
             ObCard(Modifier.fillMaxWidth()) {
-                Text("Einstellungen", style = MaterialTheme.typography.titleMedium)
-                Toggle("Vorabversionen einbeziehen", app.includePrereleases) {
+                Text(t(R.string.settings), style = MaterialTheme.typography.titleMedium)
+                Toggle(t(R.string.include_pre), app.includePrereleases) {
                     scope.launch { Updates.check(app.copy(includePrereleases = it)) }
                 }
                 OutlinedTextField(
                     value = filter,
                     onValueChange = { filter = it },
-                    label = { Text("APK-Filter (Regex)") },
+                    label = { Text(t(R.string.apk_filter)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 )
-                Toggle("Filter umkehren", app.invertApkFilter) {
+                Toggle(t(R.string.invert_filter), app.invertApkFilter) {
                     scope.launch { Updates.check(app.copy(invertApkFilter = it, apkFilterRegex = filter)) }
                 }
                 OutlinedTextField(
                     value = pkg,
                     onValueChange = { pkg = it.trim() },
-                    label = { Text("Paketname der installierten App") },
+                    label = { Text(t(R.string.pkg_of_installed)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    OutlinedButton(onClick = { scope.launch { Updates.check(app.copy(apkFilterRegex = filter, id = pkg)) } }) { Text("Übernehmen") }
-                    TextButton(onClick = { confirmRemove = true }) { Text("Entfernen") }
+                    OutlinedButton(onClick = { scope.launch { Updates.check(app.copy(apkFilterRegex = filter, id = pkg)) } }) { Text(t(R.string.apply)) }
+                    TextButton(onClick = { confirmRemove = true }) { Text(t(R.string.remove)) }
                 }
             }
         }
@@ -202,10 +204,10 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
     if (confirmRemove) {
         AlertDialog(
             onDismissRequest = { confirmRemove = false },
-            title = { Text("Nicht mehr verfolgen?") },
-            text = { Text("Die App bleibt installiert, ShizuBox prüft nur keine Updates mehr.") },
-            confirmButton = { TextButton(onClick = { Updates.remove(app); onBack() }) { Text("Entfernen") } },
-            dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text("Abbrechen") } },
+            title = { Text(t(R.string.untrack_q)) },
+            text = { Text(t(R.string.untrack_hint)) },
+            confirmButton = { TextButton(onClick = { Updates.remove(app); onBack() }) { Text(t(R.string.remove)) } },
+            dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }

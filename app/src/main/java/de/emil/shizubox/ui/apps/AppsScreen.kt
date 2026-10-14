@@ -1,5 +1,8 @@
 package de.emil.shizubox.ui.apps
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
+import de.emil.shizubox.tp
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -63,11 +66,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private enum class AppFilter(val label: String) { User("Nutzer"), System("System"), Frozen("Eingefroren") }
+private enum class AppFilter(private val labelRes: Int) {
+    User(R.string.f_user), System(R.string.system), Frozen(R.string.f_frozen);
+    val label get() = t(labelRes)
+}
 
-private enum class AppSort(val label: String) { Name("Name"), Size("Größe"), Installed("Installiert"), Updated("Aktualisiert") }
+private enum class AppSort(private val labelRes: Int) {
+    Name(R.string.s_name), Size(R.string.s_size), Installed(R.string.s_installed), Updated(R.string.s_updated);
+    val label get() = t(labelRes)
+}
 
-private val dateFormat = java.text.SimpleDateFormat("d. MMM yy", java.util.Locale.GERMAN)
+private val dateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM)
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -114,18 +123,18 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     ) {
         item {
             IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) {
-                Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück")
+                Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back))
             }
             Column(Modifier.padding(start = 8.dp, top = 32.dp, bottom = 12.dp)) {
-                Text("Apps", style = MaterialTheme.typography.displaySmall)
+                Text(t(R.string.apps), style = MaterialTheme.typography.displaySmall)
                 Text(
-                    "Einfrieren, Berechtigungen, AppOps, Akku",
+                    t(R.string.apps_sub),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
             SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(bottom = 4.dp)) {
-                listOf("Apps", "Profile").forEachIndexed { i, label ->
+                listOf(t(R.string.apps), t(R.string.profiles)).forEachIndexed { i, label ->
                     SegmentedButton(
                         selected = tab == i,
                         onClick = { tab = i },
@@ -135,7 +144,7 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             }
         }
         if (!shizukuReady) {
-            item { GlassCard(Modifier.fillMaxWidth()) { Text("Shizuku muss verbunden sein, um Änderungen vorzunehmen.") } }
+            item { GlassCard(Modifier.fillMaxWidth()) { Text(t(R.string.shizuku_for_changes)) } }
         }
         if (tab == 1) {
             profilesSection(apps.orEmpty(), shizukuReady) { reloadKey++ }
@@ -146,7 +155,7 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 value = query,
                 onValueChange = { query = it },
                 leadingIcon = { Icon(Icons.Rounded.Search, null) },
-                placeholder = { Text("Suchen") },
+                placeholder = { Text(t(R.string.search)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(28.dp),
@@ -158,7 +167,7 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             }
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp)) {
                 Text(
-                    "${visible.size} Apps · ${android.text.format.Formatter.formatShortFileSize(context, visible.sumOf { it.sizeBytes })}",
+                    tp(R.plurals.n_apps_size, visible.size, visible.size, android.text.format.Formatter.formatShortFileSize(context, visible.sumOf { it.sizeBytes })),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f),
@@ -178,7 +187,7 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             }
         }
         if (apps == null) {
-            item { Text("Lade Apps …", modifier = Modifier.padding(8.dp)) }
+            item { Text(t(R.string.loading_apps), modifier = Modifier.padding(8.dp)) }
         }
         items(visible, key = { it.pkg }) { app ->
             AppRow(app) { selected = app.pkg }
@@ -214,8 +223,8 @@ private fun AppRow(app: AppEntry, onClick: () -> Unit) {
                     )
                     if (app.isSplit) Badge("Split")
                     when {
-                        !app.installed -> Badge("Entfernt")
-                        app.frozen -> Badge("Eingefroren")
+                        !app.installed -> Badge(t(R.string.removed))
+                        app.frozen -> Badge(t(R.string.f_frozen))
                     }
                 }
                 val small = MaterialTheme.typography.bodySmall
@@ -232,8 +241,8 @@ private fun AppRow(app: AppEntry, onClick: () -> Unit) {
                 if (app.firstInstall > 0 && !app.isSystem) {
                     Text(
                         buildString {
-                            append("${dateFormat.format(java.util.Date(app.firstInstall))} installiert")
-                            if (app.lastUpdate - app.firstInstall > 60_000) append(" · aktualisiert ${dateFormat.format(java.util.Date(app.lastUpdate))}")
+                            append(t(R.string.installed_on, dateFormat.format(java.util.Date(app.firstInstall))))
+                            if (app.lastUpdate - app.firstInstall > 60_000) append(t(R.string.updated_on, dateFormat.format(java.util.Date(app.lastUpdate))))
                         },
                         style = small,
                         color = dim,
@@ -273,27 +282,27 @@ private fun ProfilesHeader() {
     var creating by remember { mutableStateOf(false) }
     var name by remember { mutableStateOf("") }
     GlassCard(Modifier.fillMaxWidth()) {
-        Text("Profile", style = MaterialTheme.typography.titleMedium)
+        Text(t(R.string.profiles), style = MaterialTheme.typography.titleMedium)
         Text(
-            "Gruppen von Apps, die zusammen eingefroren und aufgetaut werden. Apps fügst du in den App-Details hinzu.",
+            t(R.string.profiles_hint),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(8.dp))
-        FilledTonalButton(onClick = { creating = true }) { Text("Neues Profil") }
+        FilledTonalButton(onClick = { creating = true }) { Text(t(R.string.new_profile)) }
     }
     if (creating) {
         AlertDialog(
             onDismissRequest = { creating = false },
-            title = { Text("Neues Profil") },
-            text = { OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true, placeholder = { Text("z. B. Social Media") }) },
+            title = { Text(t(R.string.new_profile)) },
+            text = { OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true, placeholder = { Text(t(R.string.profile_example)) }) },
             confirmButton = {
                 TextButton(
                     onClick = { Profiles.create(name); name = ""; creating = false },
                     enabled = name.isNotBlank(),
-                ) { Text("Anlegen") }
+                ) { Text(t(R.string.create)) }
             },
-            dismissButton = { TextButton(onClick = { creating = false }) { Text("Abbrechen") } },
+            dismissButton = { TextButton(onClick = { creating = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }
@@ -313,14 +322,14 @@ private fun ProfilesList(apps: List<AppEntry>, shizukuReady: Boolean, onChanged:
                     Column(Modifier.weight(1f)) {
                         Text(p.name, style = MaterialTheme.typography.titleMedium)
                         Text(
-                            if (members.isEmpty()) "Noch keine Apps" else members.joinToString { it.label },
+                            if (members.isEmpty()) t(R.string.no_apps_yet) else members.joinToString { it.label },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                    TextButton(onClick = { deleting = p.id }) { Text("Löschen") }
+                    TextButton(onClick = { deleting = p.id }) { Text(t(R.string.delete)) }
                 }
                 Spacer(Modifier.height(8.dp))
                 FilledTonalButton(
@@ -332,17 +341,17 @@ private fun ProfilesList(apps: List<AppEntry>, shizukuReady: Boolean, onChanged:
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                ) { Text(if (allFrozen) "Alle auftauen" else "Alle einfrieren") }
+                ) { Text(if (allFrozen) t(R.string.unfreeze_all) else t(R.string.freeze_all)) }
             }
         }
     }
     deleting?.let { id ->
         AlertDialog(
             onDismissRequest = { deleting = null },
-            title = { Text("Profil löschen?") },
-            text = { Text("Die Apps bleiben, wie sie gerade sind.") },
-            confirmButton = { TextButton(onClick = { Profiles.delete(id); deleting = null }) { Text("Löschen") } },
-            dismissButton = { TextButton(onClick = { deleting = null }) { Text("Abbrechen") } },
+            title = { Text(t(R.string.delete_profile_q)) },
+            text = { Text(t(R.string.delete_profile_hint)) },
+            confirmButton = { TextButton(onClick = { Profiles.delete(id); deleting = null }) { Text(t(R.string.delete)) } },
+            dismissButton = { TextButton(onClick = { deleting = null }) { Text(t(R.string.cancel)) } },
         )
     }
 }

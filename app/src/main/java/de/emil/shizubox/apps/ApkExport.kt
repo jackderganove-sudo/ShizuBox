@@ -1,5 +1,7 @@
 package de.emil.shizubox.apps
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -65,8 +67,8 @@ object ApkExport {
     }
 
     fun storeLabel(app: AppEntry) = when (app.installer) {
-        "com.android.vending" -> "Im Play Store öffnen"
-        "org.fdroid.fdroid", "com.looker.droidify", "org.fdroid.basic" -> "In F-Droid öffnen"
-        else -> "Im Store öffnen"
+        "com.android.vending" -> t(R.string.open_play)
+        "org.fdroid.fdroid", "com.looker.droidify", "org.fdroid.basic" -> t(R.string.open_fdroid)
+        else -> t(R.string.open_store)
     }
 }
