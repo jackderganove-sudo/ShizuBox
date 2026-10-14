@@ -147,7 +147,7 @@ private fun SelectApps(onBack: () -> Unit) {
                 ExtendedFloatingActionButton(
                     onClick = {
                         val list = all.filter { it.pkg in chosen }.map { it.pkg }
-                        scope.launch { BulkImport.run(list, sources) }
+                        BulkImport.start(list, sources)
                     },
                     icon = { Icon(Icons.Rounded.Search, null) },
                     text = { Text("Suchen") },
@@ -202,6 +202,7 @@ private fun Results(onDone: () -> Unit) {
     val state by BulkImport.state.collectAsStateWithLifecycle()
     var chosen by remember(state.hits) { mutableStateOf(state.hits.map { it.pkg }.toSet()) }
     var adding by remember { mutableStateOf(false) }
+    var showMissing by remember { mutableStateOf(false) }
     val pm = androidx.compose.ui.platform.LocalContext.current.packageManager
     // Installed app label (F-Droid's API has no names), else the source's name.
     val labels = remember(state.hits) {
@@ -231,13 +232,19 @@ private fun Results(onDone: () -> Unit) {
             }
             items(state.hits, key = { it.pkg }) { hit -> HitRow(hit, labels[hit.pkg] ?: hit.pkg, hit.pkg in chosen) { chosen = if (it) chosen + hit.pkg else chosen - hit.pkg } }
             if (state.notFound.isNotEmpty()) {
-                item {
-                    Text(
-                        "Nicht gefunden: " + state.notFound.joinToString(", "),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(8.dp),
-                    )
+                item { GroupHeader("Nicht gefunden", state.notFound.size, showMissing) { showMissing = !showMissing } }
+                if (showMissing) {
+                    items(state.notFound, key = { "nf$it" }) { pkg ->
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
+                            AppIcon(pkg, 36)
+                            Spacer(Modifier.width(14.dp))
+                            Text(
+                                runCatching { pm.getApplicationInfo(pkg, 0).loadLabel(pm).toString() }.getOrDefault(pkg),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -245,8 +252,7 @@ private fun Results(onDone: () -> Unit) {
             onClick = {
                 if (adding) return@ExtendedFloatingActionButton
                 adding = true
-                scope.launch {
-                    BulkImport.addHits(state.hits.filter { it.pkg in chosen })
+                BulkImport.addHitsInBackground(state.hits.filter { it.pkg in chosen }) {
                     BulkImport.reset()
                     onDone()
                 }

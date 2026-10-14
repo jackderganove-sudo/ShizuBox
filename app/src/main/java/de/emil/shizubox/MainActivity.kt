@@ -141,7 +141,7 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         if (!checkedThisProcess && Updates.settings.value.checkOnStart && Updates.apps.value.isNotEmpty()) {
             checkedThisProcess = true
-            lifecycleScope.launch { Updates.checkAll() }
+            Updates.checkAllInBackground()
         }
     }
 

@@ -218,7 +218,7 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
             PageTitle("Apps", onBack) {
                 IconButton(onClick = { searching = !searching; if (!searching) query = "" }) { Icon(Icons.Rounded.Search, "Suchen") }
                 if (checking) CircularProgressIndicator(Modifier.size(40.dp).padding(8.dp))
-                else IconButton(onClick = { scope.launch { Updates.checkAll() } }) { Icon(Icons.Rounded.Refresh, "Prüfen") }
+                else IconButton(onClick = { Updates.checkAllInBackground() }) { Icon(Icons.Rounded.Refresh, "Prüfen") }
             }
             if (searching) {
                 OutlinedTextField(
@@ -374,7 +374,7 @@ private fun ImportExportPage() {
             message = runCatching {
                 val text = context.contentResolver.openInputStream(uri)!!.bufferedReader().readText()
                 val (added, unsupported) = Updates.import(text)
-                Updates.checkAll()
+                Updates.checkAllInBackground()
                 "$added Apps importiert" + if (unsupported > 0) " ($unsupported mit noch nicht unterstützter Quelle)" else ""
             }.getOrElse { "Import fehlgeschlagen: ${it.message}" }
             busy = false
@@ -430,7 +430,7 @@ private fun SettingsPage() {
         item { PageTitle("Einstellungen") }
         item { SectionLabel("Aktualisierungen") }
         item {
-            Button(onClick = { scope.launch { Updates.checkAll() } }, modifier = Modifier.fillMaxWidth()) { Text("Jetzt auf Updates prüfen") }
+            Button(onClick = { Updates.checkAllInBackground() }, modifier = Modifier.fillMaxWidth()) { Text("Jetzt auf Updates prüfen") }
         }
         item {
             ObCard(Modifier.fillMaxWidth()) {

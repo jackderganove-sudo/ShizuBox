@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class ImportHit(val pkg: String, val source: String, val url: String, val release: Release)
 
@@ -30,6 +31,20 @@ object BulkImport {
     @Volatile
     private var cancel = false
 
+    /** Own scope: the search must survive the screen change from selection to progress. */
+    private val scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + kotlinx.coroutines.Dispatchers.Default)
+
+    fun start(packages: List<String>, sources: List<String>) {
+        scope.launch { run(packages, sources) }
+    }
+
+    fun addHitsInBackground(hits: List<ImportHit>, onDone: (Int) -> Unit) {
+        scope.launch {
+            val n = addHits(hits)
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) { onDone(n) }
+        }
+    }
+
     fun cancel() {
         cancel = true
     }
@@ -39,7 +54,7 @@ object BulkImport {
     }
 
     /** Each source is searched for all packages not found by an earlier source (like ObtainX). */
-    suspend fun run(packages: List<String>, sources: List<String>) {
+    private suspend fun run(packages: List<String>, sources: List<String>) {
         cancel = false
         _state.value = BulkImportState(running = true, progress = sources.map { SourceProgress(it) })
         var remaining = packages
@@ -56,7 +71,13 @@ object BulkImport {
                 _state.update { it.copy(current = "$source: $pkg") }
                 val url = urlFor(pkg)
                 val src = Source.forUrl(url)
-                val release = runCatching { src?.latest(TrackedApp(id = pkg, url = url, name = "", author = "")) }.getOrNull()
+                val release = try {
+                    src?.latest(TrackedApp(id = pkg, url = url, name = "", author = ""))
+                } catch (e: kotlinx.coroutines.CancellationException) {
+                    throw e
+                } catch (_: Exception) {
+                    null
+                }
                 if (release != null && (release.apks.isNotEmpty() || src?.trackOnly == true)) {
                     _state.update { it.copy(hits = it.hits + ImportHit(pkg, source, url, release)) }
                 } else {

@@ -196,6 +196,8 @@ object Updates {
                     error = null,
                     lastCheck = System.currentTimeMillis(),
                 )
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
             } catch (e: Exception) {
                 app.copy(error = e.message ?: e.toString(), lastCheck = System.currentTimeMillis())
             }
@@ -203,6 +205,11 @@ object Updates {
         val confirmed = confirmPendingInstall(checked)
         update(confirmed)
         return confirmed
+    }
+
+    /** Starts [checkAll] independent of any screen (leaving the screen must not cancel it). */
+    fun checkAllInBackground() {
+        ioScope.launch { checkAll() }
     }
 
     /** Checks every app one after another (keeps within GitHub's rate limit). */
