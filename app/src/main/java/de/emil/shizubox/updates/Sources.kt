@@ -3,6 +3,8 @@
  */
 package de.emil.shizubox.updates
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.net.Uri
 import android.os.Build
 import kotlinx.coroutines.Dispatchers
@@ -65,9 +67,9 @@ sealed class Source(val label: String) {
         }
         when (val code = c.responseCode) {
             in 200..299 -> c.inputStream.bufferedReader().readText()
-            404 -> throw SourceException("Nicht gefunden (404) – Link prüfen")
+            404 -> throw SourceException(t(R.string.e_404))
             403, 429 -> throw SourceException(
-                if (url.contains("api.github.com")) "GitHub-Limit erreicht (60 Abfragen/Stunde). In den Einstellungen einen GitHub-Token eintragen." else "Zugriff verweigert ($code)",
+                if (url.contains("api.github.com")) t(R.string.e_gh_limit) else t(R.string.e_denied, code),
             )
             else -> throw SourceException("HTTP $code")
         }
@@ -86,14 +88,14 @@ sealed class Source(val label: String) {
         body: (JSONObject) -> String?,
         page: (JSONObject) -> String?,
     ): Release {
-        if (releases.isEmpty()) throw SourceException("Keine Releases gefunden")
+        if (releases.isEmpty()) throw SourceException(t(R.string.e_no_releases))
         for ((json, prerelease, assets) in releases) {
             if (prerelease && !app.includePrereleases) continue
             val apks = ApkFilters.filterApks(assets, app)
             if (apks.isEmpty()) continue
             return Release(version(json), apks, name, author, date = date(json), changeLog = body(json), releaseUrl = page(json))
         }
-        throw SourceException("Kein Release mit passender APK" + if (!app.includePrereleases) " (Vorabversionen ausgeschlossen)" else "")
+        throw SourceException(t(R.string.e_no_apk_release) + if (!app.includePrereleases) t(R.string.e_pre_excluded) else "")
     }
 
     protected fun iso(s: String?): Long = runCatching {
@@ -178,10 +180,10 @@ sealed class Source(val label: String) {
         abstract fun packageOf(url: Uri): String?
 
         override suspend fun latest(app: TrackedApp): Release {
-            val pkg = packageOf(Uri.parse(app.url)) ?: throw SourceException("Paketname nicht im Link")
+            val pkg = packageOf(Uri.parse(app.url)) ?: throw SourceException(t(R.string.e_no_pkg))
             val o = JSONObject(get("$api/$pkg"))
             val versions = o.getJSONArray("packages")
-            if (versions.length() == 0) throw SourceException("Keine Versionen")
+            if (versions.length() == 0) throw SourceException(t(R.string.e_no_versions))
             val suggested = o.optString("suggestedVersionCode")
             val pick = (0 until versions.length()).map { versions.getJSONObject(it) }.let { list ->
                 if (app.includePrereleases) list.first() else list.firstOrNull { it.optString("versionCode") == suggested } ?: list.first()
@@ -236,7 +238,7 @@ sealed class Source(val label: String) {
                 } ?: 0
                 Triple(title, link, date)
             }.toList()
-            if (items.isEmpty()) throw SourceException("Keine Versionen im APKMirror-Feed")
+            if (items.isEmpty()) throw SourceException(t(R.string.e_no_versions_apkm))
             val usable = items.filter { app.includePrereleases || !Regex("\\b(beta|alpha)\\b", RegexOption.IGNORE_CASE).containsMatchIn(it.first) }
                 .ifEmpty { items }
             // The feed is ordered by upload time, not version: take the highest version.
@@ -273,9 +275,9 @@ sealed class Source(val label: String) {
                     "Ual-Access-ProjectA" to """{"device_info":{"os_ver":"${Build.VERSION.SDK_INT}"}}""",
                 ),
             )
-            val list = JSONObject(body).optJSONArray("version_list") ?: throw SourceException("Keine Versionen")
+            val list = JSONObject(body).optJSONArray("version_list") ?: throw SourceException(t(R.string.e_no_versions))
             val variants = (0 until list.length()).map { list.getJSONObject(it) }
-            if (variants.isEmpty()) throw SourceException("Keine Versionen")
+            if (variants.isEmpty()) throw SourceException(t(R.string.e_no_versions))
             val abis = Build.SUPPORTED_ABIS.toSet()
             // Newest version first; take the variants of that version that run on this device.
             for (versionName in variants.map { it.optString("version_name") }.distinct()) {
@@ -301,7 +303,7 @@ sealed class Source(val label: String) {
                     releaseUrl = app.url,
                 )
             }
-            throw SourceException("Keine Version für dieses Gerät")
+            throw SourceException(t(R.string.e_no_version_device))
         }
     }
 }

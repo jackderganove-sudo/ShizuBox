@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Intent
 import android.net.Uri
 import android.text.format.Formatter
@@ -103,7 +105,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                 options = options.copy(allowDowngrade = options.allowDowngrade || info.isDowngrade)
                 Stage.Preview(info)
             },
-            onFailure = { Stage.ParseError(it.message ?: "Datei konnte nicht gelesen werden") },
+            onFailure = { Stage.ParseError(it.message ?: t(R.string.file_unreadable_long)) },
         )
     }
 
@@ -114,7 +116,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
     ) {
         item {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
-                IconButton(onClick = onClose) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück") }
+                IconButton(onClick = onClose) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back)) }
                 Text("Universal Installer", style = MaterialTheme.typography.titleLarge)
             }
         }
@@ -123,13 +125,13 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                 GlassCard(Modifier.fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(Modifier.padding(end = 16.dp))
-                        Text("Lese Datei …")
+                        Text(t(R.string.reading_file))
                     }
                 }
             }
             is Stage.ParseError -> item {
                 GlassCard(Modifier.fillMaxWidth()) {
-                    Text("Datei nicht lesbar", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error)
+                    Text(t(R.string.file_unreadable), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error)
                     Text(s.message, style = MaterialTheme.typography.bodyMedium)
                 }
             }
@@ -164,8 +166,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                                 Icon(Icons.Rounded.Warning, null, tint = MaterialTheme.colorScheme.onErrorContainer)
                                 Spacer(Modifier.width(12.dp))
                                 Text(
-                                    "Andere Signatur als die installierte App – das Update wird fehlschlagen. " +
-                                        "Erst die installierte Version deinstallieren.",
+                                    t(R.string.sig_mismatch_warn),
                                     color = MaterialTheme.colorScheme.onErrorContainer,
                                     style = MaterialTheme.typography.bodyMedium,
                                 )
@@ -180,9 +181,9 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                         } else {
                             item {
                                 GlassCard(Modifier.fillMaxWidth()) {
-                                    Text("Installation über den System-Dialog", style = MaterialTheme.typography.titleMedium)
+                                    Text(t(R.string.via_system_dialog), style = MaterialTheme.typography.titleMedium)
                                     Text(
-                                        if (shizukuReady) "So eingestellt (Einstellungen → Installer)." else "Shizuku ist nicht verbunden – Android fragt einmal nach. Downgrade und Berechtigungs-Optionen gehen nur mit Shizuku.",
+                                        if (shizukuReady) t(R.string.via_system_set) else t(R.string.via_system_noshz),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
@@ -227,13 +228,13 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                             ) {
                                 Text(
                                     when {
-                                        blocked -> "Blockiert: andere Signatur"
-                                        silent && !shizukuReady -> "Shizuku nicht verbunden"
-                                        info.isUpdate -> "Aktualisieren"
-                                        info.isDowngrade -> "Downgrade installieren"
-                                        info.isReinstall -> "Neu installieren"
-                                        else -> "Installieren"
-                                    } + (if (!silent && !blocked) " (System-Dialog)" else "") + if (splits.size > 1) " (${selected.size} Teile, ${Formatter.formatShortFileSize(context, selected.sumOf { it.sizeBytes })})" else "",
+                                        blocked -> t(R.string.blocked_sig)
+                                        silent && !shizukuReady -> t(R.string.shizuku_not_conn)
+                                        info.isUpdate -> t(R.string.update)
+                                        info.isDowngrade -> t(R.string.install_downgrade)
+                                        info.isReinstall -> t(R.string.reinstall)
+                                        else -> t(R.string.install)
+                                    } + (if (!silent && !blocked) t(R.string.system_dialog_sfx) else "") + if (splits.size > 1) t(R.string.parts_sfx, selected.size, Formatter.formatShortFileSize(context, selected.sumOf { it.sizeBytes })) else "",
                                     style = MaterialTheme.typography.titleMedium,
                                 )
                             }
@@ -241,7 +242,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                     }
                     is Stage.Installing -> item {
                         GlassCard(Modifier.fillMaxWidth()) {
-                            Text("Installiere …", style = MaterialTheme.typography.titleMedium)
+                            Text(t(R.string.installing), style = MaterialTheme.typography.titleMedium)
                             Spacer(Modifier.height(12.dp))
                             LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
                         }
@@ -253,21 +254,21 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         Icon(Icons.Rounded.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
                                         Spacer(Modifier.width(12.dp))
-                                        Text("${info.appName} installiert", style = MaterialTheme.typography.titleMedium)
+                                        Text(t(R.string.app_installed, info.appName), style = MaterialTheme.typography.titleMedium)
                                     }
                                     Spacer(Modifier.height(12.dp))
                                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                         context.packageManager.getLaunchIntentForPackage(info.packageName)?.let { launch ->
-                                            Button(onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); onClose() }) { Text("Öffnen") }
+                                            Button(onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); onClose() }) { Text(t(R.string.open)) }
                                         }
-                                        FilledTonalButton(onClick = onClose) { Text("Fertig") }
+                                        FilledTonalButton(onClick = onClose) { Text(t(R.string.done)) }
                                     }
                                 }
                                 is InstallResult.Failure -> {
                                     Text(r.title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error)
                                     Text(r.hint, style = MaterialTheme.typography.bodyMedium)
                                     Spacer(Modifier.height(12.dp))
-                                    FilledTonalButton(onClick = { stage = Stage.Preview(info) }) { Text("Zurück") }
+                                    FilledTonalButton(onClick = { stage = Stage.Preview(info) }) { Text(t(R.string.back)) }
                                 }
                             }
                         }
@@ -297,10 +298,10 @@ private fun AppHeader(info: ApkInfo) {
         }
         Spacer(Modifier.height(12.dp))
         val version = when {
-            info.installedVersionName == null -> "Neu · ${info.versionName}"
+            info.installedVersionName == null -> t(R.string.v_new, info.versionName)
             info.isUpdate -> "Update · ${info.installedVersionName} → ${info.versionName}"
             info.isDowngrade -> "Downgrade · ${info.installedVersionName} → ${info.versionName}"
-            else -> "Gleiche Version · ${info.versionName}"
+            else -> t(R.string.v_same, info.versionName)
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             AssistChip(onClick = {}, label = { Text(version) })
@@ -315,10 +316,10 @@ private fun AppHeader(info: ApkInfo) {
 @Composable
 private fun OptionsCard(info: ApkInfo, options: InstallOptions, onChange: (InstallOptions) -> Unit) {
     GlassCard(Modifier.fillMaxWidth()) {
-        Text("Optionen", style = MaterialTheme.typography.titleMedium)
-        OptionRow("Downgrade erlauben", options.allowDowngrade, highlight = info.isDowngrade) { onChange(options.copy(allowDowngrade = it)) }
-        OptionRow("Alle Berechtigungen gewähren", options.grantAllPermissions) { onChange(options.copy(grantAllPermissions = it)) }
-        OptionRow("Als Play-Store-Installation ausgeben", options.spoofPlayStore) { onChange(options.copy(spoofPlayStore = it)) }
+        Text(t(R.string.options), style = MaterialTheme.typography.titleMedium)
+        OptionRow(t(R.string.opt_downgrade), options.allowDowngrade, highlight = info.isDowngrade) { onChange(options.copy(allowDowngrade = it)) }
+        OptionRow(t(R.string.opt_grant_all), options.grantAllPermissions) { onChange(options.copy(grantAllPermissions = it)) }
+        OptionRow(t(R.string.opt_play), options.spoofPlayStore) { onChange(options.copy(spoofPlayStore = it)) }
     }
 }
 
@@ -339,9 +340,9 @@ private fun OptionRow(label: String, checked: Boolean, highlight: Boolean = fals
 private fun SplitsCard(splits: MutableList<SplitEntry>) {
     val context = LocalContext.current
     GlassCard(Modifier.fillMaxWidth()) {
-        Text("Teile (Splits)", style = MaterialTheme.typography.titleMedium)
+        Text(t(R.string.splits), style = MaterialTheme.typography.titleMedium)
         Text(
-            "Vorausgewählt ist nur, was dieses Handy braucht: passende CPU, Bildschirmdichte und deine Sprachen.",
+            t(R.string.splits_hint),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

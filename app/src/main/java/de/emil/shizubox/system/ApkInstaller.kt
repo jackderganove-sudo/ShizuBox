@@ -1,5 +1,7 @@
 package de.emil.shizubox.system
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Context
 import android.net.Uri
 import android.os.ParcelFileDescriptor
@@ -40,14 +42,14 @@ object ApkInstaller {
                     onProgress("Kopiere $name …")
                     val target = "$TMP/${paths.size}.apk"
                     val pfd = context.contentResolver.openFileDescriptor(uri, "r")
-                        ?: return@withContext Result(false, "Datei nicht lesbar: $name")
+                        ?: return@withContext Result(false, t(R.string.file_unreadable_n, name))
                     val written = pfd.use { ShizukuManager.writeFile(it, target) }
-                    if (written < 0) return@withContext Result(false, "Kopieren fehlgeschlagen")
+                    if (written < 0) return@withContext Result(false, t(R.string.copy_failed))
                     paths += target
                 }
             }
-            if (paths.isEmpty()) return@withContext Result(false, "Keine APK gefunden")
-            onProgress("Installiere …")
+            if (paths.isEmpty()) return@withContext Result(false, t(R.string.no_apk_found))
+            onProgress(t(R.string.installing))
             val flags = buildString {
                 append("-r")
                 if (allowDowngrade) append(" -d")

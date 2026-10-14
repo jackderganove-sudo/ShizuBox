@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Row
@@ -65,7 +67,7 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
         }
         result = VtResult(VtStatus.SCANNING)
         val sha = runCatching { withContext(Dispatchers.IO) { open()?.use { VirusTotal.sha256(it) } } }.getOrNull()
-        result = if (sha.isNullOrBlank()) VtResult(VtStatus.ERROR, errorMessage = "Datei nicht lesbar") else VirusTotal.lookup(sha)
+        result = if (sha.isNullOrBlank()) VtResult(VtStatus.ERROR, errorMessage = t(R.string.file_unreadable)) else VirusTotal.lookup(sha)
     }
 
     GlassCard(Modifier.fillMaxWidth()) {
@@ -73,46 +75,46 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
         Spacer(Modifier.height(6.dp))
         val r = result
         if (keyVersion < 0 && r == null) {
-            FilledTonalButton(onClick = { keyVersion = 0 }) { Text("Mit VirusTotal prüfen") }
+            FilledTonalButton(onClick = { keyVersion = 0 }) { Text(t(R.string.vt_scan)) }
             return@GlassCard
         }
         when (r?.status) {
-            null, VtStatus.SCANNING -> Busy("Prüfe Prüfsumme …")
+            null, VtStatus.SCANNING -> Busy(t(R.string.vt_hashing))
             VtStatus.UPLOADING -> {
-                Text("Lade hoch … ${r.uploadProgress} %", style = MaterialTheme.typography.bodyMedium)
+                Text(t(R.string.vt_uploading, r.uploadProgress), style = MaterialTheme.typography.bodyMedium)
                 LinearProgressIndicator(progress = { r.uploadProgress / 100f }, modifier = Modifier.fillMaxWidth().padding(top = 6.dp))
             }
-            VtStatus.QUEUED -> Busy("In der Warteschlange …")
-            VtStatus.ANALYZING -> Busy("Wird von den Scannern geprüft …")
+            VtStatus.QUEUED -> Busy(t(R.string.vt_queued))
+            VtStatus.ANALYZING -> Busy(t(R.string.vt_analyzing))
             VtStatus.NO_API_KEY -> {
                 Text(
-                    "Für den Scan brauchst du einen kostenlosen VirusTotal-API-Schlüssel.",
+                    t(R.string.vt_need_key),
                     style = MaterialTheme.typography.bodyMedium,
                 )
-                FilledTonalButton(onClick = { askKey = true }, modifier = Modifier.padding(top = 8.dp)) { Text("Schlüssel eingeben") }
+                FilledTonalButton(onClick = { askKey = true }, modifier = Modifier.padding(top = 8.dp)) { Text(t(R.string.vt_enter_key)) }
             }
             VtStatus.INVALID_API_KEY -> {
-                Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, "API-Schlüssel ungültig")
-                TextButton(onClick = { askKey = true }) { Text("Schlüssel ändern") }
+                Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, t(R.string.vt_bad_key))
+                TextButton(onClick = { askKey = true }) { Text(t(R.string.vt_change_key)) }
             }
             VtStatus.RATE_LIMITED -> {
-                Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.tertiary, "Limit erreicht (4 Anfragen pro Minute)")
-                TextButton(onClick = { keyVersion++ }) { Text("Erneut versuchen") }
+                Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.tertiary, t(R.string.vt_limit))
+                TextButton(onClick = { keyVersion++ }) { Text(t(R.string.retry)) }
             }
             VtStatus.NOT_ANALYZED -> {
                 Text(
-                    "VirusTotal kennt die Datei, hat sie aber noch nicht fertig analysiert.",
+                    t(R.string.vt_not_analyzed),
                     style = MaterialTheme.typography.bodyMedium,
                 )
-                TextButton(onClick = { keyVersion++ }) { Text("Erneut prüfen") }
+                TextButton(onClick = { keyVersion++ }) { Text(t(R.string.recheck)) }
             }
-            VtStatus.TOO_LARGE -> Text("Datei zu groß für VirusTotal (max. 650 MB)", style = MaterialTheme.typography.bodyMedium)
+            VtStatus.TOO_LARGE -> Text(t(R.string.vt_too_large), style = MaterialTheme.typography.bodyMedium)
             VtStatus.ERROR -> {
-                Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, r.errorMessage.ifBlank { "Fehler" })
-                TextButton(onClick = { keyVersion++ }) { Text("Erneut versuchen") }
+                Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, r.errorMessage.ifBlank { t(R.string.error) })
+                TextButton(onClick = { keyVersion++ }) { Text(t(R.string.retry)) }
             }
             VtStatus.NOT_FOUND -> {
-                Text("Diese Datei kennt VirusTotal noch nicht.", style = MaterialTheme.typography.bodyMedium)
+                Text(t(R.string.vt_unknown_file), style = MaterialTheme.typography.bodyMedium)
                 FilledTonalButton(
                     modifier = Modifier.padding(top = 8.dp),
                     onClick = {
@@ -121,31 +123,31 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                             result = VtResult(VtStatus.UPLOADING, sha256 = sha)
                             val file = runCatching { asFile() }.getOrNull()
                             result = if (file == null) {
-                                VtResult(VtStatus.ERROR, errorMessage = "Datei nicht lesbar")
+                                VtResult(VtStatus.ERROR, errorMessage = t(R.string.file_unreadable))
                             } else {
                                 VirusTotal.uploadAndScan(file, sha) { result = it }
                             }
                         }
                     },
-                ) { Text("Hochladen & scannen") }
+                ) { Text(t(R.string.vt_upload)) }
             }
             VtStatus.CLEAN, VtStatus.SUSPICIOUS, VtStatus.MALICIOUS -> {
                 when (r.status) {
-                    VtStatus.CLEAN -> Verdict(Icons.Rounded.CheckCircle, Color(0xFF4CD964), "Sauber · 0 von ${r.total} Scannern")
-                    VtStatus.SUSPICIOUS -> Verdict(Icons.Rounded.GppMaybe, MaterialTheme.colorScheme.tertiary, "Verdächtig · ${r.suspicious} von ${r.total} Scannern")
-                    else -> Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, "Schädlich · ${r.malicious} von ${r.total} Scannern")
+                    VtStatus.CLEAN -> Verdict(Icons.Rounded.CheckCircle, Color(0xFF4CD964), t(R.string.vt_clean, r.total))
+                    VtStatus.SUSPICIOUS -> Verdict(Icons.Rounded.GppMaybe, MaterialTheme.colorScheme.tertiary, t(R.string.vt_suspicious, r.suspicious, r.total))
+                    else -> Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, t(R.string.vt_malicious, r.malicious, r.total))
                 }
                 val hits = r.engineResults.filter { it.category == "malicious" || it.category == "suspicious" }
                 Row {
                     if (hits.isNotEmpty()) {
-                        TextButton(onClick = { showEngines = !showEngines }) { Text(if (showEngines) "Treffer ausblenden" else "Treffer anzeigen") }
+                        TextButton(onClick = { showEngines = !showEngines }) { Text(if (showEngines) t(R.string.vt_hide_hits) else t(R.string.vt_show_hits)) }
                     }
                     TextButton(onClick = {
                         context.startActivity(
                             Intent(Intent.ACTION_VIEW, Uri.parse("https://www.virustotal.com/gui/file/${r.sha256}"))
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         )
-                    }) { Text("Bericht öffnen") }
+                    }) { Text(t(R.string.vt_report)) }
                 }
                 if (showEngines) {
                     hits.forEach {
@@ -160,11 +162,11 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
         var value by remember { mutableStateOf(VirusTotal.apiKey) }
         AlertDialog(
             onDismissRequest = { askKey = false },
-            title = { Text("VirusTotal-API-Schlüssel") },
+            title = { Text(t(R.string.vt_key_title)) },
             text = {
                 androidx.compose.foundation.layout.Column {
                     Text(
-                        "Kostenlos: auf virustotal.com anmelden, dann Profil → API Key. Der Schlüssel bleibt nur auf diesem Handy.",
+                        t(R.string.vt_key_help),
                         style = MaterialTheme.typography.bodySmall,
                     )
                     TextButton(onClick = {
@@ -172,8 +174,8 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                             Intent(Intent.ACTION_VIEW, Uri.parse("https://www.virustotal.com/gui/my-apikey"))
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         )
-                    }) { Text("virustotal.com öffnen") }
-                    OutlinedTextField(value = value, onValueChange = { value = it }, singleLine = true, placeholder = { Text("API-Schlüssel") })
+                    }) { Text(t(R.string.vt_open_site)) }
+                    OutlinedTextField(value = value, onValueChange = { value = it }, singleLine = true, placeholder = { Text(t(R.string.api_key_ph)) })
                 }
             },
             confirmButton = {
@@ -181,9 +183,9 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                     VirusTotal.apiKey = value
                     askKey = false
                     keyVersion++
-                }) { Text("Speichern") }
+                }) { Text(t(R.string.save)) }
             },
-            dismissButton = { TextButton(onClick = { askKey = false }) { Text("Abbrechen") } },
+            dismissButton = { TextButton(onClick = { askKey = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }

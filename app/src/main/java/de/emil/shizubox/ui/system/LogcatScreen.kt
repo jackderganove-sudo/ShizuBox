@@ -1,5 +1,8 @@
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
+import de.emil.shizubox.tp
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -85,14 +88,14 @@ fun LogcatScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             .padding(horizontal = 12.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück") }
+            IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back)) }
             Text("Logcat", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
             TextButton(onClick = {
                 val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 cm.setPrimaryClip(ClipData.newPlainText("logcat", shown.joinToString("\n") { it.text }))
-                Toast.makeText(context, "${shown.size} Zeilen kopiert", Toast.LENGTH_SHORT).show()
-            }) { Text("Kopieren") }
-            IconButton(onClick = { refreshKey++ }) { Icon(Icons.Rounded.Refresh, "Aktualisieren") }
+                Toast.makeText(context, tp(R.plurals.lines_copied, shown.size, shown.size), Toast.LENGTH_SHORT).show()
+            }) { Text(t(R.string.copy)) }
+            IconButton(onClick = { refreshKey++ }) { Icon(Icons.Rounded.Refresh, t(R.string.refresh)) }
         }
         LazyColumn(
             state = listState,
@@ -126,7 +129,7 @@ fun LogcatScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 OutlinedTextField(
                     value = pkg,
                     onValueChange = { pkg = it.trim() },
-                    placeholder = { Text("Paket") },
+                    placeholder = { Text(t(R.string.package_)) },
                     singleLine = true,
                     textStyle = MaterialTheme.typography.bodySmall,
                     shape = RoundedCornerShape(16.dp),
@@ -135,7 +138,7 @@ fun LogcatScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 OutlinedTextField(
                     value = search,
                     onValueChange = { search = it },
-                    placeholder = { Text("Suchen") },
+                    placeholder = { Text(t(R.string.search)) },
                     singleLine = true,
                     textStyle = MaterialTheme.typography.bodySmall,
                     shape = RoundedCornerShape(16.dp),

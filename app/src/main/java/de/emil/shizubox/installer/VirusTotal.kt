@@ -5,6 +5,8 @@
  */
 package de.emil.shizubox.installer
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Context
 import android.content.SharedPreferences
 import kotlinx.coroutines.Dispatchers
@@ -98,7 +100,7 @@ object VirusTotal {
                 JSONObject(c.inputStream.bufferedReader().readText()).getString("data")
             }
             upload(target, key, file) { pct -> onProgress(VtResult(VtStatus.UPLOADING, uploadProgress = pct, sha256 = sha256)) }
-                ?: return@withContext VtResult(VtStatus.ERROR, errorMessage = "Upload fehlgeschlagen", sha256 = sha256)
+                ?: return@withContext VtResult(VtStatus.ERROR, errorMessage = t(R.string.vt_upload_failed), sha256 = sha256)
         } catch (e: VtHttpException) {
             return@withContext e.result.copy(sha256 = sha256)
         } catch (e: Exception) {
@@ -159,7 +161,7 @@ object VirusTotal {
                     "queued" -> VtResult(VtStatus.QUEUED)
                     "in-progress" -> VtResult(VtStatus.ANALYZING)
                     "completed" -> toResult(attrs.getJSONObject("stats"), engines(attrs.optJSONObject("results")))
-                    else -> VtResult(VtStatus.ERROR, errorMessage = "Unbekannter Status")
+                    else -> VtResult(VtStatus.ERROR, errorMessage = t(R.string.vt_unknown_status))
                 }
             }.getOrNull()?.copy(sha256 = sha256) ?: continue
             if (result.status == VtStatus.QUEUED || result.status == VtStatus.ANALYZING) {
@@ -168,7 +170,7 @@ object VirusTotal {
             }
             return result
         }
-        return VtResult(VtStatus.ERROR, errorMessage = "Analyse dauert zu lange – später erneut prüfen", sha256 = sha256)
+        return VtResult(VtStatus.ERROR, errorMessage = t(R.string.vt_too_long), sha256 = sha256)
     }
 
     private fun open(url: String, key: String) = (URL(url).openConnection() as HttpURLConnection).apply {
@@ -217,7 +219,7 @@ object VirusTotal {
 
     private fun networkMessage(e: Throwable) = when (e) {
         is java.net.UnknownHostException, is java.net.ConnectException, is java.net.SocketTimeoutException ->
-            "Keine Internetverbindung"
+            t(R.string.no_internet)
         else -> e.message ?: e.toString()
     }
 }

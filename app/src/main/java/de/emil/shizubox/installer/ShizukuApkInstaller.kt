@@ -5,6 +5,8 @@
  */
 package de.emil.shizubox.installer
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Context
 import android.net.Uri
 import kotlinx.coroutines.CancellationException
@@ -79,7 +81,7 @@ object ShizukuApkInstaller {
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            InstallResult.Failure("Installation fehlgeschlagen", e.message ?: e.toString())
+            InstallResult.Failure(t(R.string.inst_failed), e.message ?: e.toString())
         } finally {
             progressJob.cancel()
         }
@@ -89,24 +91,24 @@ object ShizukuApkInstaller {
         val raw = f.message.orEmpty()
         return when (f) {
             is InstallFailure.Conflict -> InstallResult.Failure(
-                "Konflikt mit installierter App",
-                "Meist eine andere Signatur. Die installierte Version zuerst deinstallieren.",
+                t(R.string.inst_conflict),
+                t(R.string.inst_conflict_hint),
             )
             is InstallFailure.Incompatible -> InstallResult.Failure(
-                "Nicht kompatibel",
-                if ("ABI" in raw || "abi" in raw) "Die App ist nicht für die CPU dieses Handys gebaut." else "Android-Version oder Gerät wird nicht unterstützt. $raw",
+                t(R.string.inst_incompatible),
+                if ("ABI" in raw || "abi" in raw) t(R.string.inst_abi) else t(R.string.inst_unsupported, raw),
             )
-            is InstallFailure.Invalid -> InstallResult.Failure("Ungültige Datei", "Die APK ist beschädigt oder unvollständig. $raw")
-            is InstallFailure.Storage -> InstallResult.Failure("Zu wenig Speicher", "Speicher freigeben und erneut versuchen.")
-            is InstallFailure.Blocked -> InstallResult.Failure("Blockiert", "Das System hat die Installation verhindert. $raw")
-            is InstallFailure.Aborted -> InstallResult.Failure("Abgebrochen", raw.ifBlank { "Die Installation wurde abgebrochen." })
-            is InstallFailure.Timeout -> InstallResult.Failure("Zeitüberschreitung", "Erneut versuchen.")
+            is InstallFailure.Invalid -> InstallResult.Failure(t(R.string.inst_invalid), t(R.string.inst_invalid_hint, raw))
+            is InstallFailure.Storage -> InstallResult.Failure(t(R.string.inst_storage), t(R.string.inst_storage_hint))
+            is InstallFailure.Blocked -> InstallResult.Failure(t(R.string.inst_blocked), t(R.string.inst_blocked_hint, raw))
+            is InstallFailure.Aborted -> InstallResult.Failure(t(R.string.inst_aborted), raw.ifBlank { t(R.string.inst_aborted_hint) })
+            is InstallFailure.Timeout -> InstallResult.Failure(t(R.string.inst_timeout), t(R.string.retry))
             is InstallFailure.Exceptional -> InstallResult.Failure("Fehler", f.exception.message ?: raw)
             is InstallFailure.Generic -> InstallResult.Failure(
-                "Installation fehlgeschlagen",
-                if ("DOWNGRADE" in raw) "Ältere Version: „Downgrade erlauben“ einschalten." else raw.ifBlank { "Unbekannter Fehler" },
+                t(R.string.inst_failed),
+                if ("DOWNGRADE" in raw) t(R.string.inst_downgrade_hint) else raw.ifBlank { t(R.string.unknown_error) },
             )
-            else -> InstallResult.Failure("Installation fehlgeschlagen", raw.ifBlank { f.toString() })
+            else -> InstallResult.Failure(t(R.string.inst_failed), raw.ifBlank { f.toString() })
         }
     }
 }

@@ -156,7 +156,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                     Spacer(Modifier.height(8.dp))
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Apps.launchIntent(pkg)?.let { launch ->
-                            OutlinedButton(onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }) { Text("Öffnen") }
+                            OutlinedButton(onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }) { Text(t(R.string.open)) }
                         }
                         if (!e.isSystem) {
                             OutlinedButton(onClick = {

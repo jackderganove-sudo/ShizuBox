@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -69,19 +71,19 @@ fun SystemScreen(
     ) {
         item {
             IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) {
-                Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück")
+                Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back))
             }
             Column(Modifier.padding(start = 8.dp, top = 32.dp, bottom = 12.dp)) {
-                Text("System", style = MaterialTheme.typography.displaySmall)
+                Text(t(R.string.system), style = MaterialTheme.typography.displaySmall)
                 Text(
-                    "Gaming, Installieren, Logs",
+                    t(R.string.sys_sub),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
         if (!shizukuReady) {
-            item { GlassCard(Modifier.fillMaxWidth()) { Text("Shizuku muss verbunden sein.") } }
+            item { GlassCard(Modifier.fillMaxWidth()) { Text(t(R.string.shizuku_must)) } }
         }
         item { GamingCard(shizukuReady) }
         item { InstallerCard(shizukuReady, onOpenUniversalInstaller) }
@@ -91,7 +93,7 @@ fun SystemScreen(
                     Column(Modifier.weight(1f)) {
                         Text("Logcat", style = MaterialTheme.typography.titleMedium)
                         Text(
-                            "Systemprotokoll ansehen, nach App und Stufe filtern",
+                            t(R.string.logcat_sub),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -116,9 +118,9 @@ private fun GamingCard(shizukuReady: Boolean) {
     GlassCard(Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                Text("Gaming-Modus", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.gaming), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    if (active) "Aktiv – wird beim Ausschalten exakt zurückgesetzt" else "Weniger Störungen, maximale Flüssigkeit",
+                    if (active) t(R.string.gaming_active) else t(R.string.gaming_sub),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -141,11 +143,11 @@ private fun GamingCard(shizukuReady: Boolean) {
         }
         Spacer(Modifier.height(8.dp))
         listOf(
-            Triple("Benachrichtigungen blockieren (Bitte nicht stören)", o.blockNotifications) { v: Boolean -> o.copy(blockNotifications = v) },
-            Triple("Keine Pop-up-Benachrichtigungen", o.noHeadsUp) { v: Boolean -> o.copy(noHeadsUp = v) },
-            Triple("Immer maximale Bildwiederholrate", o.maxRefresh) { v: Boolean -> o.copy(maxRefresh = v) },
-            Triple("Automatische Helligkeit aus", o.fixedBrightness) { v: Boolean -> o.copy(fixedBrightness = v) },
-            Triple("Hintergrund-Apps beim Start beenden", o.killBackground) { v: Boolean -> o.copy(killBackground = v) },
+            Triple(t(R.string.g_block), o.blockNotifications) { v: Boolean -> o.copy(blockNotifications = v) },
+            Triple(t(R.string.g_headsup), o.noHeadsUp) { v: Boolean -> o.copy(noHeadsUp = v) },
+            Triple(t(R.string.g_refresh), o.maxRefresh) { v: Boolean -> o.copy(maxRefresh = v) },
+            Triple(t(R.string.g_brightness), o.fixedBrightness) { v: Boolean -> o.copy(fixedBrightness = v) },
+            Triple(t(R.string.g_kill), o.killBackground) { v: Boolean -> o.copy(killBackground = v) },
         ).forEach { (label, checked, update) ->
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(label, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
@@ -154,7 +156,7 @@ private fun GamingCard(shizukuReady: Boolean) {
         }
         if (games.isNotEmpty()) {
             Spacer(Modifier.height(8.dp))
-            Text("Spiele starten", style = MaterialTheme.typography.titleSmall)
+            Text(t(R.string.launch_games), style = MaterialTheme.typography.titleSmall)
             Spacer(Modifier.height(4.dp))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 games.forEach { g ->
@@ -195,18 +197,18 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
         }
     }
     GlassCard(Modifier.fillMaxWidth()) {
-        Text("APK-Installer", style = MaterialTheme.typography.titleMedium)
+        Text(t(R.string.apk_installer), style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(8.dp))
         SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-            SegmentedButton(selected = universal, onClick = { universal = true }, shape = SegmentedButtonDefaults.itemShape(0, 2)) { Text("Universal") }
-            SegmentedButton(selected = !universal, onClick = { universal = false }, shape = SegmentedButtonDefaults.itemShape(1, 2)) { Text("Schnell") }
+            SegmentedButton(selected = universal, onClick = { universal = true }, shape = SegmentedButtonDefaults.itemShape(0, 2)) { Text(t(R.string.universal)) }
+            SegmentedButton(selected = !universal, onClick = { universal = false }, shape = SegmentedButtonDefaults.itemShape(1, 2)) { Text(t(R.string.quick)) }
         }
         Spacer(Modifier.height(4.dp))
         Text(
             if (universal) {
-                "Universal Installer: zeigt App-Infos, Version und Signatur vorab, wählt bei APKS/XAPK/APKM nur die passenden Teile. Auch über „Öffnen mit ShizuBox“ im Dateimanager."
+                t(R.string.universal_hint)
             } else {
-                "Installiert sofort ohne Vorschau. Auch mehrere Split-APKs auf einmal."
+                t(R.string.quick_hint)
             },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -216,9 +218,9 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
             Button(
                 onClick = { universalPicker.launch(arrayOf("*/*")) },
                 modifier = Modifier.fillMaxWidth(),
-            ) { Text("Datei auswählen") }
+            ) { Text(t(R.string.pick_file)) }
             Text(
-                "Basiert auf Universal Installer von pass-with-high-score (GPL-3.0)",
+                t(R.string.ui_based_on),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),
@@ -226,11 +228,11 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
             return@GlassCard
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Downgrade erlauben", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+            Text(t(R.string.opt_downgrade), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
             Switch(checked = downgrade, onCheckedChange = { downgrade = it })
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Alle Berechtigungen gewähren", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+            Text(t(R.string.opt_grant_all), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
             Switch(checked = grantAll, onCheckedChange = { grantAll = it })
         }
         Spacer(Modifier.height(8.dp))
@@ -238,7 +240,7 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
             onClick = { picker.launch(arrayOf("*/*")) },
             enabled = shizukuReady && progress == null,
             modifier = Modifier.fillMaxWidth(),
-        ) { Text("APK auswählen") }
+        ) { Text(t(R.string.pick_apk)) }
         progress?.let {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
                 CircularProgressIndicator(Modifier.padding(end = 12.dp))
@@ -247,7 +249,7 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
         }
         result?.let {
             Text(
-                if (it.ok) "Installiert ✓" else "Fehler: ${it.message}",
+                if (it.ok) t(R.string.installed_ok) else t(R.string.error_msg, it.message),
                 color = if (it.ok) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 8.dp),

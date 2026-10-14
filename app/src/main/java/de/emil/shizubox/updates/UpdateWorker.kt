@@ -1,5 +1,7 @@
 package de.emil.shizubox.updates
 
+import de.emil.shizubox.t
+import de.emil.shizubox.tp
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -27,7 +29,7 @@ import java.util.concurrent.TimeUnit
 /** Periodic update check; optionally installs updates silently through Shizuku. */
 class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
-    override suspend fun getForegroundInfo() = progressInfo(applicationContext, "Bereite Updates vor …", 0, 0, true)
+    override suspend fun getForegroundInfo() = progressInfo(applicationContext, t(R.string.w_preparing), 0, 0, true)
 
     override suspend fun doWork(): Result {
         // "Update all" from the app: no new check needed, the list is current.
@@ -40,7 +42,7 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
             Updates.apps.value.any { Updates.state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true }
         ) {
             // Foreground: keeps the process alive while installing, and shows the progress.
-            runCatching { setForeground(progressInfo(applicationContext, "Bereite Updates vor …", 0, 0, true)) }
+            runCatching { setForeground(progressInfo(applicationContext, t(R.string.w_preparing), 0, 0, true)) }
             val (ok, failed) = Updates.runUpdateAll { i, total, name, p ->
                 val info = progressInfo(applicationContext, "$name (${i + 1}/$total)", ((i + p) * 100).toInt(), total * 100, p == 0f)
                 runCatching { setForegroundAsync(info) }
@@ -48,7 +50,7 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
             installed += ok
             held += failed.map { (n, r) -> "$n: $r" }
         } else if (updateAll && !ShizukuManager.isReady) {
-            held += "Shizuku nicht verbunden"
+            held += t(R.string.shizuku_not_conn)
         }
         notify(applicationContext, Updates.apps.value.filter { Updates.state(it) == UpdateState.Update }.map { it.name }, installed, held)
         return Result.success()
@@ -73,10 +75,10 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
 
         fun progressInfo(context: Context, text: String, progress: Int, max: Int, indeterminate: Boolean): androidx.work.ForegroundInfo {
             val nm = context.getSystemService(NotificationManager::class.java)
-            nm.createNotificationChannel(NotificationChannel(PROGRESS_CHANNEL, "Update-Fortschritt", NotificationManager.IMPORTANCE_LOW))
+            nm.createNotificationChannel(NotificationChannel(PROGRESS_CHANNEL, t(R.string.ch_progress), NotificationManager.IMPORTANCE_LOW))
             val n = android.app.Notification.Builder(context, PROGRESS_CHANNEL)
                 .setSmallIcon(R.drawable.ic_launcher_monochrome)
-                .setContentTitle("Apps werden aktualisiert")
+                .setContentTitle(t(R.string.w_updating))
                 .setContentText(text)
                 .setProgress(max, progress, indeterminate)
                 .setOngoing(true)
@@ -105,7 +107,7 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         fun notify(context: Context, pending: List<String>, installed: List<String>, held: List<String> = emptyList()) {
             if (context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return
             val nm = context.getSystemService(NotificationManager::class.java)
-            nm.createNotificationChannel(NotificationChannel(CHANNEL, "App-Updates", NotificationManager.IMPORTANCE_DEFAULT))
+            nm.createNotificationChannel(NotificationChannel(CHANNEL, t(R.string.ch_updates), NotificationManager.IMPORTANCE_DEFAULT))
             if (pending.isEmpty() && installed.isEmpty() && held.isEmpty()) {
                 nm.cancel(2)
                 return
@@ -116,17 +118,17 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
             )
             val title = when {
-                installed.isNotEmpty() -> "${installed.size} App${if (installed.size > 1) "s" else ""} aktualisiert" +
-                    if (held.isNotEmpty()) ", ${held.size} nicht" else ""
-                held.isNotEmpty() -> "${held.size} Update${if (held.size > 1) "s" else ""} nicht installiert"
-                else -> "${pending.size} Update${if (pending.size > 1) "s" else ""} verfügbar"
+                installed.isNotEmpty() -> tp(R.plurals.w_updated, installed.size, installed.size) +
+                    if (held.isNotEmpty()) t(R.string.w_not_sfx, held.size) else ""
+                held.isNotEmpty() -> tp(R.plurals.w_held, held.size, held.size)
+                else -> tp(R.plurals.w_pending, pending.size, pending.size)
             }
             val text = buildString {
                 if (installed.isNotEmpty()) append(installed.joinToString(", "))
                 else if (held.isEmpty()) append(pending.joinToString(", "))
                 if (held.isNotEmpty()) {
                     if (isNotEmpty()) append("\n\n")
-                    append("Nicht installiert:\n" + held.joinToString("\n"))
+                    append(t(R.string.w_not_installed) + "\n" + held.joinToString("\n"))
                 }
             }
             nm.notify(

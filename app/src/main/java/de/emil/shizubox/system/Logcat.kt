@@ -1,5 +1,7 @@
 package de.emil.shizubox.system
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import de.emil.shizubox.shizuku.ShizukuManager
 
 data class LogLine(val level: Char, val text: String)
@@ -15,7 +17,7 @@ object Logcat {
     suspend fun read(level: Char, pkg: String?, lines: Int = 800): List<LogLine> {
         val pidFilter = if (pkg.isNullOrBlank()) "" else {
             val pids = ShizukuManager.exec("pidof ${pkg.trim()}").out.trim()
-            if (pids.isEmpty()) return listOf(LogLine('W', "Prozess ${pkg.trim()} läuft gerade nicht."))
+            if (pids.isEmpty()) return listOf(LogLine('W', t(R.string.proc_not_running, pkg.trim())))
             // logcat accepts a single --pid; take the main process.
             "--pid=${pids.split(' ').first()}"
         }

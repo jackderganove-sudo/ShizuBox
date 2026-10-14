@@ -3,6 +3,8 @@
  */
 package de.emil.shizubox.updates
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -115,8 +117,8 @@ object Updates {
 
     suspend fun add(rawUrl: String): TrackedApp {
         val url = Source.normalize(rawUrl)
-        val source = Source.forUrl(url) ?: throw SourceException("Diese Quelle wird (noch) nicht unterstützt")
-        _apps.value.firstOrNull { it.url.equals(url, ignoreCase = true) }?.let { throw SourceException("Wird schon verfolgt: ${it.name}") }
+        val source = Source.forUrl(url) ?: throw SourceException(t(R.string.e_unsupported))
+        _apps.value.firstOrNull { it.url.equals(url, ignoreCase = true) }?.let { throw SourceException(t(R.string.e_tracked, it.name)) }
         val draft = TrackedApp(id = "", url = url, name = "", author = "", includePrereleases = _settings.value.prereleasesByDefault)
         return addResolved(url, source.latest(draft))
     }
@@ -124,11 +126,11 @@ object Updates {
     /** Adds an app whose latest release was already fetched (bulk import). */
     suspend fun addResolved(rawUrl: String, release: Release): TrackedApp {
         val url = Source.normalize(rawUrl)
-        val source = Source.forUrl(url) ?: throw SourceException("Diese Quelle wird (noch) nicht unterstützt")
-        _apps.value.firstOrNull { it.url.equals(url, ignoreCase = true) }?.let { throw SourceException("Wird schon verfolgt: ${it.name}") }
+        val source = Source.forUrl(url) ?: throw SourceException(t(R.string.e_unsupported))
+        _apps.value.firstOrNull { it.url.equals(url, ignoreCase = true) }?.let { throw SourceException(t(R.string.e_tracked, it.name)) }
         val draft = TrackedApp(id = "", url = url, name = "", author = "", includePrereleases = _settings.value.prereleasesByDefault)
         val id = release.appId ?: guessPackage(release.name)
-        if (release.apks.isEmpty() && !source.trackOnly) throw SourceException("Kein Release mit APK gefunden")
+        if (release.apks.isEmpty() && !source.trackOnly) throw SourceException(t(R.string.e_no_apk_rel))
         val real = installedVersionName(id)
         val app = draft.copy(
             id = id,
@@ -180,7 +182,7 @@ object Updates {
     suspend fun check(app: TrackedApp): TrackedApp {
         val source = Source.forUrl(app.url)
         val checked = if (source == null) {
-            app.copy(error = "Quelle wird nicht unterstützt", lastCheck = System.currentTimeMillis())
+            app.copy(error = t(R.string.e_source_unsupported), lastCheck = System.currentTimeMillis())
         } else {
             try {
                 val r = source.latest(app)
@@ -247,7 +249,7 @@ object Updates {
      * Also learns the package name from the file if it was unknown.
      */
     suspend fun download(app: TrackedApp, onProgress: (Float) -> Unit): Pair<TrackedApp, Uri> = withContext(Dispatchers.IO) {
-        val asset = app.chosenApk ?: throw SourceException("Keine APK verfügbar")
+        val asset = app.chosenApk ?: throw SourceException(t(R.string.e_no_apk))
         val dir = File(appContext.cacheDir, "updates").apply { mkdirs() }
         // Never delete files of other downloads (the installer may still be reading them),
         // only leftovers older than a day.
@@ -255,7 +257,7 @@ object Updates {
         dir.listFiles()?.filter { it.lastModified() < dayAgo }?.forEach { it.delete() }
         val target = File(dir, "${System.currentTimeMillis()}_" + asset.name.replace(Regex("[^A-Za-z0-9._-]"), "_"))
         val conn = openFollowingRedirects(asset.url)
-        if (conn.responseCode !in 200..299) throw SourceException("Download fehlgeschlagen (HTTP ${conn.responseCode})")
+        if (conn.responseCode !in 200..299) throw SourceException(t(R.string.e_dl_http, conn.responseCode))
         val total = conn.contentLengthLong
         conn.inputStream.use { input ->
             target.outputStream().use { out ->
@@ -296,7 +298,7 @@ object Updates {
             url = URL(URL(url), next).toString()
             c.disconnect()
         }
-        throw SourceException("Zu viele Weiterleitungen")
+        throw SourceException(t(R.string.e_redirects))
     }
 
     /**
@@ -304,21 +306,21 @@ object Updates {
      * background updater. Returns null on success, otherwise the reason it was not installed.
      */
     suspend fun installSilently(app: TrackedApp, onProgress: (Float) -> Unit = {}): String? {
-        if (Source.forUrl(app.url)?.trackOnly == true) return "nur über APKMirror-Seite"
-        if (!de.emil.shizubox.shizuku.ShizukuManager.isReady) return "Shizuku nicht verbunden"
+        if (Source.forUrl(app.url)?.trackOnly == true) return t(R.string.h_apkm)
+        if (!de.emil.shizubox.shizuku.ShizukuManager.isReady) return t(R.string.shizuku_not_conn)
         val (current, uri) = download(app, onProgress)
         val info = ApkParser.parse(appContext, uri)
-        if (info.signatureMismatch == true) return "andere Signatur als die installierte App"
+        if (info.signatureMismatch == true) return t(R.string.h_sig)
         val vt = de.emil.shizubox.installer.VirusTotal
         if (_settings.value.virusTotalGate && vt.apiKey.isNotBlank()) {
             val sha = appContext.contentResolver.openInputStream(uri)!!.use { vt.sha256(it) }
             val r = vt.lookup(sha)
             if (r.status != de.emil.shizubox.installer.VtStatus.CLEAN) {
                 return "VirusTotal: " + when (r.status) {
-                    de.emil.shizubox.installer.VtStatus.MALICIOUS -> "schädlich (${r.malicious})"
-                    de.emil.shizubox.installer.VtStatus.SUSPICIOUS -> "verdächtig (${r.suspicious})"
-                    de.emil.shizubox.installer.VtStatus.NOT_FOUND, de.emil.shizubox.installer.VtStatus.NOT_ANALYZED -> "Datei noch unbekannt"
-                    else -> "nicht prüfbar"
+                    de.emil.shizubox.installer.VtStatus.MALICIOUS -> t(R.string.h_malicious, r.malicious)
+                    de.emil.shizubox.installer.VtStatus.SUSPICIOUS -> t(R.string.h_suspicious, r.suspicious)
+                    de.emil.shizubox.installer.VtStatus.NOT_FOUND, de.emil.shizubox.installer.VtStatus.NOT_ANALYZED -> t(R.string.h_unknown)
+                    else -> t(R.string.h_uncheckable)
                 }
             }
         }

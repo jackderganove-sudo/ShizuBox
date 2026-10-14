@@ -5,16 +5,20 @@
  */
 package de.emil.shizubox.installer
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.graphics.drawable.Drawable
 import android.net.Uri
 
-enum class SplitType(val label: String) {
-    Base("Basis"),
-    Libs("CPU-Architektur"),
-    Locale("Sprache"),
-    ScreenDensity("Bildschirmdichte"),
-    Feature("Feature"),
-    Other("Sonstige"),
+enum class SplitType(private val labelRes: Int) {
+    Base(de.emil.shizubox.R.string.sp_base),
+    Libs(de.emil.shizubox.R.string.sp_libs),
+    Locale(de.emil.shizubox.R.string.sp_locale),
+    ScreenDensity(de.emil.shizubox.R.string.sp_density),
+    Feature(de.emil.shizubox.R.string.sp_feature),
+    Other(de.emil.shizubox.R.string.sp_other),
+    ;
+    val label get() = t(labelRes)
 }
 
 data class SplitEntry(
