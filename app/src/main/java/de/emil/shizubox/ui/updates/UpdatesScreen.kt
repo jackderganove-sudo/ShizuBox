@@ -136,6 +136,10 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         null -> {}
     }
 
+    val apps by Updates.apps.collectAsStateWithLifecycle()
+    val updateCount = remember(apps, resumeTick) { Updates.updateCount() }
+    val updatingAll by Updates.updatingAll.collectAsStateWithLifecycle()
+
     Box(Modifier.fillMaxSize()) {
         when (page) {
             0 -> AppsPage(resumeTick, onBack, onOpen = { route = Route.Detail(it.key) }, onBrowser = { route = Route.Browser(it) })
@@ -154,6 +158,45 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             onSelect = { page = it },
             modifier = Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 12.dp),
         )
+        // "Update all" like ObtainX: round button bottom left with the number of updates.
+        if (page == 0 && (updateCount > 0 || updatingAll?.first != null)) {
+            val running = updatingAll?.first != null
+            androidx.compose.material3.BadgedBox(
+                badge = { if (!running) androidx.compose.material3.Badge { Text("$updateCount") } },
+                modifier = Modifier.align(Alignment.BottomStart).navigationBarsPadding().padding(start = 16.dp, bottom = 84.dp),
+            ) {
+                androidx.compose.material3.FloatingActionButton(
+                    onClick = { if (!running) Updates.updateAllInBackground() },
+                    shape = CircleShape,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                ) {
+                    if (running) CircularProgressIndicator(Modifier.size(28.dp), strokeWidth = 3.dp)
+                    else Icon(Icons.Rounded.SystemUpdateAlt, "Alle aktualisieren")
+                }
+            }
+        }
+        // Result of "update all": what was held back and why.
+        updatingAll?.let { (currentKey, failed) ->
+            if (currentKey == null) {
+                ObCard(Modifier.align(Alignment.TopCenter).windowInsetsPadding(WindowInsets.safeDrawing).padding(12.dp).fillMaxWidth()) {
+                    Text(
+                        if (failed.isEmpty()) "Alle Updates installiert ✓" else "${failed.size} nicht automatisch installiert",
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    failed.forEach { (name, reason) ->
+                        Text("$name: $reason", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    if (failed.isNotEmpty()) {
+                        Text(
+                            "Diese Apps einzeln über ihren Knopf aktualisieren – der Installer zeigt dann Details.",
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(top = 4.dp),
+                        )
+                    }
+                    TextButton(onClick = { Updates.clearUpdateAllResult() }) { Text("OK") }
+                }
+            }
+        }
     }
 }
 
@@ -183,6 +226,8 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
     val others = apps.filter { states[it.key] != UpdateState.Update }.sortedBy { it.name.lowercase() }
     var showUpdates by rememberSaveable { mutableStateOf(true) }
     var busy by remember { mutableStateOf<String?>(null) }
+    val updatingAll by Updates.updatingAll.collectAsStateWithLifecycle()
+    val busyKey = busy ?: updatingAll?.first
     var query by rememberSaveable { mutableStateOf("") }
     var searching by rememberSaveable { mutableStateOf(false) }
 
@@ -245,25 +290,12 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
             item { GroupHeader("Updates", shownUpdates.size, showUpdates) { showUpdates = !showUpdates } }
             if (showUpdates) {
                 items(shownUpdates, key = { "u" + it.key }) { app ->
-                    AppRow(app, states[app.key], busy == app.key, onOpen = { onOpen(app) }, onInstall = { install(app) })
-                }
-                if (shownUpdates.size > 1) {
-                    item {
-                        TextButton(enabled = busy == null, modifier = Modifier.fillMaxWidth(), onClick = {
-                            scope.launch {
-                                for (app in shownUpdates.filter { Source.forUrl(it.url)?.trackOnly != true }) {
-                                    busy = app.key
-                                    runCatching { Updates.download(app) {} }.onSuccess { (_, uri) -> openInstaller(context, uri) }
-                                }
-                                busy = null
-                            }
-                        }) { Text("Alle aktualisieren (APKMirror-Apps ausgenommen)") }
-                    }
+                    AppRow(app, states[app.key], busyKey == app.key, onOpen = { onOpen(app) }, onInstall = { install(app) })
                 }
             }
         }
         items(others.filter(::matches), key = { it.key }) { app ->
-            AppRow(app, states[app.key], busy == app.key, onOpen = { onOpen(app) }, onInstall = { install(app) })
+            AppRow(app, states[app.key], busyKey == app.key, onOpen = { onOpen(app) }, onInstall = { install(app) })
         }
     }
 }
@@ -282,9 +314,10 @@ private fun AppRow(app: TrackedApp, state: UpdateState?, busy: Boolean, onOpen: 
                         contentAlignment = Alignment.Center,
                     ) { Text(app.name.take(1).uppercase(), style = MaterialTheme.typography.titleLarge) }
                 }
-                Box(Modifier.align(Alignment.BottomEnd).offset(x = 4.dp, y = 4.dp)) { SourceBadge(source) }
             }
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(10.dp))
+            SourceBadge(source, 24)
+            Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text(app.name, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(

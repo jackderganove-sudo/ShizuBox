@@ -278,11 +278,10 @@ private fun Counter(n: Int, label: String) {
 @Composable
 private fun HitRow(hit: ImportHit, name: String, checked: Boolean, onCheck: (Boolean) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
-        Box {
-            AppIcon(hit.pkg, 44)
-            Box(Modifier.align(Alignment.BottomEnd).offset(x = 4.dp, y = 4.dp)) { SourceBadge(hit.source, 18) }
-        }
-        Spacer(Modifier.width(16.dp))
+        AppIcon(hit.pkg, 44)
+        Spacer(Modifier.width(10.dp))
+        SourceBadge(hit.source, 22)
+        Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text(name, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text("${hit.pkg} · ${hit.release.version}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)

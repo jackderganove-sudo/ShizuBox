@@ -34,34 +34,8 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         val s = Updates.settings.value
         if (s.autoInstall && ShizukuManager.isReady) {
             for (app in Updates.apps.value.filter { Updates.state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true }) {
-                runCatching {
-                    val (current, uri) = Updates.download(app) {}
-                    val info = ApkParser.parse(applicationContext, uri)
-                    // Safety gates: same as the manual installer shows, but without a human looking.
-                    if (info.signatureMismatch == true) {
-                        held += "${current.name}: andere Signatur"
-                        return@runCatching
-                    }
-                    if (s.virusTotalGate && VirusTotal.apiKey.isNotBlank()) {
-                        val sha = applicationContext.contentResolver.openInputStream(uri)!!.use { VirusTotal.sha256(it) }
-                        val vt = VirusTotal.lookup(sha)
-                        if (vt.status != VtStatus.CLEAN) {
-                            held += "${current.name}: VirusTotal " + when (vt.status) {
-                                VtStatus.MALICIOUS -> "schädlich (${vt.malicious})"
-                                VtStatus.SUSPICIOUS -> "verdächtig (${vt.suspicious})"
-                                VtStatus.NOT_FOUND, VtStatus.NOT_ANALYZED -> "kennt die Datei noch nicht"
-                                else -> "nicht prüfbar"
-                            }
-                            return@runCatching
-                        }
-                    }
-                    val uris = info.splitEntries.filter { it.selected }.map { it.uri }
-                    val r = ShizukuApkInstaller.install(applicationContext, current.name, uris, InstallOptions()) {}
-                    if (r == InstallResult.Success) {
-                        Updates.markInstalled(Updates.apps.value.first { it.key == current.key })
-                        installed += current.name
-                    }
-                }
+                val reason = runCatching { Updates.installSilently(app) }.getOrElse { it.message ?: it.toString() }
+                if (reason == null) installed += app.name else held += "${app.name}: $reason"
             }
         }
         notify(applicationContext, Updates.apps.value.filter { Updates.state(it) == UpdateState.Update }.map { it.name }, installed, held)

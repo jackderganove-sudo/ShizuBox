@@ -59,31 +59,35 @@ fun ObCard(
     }
 }
 
-/** Colors and short marks for each source (shown as a badge on the app icon). */
-fun sourceStyle(label: String?): Pair<Color, String> = when (label) {
-    "GitHub" -> Color(0xFF24292F) to "GH"
-    "GitLab" -> Color(0xFFE24329) to "GL"
-    "Codeberg" -> Color(0xFF2185D0) to "CB"
-    "F-Droid" -> Color(0xFF1976D2) to "F"
-    "IzzyOnDroid" -> Color(0xFF00A3A3) to "IZ"
-    "APKPure" -> Color(0xFF24CD77) to "A"
-    "APKMirror" -> Color(0xFFFF8B14) to "AM"
-    else -> Color.Gray to "?"
+/** Logo per source (from ObtainX's assets), null for unknown sources. */
+fun sourceLogo(label: String?): Int? = when (label) {
+    "GitHub" -> de.emil.shizubox.R.drawable.src_github
+    "GitLab" -> de.emil.shizubox.R.drawable.src_gitlab
+    "Codeberg" -> de.emil.shizubox.R.drawable.src_codeberg
+    "F-Droid" -> de.emil.shizubox.R.drawable.src_fdroid
+    "IzzyOnDroid" -> de.emil.shizubox.R.drawable.src_izzydroid
+    "APKPure" -> de.emil.shizubox.R.drawable.src_apkpure
+    "APKMirror" -> de.emil.shizubox.R.drawable.src_apkmirror
+    else -> null
 }
 
 @Composable
 fun SourceBadge(label: String?, size: Int = 20) {
-    val (color, mark) = sourceStyle(label)
-    Box(
-        Modifier
-            .size(size.dp)
-            .clip(CircleShape)
-            .background(color)
-            .border(1.5.dp, MaterialTheme.colorScheme.surface, CircleShape),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(mark, color = Color.White, fontSize = (size * 0.42f).sp, fontWeight = FontWeight.Bold, maxLines = 1)
+    val logo = sourceLogo(label)
+    if (logo == null) {
+        Box(
+            Modifier.size(size.dp).clip(CircleShape).background(Color.Gray),
+            contentAlignment = Alignment.Center,
+        ) { Text("?", color = Color.White, fontSize = (size * 0.5f).sp, fontWeight = FontWeight.Bold) }
+        return
     }
+    androidx.compose.foundation.Image(
+        painter = androidx.compose.ui.res.painterResource(logo),
+        contentDescription = label,
+        modifier = Modifier.size(size.dp),
+        // The GitHub mark is black: show it in the text color so it stays visible in dark mode.
+        colorFilter = if (label == "GitHub") androidx.compose.ui.graphics.ColorFilter.tint(MaterialTheme.colorScheme.onSurface) else null,
+    )
 }
 
 /** Version + date chip on the right of a list row. */

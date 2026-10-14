@@ -249,8 +249,11 @@ object Updates {
     suspend fun download(app: TrackedApp, onProgress: (Float) -> Unit): Pair<TrackedApp, Uri> = withContext(Dispatchers.IO) {
         val asset = app.chosenApk ?: throw SourceException("Keine APK verfügbar")
         val dir = File(appContext.cacheDir, "updates").apply { mkdirs() }
-        dir.listFiles()?.forEach { it.delete() }
-        val target = File(dir, asset.name.replace(Regex("[^A-Za-z0-9._-]"), "_"))
+        // Never delete files of other downloads (the installer may still be reading them),
+        // only leftovers older than a day.
+        val dayAgo = System.currentTimeMillis() - 24 * 3600_000L
+        dir.listFiles()?.filter { it.lastModified() < dayAgo }?.forEach { it.delete() }
+        val target = File(dir, "${System.currentTimeMillis()}_" + asset.name.replace(Regex("[^A-Za-z0-9._-]"), "_"))
         val conn = openFollowingRedirects(asset.url)
         if (conn.responseCode !in 200..299) throw SourceException("Download fehlgeschlagen (HTTP ${conn.responseCode})")
         val total = conn.contentLengthLong
@@ -294,6 +297,68 @@ object Updates {
             c.disconnect()
         }
         throw SourceException("Zu viele Weiterleitungen")
+    }
+
+    /**
+     * Downloads and installs an update silently through Shizuku, with the same safety gates as the
+     * background updater. Returns null on success, otherwise the reason it was not installed.
+     */
+    suspend fun installSilently(app: TrackedApp): String? {
+        if (Source.forUrl(app.url)?.trackOnly == true) return "nur über APKMirror-Seite"
+        if (!de.emil.shizubox.shizuku.ShizukuManager.isReady) return "Shizuku nicht verbunden"
+        val (current, uri) = download(app) {}
+        val info = ApkParser.parse(appContext, uri)
+        if (info.signatureMismatch == true) return "andere Signatur als die installierte App"
+        val vt = de.emil.shizubox.installer.VirusTotal
+        if (_settings.value.virusTotalGate && vt.apiKey.isNotBlank()) {
+            val sha = appContext.contentResolver.openInputStream(uri)!!.use { vt.sha256(it) }
+            val r = vt.lookup(sha)
+            if (r.status != de.emil.shizubox.installer.VtStatus.CLEAN) {
+                return "VirusTotal: " + when (r.status) {
+                    de.emil.shizubox.installer.VtStatus.MALICIOUS -> "schädlich (${r.malicious})"
+                    de.emil.shizubox.installer.VtStatus.SUSPICIOUS -> "verdächtig (${r.suspicious})"
+                    de.emil.shizubox.installer.VtStatus.NOT_FOUND, de.emil.shizubox.installer.VtStatus.NOT_ANALYZED -> "Datei noch unbekannt"
+                    else -> "nicht prüfbar"
+                }
+            }
+        }
+        val uris = info.splitEntries.filter { it.selected }.map { it.uri }
+        val result = de.emil.shizubox.installer.ShizukuApkInstaller.install(appContext, current.name, uris, de.emil.shizubox.installer.InstallOptions()) {}
+        return when (result) {
+            de.emil.shizubox.installer.InstallResult.Success -> {
+                markInstalled(_apps.value.first { it.key == current.key })
+                null
+            }
+            is de.emil.shizubox.installer.InstallResult.Failure -> "${result.title}: ${result.hint}"
+        }
+    }
+
+    private val _updatingAll = MutableStateFlow<Pair<String?, Map<String, String>>?>(null)
+
+    /** (app currently installing, failures by app name) while "update all" runs, else null. */
+    val updatingAll: StateFlow<Pair<String?, Map<String, String>>?> = _updatingAll.asStateFlow()
+
+    fun updateAllInBackground() {
+        if (_updatingAll.value?.first != null) return
+        ioScope.launch {
+            val failed = linkedMapOf<String, String>()
+            for (app in _apps.value.filter { state(it) == UpdateState.Update }) {
+                _updatingAll.value = app.key to failed.toMap()
+                val reason = try {
+                    installSilently(app)
+                } catch (e: kotlinx.coroutines.CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    e.message ?: e.toString()
+                }
+                if (reason != null) failed[app.name] = reason
+            }
+            _updatingAll.value = null to failed
+        }
+    }
+
+    fun clearUpdateAllResult() {
+        _updatingAll.value = null
     }
 
     // ------------------------------------------------------------- import / export
