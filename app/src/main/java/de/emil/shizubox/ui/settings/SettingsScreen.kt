@@ -25,6 +25,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -209,9 +211,21 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                var showKey by remember { mutableStateOf(false) }
                 OutlinedTextField(
                     value = vtKey, onValueChange = { vtKey = it.trim() }, singleLine = true,
                     placeholder = { Text("API-Schlüssel") }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    // Masked like a password: the key is a secret.
+                    visualTransformation = if (showKey) androidx.compose.ui.text.input.VisualTransformation.None
+                    else androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(onClick = { showKey = !showKey }) {
+                            Icon(
+                                if (showKey) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
+                                if (showKey) "Verbergen" else "Anzeigen",
+                            )
+                        }
+                    },
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
                     FilledTonalButton(onClick = { VirusTotal.apiKey = vtKey; message = "Schlüssel gespeichert ✓" }) { Text("Speichern") }
@@ -244,7 +258,17 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         item { Header("Shizuku") }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Status: ${shizuku.name}" + (ShizukuManager.serverMode?.let { " ($it)" } ?: ""), style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    "Status: " + when (shizuku) {
+                        de.emil.shizubox.shizuku.ShizukuStatus.Ready -> "Verbunden" + (ShizukuManager.serverMode?.let { " ($it)" } ?: "")
+                        de.emil.shizubox.shizuku.ShizukuStatus.Connecting -> "Verbinde …"
+                        de.emil.shizubox.shizuku.ShizukuStatus.NoPermission -> "Zugriff noch nicht erlaubt"
+                        de.emil.shizubox.shizuku.ShizukuStatus.PermissionDenied -> "Zugriff verweigert"
+                        de.emil.shizubox.shizuku.ShizukuStatus.NotRunning -> "Läuft nicht"
+                        de.emil.shizubox.shizuku.ShizukuStatus.NotInstalled -> "Nicht installiert"
+                    },
+                    style = MaterialTheme.typography.bodyLarge,
+                )
                 Text("Manager-App: ${ShizukuManager.shizukuPackage ?: "nicht gefunden"}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(
                     "Ohne Shizuku funktionieren: App-Updates (prüfen und per System-Dialog installieren), Universal Installer, App-Liste mit Details, APK teilen/extrahieren und VirusTotal. Schulmodus, Customization, Einfrieren, AppOps, Gaming-Modus und Logcat brauchen Shizuku.",

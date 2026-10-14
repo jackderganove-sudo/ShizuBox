@@ -217,6 +217,8 @@ private fun SectionTile(section: Section, modifier: Modifier, subtitle: String? 
             subtitle ?: section.subtitle,
             style = MaterialTheme.typography.bodySmall,
             color = if (subtitle != null) colors.primary else colors.onSurfaceVariant,
+            // Always two lines, so tile titles side by side sit at the same height.
+            minLines = 2,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
         )

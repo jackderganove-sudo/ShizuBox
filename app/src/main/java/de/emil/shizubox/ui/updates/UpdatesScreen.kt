@@ -516,7 +516,11 @@ private fun SettingsPage() {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(value = token, onValueChange = { token = it.trim() }, singleLine = true, placeholder = { Text("github_pat_…") }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
+                OutlinedTextField(
+                    value = token, onValueChange = { token = it.trim() }, singleLine = true,
+                    placeholder = { Text("github_pat_…") }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
                     FilledTonalButton(onClick = { Updates.setSettings(s.copy(githubToken = token)) }) { Text("Speichern") }
                     TextButton(onClick = {
