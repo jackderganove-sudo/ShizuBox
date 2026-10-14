@@ -1,5 +1,7 @@
 package de.emil.shizubox.school
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -60,10 +62,10 @@ object SchoolMode {
     /** Turns the school mode on. Requires a working Shizuku connection. */
     suspend fun activate(): Result<Unit> = mutex.withLock {
         runCatching {
-            check(ShizukuManager.isReady) { "Shizuku ist nicht verbunden" }
+            check(ShizukuManager.isReady) { t(R.string.shizuku_not_connected) }
             val current = store.current()
             if (current.active) return@runCatching
-            check(!current.pendingRestore) { "Die letzte Wiederherstellung ist noch offen" }
+            check(!current.pendingRestore) { t(R.string.school_last_restore_open) }
 
             SchoolCommands.grantSelfPermissions()
             val snapshot = SchoolCommands.takeSnapshot()

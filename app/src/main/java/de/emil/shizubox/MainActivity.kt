@@ -84,7 +84,7 @@ class MainActivity : ComponentActivity() {
                     busy = true
                     lifecycleScope.launch {
                         SchoolMode.activate().onFailure {
-                            Toast.makeText(this@MainActivity, it.message ?: "Fehler", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@MainActivity, it.message ?: t(R.string.error), Toast.LENGTH_LONG).show()
                         }
                         busy = false
                     }

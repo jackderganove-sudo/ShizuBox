@@ -1,5 +1,6 @@
 package de.emil.shizubox.school
 
+import de.emil.shizubox.t
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -206,14 +207,14 @@ class SchoolService : Service() {
     private fun buildNotification(): Notification {
         val nm = getSystemService(NotificationManager::class.java)
         nm.createNotificationChannel(
-            NotificationChannel(CHANNEL_ID, "Schulmodus", NotificationManager.IMPORTANCE_MIN).apply {
+            NotificationChannel(CHANNEL_ID, t(R.string.sec_school), NotificationManager.IMPORTANCE_MIN).apply {
                 setShowBadge(false)
                 lockscreenVisibility = Notification.VISIBILITY_SECRET
             },
         )
         return Notification.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_monochrome)
-            .setContentTitle("Schulmodus aktiv")
+            .setContentTitle(t(R.string.school_active))
             .setOngoing(true)
             .setVisibility(Notification.VISIBILITY_SECRET)
             .build()

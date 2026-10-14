@@ -15,6 +15,7 @@ import de.emil.shizubox.shizuku.ShizukuManager
 class ShizuBoxApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        Str.init(this)
         AppSettings.init(this)
         Customization.init(this)
         Apps.init(this)

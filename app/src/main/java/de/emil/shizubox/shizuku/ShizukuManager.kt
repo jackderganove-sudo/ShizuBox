@@ -1,5 +1,7 @@
 package de.emil.shizubox.shizuku
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -22,7 +24,7 @@ data class ShellResult(val code: Int, val out: String, val err: String) {
     val ok get() = code == 0
 }
 
-class ShizukuUnavailableException : Exception("Shizuku ist nicht verbunden")
+class ShizukuUnavailableException : Exception(t(R.string.shizuku_not_connected))
 
 enum class ShizukuStatus {
     /** Shizuku app is not installed. */

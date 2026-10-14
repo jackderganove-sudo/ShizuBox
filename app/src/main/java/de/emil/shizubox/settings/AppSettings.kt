@@ -1,22 +1,34 @@
 package de.emil.shizubox.settings
 
+import de.emil.shizubox.t
+import de.emil.shizubox.R
 import android.content.Context
 import android.content.SharedPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-enum class ThemeMode(val label: String) { System("System"), Light("Hell"), Dark("Dunkel") }
+enum class ThemeMode(private val labelRes: Int) {
+    System(R.string.theme_system), Light(R.string.theme_light), Dark(R.string.theme_dark);
+    val label get() = t(labelRes)
+}
 
 enum class ColorSource { Wallpaper, Accent }
 
-enum class Palette(val label: String) { TonalSpot("Ruhig"), Vibrant("Kräftig"), Expressive("Expressiv"), Neutral("Neutral"), Monochrome("Monochrom") }
+enum class Palette(private val labelRes: Int) {
+    TonalSpot(R.string.pal_calm), Vibrant(R.string.pal_vibrant), Expressive(R.string.pal_expressive),
+    Neutral(R.string.pal_neutral), Monochrome(R.string.pal_mono);
+    val label get() = t(labelRes)
+}
 
 /** How apps get installed. */
-enum class InstallMethod(val label: String, val hint: String) {
-    Auto("Automatisch", "Still über Shizuku, sonst System-Dialog"),
-    Shizuku("Nur Shizuku", "Immer still, braucht Shizuku"),
-    System("System-Dialog", "Ohne Shizuku, jede Installation bestätigen"),
+enum class InstallMethod(private val labelRes: Int, private val hintRes: Int) {
+    Auto(R.string.im_auto, R.string.im_auto_sub),
+    Shizuku(R.string.im_shizuku, R.string.im_shizuku_sub),
+    System(R.string.im_system, R.string.im_system_sub),
+    ;
+    val label get() = t(labelRes)
+    val hint get() = t(hintRes)
 }
 
 data class Settings(

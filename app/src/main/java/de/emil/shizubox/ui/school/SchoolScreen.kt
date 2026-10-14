@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.school
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -34,9 +36,9 @@ import de.emil.shizubox.ui.glass.GlassCard
 val AUTO_END_OPTIONS = listOf(0, 45, 60, 120, 240, 360, 480)
 
 fun autoEndLabel(minutes: Int) = when {
-    minutes == 0 -> "Aus"
-    minutes < 60 -> "$minutes Min"
-    else -> "${minutes / 60} Std"
+    minutes == 0 -> t(R.string.off)
+    minutes < 60 -> t(R.string.dur_min, minutes)
+    else -> t(R.string.dur_hours, minutes / 60)
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -58,12 +60,12 @@ fun SchoolScreen(
     ) {
         item {
             IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) {
-                Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück")
+                Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back))
             }
             Column(Modifier.padding(start = 8.dp, top = 32.dp, bottom = 12.dp)) {
-                Text("Schulmodus", style = MaterialTheme.typography.displaySmall)
+                Text(t(R.string.sec_school), style = MaterialTheme.typography.displaySmall)
                 Text(
-                    "Das Handy bleibt an, aber es passiert absolut nichts.",
+                    t(R.string.school_title_sub),
                     style = MaterialTheme.typography.bodyLarge,
                     color = colors.onSurfaceVariant,
                 )
@@ -71,14 +73,14 @@ fun SchoolScreen(
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Was passiert", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.school_what), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(8.dp))
                 listOf(
-                    "Flugmodus an, WLAN, Bluetooth und mobile Daten aus",
-                    "Bitte nicht stören: keine Unterbrechungen, kein Ton, keine Vibration",
-                    "Always-on-Display, Sperrbildschirm-Benachrichtigungen und Kamera-Doppeldruck aus",
-                    "Alle Apps pausiert (außer Telefon/Notruf, Einstellungen, Shizuku)",
-                    "Bildschirm komplett schwarz, auch über dem Sperrbildschirm",
+                    t(R.string.school_what1),
+                    t(R.string.school_what2),
+                    t(R.string.school_what3),
+                    t(R.string.school_what4),
+                    t(R.string.school_what5),
                 ).forEach {
                     Text("•  $it", style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
                 }
@@ -86,9 +88,9 @@ fun SchoolScreen(
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Beenden", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.school_exit), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "3× schnell hintereinander die Power-Taste drücken. Danach wird alles exakt so wiederhergestellt, wie es vorher war.",
+                    t(R.string.school_exit_sub),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                 )
@@ -96,7 +98,7 @@ fun SchoolScreen(
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Automatisch beenden nach", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.school_autoend), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(8.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     AUTO_END_OPTIONS.forEach { minutes ->
@@ -111,26 +113,26 @@ fun SchoolScreen(
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Nach einem Neustart", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.school_after_reboot), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(8.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilterChip(
                         selected = !state.waitForShizukuAfterReboot,
                         onClick = { onWaitForShizukuChange(false) },
-                        label = { Text("Sofort schwarz") },
+                        label = { Text(t(R.string.school_reboot_black)) },
                     )
                     FilterChip(
                         selected = state.waitForShizukuAfterReboot,
                         onClick = { onWaitForShizukuChange(true) },
-                        label = { Text("Erst mit Shizuku") },
+                        label = { Text(t(R.string.school_reboot_wait)) },
                     )
                 }
                 Spacer(Modifier.height(4.dp))
                 Text(
                     if (state.waitForShizukuAfterReboot) {
-                        "Das Handy bleibt nach dem Neustart bedienbar. Sobald Shizuku wieder läuft, wird der Bildschirm wieder schwarz – 3× Power stellt dann direkt alles wieder her."
+                        t(R.string.school_reboot_wait_sub)
                     } else {
-                        "Der Bildschirm ist direkt nach dem Neustart schwarz. Nach 3× Power führt eine kurze Anleitung durch den Neustart von Shizuku, danach wird alles automatisch wiederhergestellt."
+                        t(R.string.school_reboot_black_sub)
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = colors.onSurfaceVariant,
@@ -148,11 +150,11 @@ fun SchoolScreen(
             ) {
                 Icon(Icons.Rounded.PowerSettingsNew, null)
                 Spacer(Modifier.width(8.dp))
-                Text(if (busy) "Wird aktiviert …" else "Schulmodus aktivieren", style = MaterialTheme.typography.titleMedium)
+                Text(if (busy) t(R.string.activating) else t(R.string.school_activate), style = MaterialTheme.typography.titleMedium)
             }
             if (!shizukuReady) {
                 Row(Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text("Shizuku muss verbunden sein.", style = MaterialTheme.typography.bodySmall, color = colors.error)
+                    Text(t(R.string.shizuku_required), style = MaterialTheme.typography.bodySmall, color = colors.error)
                 }
             }
         }

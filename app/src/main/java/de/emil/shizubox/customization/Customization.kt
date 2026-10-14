@@ -1,5 +1,7 @@
 package de.emil.shizubox.customization
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Context
 import android.content.SharedPreferences
 import de.emil.shizubox.shizuku.ShizukuManager
@@ -53,10 +55,12 @@ data class StatusBarHide(
     ).ifEmpty { listOf("none") }.joinToString(" ")
 }
 
-enum class RefreshMode(val label: String) {
-    Adaptive("Adaptiv"),
-    Fixed60("60 Hz"),
-    AlwaysMax("Immer max."),
+enum class RefreshMode(private val labelRes: Int) {
+    Adaptive(R.string.rm_adaptive),
+    Fixed60(R.string.rm_60),
+    AlwaysMax(R.string.rm_max),
+    ;
+    val label get() = t(labelRes)
 }
 
 /** A display change that is reverted unless the user confirms it in time. */
@@ -184,7 +188,7 @@ object Customization {
     suspend fun setDensity(current: CustomState, density: Int) {
         val revert = densityCommand(current.density, current.physicalDensity)
         run(densityCommand(density, current.physicalDensity))
-        scheduleRevert("Anzeigegröße $density dpi", revert)
+        scheduleRevert(t(R.string.cust_dpi_pending, density), revert)
     }
 
     /** Render resolution in percent of the panel, with proportionally scaled DPI so things keep their size. */
@@ -196,7 +200,7 @@ object Customization {
         val relativeDensity = current.density.toFloat() / current.physicalDensity
         val d = (current.physicalDensity * percent / 100f * relativeDensity).roundToInt()
         run(withoutOneHanded(sizeCommand(w, h, current) + "; " + densityCommand(d, current.physicalDensity)))
-        scheduleRevert("Auflösung $percent % (${w}×$h)", withoutOneHanded(revert))
+        scheduleRevert(t(R.string.cust_res_pending, percent, "${w}×$h"), withoutOneHanded(revert))
     }
 
     fun confirm() {

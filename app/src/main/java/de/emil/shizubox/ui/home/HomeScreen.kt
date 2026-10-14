@@ -1,5 +1,8 @@
 package de.emil.shizubox.ui.home
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
+import de.emil.shizubox.tp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,12 +46,17 @@ import de.emil.shizubox.shizuku.ShizukuStatus
 import de.emil.shizubox.ui.school.autoEndLabel
 import de.emil.shizubox.ui.glass.GlassCard
 
-enum class Section(val title: String, val subtitle: String, val icon: ImageVector) {
-    School("Schulmodus", "Handy an, aber absolut nichts passiert", Icons.Rounded.School),
-    Customization("Customization", "Animationen, DPI, Statusleiste", Icons.Rounded.Palette),
-    Apps("Apps", "Freezer, Berechtigungen, AppOps, Akku", Icons.Rounded.Apps),
-    Updates("Updates", "GitHub, F-Droid, APKPure …", Icons.Rounded.SystemUpdate),
-    System("System", "Gaming, Installer, Logcat", Icons.Rounded.Terminal),
+enum class Section(private val titleRes: Int, private val subtitleRes: Int, val icon: ImageVector) {
+    School(R.string.sec_school, R.string.sec_school_sub, Icons.Rounded.School),
+    Customization(R.string.sec_custom, R.string.sec_custom_sub, Icons.Rounded.Palette),
+    Apps(R.string.sec_apps, R.string.sec_apps_sub, Icons.Rounded.Apps),
+    Updates(R.string.sec_updates, R.string.sec_updates_sub, Icons.Rounded.SystemUpdate),
+    System(R.string.sec_system, R.string.sec_system_sub, Icons.Rounded.Terminal),
+    ;
+
+    // Resolved on every access, so a language change applies immediately.
+    val title get() = t(titleRes)
+    val subtitle get() = t(subtitleRes)
 }
 
 @Composable
@@ -72,13 +80,13 @@ fun HomeScreen(
         item {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 androidx.compose.material3.IconButton(onClick = onOpenSettings) {
-                    Icon(androidx.compose.material.icons.Icons.Rounded.Settings, "Einstellungen")
+                    Icon(androidx.compose.material.icons.Icons.Rounded.Settings, t(R.string.settings))
                 }
             }
             Column(Modifier.padding(start = 8.dp, top = 48.dp, bottom = 20.dp)) {
                 Text("ShizuBox", style = MaterialTheme.typography.displaySmall)
                 Text(
-                    "Systemwerkzeuge über Shizuku",
+                    t(R.string.home_tagline),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -105,7 +113,7 @@ fun HomeScreen(
                 SectionTile(
                     Section.Updates,
                     Modifier.weight(1f),
-                    subtitle = if (updateCount > 0) "$updateCount Update${if (updateCount > 1) "s" else ""} verfügbar" else null,
+                    subtitle = if (updateCount > 0) tp(R.plurals.updates_available, updateCount, updateCount) else null,
                 ) { onOpenSection(Section.Updates) }
                 SectionTile(Section.System, Modifier.weight(1f)) { onOpenSection(Section.System) }
             }
@@ -117,12 +125,12 @@ fun HomeScreen(
 private fun ShizukuCard(status: ShizukuStatus, serverMode: String?, onAction: () -> Unit) {
     val colors = MaterialTheme.colorScheme
     val (title, detail, action) = when (status) {
-        ShizukuStatus.Ready -> Triple("Shizuku verbunden", "Läuft im ${serverMode ?: "ADB"}-Modus", null)
-        ShizukuStatus.Connecting -> Triple("Verbinde …", "Shell-Dienst wird gestartet", null)
-        ShizukuStatus.NoPermission -> Triple("Zugriff nötig", "ShizuBox braucht die Shizuku-Berechtigung", "Erlauben")
-        ShizukuStatus.PermissionDenied -> Triple("Zugriff verweigert", "In der Shizuku-App unter „Autorisierte Apps“ erlauben", "Shizuku öffnen")
-        ShizukuStatus.NotRunning -> Triple("Shizuku läuft nicht", "Updates, Installer und App-Liste gehen trotzdem", "Starten")
-        ShizukuStatus.NotInstalled -> Triple("Shizuku fehlt", "Updates, Installer und App-Liste gehen trotzdem", "Installieren")
+        ShizukuStatus.Ready -> Triple(t(R.string.shz_connected), t(R.string.shz_mode, serverMode ?: "ADB"), null)
+        ShizukuStatus.Connecting -> Triple(t(R.string.shz_connecting), t(R.string.shz_connecting_sub), null)
+        ShizukuStatus.NoPermission -> Triple(t(R.string.shz_need_access), t(R.string.shz_need_access_sub), t(R.string.allow))
+        ShizukuStatus.PermissionDenied -> Triple(t(R.string.shz_denied), t(R.string.shz_denied_sub), t(R.string.open_shizuku))
+        ShizukuStatus.NotRunning -> Triple(t(R.string.shz_not_running), t(R.string.shz_works_without), t(R.string.start))
+        ShizukuStatus.NotInstalled -> Triple(t(R.string.shz_missing), t(R.string.shz_works_without), t(R.string.install))
     }
     val dot = when (status) {
         ShizukuStatus.Ready -> Color(0xFF4CD964)
@@ -176,9 +184,9 @@ private fun SchoolCard(
                 Text(Section.School.title, style = MaterialTheme.typography.headlineSmall, color = colors.onPrimaryContainer)
                 Text(
                     when {
-                        school.pendingRestore -> "Wiederherstellung ausstehend"
-                        school.autoEndMinutes > 0 -> "Aus · endet nach ${autoEndLabel(school.autoEndMinutes)}"
-                        else -> "Aus"
+                        school.pendingRestore -> t(R.string.school_restore_pending)
+                        school.autoEndMinutes > 0 -> t(R.string.school_off_ends, autoEndLabel(school.autoEndMinutes))
+                        else -> t(R.string.off)
                     },
                     style = MaterialTheme.typography.bodyLarge,
                     color = colors.onPrimaryContainer.copy(alpha = 0.75f),
@@ -201,7 +209,7 @@ private fun SchoolCard(
         ) {
             Icon(Icons.Rounded.PowerSettingsNew, contentDescription = null)
             Spacer(Modifier.width(8.dp))
-            Text(if (busy) "Wird aktiviert …" else "Aktivieren", style = MaterialTheme.typography.titleMedium)
+            Text(if (busy) t(R.string.activating) else t(R.string.activate), style = MaterialTheme.typography.titleMedium)
         }
     }
 }

@@ -1,5 +1,7 @@
 package de.emil.shizubox.school
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.app.PendingIntent
 import android.content.Intent
 import android.service.quicksettings.Tile
@@ -47,7 +49,7 @@ class SchoolTileService : TileService() {
     private fun updateTile(active: Boolean) {
         qsTile?.apply {
             state = if (active) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            subtitle = if (active) "An" else "Aus"
+            subtitle = if (active) t(R.string.on) else t(R.string.off)
             updateTile()
         }
     }

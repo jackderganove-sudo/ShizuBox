@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.customization
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -75,12 +77,12 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     ) {
         item {
             IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) {
-                Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück")
+                Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back))
             }
             Column(Modifier.padding(start = 8.dp, top = 32.dp, bottom = 12.dp)) {
-                Text("Customization", style = MaterialTheme.typography.displaySmall)
+                Text(t(R.string.sec_custom), style = MaterialTheme.typography.displaySmall)
                 Text(
-                    "Änderungen wirken sofort.",
+                    t(R.string.cust_instant),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -92,7 +94,7 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 GlassCard(Modifier.fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if (shizukuReady) CircularProgressIndicator(Modifier.padding(end = 16.dp))
-                        Text(if (shizukuReady) "Lese Einstellungen …" else "Shizuku muss verbunden sein.")
+                        Text(if (shizukuReady) t(R.string.reading_settings) else t(R.string.shizuku_required))
                     }
                 }
             }
@@ -101,21 +103,21 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
 
         item {
             ChipCard(
-                title = "Animationsgeschwindigkeit",
-                hint = "Kleiner = schneller, 0 = aus",
+                title = t(R.string.cust_anim),
+                hint = t(R.string.cust_anim_hint),
                 options = Customization.ANIMATION_SCALES,
                 selected = s.animationScale,
-                label = { if (it == 0f) "Aus" else "${fmt(it)}×" },
+                label = { if (it == 0f) t(R.string.off) else "${fmt(it)}×" },
                 onSelect = { v -> change { Customization.setAnimationScale(v) } },
             )
         }
         item {
             ChipCard(
-                title = "Bildwiederholrate",
+                title = t(R.string.cust_refresh),
                 hint = when (s.refresh) {
-                    RefreshMode.Adaptive -> "Passt sich an (bis 120 Hz), spart Akku"
-                    RefreshMode.Fixed60 -> "Max. 60 Hz, spart am meisten Akku"
-                    RefreshMode.AlwaysMax -> "Immer 120 Hz, am flüssigsten, braucht mehr Akku"
+                    RefreshMode.Adaptive -> t(R.string.cust_refresh_adaptive)
+                    RefreshMode.Fixed60 -> t(R.string.cust_refresh_60)
+                    RefreshMode.AlwaysMax -> t(R.string.cust_refresh_max)
                 },
                 options = RefreshMode.entries,
                 selected = s.refresh,
@@ -125,7 +127,7 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Schrift", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.cust_font), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(8.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Customization.FONT_SCALES.forEach { v ->
@@ -136,14 +138,14 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                         )
                     }
                 }
-                ToggleRow("Fett", s.boldText) { b -> change { Customization.setBoldText(b) } }
+                ToggleRow(t(R.string.cust_bold), s.boldText) { b -> change { Customization.setBoldText(b) } }
             }
         }
         item { DensityCard(s, enabled = pending == null) { d -> change { Customization.setDensity(it, d) } } }
         item {
             ChipCard(
-                title = "Auflösung",
-                hint = "${s.width}×${s.height} · weniger spart Akku, Inhalte bleiben gleich groß",
+                title = t(R.string.cust_resolution),
+                hint = t(R.string.cust_res_hint, "${s.width}×${s.height}"),
                 options = Customization.RESOLUTION_PERCENTS,
                 selected = s.resolutionPercent,
                 label = { "$it %" },
@@ -153,30 +155,30 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Statusleiste", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.cust_statusbar), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Einzelne Icons lassen sich unter Android 17 nicht mehr ausblenden, nur diese Gruppen.",
+                    t(R.string.cust_statusbar_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(4.dp))
                 val sb = s.statusBar
-                ToggleRow("Systemsymbole zeigen", !sb.systemIcons) { show ->
+                ToggleRow(t(R.string.cust_sb_system), !sb.systemIcons) { show ->
                     change { Customization.setStatusBar(sb.copy(systemIcons = !show)) }
                 }
-                ToggleRow("Uhr zeigen", !sb.clock) { show ->
+                ToggleRow(t(R.string.cust_sb_clock), !sb.clock) { show ->
                     change { Customization.setStatusBar(sb.copy(clock = !show)) }
                 }
-                ToggleRow("Benachrichtigungssymbole zeigen", !sb.notificationIcons) { show ->
+                ToggleRow(t(R.string.cust_sb_notif), !sb.notificationIcons) { show ->
                     change { Customization.setStatusBar(sb.copy(notificationIcons = !show)) }
                 }
             }
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Immersive-Modus pro App", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.cust_immersive), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Nicht mehr möglich: Google hat die dafür nötige Einstellung (policy_control) mit Android 11 entfernt.",
+                    t(R.string.cust_immersive_sub),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -194,10 +196,10 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         }
         AlertDialog(
             onDismissRequest = {},
-            title = { Text("Behalten?") },
-            text = { Text("${p.description}\nWird in $secondsLeft s automatisch zurückgesetzt.") },
-            confirmButton = { TextButton(onClick = { Customization.confirm() }) { Text("Behalten") } },
-            dismissButton = { TextButton(onClick = { Customization.revertNow() }) { Text("Zurücksetzen") } },
+            title = { Text(t(R.string.keep_q)) },
+            text = { Text(t(R.string.cust_revert_in, p.description, secondsLeft)) },
+            confirmButton = { TextButton(onClick = { Customization.confirm() }) { Text(t(R.string.keep)) } },
+            dismissButton = { TextButton(onClick = { Customization.revertNow() }) { Text(t(R.string.revert)) } },
         )
     }
 }
@@ -218,11 +220,11 @@ private fun DensityCard(s: CustomState, enabled: Boolean, onApply: (Int) -> Unit
     var value by remember(s.density) { mutableFloatStateOf(s.density.toFloat()) }
     GlassCard(Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Anzeigegröße (DPI)", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text(t(R.string.cust_dpi), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             Text("${value.roundToInt()} dpi", style = MaterialTheme.typography.bodyLarge)
         }
         Text(
-            "Kleiner = mehr Inhalt auf dem Bildschirm. Standard: $base dpi",
+            t(R.string.cust_dpi_hint, base),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -238,7 +240,7 @@ private fun DensityCard(s: CustomState, enabled: Boolean, onApply: (Int) -> Unit
             },
         )
         if (s.density != base) {
-            TextButton(onClick = { onApply(base) }, enabled = enabled) { Text("Auf Standard zurücksetzen") }
+            TextButton(onClick = { onApply(base) }, enabled = enabled) { Text(t(R.string.cust_reset_default)) }
         }
     }
 }

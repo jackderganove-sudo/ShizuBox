@@ -1,5 +1,7 @@
 package de.emil.shizubox.school
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -80,10 +82,10 @@ private fun ExitGuide(done: Boolean, shizuku: ShizukuStatus, onOpenShizuku: () -
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Bottom),
     ) {
-        Text("Schulmodus beendet", style = MaterialTheme.typography.displaySmall, modifier = Modifier.padding(start = 8.dp))
+        Text(t(R.string.exit_done_title), style = MaterialTheme.typography.displaySmall, modifier = Modifier.padding(start = 8.dp))
         Text(
-            if (done) "Alle Einstellungen sind wiederhergestellt."
-            else "Shizuku läuft nicht, deshalb können die Einstellungen noch nicht zurückgesetzt werden.",
+            if (done) t(R.string.exit_restored)
+            else t(R.string.exit_not_restored),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 8.dp, bottom = 12.dp),
@@ -93,22 +95,22 @@ private fun ExitGuide(done: Boolean, shizuku: ShizukuStatus, onOpenShizuku: () -
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Rounded.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.width(12.dp))
-                    Text("Fertig", style = MaterialTheme.typography.titleMedium)
+                    Text(t(R.string.done), style = MaterialTheme.typography.titleMedium)
                 }
             }
             return@Column
         }
-        Step(1, "WLAN einschalten", "In den Schnelleinstellungen (von oben wischen) WLAN antippen.")
-        Step(2, "Shizuku starten", "Shizuku öffnen und über kabelloses Debugging starten.")
-        Step(3, "Zurück zu ShizuBox", "Sobald Shizuku läuft, wird alles automatisch wiederhergestellt.")
+        Step(1, t(R.string.exit_step1), t(R.string.exit_step1_sub))
+        Step(2, t(R.string.exit_step2), t(R.string.exit_step2_sub))
+        Step(3, t(R.string.exit_step3), t(R.string.exit_step3_sub))
         GlassCard(Modifier.fillMaxWidth()) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (shizuku == ShizukuStatus.Ready || shizuku == ShizukuStatus.Connecting) {
                     CircularProgressIndicator(Modifier.padding(end = 16.dp))
-                    Text("Stelle wieder her …", style = MaterialTheme.typography.titleMedium)
+                    Text(t(R.string.restoring), style = MaterialTheme.typography.titleMedium)
                 } else {
-                    Text("Warte auf Shizuku …", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-                    Button(onClick = onOpenShizuku) { Text("Shizuku öffnen") }
+                    Text(t(R.string.waiting_shizuku), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                    Button(onClick = onOpenShizuku) { Text(t(R.string.open_shizuku)) }
                 }
             }
         }

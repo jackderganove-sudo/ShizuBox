@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.home
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -54,7 +56,7 @@ fun SectionScreen(section: Section, onBack: () -> Unit) {
     ) {
         item {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
-                IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück") }
+                IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back)) }
             }
             Column(Modifier.padding(start = 8.dp, top = 48.dp, bottom = 20.dp)) {
                 Text(section.title, style = MaterialTheme.typography.displaySmall)
@@ -63,13 +65,9 @@ fun SectionScreen(section: Section, onBack: () -> Unit) {
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Kommt bald", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.coming_soon), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    when (section) {
-                        Section.School -> "Wird in Phase 2 gebaut."
-                        Section.Customization -> "Wird in Phase 3 gebaut."
-                        else -> "Wird in Phase 4 gebaut."
-                    },
+                    t(R.string.built_later),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -101,7 +99,7 @@ fun ShellConsole() {
         Unit
     }
     GlassCard(Modifier.fillMaxWidth()) {
-        Text("Shell-Test", style = MaterialTheme.typography.titleMedium)
+        Text(t(R.string.shell_test), style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(12.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             OutlinedTextField(
@@ -114,7 +112,7 @@ fun ShellConsole() {
                 modifier = Modifier.weight(1f),
             )
             Spacer(Modifier.width(8.dp))
-            FilledIconButton(onClick = run) { Icon(Icons.AutoMirrored.Rounded.Send, "Ausführen") }
+            FilledIconButton(onClick = run) { Icon(Icons.AutoMirrored.Rounded.Send, t(R.string.run)) }
         }
         if (output.isNotEmpty()) {
             Spacer(Modifier.height(12.dp))
