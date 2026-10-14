@@ -41,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import de.emil.shizubox.ui.apps.AppIcon
-import de.emil.shizubox.ui.glass.GlassCard
 import de.emil.shizubox.updates.Source
 import de.emil.shizubox.updates.TrackedApp
 import de.emil.shizubox.updates.UpdateState
@@ -53,7 +52,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun UpdateDetailScreen(app: TrackedApp, shizukuReady: Boolean, resumeTick: Int, onBack: () -> Unit) {
+fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onOpenBrowser: (String) -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val state = remember(app, resumeTick) { Updates.state(app) }
@@ -88,7 +87,7 @@ fun UpdateDetailScreen(app: TrackedApp, shizukuReady: Boolean, resumeTick: Int, 
             }
         }
         item {
-            GlassCard(Modifier.fillMaxWidth()) {
+            ObCard(Modifier.fillMaxWidth()) {
                 Text(
                     when (state) {
                         UpdateState.Update -> "Update verfügbar"
@@ -108,7 +107,7 @@ fun UpdateDetailScreen(app: TrackedApp, shizukuReady: Boolean, resumeTick: Int, 
                 val trackOnly = Source.forUrl(app.url)?.trackOnly == true
                 if (trackOnly) {
                     Text(
-                        "APKMirror erlaubt keine automatischen Downloads: Auf der Seite die passende Variante laden und mit ShizuBox öffnen.",
+                        "APKMirror erlaubt keine automatischen Downloads: Im Browser die passende Variante antippen – ShizuBox installiert sie dann direkt.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 4.dp),
@@ -116,9 +115,7 @@ fun UpdateDetailScreen(app: TrackedApp, shizukuReady: Boolean, resumeTick: Int, 
                 }
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (trackOnly) {
-                        Button(onClick = {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(app.releaseUrl ?: app.url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                        }) { Text("Auf APKMirror laden") }
+                        Button(onClick = { onOpenBrowser(app.releaseUrl ?: app.url) }) { Text("Auf APKMirror laden") }
                     } else Button(
                         enabled = progress == null && app.chosenApk != null,
                         onClick = {
@@ -146,7 +143,7 @@ fun UpdateDetailScreen(app: TrackedApp, shizukuReady: Boolean, resumeTick: Int, 
         }
         if (app.apks.size > 1) {
             item {
-                GlassCard(Modifier.fillMaxWidth()) {
+                ObCard(Modifier.fillMaxWidth()) {
                     Text("APK-Auswahl", style = MaterialTheme.typography.titleMedium)
                     app.apks.forEachIndexed { i, a ->
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -159,7 +156,7 @@ fun UpdateDetailScreen(app: TrackedApp, shizukuReady: Boolean, resumeTick: Int, 
         }
         app.changeLog?.let { log ->
             item {
-                GlassCard(Modifier.fillMaxWidth(), onClick = { showLog = !showLog }) {
+                ObCard(Modifier.fillMaxWidth(), onClick = { showLog = !showLog }) {
                     Text("Änderungen", style = MaterialTheme.typography.titleMedium)
                     Text(
                         log.trim(),
@@ -171,7 +168,7 @@ fun UpdateDetailScreen(app: TrackedApp, shizukuReady: Boolean, resumeTick: Int, 
             }
         }
         item {
-            GlassCard(Modifier.fillMaxWidth()) {
+            ObCard(Modifier.fillMaxWidth()) {
                 Text("Einstellungen", style = MaterialTheme.typography.titleMedium)
                 Toggle("Vorabversionen einbeziehen", app.includePrereleases) {
                     scope.launch { Updates.check(app.copy(includePrereleases = it)) }

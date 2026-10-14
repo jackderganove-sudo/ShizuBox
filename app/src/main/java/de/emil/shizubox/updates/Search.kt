@@ -49,6 +49,13 @@ object SourceSearch {
         }
     }.getOrDefault(emptyList())
 
+    /** Repos the user starred on GitHub (public list). */
+    suspend fun starred(user: String): List<String> {
+        val headers = if (Source.GitHub.token.isNotBlank()) mapOf("Authorization" to "Bearer ${Source.GitHub.token}") else emptyMap()
+        val arr = JSONArray(get("https://api.github.com/users/${Uri.encode(user)}/starred?per_page=100", headers))
+        return (0 until arr.length()).map { arr.getJSONObject(it).getString("html_url") }
+    }
+
     private suspend fun get(url: String, headers: Map<String, String> = emptyMap()) = withContext(Dispatchers.IO) {
         val c = (URL(url).openConnection() as HttpURLConnection).apply {
             connectTimeout = 15_000

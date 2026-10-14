@@ -118,13 +118,22 @@ object Updates {
         val source = Source.forUrl(url) ?: throw SourceException("Diese Quelle wird (noch) nicht unterstützt")
         _apps.value.firstOrNull { it.url.equals(url, ignoreCase = true) }?.let { throw SourceException("Wird schon verfolgt: ${it.name}") }
         val draft = TrackedApp(id = "", url = url, name = "", author = "", includePrereleases = _settings.value.prereleasesByDefault)
-        val release = source.latest(draft)
+        return addResolved(url, source.latest(draft))
+    }
+
+    /** Adds an app whose latest release was already fetched (bulk import). */
+    suspend fun addResolved(rawUrl: String, release: Release): TrackedApp {
+        val url = Source.normalize(rawUrl)
+        val source = Source.forUrl(url) ?: throw SourceException("Diese Quelle wird (noch) nicht unterstützt")
+        _apps.value.firstOrNull { it.url.equals(url, ignoreCase = true) }?.let { throw SourceException("Wird schon verfolgt: ${it.name}") }
+        val draft = TrackedApp(id = "", url = url, name = "", author = "", includePrereleases = _settings.value.prereleasesByDefault)
         val id = release.appId ?: guessPackage(release.name)
         if (release.apks.isEmpty() && !source.trackOnly) throw SourceException("Kein Release mit APK gefunden")
         val real = installedVersionName(id)
         val app = draft.copy(
             id = id,
-            name = if (source is Source.FDroidLike && real != null) label(id) ?: release.name else release.name,
+            // F-Droid's API has no app names: prefer the installed app's label.
+            name = if (source is Source.FDroidLike) label(id) ?: release.name else release.name,
             author = release.author,
             latestVersion = release.version,
             apks = release.apks,
