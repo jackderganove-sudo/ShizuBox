@@ -15,6 +15,18 @@ import kotlinx.coroutines.launch
  */
 class DebugReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        intent.getStringExtra("pkgs")?.let { pkgs ->
+            // Bulk import dry run: adb shell am broadcast -n …/.updates.DebugReceiver --es pkgs a,b,c
+            BulkImport.reset()
+            BulkImport.start(pkgs.split(','), Updates.PACKAGE_SOURCES.keys.toList())
+            CoroutineScope(Dispatchers.IO).launch {
+                while (!BulkImport.state.value.finished) kotlinx.coroutines.delay(500)
+                val st = BulkImport.state.value
+                Log.i(TAG, "bulk hits=${st.hits.map { "${it.pkg}@${it.source}:${it.release.version}" }} notFound=${st.notFound}")
+                BulkImport.reset()
+            }
+            return
+        }
         val url = intent.getStringExtra("url") ?: return
         val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
