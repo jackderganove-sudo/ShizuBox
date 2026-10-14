@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import de.emil.shizubox.customization.Customization
 import de.emil.shizubox.shizuku.ShizukuManager
 import de.emil.shizubox.shizuku.ShizukuStatus
 import kotlinx.coroutines.CoroutineScope
@@ -43,6 +44,9 @@ object SchoolMode {
                     when {
                         // Restore automatically as soon as Shizuku is back (e.g. after a reboot).
                         s.pendingRestore && shizukuReady -> restore()
+                        // Status bar flags are lost on reboot; re-apply once Shizuku is back.
+                        !s.active && shizukuReady && Customization.hasStatusBarCustomization() ->
+                            runCatching { Customization.applyStatusBar() }
                         // Optional reboot behavior: black screen returns together with Shizuku.
                         s.active && shizukuReady && !SchoolService.running -> {
                             SchoolLog.log(TAG, "Shizuku back while active, starting black screen")
@@ -104,6 +108,8 @@ object SchoolMode {
         }
         try {
             SchoolCommands.restore(JSONObject(s.snapshot ?: "{}"), s.suspended)
+            // The restore released all status bar flags; bring back the user's own ones.
+            if (Customization.hasStatusBarCustomization()) Customization.applyStatusBar()
             store.clear()
             SchoolLog.log(TAG, "restored")
             true
