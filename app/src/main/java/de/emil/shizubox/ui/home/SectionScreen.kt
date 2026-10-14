@@ -81,7 +81,7 @@ fun SectionScreen(section: Section, onBack: () -> Unit) {
 
 /** Small test console: runs a command through Shizuku and shows the output. */
 @Composable
-private fun ShellConsole() {
+fun ShellConsole() {
     val scope = rememberCoroutineScope()
     var cmd by rememberSaveable { mutableStateOf("id") }
     var output by remember { mutableStateOf("") }

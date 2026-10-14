@@ -22,6 +22,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import de.emil.shizubox.school.SchoolMode
 import de.emil.shizubox.ui.apps.AppsScreen
+import de.emil.shizubox.ui.system.LogcatScreen
+import de.emil.shizubox.ui.system.SystemScreen
 import de.emil.shizubox.ui.customization.CustomizationScreen
 import de.emil.shizubox.ui.school.SchoolScreen
 import kotlinx.coroutines.launch
@@ -50,6 +52,7 @@ class MainActivity : ComponentActivity() {
                 val status by ShizukuManager.status.collectAsStateWithLifecycle()
                 val school by SchoolMode.state.collectAsStateWithLifecycle()
                 var section by rememberSaveable { mutableStateOf<Section?>(null) }
+                var logcatOpen by rememberSaveable { mutableStateOf(false) }
                 var busy by remember { mutableStateOf(false) }
                 val activate: () -> Unit = {
                     busy = true
@@ -60,7 +63,8 @@ class MainActivity : ComponentActivity() {
                         busy = false
                     }
                 }
-                BackHandler(enabled = section != null) { section = null }
+                BackHandler(enabled = section != null && !logcatOpen) { section = null }
+                BackHandler(enabled = logcatOpen) { logcatOpen = false }
 
                 GlassBackground(windowBlurActive = windowBlur.value) {
                     AnimatedContent(
@@ -88,6 +92,16 @@ class MainActivity : ComponentActivity() {
                                 onWaitForShizukuChange = { lifecycleScope.launch { SchoolMode.setWaitForShizukuAfterReboot(it) } },
                                 onBack = { section = null },
                             )
+                        } else if (current == Section.System) {
+                            if (logcatOpen) {
+                                LogcatScreen(status == ShizukuStatus.Ready, onBack = { logcatOpen = false })
+                            } else {
+                                SystemScreen(
+                                    shizukuReady = status == ShizukuStatus.Ready,
+                                    onOpenLogcat = { logcatOpen = true },
+                                    onBack = { section = null },
+                                )
+                            }
                         } else if (current == Section.Apps) {
                             AppsScreen(
                                 shizukuReady = status == ShizukuStatus.Ready,

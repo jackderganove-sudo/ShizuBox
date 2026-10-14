@@ -157,6 +157,17 @@ object ShizukuManager {
 
     val isReady get() = _status.value == ShizukuStatus.Ready
 
+    /** Copies [fd] to [path] as the Shizuku user. Returns bytes written or -1. */
+    suspend fun writeFile(fd: android.os.ParcelFileDescriptor, path: String): Long = withContext(Dispatchers.IO) {
+        val svc = awaitService(3000) ?: throw ShizukuUnavailableException()
+        try {
+            svc.writeFile(fd, path)
+        } catch (e: Exception) {
+            Log.e(TAG, "writeFile failed: $path", e)
+            -1L
+        }
+    }
+
     /** Runs [cmd] with ADB rights. Throws [ShizukuUnavailableException] if Shizuku is not connected. */
     suspend fun exec(cmd: String, timeoutMs: Long = 3000): ShellResult = withContext(Dispatchers.IO) {
         val svc = awaitService(timeoutMs) ?: throw ShizukuUnavailableException()

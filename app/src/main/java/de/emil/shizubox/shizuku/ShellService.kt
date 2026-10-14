@@ -1,6 +1,8 @@
 package de.emil.shizubox.shizuku
 
+import android.os.ParcelFileDescriptor
 import de.emil.shizubox.IShellService
+import java.io.File
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
@@ -23,5 +25,14 @@ class ShellService : IShellService.Stub() {
         val code = process.waitFor()
         errReader.join()
         return "$code\u0000$out\u0000$err"
+    }
+
+    override fun writeFile(fd: ParcelFileDescriptor, path: String): Long = try {
+        File(path).parentFile?.mkdirs()
+        ParcelFileDescriptor.AutoCloseInputStream(fd).use { input ->
+            File(path).outputStream().use { input.copyTo(it) }
+        }
+    } catch (e: Exception) {
+        -1
     }
 }

@@ -44,8 +44,8 @@ import de.emil.shizubox.ui.glass.GlassCard
 enum class Section(val title: String, val subtitle: String, val icon: ImageVector) {
     School("Schulmodus", "Handy an, aber absolut nichts passiert", Icons.Rounded.School),
     Customization("Customization", "Animationen, DPI, Statusleiste", Icons.Rounded.Palette),
-    Apps("Apps", "Freezer, Berechtigungen, AppOps", Icons.Rounded.Apps),
-    System("System", "Shell, Akku, Logcat", Icons.Rounded.Terminal),
+    Apps("Apps", "Freezer, Berechtigungen, AppOps, Akku", Icons.Rounded.Apps),
+    System("System", "Gaming, APK-Installer, Logcat, Shell", Icons.Rounded.Terminal),
 }
 
 @Composable
