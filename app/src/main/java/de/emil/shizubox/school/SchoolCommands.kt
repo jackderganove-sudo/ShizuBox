@@ -11,8 +11,8 @@ import org.json.JSONObject
 object SchoolCommands {
     private const val TAG = "SchoolCommands"
 
-    /** Settings changed while the mode is on: namespace, key, value during school mode. */
-    private val SETTINGS = listOf(
+    /** Settings changed while the mode is on: namespace, key, value during school mode (null = delete). */
+    private val SETTINGS = listOf<Triple<String, String, String?>>(
         Triple("secure", "doze_always_on", "0"),
         Triple("secure", "lock_screen_show_notifications", "0"),
         Triple("secure", "camera_double_tap_power_gesture_disabled", "1"),
@@ -33,14 +33,17 @@ object SchoolCommands {
         Triple("system", "notification_vibration_intensity", "0"),
         // A display woken by accident goes dark again quickly.
         Triple("system", "screen_off_timeout", "10000"),
+        // Accessibility overlays (e.g. MT Island) are drawn above everything, even the lock
+        // screen, and are not hidden when their app is suspended. Off for the duration.
+        Triple("secure", "enabled_accessibility_services", null),
+        Triple("secure", "accessibility_enabled", "0"),
     )
 
     /**
      * Not changed on purpose, only saved: suspending apps can make the system drop their
-     * accessibility services / notification listeners, so these get written back on exit.
+     * notification listeners, so these get written back on exit.
      */
     private val PRESERVED = listOf(
-        "secure" to "enabled_accessibility_services",
         "secure" to "enabled_notification_listeners",
     )
 
@@ -118,7 +121,9 @@ object SchoolCommands {
     suspend fun apply(suspend: Set<String>) {
         val script = buildList {
             if (suspend.isNotEmpty()) add("pm suspend ${suspend.joinToString(" ")} > /dev/null")
-            for ((ns, key, value) in SETTINGS) add("settings put $ns $key $value")
+            for ((ns, key, value) in SETTINGS) {
+                add(if (value == null) "settings delete $ns $key" else "settings put $ns $key $value")
+            }
             add("cmd audio set-ringer-mode SILENT")
             add("cmd notification set_dnd none")
             add(STATUSBAR_LOCK)
