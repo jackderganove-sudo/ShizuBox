@@ -1,5 +1,7 @@
 package de.emil.shizubox.ui.settings
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -93,15 +95,15 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item {
-            IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück") }
-            Text("Einstellungen", style = MaterialTheme.typography.displaySmall, modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 8.dp))
+            IconButton(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back)) }
+            Text(t(R.string.settings), style = MaterialTheme.typography.displaySmall, modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 8.dp))
         }
 
         // ------------------------------------------------------------ appearance
-        item { Header("Darstellung") }
+        item { Header(t(R.string.set_appearance)) }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Design", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.set_design), style = MaterialTheme.typography.titleMedium)
                 SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(top = 8.dp)) {
                     ThemeMode.entries.forEachIndexed { i, m ->
                         SegmentedButton(
@@ -112,14 +114,14 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     }
                 }
                 Row(Modifier.padding(top = 12.dp)) {
-                    Text("Reines Schwarz (AMOLED)", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f).align(Alignment.CenterVertically))
+                    Text(t(R.string.set_amoled), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f).align(Alignment.CenterVertically))
                     Switch(checked = s.amoled, onCheckedChange = { v -> AppSettings.update { it.copy(amoled = v) } })
                 }
             }
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Farben", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.set_colors), style = MaterialTheme.typography.titleMedium)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.padding(top = 10.dp)) {
                     // Wallpaper (Material You)
                     ColorDot(
@@ -134,13 +136,13 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     }
                 }
                 Text(
-                    if (s.colorSource == ColorSource.Wallpaper) "Farben aus dem Hintergrundbild (Material You)" else "Eigene Akzentfarbe",
+                    if (s.colorSource == ColorSource.Wallpaper) t(R.string.set_colors_wallpaper) else t(R.string.set_colors_accent),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp),
                 )
                 if (s.colorSource == ColorSource.Accent) {
-                    Text("Paletten-Stil", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 10.dp))
+                    Text(t(R.string.set_palette), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 10.dp))
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Palette.entries.forEach { p ->
                             FilterChip(selected = s.palette == p, onClick = { AppSettings.update { it.copy(palette = p) } }, label = { Text(p.label) })
@@ -151,11 +153,11 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Glas-Effekt", style = MaterialTheme.typography.titleMedium)
-                SwitchRow("Unschärfe hinter Karten und Fenster", s.glass) { v -> AppSettings.update { it.copy(glass = v) } }
+                Text(t(R.string.set_glass), style = MaterialTheme.typography.titleMedium)
+                SwitchRow(t(R.string.set_glass_blur), s.glass) { v -> AppSettings.update { it.copy(glass = v) } }
                 if (s.glass) {
                     var strength by remember(s.blurStrength) { mutableFloatStateOf(s.blurStrength.toFloat()) }
-                    Text("Stärke: ${strength.roundToInt()} %", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
+                    Text(t(R.string.set_strength, strength.roundToInt()), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
                     Slider(
                         value = strength,
                         onValueChange = { strength = it },
@@ -164,9 +166,9 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                         onValueChangeFinished = { AppSettings.update { it.copy(blurStrength = strength.roundToInt()) } },
                     )
                 }
-                SwitchRow("Animierter Hintergrund", s.animatedBackground) { v -> AppSettings.update { it.copy(animatedBackground = v) } }
+                SwitchRow(t(R.string.set_anim_bg), s.animatedBackground) { v -> AppSettings.update { it.copy(animatedBackground = v) } }
                 Text(
-                    "Glas und Animation aus spart etwas Akku.",
+                    t(R.string.set_glass_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -174,10 +176,10 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         }
 
         // ------------------------------------------------------------ installer & security
-        item { Header("Installer & Sicherheit") }
+        item { Header(t(R.string.set_installer_security)) }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text("Installationsart", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.set_install_method), style = MaterialTheme.typography.titleMedium)
                 InstallMethod.entries.forEach { m ->
                     Row(
                         Modifier.fillMaxWidth().clip(MaterialTheme.shapes.medium).clickable { AppSettings.update { it.copy(installMethod = m) } }.padding(vertical = 6.dp),
@@ -195,26 +197,26 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                         context.startActivity(
                             Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${context.packageName}")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         )
-                    }) { Text("„Unbekannte Apps installieren“ für ShizuBox erlauben") }
+                    }) { Text(t(R.string.set_allow_unknown)) }
                 }
-                Text("Standard-Optionen (nur mit Shizuku)", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 10.dp))
-                SwitchRow("Downgrade erlauben", s.defaultDowngrade) { v -> AppSettings.update { it.copy(defaultDowngrade = v) } }
-                SwitchRow("Alle Berechtigungen gewähren", s.defaultGrantAll) { v -> AppSettings.update { it.copy(defaultGrantAll = v) } }
-                SwitchRow("Als Play-Store-Installation ausgeben", s.defaultPlayStoreSource) { v -> AppSettings.update { it.copy(defaultPlayStoreSource = v) } }
+                Text(t(R.string.set_default_options), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 10.dp))
+                SwitchRow(t(R.string.opt_downgrade), s.defaultDowngrade) { v -> AppSettings.update { it.copy(defaultDowngrade = v) } }
+                SwitchRow(t(R.string.opt_grant_all), s.defaultGrantAll) { v -> AppSettings.update { it.copy(defaultGrantAll = v) } }
+                SwitchRow(t(R.string.opt_play), s.defaultPlayStoreSource) { v -> AppSettings.update { it.copy(defaultPlayStoreSource = v) } }
             }
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text("VirusTotal", style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Kostenloser API-Schlüssel von virustotal.com (Profil → API Key). Bleibt nur auf diesem Handy.",
+                    t(R.string.set_vt_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 var showKey by remember { mutableStateOf(false) }
                 OutlinedTextField(
                     value = vtKey, onValueChange = { vtKey = it.trim() }, singleLine = true,
-                    placeholder = { Text("API-Schlüssel") }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    placeholder = { Text(t(R.string.api_key)) }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     // Masked like a password: the key is a secret.
                     visualTransformation = if (showKey) androidx.compose.ui.text.input.VisualTransformation.None
                     else androidx.compose.ui.text.input.PasswordVisualTransformation(),
@@ -222,19 +224,19 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                         IconButton(onClick = { showKey = !showKey }) {
                             Icon(
                                 if (showKey) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
-                                if (showKey) "Verbergen" else "Anzeigen",
+                                if (showKey) t(R.string.hide) else t(R.string.show),
                             )
                         }
                     },
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    FilledTonalButton(onClick = { VirusTotal.apiKey = vtKey; message = "Schlüssel gespeichert ✓" }) { Text("Speichern") }
-                    TextButton(onClick = { open("https://www.virustotal.com/gui/my-apikey") }) { Text("Schlüssel holen") }
+                    FilledTonalButton(onClick = { VirusTotal.apiKey = vtKey; message = t(R.string.key_saved) }) { Text(t(R.string.save)) }
+                    TextButton(onClick = { open("https://www.virustotal.com/gui/my-apikey") }) { Text(t(R.string.get_key)) }
                 }
-                SwitchRow("Beim Installieren automatisch prüfen", s.vtAutoScan) { v -> AppSettings.update { it.copy(vtAutoScan = v) } }
-                SwitchRow("Andere Signatur blockieren", s.blockSignatureMismatch) { v -> AppSettings.update { it.copy(blockSignatureMismatch = v) } }
+                SwitchRow(t(R.string.set_vt_auto), s.vtAutoScan) { v -> AppSettings.update { it.copy(vtAutoScan = v) } }
+                SwitchRow(t(R.string.set_block_sig), s.blockSignatureMismatch) { v -> AppSettings.update { it.copy(blockSignatureMismatch = v) } }
                 Text(
-                    "Eine andere Signatur als die installierte App bedeutet: nicht vom selben Entwickler (oder neu signiert).",
+                    t(R.string.set_block_sig_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -243,11 +245,11 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         }
 
         // ------------------------------------------------------------ other areas
-        item { Header("Bereiche") }
-        item { LinkCard("App-Updates", "Prüfintervall, Hintergrund-Installation, GitHub-Token", onOpenUpdates) }
-        item { LinkCard("Schulmodus", "Automatisches Ende, Verhalten nach Neustart", onOpenSchool) }
+        item { Header(t(R.string.set_areas)) }
+        item { LinkCard(t(R.string.set_link_updates), t(R.string.set_link_updates_sub), onOpenUpdates) }
+        item { LinkCard(t(R.string.sec_school), t(R.string.set_link_school_sub), onOpenSchool) }
         item {
-            LinkCard("Benachrichtigungen", "Kanäle für Updates und Schulmodus") {
+            LinkCard(t(R.string.set_notifications), t(R.string.set_notifications_sub)) {
                 context.startActivity(
                     Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                 )
@@ -255,52 +257,52 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         }
 
         // ------------------------------------------------------------ shizuku
-        item { Header("Shizuku") }
+        item { Header(t(R.string.shizuku)) }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(
-                    "Status: " + when (shizuku) {
-                        de.emil.shizubox.shizuku.ShizukuStatus.Ready -> "Verbunden" + (ShizukuManager.serverMode?.let { " ($it)" } ?: "")
-                        de.emil.shizubox.shizuku.ShizukuStatus.Connecting -> "Verbinde …"
-                        de.emil.shizubox.shizuku.ShizukuStatus.NoPermission -> "Zugriff noch nicht erlaubt"
-                        de.emil.shizubox.shizuku.ShizukuStatus.PermissionDenied -> "Zugriff verweigert"
-                        de.emil.shizubox.shizuku.ShizukuStatus.NotRunning -> "Läuft nicht"
-                        de.emil.shizubox.shizuku.ShizukuStatus.NotInstalled -> "Nicht installiert"
-                    },
+                    t(R.string.set_status, when (shizuku) {
+                        de.emil.shizubox.shizuku.ShizukuStatus.Ready -> t(R.string.st_connected) + (ShizukuManager.serverMode?.let { " ($it)" } ?: "")
+                        de.emil.shizubox.shizuku.ShizukuStatus.Connecting -> t(R.string.shz_connecting)
+                        de.emil.shizubox.shizuku.ShizukuStatus.NoPermission -> t(R.string.st_no_permission)
+                        de.emil.shizubox.shizuku.ShizukuStatus.PermissionDenied -> t(R.string.shz_denied)
+                        de.emil.shizubox.shizuku.ShizukuStatus.NotRunning -> t(R.string.st_not_running)
+                        de.emil.shizubox.shizuku.ShizukuStatus.NotInstalled -> t(R.string.st_not_installed)
+                    }),
                     style = MaterialTheme.typography.bodyLarge,
                 )
-                Text("Manager-App: ${ShizukuManager.shizukuPackage ?: "nicht gefunden"}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(t(R.string.set_manager_app, ShizukuManager.shizukuPackage ?: t(R.string.not_found)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(
-                    "Ohne Shizuku funktionieren: App-Updates (prüfen und per System-Dialog installieren), Universal Installer, App-Liste mit Details, APK teilen/extrahieren und VirusTotal. Schulmodus, Customization, Einfrieren, AppOps, Gaming-Modus und Logcat brauchen Shizuku.",
+                    t(R.string.set_without_shizuku),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp),
                 )
                 ShizukuManager.shizukuLaunchIntent()?.let { launch ->
-                    TextButton(onClick = { context.startActivity(launch) }) { Text("Shizuku öffnen") }
+                    TextButton(onClick = { context.startActivity(launch) }) { Text(t(R.string.open_shizuku)) }
                 }
             }
         }
 
         // ------------------------------------------------------------ about
-        item { Header("Über") }
+        item { Header(t(R.string.set_about)) }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text("ShizuBox ${BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.titleLarge)
-                Text("Open Source unter GPL-3.0", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(t(R.string.set_license), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
                     FilledTonalButton(onClick = { open(REPO_URL) }) { Text("GitHub") }
-                    FilledTonalButton(onClick = { open("$REPO_URL/releases") }) { Text("Releases") }
+                    FilledTonalButton(onClick = { open("$REPO_URL/releases") }) { Text(t(R.string.releases)) }
                     FilledTonalButton(onClick = {
                         scope.launch {
                             message = runCatching { Updates.add(REPO_URL) }.fold(
-                                { "ShizuBox wird jetzt unter App-Updates verfolgt ✓" },
-                                { it.message ?: "Fehler" },
+                                { t(R.string.set_self_tracked) },
+                                { it.message ?: t(R.string.error) },
                             )
                         }
-                    }) { Text("ShizuBox selbst aktualisieren") }
+                    }) { Text(t(R.string.set_self_update)) }
                 }
-                Text("Dank an", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
+                Text(t(R.string.set_thanks), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
                 listOf(
                     "Shizuku (RikkaApps) – Apache-2.0" to "https://github.com/RikkaApps/Shizuku",
                     "Universal Installer (pass-with-high-score) – GPL-3.0" to "https://github.com/pass-with-high-score/universal-installer",
@@ -355,7 +357,7 @@ private fun ColorDot(color: Color, selected: Boolean, icon: Boolean = false, onC
     ) {
         when {
             selected -> Icon(Icons.Rounded.Check, null, tint = Color.White)
-            icon -> Icon(Icons.Rounded.Palette, "Hintergrundbild", tint = Color.White)
+            icon -> Icon(Icons.Rounded.Palette, t(R.string.wallpaper), tint = Color.White)
         }
     }
 }

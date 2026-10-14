@@ -1,5 +1,8 @@
 package de.emil.shizubox.ui.updates
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
+import de.emil.shizubox.tp
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -178,16 +181,16 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                     ) {
                         if (running) CircularProgressIndicator(Modifier.size(28.dp), strokeWidth = 3.dp)
-                        else Icon(Icons.Rounded.SystemUpdateAlt, "Alle aktualisieren")
+                        else Icon(Icons.Rounded.SystemUpdateAlt, t(R.string.upd_all))
                     }
                 }
             }
             PillNav(
                 items = listOf(
-                    Icons.Rounded.Apps to "Apps",
-                    Icons.Rounded.Add to "Hinzufügen",
-                    Icons.Rounded.CloudUpload to "Import/Export",
-                    Icons.Rounded.Settings to "Einstellungen",
+                    Icons.Rounded.Apps to t(R.string.nav_apps),
+                    Icons.Rounded.Add to t(R.string.nav_add),
+                    Icons.Rounded.CloudUpload to t(R.string.nav_ie),
+                    Icons.Rounded.Settings to t(R.string.settings),
                 ),
                 selected = page,
                 onSelect = { page = it },
@@ -198,7 +201,7 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             if (currentKey == null) {
                 ObCard(Modifier.align(Alignment.TopCenter).windowInsetsPadding(WindowInsets.safeDrawing).padding(12.dp).fillMaxWidth()) {
                     Text(
-                        if (failed.isEmpty()) "Alle Updates installiert ✓" else "${failed.size} nicht automatisch installiert",
+                        if (failed.isEmpty()) t(R.string.upd_all_done) else tp(R.plurals.upd_not_auto, failed.size, failed.size),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     failed.forEach { (name, reason) ->
@@ -206,12 +209,12 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                     }
                     if (failed.isNotEmpty()) {
                         Text(
-                            "Diese Apps einzeln über ihren Knopf aktualisieren – der Installer zeigt dann Details.",
+                            t(R.string.upd_not_auto_hint),
                             style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.padding(top = 4.dp),
                         )
                     }
-                    TextButton(onClick = { Updates.clearUpdateAllResult() }) { Text("OK") }
+                    TextButton(onClick = { Updates.clearUpdateAllResult() }) { Text(t(R.string.ok)) }
                 }
             }
         }
@@ -221,7 +224,7 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
 @Composable
 private fun PageTitle(title: String, onBack: (() -> Unit)? = null, actions: @Composable () -> Unit = {}) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)) {
-        if (onBack != null) IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück") }
+        if (onBack != null) IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, t(R.string.back)) }
         Text(
             title,
             style = MaterialTheme.typography.headlineLarge,
@@ -278,15 +281,15 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item {
-            PageTitle("Apps", onBack) {
-                IconButton(onClick = { searching = !searching; if (!searching) query = "" }) { Icon(Icons.Rounded.Search, "Suchen") }
+            PageTitle(t(R.string.nav_apps), onBack) {
+                IconButton(onClick = { searching = !searching; if (!searching) query = "" }) { Icon(Icons.Rounded.Search, t(R.string.search)) }
                 if (checking) CircularProgressIndicator(Modifier.size(40.dp).padding(8.dp))
-                else IconButton(onClick = { Updates.checkAllInBackground() }) { Icon(Icons.Rounded.Refresh, "Prüfen") }
+                else IconButton(onClick = { Updates.checkAllInBackground() }) { Icon(Icons.Rounded.Refresh, t(R.string.check)) }
             }
             if (searching) {
                 OutlinedTextField(
                     value = query, onValueChange = { query = it }, singleLine = true,
-                    placeholder = { Text("App suchen") }, shape = RoundedCornerShape(28.dp),
+                    placeholder = { Text(t(R.string.search_app)) }, shape = RoundedCornerShape(28.dp),
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                 )
             }
@@ -294,9 +297,9 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
         if (apps.isEmpty()) {
             item {
                 ObCard(Modifier.fillMaxWidth()) {
-                    Text("Noch keine Apps", style = MaterialTheme.typography.titleMedium)
+                    Text(t(R.string.upd_empty), style = MaterialTheme.typography.titleMedium)
                     Text(
-                        "Über „Hinzufügen“ einen Link einfügen, installierte Apps übernehmen – oder unter Import/Export deinen ObtainX-Export laden.",
+                        t(R.string.upd_empty_hint),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -305,7 +308,7 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
         }
         val shownUpdates = updates.filter(::matches)
         if (shownUpdates.isNotEmpty()) {
-            item { GroupHeader("Updates", shownUpdates.size, showUpdates) { showUpdates = !showUpdates } }
+            item { GroupHeader(t(R.string.sec_updates), shownUpdates.size, showUpdates) { showUpdates = !showUpdates } }
             if (showUpdates) {
                 items(shownUpdates, key = { "u" + it.key }) { app ->
                     AppRow(app, states[app.key], busyKey == app.key, onOpen = { onOpen(app) }, onInstall = { install(app) })
@@ -339,7 +342,7 @@ private fun AppRow(app: TrackedApp, state: UpdateState?, busy: Boolean, onOpen: 
             Column(Modifier.weight(1f)) {
                 Text(app.name, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(
-                    app.error ?: "Von ${app.author}",
+                    app.error ?: t(R.string.by_author, app.author),
                     style = MaterialTheme.typography.bodyMedium,
                     color = if (app.error != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
@@ -349,7 +352,7 @@ private fun AppRow(app: TrackedApp, state: UpdateState?, busy: Boolean, onOpen: 
             VersionChip(
                 version = app.latestVersion,
                 date = when (state) {
-                    UpdateState.NotInstalled -> "nicht installiert"
+                    UpdateState.NotInstalled -> t(R.string.not_installed)
                     else -> if (app.releaseDate > 0) shortDate.format(Date(app.releaseDate)) else null
                 },
                 highlight = state == UpdateState.Update,
@@ -359,7 +362,7 @@ private fun AppRow(app: TrackedApp, state: UpdateState?, busy: Boolean, onOpen: 
                     CircularProgressIndicator(Modifier.size(40.dp).padding(8.dp))
                 } else {
                     IconButton(onClick = onInstall) {
-                        Icon(Icons.Rounded.SystemUpdateAlt, "Installieren", tint = MaterialTheme.colorScheme.primary)
+                        Icon(Icons.Rounded.SystemUpdateAlt, t(R.string.install), tint = MaterialTheme.colorScheme.primary)
                     }
                 }
             }
@@ -381,9 +384,9 @@ private fun AddPage(onRoute: (Route) -> Unit, onAdded: () -> Unit) {
         contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 110.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        item { PageTitle("App hinzufügen") }
+        item { PageTitle(t(R.string.add_app)) }
         item {
-            MenuEntry(Icons.Rounded.Link, "Quell-URL der App", "GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, APKPure, APKMirror") { showUrl = !showUrl }
+            MenuEntry(Icons.Rounded.Link, t(R.string.add_url), t(R.string.add_url_sub)) { showUrl = !showUrl }
             if (showUrl) {
                 ObCard(Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
                     OutlinedTextField(value = url, onValueChange = { url = it }, singleLine = true, placeholder = { Text("https://…") }, modifier = Modifier.fillMaxWidth())
@@ -391,22 +394,22 @@ private fun AddPage(onRoute: (Route) -> Unit, onAdded: () -> Unit) {
                         onClick = {
                             busy = true
                             scope.launch {
-                                message = runCatching { Updates.add(url) }.fold({ "${it.name} hinzugefügt ✓" }, { it.message ?: "Fehler" })
+                                message = runCatching { Updates.add(url) }.fold({ t(R.string.added_ok, it.name) }, { it.message ?: t(R.string.error) })
                                 busy = false
                                 if (message!!.endsWith("✓")) { url = ""; onAdded() }
                             }
                         },
                         enabled = url.isNotBlank() && !busy,
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    ) { Text(if (busy) "Prüfe …" else "Hinzufügen") }
+                    ) { Text(if (busy) t(R.string.checking) else t(R.string.add)) }
                     message?.let { Text(it, color = if (it.endsWith("✓")) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 6.dp)) }
                 }
             }
         }
-        item { MenuEntry(Icons.Rounded.Search, "Quellen durchsuchen", "GitHub, Codeberg, GitLab") { onRoute(Route.Search) } }
-        item { MenuEntry(Icons.Rounded.PhoneAndroid, "Geräte-Apps gesammelt importieren", "Auf F-Droid, IzzyOnDroid und APKPure suchen") { onRoute(Route.ImportDevice) } }
-        item { MenuEntry(Icons.AutoMirrored.Rounded.PlaylistAdd, "Aus URL-Liste importieren") { onRoute(Route.UrlList) } }
-        item { MenuEntry(Icons.Rounded.Star, "Mit Stern markierte GitHub-Repos importieren") { onRoute(Route.Stars) } }
+        item { MenuEntry(Icons.Rounded.Search, t(R.string.add_search), t(R.string.add_search_sub)) { onRoute(Route.Search) } }
+        item { MenuEntry(Icons.Rounded.PhoneAndroid, t(R.string.add_device), t(R.string.add_device_sub)) { onRoute(Route.ImportDevice) } }
+        item { MenuEntry(Icons.AutoMirrored.Rounded.PlaylistAdd, t(R.string.add_urls)) { onRoute(Route.UrlList) } }
+        item { MenuEntry(Icons.Rounded.Star, t(R.string.add_stars)) { onRoute(Route.Stars) } }
     }
 }
 
@@ -426,8 +429,8 @@ private fun ImportExportPage() {
                 val text = context.contentResolver.openInputStream(uri)!!.bufferedReader().readText()
                 val (added, unsupported) = Updates.import(text)
                 Updates.checkAllInBackground()
-                "$added Apps importiert" + if (unsupported > 0) " ($unsupported mit noch nicht unterstützter Quelle)" else ""
-            }.getOrElse { "Import fehlgeschlagen: ${it.message}" }
+                t(R.string.ie_imported, added) + if (unsupported > 0) t(R.string.ie_unsupported, unsupported) else ""
+            }.getOrElse { t(R.string.ie_import_failed, it.message) }
             busy = false
         }
     }
@@ -435,30 +438,30 @@ private fun ImportExportPage() {
         if (uri == null) return@rememberLauncherForActivityResult
         message = runCatching {
             context.contentResolver.openOutputStream(uri)!!.use { it.write(Updates.export().toByteArray()) }
-            "Exportiert ✓"
-        }.getOrElse { "Export fehlgeschlagen: ${it.message}" }
+            t(R.string.ie_exported)
+        }.getOrElse { t(R.string.ie_export_failed, it.message) }
     }
     LazyColumn(
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 110.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        item { PageTitle("Import/Export") }
+        item { PageTitle(t(R.string.nav_ie)) }
         item {
             ObCard(Modifier.fillMaxWidth()) {
                 Text("ObtainX / Obtainium", style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Liest den JSON-Export von ObtainX und Obtainium. Der Export von ShizuBox lässt sich dort wieder importieren.",
+                    t(R.string.ie_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 12.dp)) {
                     OutlinedButton(enabled = !busy, onClick = { importFile.launch(arrayOf("application/json", "*/*")) }, modifier = Modifier.weight(1f)) {
-                        Text(if (busy) "Importiere …" else "Import")
+                        Text(if (busy) t(R.string.importing) else t(R.string.do_import))
                     }
-                    OutlinedButton(onClick = { exportFile.launch("shizubox-apps.json") }, modifier = Modifier.weight(1f)) { Text("Export") }
+                    OutlinedButton(onClick = { exportFile.launch("shizubox-apps.json") }, modifier = Modifier.weight(1f)) { Text(t(R.string.export)) }
                 }
-                message?.let { Text(it, color = if (it.contains("fehlgeschlagen")) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp)) }
+                message?.let { Text(it, color = if (it.startsWith("⚠")) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp)) }
             }
         }
     }
@@ -478,41 +481,41 @@ private fun SettingsPage() {
         contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 110.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        item { PageTitle("Einstellungen") }
-        item { SectionLabel("Aktualisierungen") }
+        item { PageTitle(t(R.string.settings)) }
+        item { SectionLabel(t(R.string.us_updates)) }
         item {
-            Button(onClick = { Updates.checkAllInBackground() }, modifier = Modifier.fillMaxWidth()) { Text("Jetzt auf Updates prüfen") }
+            Button(onClick = { Updates.checkAllInBackground() }, modifier = Modifier.fillMaxWidth()) { Text(t(R.string.us_check_now)) }
         }
         item {
             ObCard(Modifier.fillMaxWidth()) {
-                Text("Prüfintervall im Hintergrund", style = MaterialTheme.typography.titleSmall)
+                Text(t(R.string.us_interval), style = MaterialTheme.typography.titleSmall)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 6.dp)) {
-                    listOf(0 to "Aus", 6 to "6 Std", 12 to "12 Std", 24 to "1 Tag", 48 to "2 Tage", 168 to "1 Woche").forEach { (h, label) ->
+                    listOf(0 to t(R.string.off), 6 to t(R.string.h6), 12 to t(R.string.h12), 24 to t(R.string.d1), 48 to t(R.string.d2), 168 to t(R.string.w1)).forEach { (h, label) ->
                         FilterChip(selected = s.intervalHours == h, onClick = { Updates.setSettings(s.copy(intervalHours = h)) }, label = { Text(label) })
                     }
                 }
             }
         }
-        item { SettingRow("Installation von Updates im Hintergrund", "Still über Shizuku", s.autoInstall) { Updates.setSettings(s.copy(autoInstall = it)) } }
+        item { SettingRow(t(R.string.us_bg_install), t(R.string.us_bg_install_sub), s.autoInstall) { Updates.setSettings(s.copy(autoInstall = it)) } }
         if (s.autoInstall) {
             item {
                 SettingRow(
-                    "Nur nach sauberem VirusTotal-Ergebnis",
-                    if (de.emil.shizubox.installer.VirusTotal.apiKey.isBlank()) "Kein Schlüssel hinterlegt – im Installer eintragen" else "Andere Signatur wird nie automatisch installiert",
+                    t(R.string.us_vt_gate),
+                    if (de.emil.shizubox.installer.VirusTotal.apiKey.isBlank()) t(R.string.us_no_key) else t(R.string.us_sig_never),
                     s.virusTotalGate,
                 ) { Updates.setSettings(s.copy(virusTotalGate = it)) }
             }
         }
-        item { SettingRow("Nur im WLAN", null, s.wifiOnly) { Updates.setSettings(s.copy(wifiOnly = it)) } }
-        item { SettingRow("Nur während das Gerät lädt", null, s.chargingOnly) { Updates.setSettings(s.copy(chargingOnly = it)) } }
-        item { SettingRow("Beim Start auf Updates prüfen", null, s.checkOnStart) { Updates.setSettings(s.copy(checkOnStart = it)) } }
-        item { SettingRow("Vorabversionen standardmäßig einbeziehen", null, s.prereleasesByDefault) { Updates.setSettings(s.copy(prereleasesByDefault = it)) } }
-        item { SectionLabel("Quellenspezifisch") }
+        item { SettingRow(t(R.string.us_wifi), null, s.wifiOnly) { Updates.setSettings(s.copy(wifiOnly = it)) } }
+        item { SettingRow(t(R.string.us_charging), null, s.chargingOnly) { Updates.setSettings(s.copy(chargingOnly = it)) } }
+        item { SettingRow(t(R.string.us_on_start), null, s.checkOnStart) { Updates.setSettings(s.copy(checkOnStart = it)) } }
+        item { SettingRow(t(R.string.us_prerelease), null, s.prereleasesByDefault) { Updates.setSettings(s.copy(prereleasesByDefault = it)) } }
+        item { SectionLabel(t(R.string.us_source_specific)) }
         item {
             ObCard(Modifier.fillMaxWidth()) {
-                Text("Persönlicher GitHub-Zugriffstoken", style = MaterialTheme.typography.titleSmall)
+                Text(t(R.string.us_token), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Ohne Token erlaubt GitHub nur 60 Abfragen pro Stunde. Ein Token ohne Berechtigungen reicht; er bleibt auf diesem Handy.",
+                    t(R.string.us_token_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -522,16 +525,16 @@ private fun SettingsPage() {
                     visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    FilledTonalButton(onClick = { Updates.setSettings(s.copy(githubToken = token)) }) { Text("Speichern") }
+                    FilledTonalButton(onClick = { Updates.setSettings(s.copy(githubToken = token)) }) { Text(t(R.string.save)) }
                     TextButton(onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/settings/personal-access-tokens/new")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                    }) { Text("Token erstellen") }
+                    }) { Text(t(R.string.us_create_token)) }
                 }
             }
         }
         item {
             Text(
-                "Funktionsweise nach Obtainium und ObtainX (GPL-3.0).",
+                t(R.string.us_credit),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, top = 8.dp),
@@ -584,16 +587,16 @@ private fun SearchScreen(onBack: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item {
-            PageTitle("Quellen durchsuchen", onBack)
+            PageTitle(t(R.string.add_search), onBack)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                OutlinedTextField(value = query, onValueChange = { query = it }, singleLine = true, placeholder = { Text("Suchen") }, shape = RoundedCornerShape(28.dp), modifier = Modifier.weight(1f))
+                OutlinedTextField(value = query, onValueChange = { query = it }, singleLine = true, placeholder = { Text(t(R.string.search)) }, shape = RoundedCornerShape(28.dp), modifier = Modifier.weight(1f))
                 Spacer(Modifier.width(8.dp))
                 FilledTonalButton(enabled = query.isNotBlank() && !loading, onClick = {
                     loading = true
                     scope.launch { results = SourceSearch.search(query, sources); loading = false }
-                }) { Icon(Icons.Rounded.Search, "Suchen") }
+                }) { Icon(Icons.Rounded.Search, t(R.string.search)) }
             }
-            Text("Durchsuchbare Quellen", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+            Text(t(R.string.srch_sources), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SourceSearch.SOURCES.forEach { s ->
                     FilterChip(selected = s in sources, onClick = { sources = if (s in sources) sources - s else sources + s }, label = { Text(s) }, leadingIcon = { SourceBadge(s, 18) })
@@ -618,12 +621,12 @@ private fun SearchScreen(onBack: () -> Unit) {
                             scope.launch {
                                 runCatching { Updates.add(r.url) }.onSuccess { added = added + r.url }.onFailure { message = "${r.name}: ${it.message}" }
                             }
-                        }) { Text("Hinzufügen") }
+                        }) { Text(t(R.string.add)) }
                     }
                 }
             }
         }
-        if (results?.isEmpty() == true) item { Text("Nichts gefunden", modifier = Modifier.padding(8.dp)) }
+        if (results?.isEmpty() == true) item { Text(t(R.string.nothing_found), modifier = Modifier.padding(8.dp)) }
     }
 }
 
@@ -634,10 +637,10 @@ private fun UrlListScreen(onBack: () -> Unit) {
     var busy by remember { mutableStateOf(false) }
     var result by remember { mutableStateOf<String?>(null) }
     Column(Modifier.windowInsetsPadding(WindowInsets.safeDrawing).padding(12.dp)) {
-        PageTitle("Aus URL-Liste importieren", onBack)
+        PageTitle(t(R.string.add_urls), onBack)
         OutlinedTextField(
             value = text, onValueChange = { text = it },
-            placeholder = { Text("Ein Link pro Zeile") },
+            placeholder = { Text(t(R.string.one_link_per_line)) },
             modifier = Modifier.fillMaxWidth().height(260.dp),
         )
         Button(enabled = text.isNotBlank() && !busy, modifier = Modifier.fillMaxWidth().padding(top = 12.dp), onClick = {
@@ -647,10 +650,10 @@ private fun UrlListScreen(onBack: () -> Unit) {
                 var ok = 0
                 val failed = mutableListOf<String>()
                 urls.forEach { u -> runCatching { Updates.add(u) }.onSuccess { ok++ }.onFailure { failed += "$u – ${it.message}" } }
-                result = "$ok von ${urls.size} hinzugefügt" + if (failed.isNotEmpty()) "\n" + failed.joinToString("\n") else ""
+                result = t(R.string.n_of_m_added, ok, urls.size) + if (failed.isNotEmpty()) "\n" + failed.joinToString("\n") else ""
                 busy = false
             }
-        }) { Text(if (busy) "Importiere …" else "Importieren") }
+        }) { Text(if (busy) t(R.string.importing) else t(R.string.do_import)) }
         result?.let { Text(it, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp)) }
     }
 }
@@ -669,9 +672,9 @@ private fun StarsScreen(onBack: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         item {
-            PageTitle("GitHub-Sterne importieren", onBack)
+            PageTitle(t(R.string.stars_title), onBack)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                OutlinedTextField(value = user, onValueChange = { user = it.trim() }, singleLine = true, placeholder = { Text("GitHub-Benutzername") }, modifier = Modifier.weight(1f))
+                OutlinedTextField(value = user, onValueChange = { user = it.trim() }, singleLine = true, placeholder = { Text(t(R.string.gh_user)) }, modifier = Modifier.weight(1f))
                 Spacer(Modifier.width(8.dp))
                 FilledTonalButton(enabled = user.isNotBlank() && !busy, onClick = {
                     busy = true
@@ -680,7 +683,7 @@ private fun StarsScreen(onBack: () -> Unit) {
                         chosen = repos.orEmpty().toSet()
                         busy = false
                     }
-                }) { Text("Laden") }
+                }) { Text(t(R.string.load)) }
             }
             result?.let { Text(it, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp)) }
         }
@@ -697,10 +700,10 @@ private fun StarsScreen(onBack: () -> Unit) {
                     scope.launch {
                         var ok = 0
                         chosen.forEach { u -> if (runCatching { Updates.add(u) }.isSuccess) ok++ }
-                        result = "$ok von ${chosen.size} hinzugefügt (Repos ohne APK-Release werden übersprungen)"
+                        result = t(R.string.stars_result, ok, chosen.size)
                         busy = false
                     }
-                }) { Text(if (busy) "Füge hinzu …" else "${chosen.size} Repos hinzufügen") }
+                }) { Text(if (busy) t(R.string.adding) else tp(R.plurals.add_n_repos, chosen.size, chosen.size)) }
             }
         }
     }
