@@ -303,10 +303,10 @@ object Updates {
      * Downloads and installs an update silently through Shizuku, with the same safety gates as the
      * background updater. Returns null on success, otherwise the reason it was not installed.
      */
-    suspend fun installSilently(app: TrackedApp): String? {
+    suspend fun installSilently(app: TrackedApp, onProgress: (Float) -> Unit = {}): String? {
         if (Source.forUrl(app.url)?.trackOnly == true) return "nur über APKMirror-Seite"
         if (!de.emil.shizubox.shizuku.ShizukuManager.isReady) return "Shizuku nicht verbunden"
-        val (current, uri) = download(app) {}
+        val (current, uri) = download(app, onProgress)
         val info = ApkParser.parse(appContext, uri)
         if (info.signatureMismatch == true) return "andere Signatur als die installierte App"
         val vt = de.emil.shizubox.installer.VirusTotal
@@ -338,23 +338,34 @@ object Updates {
     /** (app currently installing, failures by app name) while "update all" runs, else null. */
     val updatingAll: StateFlow<Pair<String?, Map<String, String>>?> = _updatingAll.asStateFlow()
 
+    /** Runs "update all" as foreground work: survives leaving the app, shows progress. */
     fun updateAllInBackground() {
         if (_updatingAll.value?.first != null) return
-        ioScope.launch {
-            val failed = linkedMapOf<String, String>()
-            for (app in _apps.value.filter { state(it) == UpdateState.Update }) {
+        UpdateWorker.updateAllNow(appContext)
+    }
+
+    /** Called by the worker; installs every pending update one after another. */
+    suspend fun runUpdateAll(onStep: (index: Int, total: Int, name: String, progress: Float) -> Unit): Pair<List<String>, Map<String, String>> {
+        val todo = _apps.value.filter { state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true }
+        val installed = mutableListOf<String>()
+        val failed = linkedMapOf<String, String>()
+        try {
+            todo.forEachIndexed { i, app ->
                 _updatingAll.value = app.key to failed.toMap()
+                onStep(i, todo.size, app.name, 0f)
                 val reason = try {
-                    installSilently(app)
+                    installSilently(app) { p -> onStep(i, todo.size, app.name, p) }
                 } catch (e: kotlinx.coroutines.CancellationException) {
                     throw e
                 } catch (e: Exception) {
                     e.message ?: e.toString()
                 }
-                if (reason != null) failed[app.name] = reason
+                if (reason == null) installed += app.name else failed[app.name] = reason
             }
-            _updatingAll.value = null to failed
+        } finally {
+            _updatingAll.value = null to failed.toMap()
         }
+        return installed to failed
     }
 
     fun clearUpdateAllResult() {
