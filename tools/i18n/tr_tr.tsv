@@ -577,3 +577,23 @@ tech_installer	Yükleyen
 tech_data	Veri klasörü
 tech_signature	İmza (SHA-256)
 tech_copy_hint	Kopyalamak için bir değere dokun.
+pg_camera	Kamera
+pg_microphone	Mikrofon
+pg_location	Konum
+pg_contacts	Kişiler
+pg_phone	Telefon ve arama kaydı
+pg_sms	SMS
+pg_calendar	Takvim
+pg_media	Fotoğraflar, videolar ve müzik
+pg_nearby	Yakındaki cihazlar
+pg_activity	Fiziksel etkinlik ve sensörler
+pg_notifications	Bildirimler
+pg_overlay	Diğer uygulamaların üzerinde göster
+pg_install	Bilinmeyen uygulamaları yükle
+pg_all_files	Tüm dosyalara erişim
+pg_title	Kim neyi yapabilir?
+pg_sub	İzin verilmiş uygulamalar, kategoriye göre. Ayrıntılar için bir uygulamaya dokun.
+pg_include_system	Sistem uygulamalarını dahil et
+pg_none	Uygulama yok
+pg_n_apps	%d uygulama|||%d uygulama
+pg_revoke	Geri al

@@ -607,5 +607,28 @@
 "tech_installer": "Instalada por",
 "tech_data": "Carpeta de datos",
 "tech_signature": "Firma (SHA-256)",
-"tech_copy_hint": "Toca un valor para copiarlo."
+"tech_copy_hint": "Toca un valor para copiarlo.",
+"pg_camera": "Cámara",
+"pg_microphone": "Micrófono",
+"pg_location": "Ubicación",
+"pg_contacts": "Contactos",
+"pg_phone": "Teléfono y registro de llamadas",
+"pg_sms": "SMS",
+"pg_calendar": "Calendario",
+"pg_media": "Fotos, vídeos y música",
+"pg_nearby": "Dispositivos cercanos",
+"pg_activity": "Actividad física y sensores",
+"pg_notifications": "Notificaciones",
+"pg_overlay": "Mostrar sobre otras apps",
+"pg_install": "Instalar apps desconocidas",
+"pg_all_files": "Acceso a todos los archivos",
+"pg_title": "¿Quién puede hacer qué?",
+"pg_sub": "Apps con permisos concedidos, por categoría. Toca una app para ver sus detalles.",
+"pg_include_system": "Incluir apps del sistema",
+"pg_none": "Ninguna app",
+"pg_n_apps": {
+"one": "%d app",
+"other": "%d apps"
+},
+"pg_revoke": "Revocar"
 }

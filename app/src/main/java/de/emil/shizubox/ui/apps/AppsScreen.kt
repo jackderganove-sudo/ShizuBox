@@ -60,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.emil.shizubox.apps.AppEntry
 import de.emil.shizubox.apps.Apps
+import de.emil.shizubox.apps.PermissionOverview
 import de.emil.shizubox.apps.Profiles
 import de.emil.shizubox.ui.glass.GlassCard
 import kotlinx.coroutines.Dispatchers
@@ -91,6 +92,14 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         BackHandler { selected = null; reloadKey++ }
         AppDetailScreen(pkg, shizukuReady, onBack = { selected = null; reloadKey++ })
         return
+    }
+
+    var permState by remember { mutableStateOf(PermTabState()) }
+    var permReload by remember { mutableStateOf(0) }
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val ctx = androidx.compose.ui.platform.LocalContext.current
+    LaunchedEffect(tab, permReload, shizukuReady) {
+        if (tab == 2) permState = permState.copy(data = PermissionOverview.load(ctx))
     }
 
     var query by rememberSaveable { mutableStateOf("") }
@@ -134,11 +143,11 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 )
             }
             SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(bottom = 4.dp)) {
-                listOf(t(R.string.apps), t(R.string.profiles)).forEachIndexed { i, label ->
+                listOf(t(R.string.apps), t(R.string.profiles), t(R.string.permissions)).forEachIndexed { i, label ->
                     SegmentedButton(
                         selected = tab == i,
                         onClick = { tab = i },
-                        shape = SegmentedButtonDefaults.itemShape(i, 2),
+                        shape = SegmentedButtonDefaults.itemShape(i, 3),
                     ) { Text(label) }
                 }
             }
@@ -148,6 +157,21 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         }
         if (tab == 1) {
             profilesSection(apps.orEmpty(), shizukuReady) { reloadKey++ }
+            return@LazyColumn
+        }
+        if (tab == 2) {
+            permissionsSection(
+                state = permState,
+                shizukuReady = shizukuReady,
+                onState = { permState = it },
+                onRevoke = { g, h ->
+                    scope.launch {
+                        runCatching { PermissionOverview.revoke(g, h) }
+                        permReload++
+                    }
+                },
+                onOpenApp = { selected = it },
+            )
             return@LazyColumn
         }
         item {

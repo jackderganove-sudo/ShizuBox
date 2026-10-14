@@ -31,6 +31,9 @@ class DebugReceiver : BroadcastReceiver() {
                         "processes" -> de.emil.shizubox.system.Processes.snapshot().let { s ->
                             "summary=${s.summary} n=${s.processes.size} top=${s.processes.take(5).map { "${it.name}/${it.group}/${it.pssKb}" }}"
                         }
+                        "perms" -> de.emil.shizubox.apps.PermissionOverview.load(context).entries.joinToString { (g, l) ->
+                            "${g.name}=${l.count { !it.isSystem }}/${l.size}"
+                        }
                         "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
                         "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()
                         "device" -> "${de.emil.shizubox.system.DeviceInfo.battery(context)} ${de.emil.shizubox.system.DeviceInfo.memory(context)} ${de.emil.shizubox.system.DeviceInfo.storage()} soc=${de.emil.shizubox.system.DeviceInfo.soc()}"

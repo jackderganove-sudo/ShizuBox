@@ -609,5 +609,28 @@
     <string name="tech_data">Datenordner</string>
     <string name="tech_signature">Signatur (SHA-256)</string>
     <string name="tech_copy_hint">Tippe auf einen Wert, um ihn zu kopieren.</string>
+    <string name="pg_camera">Kamera</string>
+    <string name="pg_microphone">Mikrofon</string>
+    <string name="pg_location">Standort</string>
+    <string name="pg_contacts">Kontakte</string>
+    <string name="pg_phone">Telefon &amp; Anrufliste</string>
+    <string name="pg_sms">SMS</string>
+    <string name="pg_calendar">Kalender</string>
+    <string name="pg_media">Fotos, Videos &amp; Musik</string>
+    <string name="pg_nearby">Geräte in der Nähe</string>
+    <string name="pg_activity">Körperliche Aktivität &amp; Sensoren</string>
+    <string name="pg_notifications">Benachrichtigungen</string>
+    <string name="pg_overlay">Über anderen Apps einblenden</string>
+    <string name="pg_install">Unbekannte Apps installieren</string>
+    <string name="pg_all_files">Zugriff auf alle Dateien</string>
+    <string name="pg_title">Wer darf was?</string>
+    <string name="pg_sub">Apps mit erteilten Berechtigungen, nach Kategorie. Tippe auf eine App für ihre Details.</string>
+    <string name="pg_include_system">System-Apps einbeziehen</string>
+    <string name="pg_none">Keine App</string>
+    <plurals name="pg_n_apps">
+        <item quantity="one">%d App</item>
+        <item quantity="other">%d Apps</item>
+    </plurals>
+    <string name="pg_revoke">Entziehen</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

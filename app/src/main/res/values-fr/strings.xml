@@ -609,4 +609,27 @@
     <string name="tech_data">Dossier de données</string>
     <string name="tech_signature">Signature (SHA-256)</string>
     <string name="tech_copy_hint">Appuie sur une valeur pour la copier.</string>
+    <string name="pg_camera">Appareil photo</string>
+    <string name="pg_microphone">Micro</string>
+    <string name="pg_location">Position</string>
+    <string name="pg_contacts">Contacts</string>
+    <string name="pg_phone">Téléphone et journal d’appels</string>
+    <string name="pg_sms">SMS</string>
+    <string name="pg_calendar">Agenda</string>
+    <string name="pg_media">Photos, vidéos et musique</string>
+    <string name="pg_nearby">Appareils à proximité</string>
+    <string name="pg_activity">Activité physique et capteurs</string>
+    <string name="pg_notifications">Notifications</string>
+    <string name="pg_overlay">Superposition sur d’autres applis</string>
+    <string name="pg_install">Installer des applis inconnues</string>
+    <string name="pg_all_files">Accès à tous les fichiers</string>
+    <string name="pg_title">Qui peut faire quoi ?</string>
+    <string name="pg_sub">Applis avec autorisations accordées, par catégorie. Appuie sur une appli pour ses détails.</string>
+    <string name="pg_include_system">Inclure les applis système</string>
+    <string name="pg_none">Aucune appli</string>
+    <plurals name="pg_n_apps">
+        <item quantity="one">%d appli</item>
+        <item quantity="other">%d applis</item>
+    </plurals>
+    <string name="pg_revoke">Retirer</string>
 </resources>

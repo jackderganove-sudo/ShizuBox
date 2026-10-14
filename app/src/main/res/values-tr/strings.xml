@@ -609,4 +609,27 @@
     <string name="tech_data">Veri klasörü</string>
     <string name="tech_signature">İmza (SHA-256)</string>
     <string name="tech_copy_hint">Kopyalamak için bir değere dokun.</string>
+    <string name="pg_camera">Kamera</string>
+    <string name="pg_microphone">Mikrofon</string>
+    <string name="pg_location">Konum</string>
+    <string name="pg_contacts">Kişiler</string>
+    <string name="pg_phone">Telefon ve arama kaydı</string>
+    <string name="pg_sms">SMS</string>
+    <string name="pg_calendar">Takvim</string>
+    <string name="pg_media">Fotoğraflar, videolar ve müzik</string>
+    <string name="pg_nearby">Yakındaki cihazlar</string>
+    <string name="pg_activity">Fiziksel etkinlik ve sensörler</string>
+    <string name="pg_notifications">Bildirimler</string>
+    <string name="pg_overlay">Diğer uygulamaların üzerinde göster</string>
+    <string name="pg_install">Bilinmeyen uygulamaları yükle</string>
+    <string name="pg_all_files">Tüm dosyalara erişim</string>
+    <string name="pg_title">Kim neyi yapabilir?</string>
+    <string name="pg_sub">İzin verilmiş uygulamalar, kategoriye göre. Ayrıntılar için bir uygulamaya dokun.</string>
+    <string name="pg_include_system">Sistem uygulamalarını dahil et</string>
+    <string name="pg_none">Uygulama yok</string>
+    <plurals name="pg_n_apps">
+        <item quantity="one">%d uygulama</item>
+        <item quantity="other">%d uygulama</item>
+    </plurals>
+    <string name="pg_revoke">Geri al</string>
 </resources>

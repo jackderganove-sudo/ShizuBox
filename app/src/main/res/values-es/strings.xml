@@ -609,4 +609,27 @@
     <string name="tech_data">Carpeta de datos</string>
     <string name="tech_signature">Firma (SHA-256)</string>
     <string name="tech_copy_hint">Toca un valor para copiarlo.</string>
+    <string name="pg_camera">Cámara</string>
+    <string name="pg_microphone">Micrófono</string>
+    <string name="pg_location">Ubicación</string>
+    <string name="pg_contacts">Contactos</string>
+    <string name="pg_phone">Teléfono y registro de llamadas</string>
+    <string name="pg_sms">SMS</string>
+    <string name="pg_calendar">Calendario</string>
+    <string name="pg_media">Fotos, vídeos y música</string>
+    <string name="pg_nearby">Dispositivos cercanos</string>
+    <string name="pg_activity">Actividad física y sensores</string>
+    <string name="pg_notifications">Notificaciones</string>
+    <string name="pg_overlay">Mostrar sobre otras apps</string>
+    <string name="pg_install">Instalar apps desconocidas</string>
+    <string name="pg_all_files">Acceso a todos los archivos</string>
+    <string name="pg_title">¿Quién puede hacer qué?</string>
+    <string name="pg_sub">Apps con permisos concedidos, por categoría. Toca una app para ver sus detalles.</string>
+    <string name="pg_include_system">Incluir apps del sistema</string>
+    <string name="pg_none">Ninguna app</string>
+    <plurals name="pg_n_apps">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="pg_revoke">Revocar</string>
 </resources>

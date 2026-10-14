@@ -577,3 +577,23 @@ tech_installer	Installée par
 tech_data	Dossier de données
 tech_signature	Signature (SHA-256)
 tech_copy_hint	Appuie sur une valeur pour la copier.
+pg_camera	Appareil photo
+pg_microphone	Micro
+pg_location	Position
+pg_contacts	Contacts
+pg_phone	Téléphone et journal d’appels
+pg_sms	SMS
+pg_calendar	Agenda
+pg_media	Photos, vidéos et musique
+pg_nearby	Appareils à proximité
+pg_activity	Activité physique et capteurs
+pg_notifications	Notifications
+pg_overlay	Superposition sur d’autres applis
+pg_install	Installer des applis inconnues
+pg_all_files	Accès à tous les fichiers
+pg_title	Qui peut faire quoi ?
+pg_sub	Applis avec autorisations accordées, par catégorie. Appuie sur une appli pour ses détails.
+pg_include_system	Inclure les applis système
+pg_none	Aucune appli
+pg_n_apps	%d appli|||%d applis
+pg_revoke	Retirer

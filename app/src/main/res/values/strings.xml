@@ -611,4 +611,27 @@
     <string name="tech_data">Data directory</string>
     <string name="tech_signature">Signature (SHA-256)</string>
     <string name="tech_copy_hint">Tap a value to copy it.</string>
+    <string name="pg_camera">Camera</string>
+    <string name="pg_microphone">Microphone</string>
+    <string name="pg_location">Location</string>
+    <string name="pg_contacts">Contacts</string>
+    <string name="pg_phone">Phone &amp; call log</string>
+    <string name="pg_sms">SMS</string>
+    <string name="pg_calendar">Calendar</string>
+    <string name="pg_media">Photos, videos &amp; music</string>
+    <string name="pg_nearby">Nearby devices</string>
+    <string name="pg_activity">Physical activity &amp; sensors</string>
+    <string name="pg_notifications">Notifications</string>
+    <string name="pg_overlay">Display over other apps</string>
+    <string name="pg_install">Install unknown apps</string>
+    <string name="pg_all_files">All files access</string>
+    <string name="pg_title">Who may do what?</string>
+    <string name="pg_sub">Apps with granted permissions, sorted by category. Tap an app for its details.</string>
+    <string name="pg_include_system">Include system apps</string>
+    <string name="pg_none">No app</string>
+    <plurals name="pg_n_apps">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="pg_revoke">Revoke</string>
 </resources>

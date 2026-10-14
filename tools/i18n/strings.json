@@ -2953,5 +2953,111 @@
   "en": "Tap a value to copy it.",
   "de": "Tippe auf einen Wert, um ihn zu kopieren.",
   "plural": false
+ },
+ "pg_camera": {
+  "en": "Camera",
+  "de": "Kamera",
+  "plural": false
+ },
+ "pg_microphone": {
+  "en": "Microphone",
+  "de": "Mikrofon",
+  "plural": false
+ },
+ "pg_location": {
+  "en": "Location",
+  "de": "Standort",
+  "plural": false
+ },
+ "pg_contacts": {
+  "en": "Contacts",
+  "de": "Kontakte",
+  "plural": false
+ },
+ "pg_phone": {
+  "en": "Phone & call log",
+  "de": "Telefon & Anrufliste",
+  "plural": false
+ },
+ "pg_sms": {
+  "en": "SMS",
+  "de": "SMS",
+  "plural": false
+ },
+ "pg_calendar": {
+  "en": "Calendar",
+  "de": "Kalender",
+  "plural": false
+ },
+ "pg_media": {
+  "en": "Photos, videos & music",
+  "de": "Fotos, Videos & Musik",
+  "plural": false
+ },
+ "pg_nearby": {
+  "en": "Nearby devices",
+  "de": "Geräte in der Nähe",
+  "plural": false
+ },
+ "pg_activity": {
+  "en": "Physical activity & sensors",
+  "de": "Körperliche Aktivität & Sensoren",
+  "plural": false
+ },
+ "pg_notifications": {
+  "en": "Notifications",
+  "de": "Benachrichtigungen",
+  "plural": false
+ },
+ "pg_overlay": {
+  "en": "Display over other apps",
+  "de": "Über anderen Apps einblenden",
+  "plural": false
+ },
+ "pg_install": {
+  "en": "Install unknown apps",
+  "de": "Unbekannte Apps installieren",
+  "plural": false
+ },
+ "pg_all_files": {
+  "en": "All files access",
+  "de": "Zugriff auf alle Dateien",
+  "plural": false
+ },
+ "pg_title": {
+  "en": "Who may do what?",
+  "de": "Wer darf was?",
+  "plural": false
+ },
+ "pg_sub": {
+  "en": "Apps with granted permissions, sorted by category. Tap an app for its details.",
+  "de": "Apps mit erteilten Berechtigungen, nach Kategorie. Tippe auf eine App für ihre Details.",
+  "plural": false
+ },
+ "pg_include_system": {
+  "en": "Include system apps",
+  "de": "System-Apps einbeziehen",
+  "plural": false
+ },
+ "pg_none": {
+  "en": "No app",
+  "de": "Keine App",
+  "plural": false
+ },
+ "pg_n_apps": {
+  "en": {
+   "one": "%d app",
+   "other": "%d apps"
+  },
+  "de": {
+   "one": "%d App",
+   "other": "%d Apps"
+  },
+  "plural": true
+ },
+ "pg_revoke": {
+  "en": "Revoke",
+  "de": "Entziehen",
+  "plural": false
  }
 }
