@@ -36,10 +36,10 @@ object ApkInstaller {
             for (uri in uris) {
                 val name = displayName(context, uri) ?: "file.apk"
                 if (name.endsWith(".apks", true) || name.endsWith(".xapk", true) || name.endsWith(".zip", true)) {
-                    onProgress("Entpacke $name …")
+                    onProgress(t(R.string.unpacking, name))
                     paths += extractBundle(context, uri)
                 } else {
-                    onProgress("Kopiere $name …")
+                    onProgress(t(R.string.copying, name))
                     val target = "$TMP/${paths.size}.apk"
                     val pfd = context.contentResolver.openFileDescriptor(uri, "r")
                         ?: return@withContext Result(false, t(R.string.file_unreadable_n, name))

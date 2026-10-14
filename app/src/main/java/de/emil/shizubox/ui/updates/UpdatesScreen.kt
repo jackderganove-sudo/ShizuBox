@@ -90,7 +90,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-private val shortDate = SimpleDateFormat("MM-dd", Locale.GERMAN)
+private val shortDate = SimpleDateFormat("MM-dd", Locale.ROOT)
 
 /** Hands a downloaded APK to ShizuBox's own installer screen (preview, VirusTotal, Shizuku install). */
 fun openInstaller(context: Context, uri: Uri) {

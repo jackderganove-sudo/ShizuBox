@@ -1,0 +1,2546 @@
+{
+ "sec_school": {
+  "en": "School mode",
+  "de": "Schulmodus",
+  "plural": false
+ },
+ "sec_school_sub": {
+  "en": "Phone on, but absolutely nothing happens",
+  "de": "Handy an, aber absolut nichts passiert",
+  "plural": false
+ },
+ "sec_custom": {
+  "en": "Customization",
+  "de": "Customization",
+  "plural": false
+ },
+ "sec_custom_sub": {
+  "en": "Animations, DPI, status bar",
+  "de": "Animationen, DPI, Statusleiste",
+  "plural": false
+ },
+ "sec_apps": {
+  "en": "Apps",
+  "de": "Apps",
+  "plural": false
+ },
+ "sec_apps_sub": {
+  "en": "Freezer, permissions, AppOps, battery",
+  "de": "Freezer, Berechtigungen, AppOps, Akku",
+  "plural": false
+ },
+ "sec_updates": {
+  "en": "Updates",
+  "de": "Updates",
+  "plural": false
+ },
+ "sec_updates_sub": {
+  "en": "GitHub, F-Droid, APKPure …",
+  "de": "GitHub, F-Droid, APKPure …",
+  "plural": false
+ },
+ "sec_system": {
+  "en": "System",
+  "de": "System",
+  "plural": false
+ },
+ "sec_system_sub": {
+  "en": "Gaming, installer, Logcat",
+  "de": "Gaming, Installer, Logcat",
+  "plural": false
+ },
+ "settings": {
+  "en": "Settings",
+  "de": "Einstellungen",
+  "plural": false
+ },
+ "home_tagline": {
+  "en": "System tools via Shizuku",
+  "de": "Systemwerkzeuge über Shizuku",
+  "plural": false
+ },
+ "updates_available": {
+  "en": {
+   "one": "%d update available",
+   "other": "%d updates available"
+  },
+  "de": {
+   "one": "%d Update verfügbar",
+   "other": "%d Updates verfügbar"
+  },
+  "plural": true
+ },
+ "shz_connected": {
+  "en": "Shizuku connected",
+  "de": "Shizuku verbunden",
+  "plural": false
+ },
+ "shz_mode": {
+  "en": "Running in %1$s mode",
+  "de": "Läuft im %1$s-Modus",
+  "plural": false
+ },
+ "shz_connecting": {
+  "en": "Connecting …",
+  "de": "Verbinde …",
+  "plural": false
+ },
+ "shz_connecting_sub": {
+  "en": "Starting the shell service",
+  "de": "Shell-Dienst wird gestartet",
+  "plural": false
+ },
+ "shz_need_access": {
+  "en": "Access needed",
+  "de": "Zugriff nötig",
+  "plural": false
+ },
+ "shz_need_access_sub": {
+  "en": "ShizuBox needs the Shizuku permission",
+  "de": "ShizuBox braucht die Shizuku-Berechtigung",
+  "plural": false
+ },
+ "allow": {
+  "en": "Allow",
+  "de": "Erlauben",
+  "plural": false
+ },
+ "shz_denied": {
+  "en": "Access denied",
+  "de": "Zugriff verweigert",
+  "plural": false
+ },
+ "shz_denied_sub": {
+  "en": "Allow it in the Shizuku app under “Authorized apps”",
+  "de": "In der Shizuku-App unter „Autorisierte Apps“ erlauben",
+  "plural": false
+ },
+ "open_shizuku": {
+  "en": "Open Shizuku",
+  "de": "Shizuku öffnen",
+  "plural": false
+ },
+ "shz_not_running": {
+  "en": "Shizuku is not running",
+  "de": "Shizuku läuft nicht",
+  "plural": false
+ },
+ "shz_works_without": {
+  "en": "Updates, installer and app list still work",
+  "de": "Updates, Installer und App-Liste gehen trotzdem",
+  "plural": false
+ },
+ "start": {
+  "en": "Start",
+  "de": "Starten",
+  "plural": false
+ },
+ "shz_missing": {
+  "en": "Shizuku is missing",
+  "de": "Shizuku fehlt",
+  "plural": false
+ },
+ "install": {
+  "en": "Install",
+  "de": "Installieren",
+  "plural": false
+ },
+ "school_restore_pending": {
+  "en": "Restore pending",
+  "de": "Wiederherstellung ausstehend",
+  "plural": false
+ },
+ "school_off_ends": {
+  "en": "Off · ends after %1$s",
+  "de": "Aus · endet nach %1$s",
+  "plural": false
+ },
+ "off": {
+  "en": "Off",
+  "de": "Aus",
+  "plural": false
+ },
+ "on": {
+  "en": "On",
+  "de": "An",
+  "plural": false
+ },
+ "activating": {
+  "en": "Activating …",
+  "de": "Wird aktiviert …",
+  "plural": false
+ },
+ "activate": {
+  "en": "Activate",
+  "de": "Aktivieren",
+  "plural": false
+ },
+ "back": {
+  "en": "Back",
+  "de": "Zurück",
+  "plural": false
+ },
+ "coming_soon": {
+  "en": "Coming soon",
+  "de": "Kommt bald",
+  "plural": false
+ },
+ "built_later": {
+  "en": "Will be built in a later version.",
+  "de": "Kommt in einer späteren Version.",
+  "plural": false
+ },
+ "shell_test": {
+  "en": "Shell test",
+  "de": "Shell-Test",
+  "plural": false
+ },
+ "run": {
+  "en": "Run",
+  "de": "Ausführen",
+  "plural": false
+ },
+ "error": {
+  "en": "Error",
+  "de": "Fehler",
+  "plural": false
+ },
+ "exit_done_title": {
+  "en": "School mode ended",
+  "de": "Schulmodus beendet",
+  "plural": false
+ },
+ "exit_restored": {
+  "en": "All settings have been restored.",
+  "de": "Alle Einstellungen sind wiederhergestellt.",
+  "plural": false
+ },
+ "exit_not_restored": {
+  "en": "Shizuku is not running, so the settings can’t be restored yet.",
+  "de": "Shizuku läuft nicht, deshalb können die Einstellungen noch nicht zurückgesetzt werden.",
+  "plural": false
+ },
+ "done": {
+  "en": "Done",
+  "de": "Fertig",
+  "plural": false
+ },
+ "exit_step1": {
+  "en": "Turn on Wi-Fi",
+  "de": "WLAN einschalten",
+  "plural": false
+ },
+ "exit_step1_sub": {
+  "en": "Tap Wi-Fi in the quick settings (swipe down from the top).",
+  "de": "In den Schnelleinstellungen (von oben wischen) WLAN antippen.",
+  "plural": false
+ },
+ "exit_step2": {
+  "en": "Start Shizuku",
+  "de": "Shizuku starten",
+  "plural": false
+ },
+ "exit_step2_sub": {
+  "en": "Open Shizuku and start it via wireless debugging.",
+  "de": "Shizuku öffnen und über kabelloses Debugging starten.",
+  "plural": false
+ },
+ "exit_step3": {
+  "en": "Back to ShizuBox",
+  "de": "Zurück zu ShizuBox",
+  "plural": false
+ },
+ "exit_step3_sub": {
+  "en": "As soon as Shizuku runs, everything is restored automatically.",
+  "de": "Sobald Shizuku läuft, wird alles automatisch wiederhergestellt.",
+  "plural": false
+ },
+ "restoring": {
+  "en": "Restoring …",
+  "de": "Stelle wieder her …",
+  "plural": false
+ },
+ "waiting_shizuku": {
+  "en": "Waiting for Shizuku …",
+  "de": "Warte auf Shizuku …",
+  "plural": false
+ },
+ "school_active": {
+  "en": "School mode active",
+  "de": "Schulmodus aktiv",
+  "plural": false
+ },
+ "shizuku_not_connected": {
+  "en": "Shizuku is not connected",
+  "de": "Shizuku ist nicht verbunden",
+  "plural": false
+ },
+ "school_last_restore_open": {
+  "en": "The last restore is still pending",
+  "de": "Die letzte Wiederherstellung ist noch offen",
+  "plural": false
+ },
+ "dur_min": {
+  "en": "%1$d min",
+  "de": "%1$d Min",
+  "plural": false
+ },
+ "dur_hours": {
+  "en": "%1$d h",
+  "de": "%1$d Std",
+  "plural": false
+ },
+ "school_title_sub": {
+  "en": "The phone stays on, but absolutely nothing happens.",
+  "de": "Das Handy bleibt an, aber es passiert absolut nichts.",
+  "plural": false
+ },
+ "school_what": {
+  "en": "What happens",
+  "de": "Was passiert",
+  "plural": false
+ },
+ "school_what1": {
+  "en": "Airplane mode on; Wi-Fi, Bluetooth and mobile data off",
+  "de": "Flugmodus an, WLAN, Bluetooth und mobile Daten aus",
+  "plural": false
+ },
+ "school_what2": {
+  "en": "Do not disturb: no interruptions, no sound, no vibration",
+  "de": "Bitte nicht stören: keine Unterbrechungen, kein Ton, keine Vibration",
+  "plural": false
+ },
+ "school_what3": {
+  "en": "Always-on display, lock screen notifications and camera double-press off",
+  "de": "Always-on-Display, Sperrbildschirm-Benachrichtigungen und Kamera-Doppeldruck aus",
+  "plural": false
+ },
+ "school_what4": {
+  "en": "All apps paused (except phone/emergency, Settings, Shizuku)",
+  "de": "Alle Apps pausiert (außer Telefon/Notruf, Einstellungen, Shizuku)",
+  "plural": false
+ },
+ "school_what5": {
+  "en": "Screen completely black, even over the lock screen",
+  "de": "Bildschirm komplett schwarz, auch über dem Sperrbildschirm",
+  "plural": false
+ },
+ "school_exit": {
+  "en": "Ending it",
+  "de": "Beenden",
+  "plural": false
+ },
+ "school_exit_sub": {
+  "en": "Press the power button 3× quickly. Everything is then restored exactly as it was.",
+  "de": "3× schnell hintereinander die Power-Taste drücken. Danach wird alles exakt so wiederhergestellt, wie es vorher war.",
+  "plural": false
+ },
+ "school_autoend": {
+  "en": "End automatically after",
+  "de": "Automatisch beenden nach",
+  "plural": false
+ },
+ "school_after_reboot": {
+  "en": "After a restart",
+  "de": "Nach einem Neustart",
+  "plural": false
+ },
+ "school_reboot_black": {
+  "en": "Black right away",
+  "de": "Sofort schwarz",
+  "plural": false
+ },
+ "school_reboot_wait": {
+  "en": "Only with Shizuku",
+  "de": "Erst mit Shizuku",
+  "plural": false
+ },
+ "school_reboot_wait_sub": {
+  "en": "The phone stays usable after the restart. As soon as Shizuku runs again, the screen turns black again – 3× power then restores everything directly.",
+  "de": "Das Handy bleibt nach dem Neustart bedienbar. Sobald Shizuku wieder läuft, wird der Bildschirm wieder schwarz – 3× Power stellt dann direkt alles wieder her.",
+  "plural": false
+ },
+ "school_reboot_black_sub": {
+  "en": "The screen is black right after the restart. After 3× power a short guide walks you through restarting Shizuku, then everything is restored automatically.",
+  "de": "Der Bildschirm ist direkt nach dem Neustart schwarz. Nach 3× Power führt eine kurze Anleitung durch den Neustart von Shizuku, danach wird alles automatisch wiederhergestellt.",
+  "plural": false
+ },
+ "school_activate": {
+  "en": "Activate school mode",
+  "de": "Schulmodus aktivieren",
+  "plural": false
+ },
+ "shizuku_required": {
+  "en": "Shizuku must be connected.",
+  "de": "Shizuku muss verbunden sein.",
+  "plural": false
+ },
+ "theme_system": {
+  "en": "System",
+  "de": "System",
+  "plural": false
+ },
+ "theme_light": {
+  "en": "Light",
+  "de": "Hell",
+  "plural": false
+ },
+ "theme_dark": {
+  "en": "Dark",
+  "de": "Dunkel",
+  "plural": false
+ },
+ "pal_calm": {
+  "en": "Calm",
+  "de": "Ruhig",
+  "plural": false
+ },
+ "pal_vibrant": {
+  "en": "Vibrant",
+  "de": "Kräftig",
+  "plural": false
+ },
+ "pal_expressive": {
+  "en": "Expressive",
+  "de": "Expressiv",
+  "plural": false
+ },
+ "pal_neutral": {
+  "en": "Neutral",
+  "de": "Neutral",
+  "plural": false
+ },
+ "pal_mono": {
+  "en": "Monochrome",
+  "de": "Monochrom",
+  "plural": false
+ },
+ "im_auto": {
+  "en": "Automatic",
+  "de": "Automatisch",
+  "plural": false
+ },
+ "im_auto_sub": {
+  "en": "Silent via Shizuku, otherwise system dialog",
+  "de": "Still über Shizuku, sonst System-Dialog",
+  "plural": false
+ },
+ "im_shizuku": {
+  "en": "Shizuku only",
+  "de": "Nur Shizuku",
+  "plural": false
+ },
+ "im_shizuku_sub": {
+  "en": "Always silent, needs Shizuku",
+  "de": "Immer still, braucht Shizuku",
+  "plural": false
+ },
+ "im_system": {
+  "en": "System dialog",
+  "de": "System-Dialog",
+  "plural": false
+ },
+ "im_system_sub": {
+  "en": "Without Shizuku, confirm every install",
+  "de": "Ohne Shizuku, jede Installation bestätigen",
+  "plural": false
+ },
+ "rm_adaptive": {
+  "en": "Adaptive",
+  "de": "Adaptiv",
+  "plural": false
+ },
+ "rm_60": {
+  "en": "60 Hz",
+  "de": "60 Hz",
+  "plural": false
+ },
+ "rm_max": {
+  "en": "Always max.",
+  "de": "Immer max.",
+  "plural": false
+ },
+ "cust_dpi_pending": {
+  "en": "Display size %1$d dpi",
+  "de": "Anzeigegröße %1$d dpi",
+  "plural": false
+ },
+ "cust_res_pending": {
+  "en": "Resolution %1$d %% (%2$s)",
+  "de": "Auflösung %1$d %% (%2$s)",
+  "plural": false
+ },
+ "cust_instant": {
+  "en": "Changes apply immediately.",
+  "de": "Änderungen wirken sofort.",
+  "plural": false
+ },
+ "reading_settings": {
+  "en": "Reading settings …",
+  "de": "Lese Einstellungen …",
+  "plural": false
+ },
+ "cust_anim": {
+  "en": "Animation speed",
+  "de": "Animationsgeschwindigkeit",
+  "plural": false
+ },
+ "cust_anim_hint": {
+  "en": "Smaller = faster, 0 = off",
+  "de": "Kleiner = schneller, 0 = aus",
+  "plural": false
+ },
+ "cust_refresh": {
+  "en": "Refresh rate",
+  "de": "Bildwiederholrate",
+  "plural": false
+ },
+ "cust_refresh_adaptive": {
+  "en": "Adapts (up to 120 Hz), saves battery",
+  "de": "Passt sich an (bis 120 Hz), spart Akku",
+  "plural": false
+ },
+ "cust_refresh_60": {
+  "en": "Max. 60 Hz, saves the most battery",
+  "de": "Max. 60 Hz, spart am meisten Akku",
+  "plural": false
+ },
+ "cust_refresh_max": {
+  "en": "Always 120 Hz, smoothest, uses more battery",
+  "de": "Immer 120 Hz, am flüssigsten, braucht mehr Akku",
+  "plural": false
+ },
+ "cust_font": {
+  "en": "Font",
+  "de": "Schrift",
+  "plural": false
+ },
+ "cust_bold": {
+  "en": "Bold",
+  "de": "Fett",
+  "plural": false
+ },
+ "cust_resolution": {
+  "en": "Resolution",
+  "de": "Auflösung",
+  "plural": false
+ },
+ "cust_res_hint": {
+  "en": "%1$s · lower saves battery, content keeps its size",
+  "de": "%1$s · weniger spart Akku, Inhalte bleiben gleich groß",
+  "plural": false
+ },
+ "cust_statusbar": {
+  "en": "Status bar",
+  "de": "Statusleiste",
+  "plural": false
+ },
+ "cust_statusbar_hint": {
+  "en": "Single icons can no longer be hidden on Android 17, only these groups.",
+  "de": "Einzelne Icons lassen sich unter Android 17 nicht mehr ausblenden, nur diese Gruppen.",
+  "plural": false
+ },
+ "cust_sb_system": {
+  "en": "Show system icons",
+  "de": "Systemsymbole zeigen",
+  "plural": false
+ },
+ "cust_sb_clock": {
+  "en": "Show clock",
+  "de": "Uhr zeigen",
+  "plural": false
+ },
+ "cust_sb_notif": {
+  "en": "Show notification icons",
+  "de": "Benachrichtigungssymbole zeigen",
+  "plural": false
+ },
+ "cust_immersive": {
+  "en": "Immersive mode per app",
+  "de": "Immersive-Modus pro App",
+  "plural": false
+ },
+ "cust_immersive_sub": {
+  "en": "No longer possible: Google removed the required setting (policy_control) in Android 11.",
+  "de": "Nicht mehr möglich: Google hat die dafür nötige Einstellung (policy_control) mit Android 11 entfernt.",
+  "plural": false
+ },
+ "keep_q": {
+  "en": "Keep?",
+  "de": "Behalten?",
+  "plural": false
+ },
+ "keep": {
+  "en": "Keep",
+  "de": "Behalten",
+  "plural": false
+ },
+ "revert": {
+  "en": "Revert",
+  "de": "Zurücksetzen",
+  "plural": false
+ },
+ "cust_revert_in": {
+  "en": "%1$s\nReverts automatically in %2$d s.",
+  "de": "%1$s\nWird in %2$d s automatisch zurückgesetzt.",
+  "plural": false
+ },
+ "cust_dpi": {
+  "en": "Display size (DPI)",
+  "de": "Anzeigegröße (DPI)",
+  "plural": false
+ },
+ "cust_dpi_hint": {
+  "en": "Smaller = more content on screen. Default: %1$d dpi",
+  "de": "Kleiner = mehr Inhalt auf dem Bildschirm. Standard: %1$d dpi",
+  "plural": false
+ },
+ "cust_reset_default": {
+  "en": "Reset to default",
+  "de": "Auf Standard zurücksetzen",
+  "plural": false
+ },
+ "set_appearance": {
+  "en": "Appearance",
+  "de": "Darstellung",
+  "plural": false
+ },
+ "set_design": {
+  "en": "Design",
+  "de": "Design",
+  "plural": false
+ },
+ "set_amoled": {
+  "en": "Pure black (AMOLED)",
+  "de": "Reines Schwarz (AMOLED)",
+  "plural": false
+ },
+ "set_colors": {
+  "en": "Colors",
+  "de": "Farben",
+  "plural": false
+ },
+ "set_colors_wallpaper": {
+  "en": "Colors from the wallpaper (Material You)",
+  "de": "Farben aus dem Hintergrundbild (Material You)",
+  "plural": false
+ },
+ "set_colors_accent": {
+  "en": "Custom accent color",
+  "de": "Eigene Akzentfarbe",
+  "plural": false
+ },
+ "set_palette": {
+  "en": "Palette style",
+  "de": "Paletten-Stil",
+  "plural": false
+ },
+ "set_glass": {
+  "en": "Glass effect",
+  "de": "Glas-Effekt",
+  "plural": false
+ },
+ "set_glass_blur": {
+  "en": "Blur behind cards and window",
+  "de": "Unschärfe hinter Karten und Fenster",
+  "plural": false
+ },
+ "set_strength": {
+  "en": "Strength: %1$d %%",
+  "de": "Stärke: %1$d %%",
+  "plural": false
+ },
+ "set_anim_bg": {
+  "en": "Animated background",
+  "de": "Animierter Hintergrund",
+  "plural": false
+ },
+ "set_glass_hint": {
+  "en": "Turning off glass and animation saves a little battery.",
+  "de": "Glas und Animation aus spart etwas Akku.",
+  "plural": false
+ },
+ "set_installer_security": {
+  "en": "Installer & security",
+  "de": "Installer & Sicherheit",
+  "plural": false
+ },
+ "set_install_method": {
+  "en": "Install method",
+  "de": "Installationsart",
+  "plural": false
+ },
+ "set_allow_unknown": {
+  "en": "Allow “Install unknown apps” for ShizuBox",
+  "de": "„Unbekannte Apps installieren“ für ShizuBox erlauben",
+  "plural": false
+ },
+ "set_default_options": {
+  "en": "Default options (Shizuku only)",
+  "de": "Standard-Optionen (nur mit Shizuku)",
+  "plural": false
+ },
+ "opt_downgrade": {
+  "en": "Allow downgrade",
+  "de": "Downgrade erlauben",
+  "plural": false
+ },
+ "opt_grant_all": {
+  "en": "Grant all permissions",
+  "de": "Alle Berechtigungen gewähren",
+  "plural": false
+ },
+ "opt_play": {
+  "en": "Report as Play Store install",
+  "de": "Als Play-Store-Installation ausgeben",
+  "plural": false
+ },
+ "vt": {
+  "en": "VirusTotal",
+  "de": "VirusTotal",
+  "plural": false
+ },
+ "set_vt_hint": {
+  "en": "Free API key from virustotal.com (profile → API key). Stays on this phone only.",
+  "de": "Kostenloser API-Schlüssel von virustotal.com (Profil → API Key). Bleibt nur auf diesem Handy.",
+  "plural": false
+ },
+ "api_key": {
+  "en": "API key",
+  "de": "API-Schlüssel",
+  "plural": false
+ },
+ "hide": {
+  "en": "Hide",
+  "de": "Verbergen",
+  "plural": false
+ },
+ "show": {
+  "en": "Show",
+  "de": "Anzeigen",
+  "plural": false
+ },
+ "key_saved": {
+  "en": "Key saved ✓",
+  "de": "Schlüssel gespeichert ✓",
+  "plural": false
+ },
+ "save": {
+  "en": "Save",
+  "de": "Speichern",
+  "plural": false
+ },
+ "get_key": {
+  "en": "Get key",
+  "de": "Schlüssel holen",
+  "plural": false
+ },
+ "set_vt_auto": {
+  "en": "Check automatically when installing",
+  "de": "Beim Installieren automatisch prüfen",
+  "plural": false
+ },
+ "set_block_sig": {
+  "en": "Block different signature",
+  "de": "Andere Signatur blockieren",
+  "plural": false
+ },
+ "set_block_sig_hint": {
+  "en": "A different signature than the installed app means: not from the same developer (or re-signed).",
+  "de": "Eine andere Signatur als die installierte App bedeutet: nicht vom selben Entwickler (oder neu signiert).",
+  "plural": false
+ },
+ "set_areas": {
+  "en": "Sections",
+  "de": "Bereiche",
+  "plural": false
+ },
+ "set_link_updates": {
+  "en": "App updates",
+  "de": "App-Updates",
+  "plural": false
+ },
+ "set_link_updates_sub": {
+  "en": "Check interval, background install, GitHub token",
+  "de": "Prüfintervall, Hintergrund-Installation, GitHub-Token",
+  "plural": false
+ },
+ "set_link_school_sub": {
+  "en": "Automatic end, behavior after restart",
+  "de": "Automatisches Ende, Verhalten nach Neustart",
+  "plural": false
+ },
+ "set_notifications": {
+  "en": "Notifications",
+  "de": "Benachrichtigungen",
+  "plural": false
+ },
+ "set_notifications_sub": {
+  "en": "Channels for updates and school mode",
+  "de": "Kanäle für Updates und Schulmodus",
+  "plural": false
+ },
+ "shizuku": {
+  "en": "Shizuku",
+  "de": "Shizuku",
+  "plural": false
+ },
+ "set_status": {
+  "en": "Status: %1$s",
+  "de": "Status: %1$s",
+  "plural": false
+ },
+ "st_connected": {
+  "en": "Connected",
+  "de": "Verbunden",
+  "plural": false
+ },
+ "st_no_permission": {
+  "en": "Access not allowed yet",
+  "de": "Zugriff noch nicht erlaubt",
+  "plural": false
+ },
+ "st_not_running": {
+  "en": "Not running",
+  "de": "Läuft nicht",
+  "plural": false
+ },
+ "st_not_installed": {
+  "en": "Not installed",
+  "de": "Nicht installiert",
+  "plural": false
+ },
+ "set_manager_app": {
+  "en": "Manager app: %1$s",
+  "de": "Manager-App: %1$s",
+  "plural": false
+ },
+ "not_found": {
+  "en": "not found",
+  "de": "nicht gefunden",
+  "plural": false
+ },
+ "set_without_shizuku": {
+  "en": "Without Shizuku these work: app updates (check and install via system dialog), Universal Installer, app list with details, share/extract APK and VirusTotal. School mode, Customization, freezing, AppOps, gaming mode and Logcat need Shizuku.",
+  "de": "Ohne Shizuku funktionieren: App-Updates (prüfen und per System-Dialog installieren), Universal Installer, App-Liste mit Details, APK teilen/extrahieren und VirusTotal. Schulmodus, Customization, Einfrieren, AppOps, Gaming-Modus und Logcat brauchen Shizuku.",
+  "plural": false
+ },
+ "set_about": {
+  "en": "About",
+  "de": "Über",
+  "plural": false
+ },
+ "set_license": {
+  "en": "Open source under GPL-3.0",
+  "de": "Open Source unter GPL-3.0",
+  "plural": false
+ },
+ "releases": {
+  "en": "Releases",
+  "de": "Releases",
+  "plural": false
+ },
+ "set_self_tracked": {
+  "en": "ShizuBox is now tracked under app updates ✓",
+  "de": "ShizuBox wird jetzt unter App-Updates verfolgt ✓",
+  "plural": false
+ },
+ "set_self_update": {
+  "en": "Update ShizuBox itself",
+  "de": "ShizuBox selbst aktualisieren",
+  "plural": false
+ },
+ "set_thanks": {
+  "en": "Thanks to",
+  "de": "Dank an",
+  "plural": false
+ },
+ "wallpaper": {
+  "en": "Wallpaper",
+  "de": "Hintergrundbild",
+  "plural": false
+ },
+ "upd_all": {
+  "en": "Update all",
+  "de": "Alle aktualisieren",
+  "plural": false
+ },
+ "nav_apps": {
+  "en": "Apps",
+  "de": "Apps",
+  "plural": false
+ },
+ "nav_add": {
+  "en": "Add",
+  "de": "Hinzufügen",
+  "plural": false
+ },
+ "nav_ie": {
+  "en": "Import/Export",
+  "de": "Import/Export",
+  "plural": false
+ },
+ "upd_all_done": {
+  "en": "All updates installed ✓",
+  "de": "Alle Updates installiert ✓",
+  "plural": false
+ },
+ "upd_not_auto": {
+  "en": {
+   "one": "%d not installed automatically",
+   "other": "%d not installed automatically"
+  },
+  "de": {
+   "one": "%d nicht automatisch installiert",
+   "other": "%d nicht automatisch installiert"
+  },
+  "plural": true
+ },
+ "upd_not_auto_hint": {
+  "en": "Update these apps individually via their button – the installer then shows details.",
+  "de": "Diese Apps einzeln über ihren Knopf aktualisieren – der Installer zeigt dann Details.",
+  "plural": false
+ },
+ "ok": {
+  "en": "OK",
+  "de": "OK",
+  "plural": false
+ },
+ "search": {
+  "en": "Search",
+  "de": "Suchen",
+  "plural": false
+ },
+ "check": {
+  "en": "Check",
+  "de": "Prüfen",
+  "plural": false
+ },
+ "search_app": {
+  "en": "Search app",
+  "de": "App suchen",
+  "plural": false
+ },
+ "upd_empty": {
+  "en": "No apps yet",
+  "de": "Noch keine Apps",
+  "plural": false
+ },
+ "upd_empty_hint": {
+  "en": "Paste a link under “Add”, import installed apps – or load your ObtainX export under Import/Export.",
+  "de": "Über „Hinzufügen“ einen Link einfügen, installierte Apps übernehmen – oder unter Import/Export deinen ObtainX-Export laden.",
+  "plural": false
+ },
+ "by_author": {
+  "en": "By %1$s",
+  "de": "Von %1$s",
+  "plural": false
+ },
+ "not_installed": {
+  "en": "not installed",
+  "de": "nicht installiert",
+  "plural": false
+ },
+ "add_app": {
+  "en": "Add app",
+  "de": "App hinzufügen",
+  "plural": false
+ },
+ "add_url": {
+  "en": "App source URL",
+  "de": "Quell-URL der App",
+  "plural": false
+ },
+ "add_url_sub": {
+  "en": "GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, APKPure, APKMirror",
+  "de": "GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, APKPure, APKMirror",
+  "plural": false
+ },
+ "added_ok": {
+  "en": "%1$s added ✓",
+  "de": "%1$s hinzugefügt ✓",
+  "plural": false
+ },
+ "checking": {
+  "en": "Checking …",
+  "de": "Prüfe …",
+  "plural": false
+ },
+ "add": {
+  "en": "Add",
+  "de": "Hinzufügen",
+  "plural": false
+ },
+ "add_search": {
+  "en": "Search sources",
+  "de": "Quellen durchsuchen",
+  "plural": false
+ },
+ "add_search_sub": {
+  "en": "GitHub, Codeberg, GitLab",
+  "de": "GitHub, Codeberg, GitLab",
+  "plural": false
+ },
+ "add_device": {
+  "en": "Import device apps in bulk",
+  "de": "Geräte-Apps gesammelt importieren",
+  "plural": false
+ },
+ "add_device_sub": {
+  "en": "Search on F-Droid, IzzyOnDroid and APKPure",
+  "de": "Auf F-Droid, IzzyOnDroid und APKPure suchen",
+  "plural": false
+ },
+ "add_urls": {
+  "en": "Import from URL list",
+  "de": "Aus URL-Liste importieren",
+  "plural": false
+ },
+ "add_stars": {
+  "en": "Import starred GitHub repos",
+  "de": "Mit Stern markierte GitHub-Repos importieren",
+  "plural": false
+ },
+ "ie_imported": {
+  "en": "%1$d apps imported",
+  "de": "%1$d Apps importiert",
+  "plural": false
+ },
+ "ie_unsupported": {
+  "en": " (%1$d with a source that isn’t supported yet)",
+  "de": " (%1$d mit noch nicht unterstützter Quelle)",
+  "plural": false
+ },
+ "ie_import_failed": {
+  "en": "⚠ Import failed: %1$s",
+  "de": "⚠ Import fehlgeschlagen: %1$s",
+  "plural": false
+ },
+ "ie_exported": {
+  "en": "Exported ✓",
+  "de": "Exportiert ✓",
+  "plural": false
+ },
+ "ie_export_failed": {
+  "en": "⚠ Export failed: %1$s",
+  "de": "⚠ Export fehlgeschlagen: %1$s",
+  "plural": false
+ },
+ "ie_hint": {
+  "en": "Reads the JSON export of ObtainX and Obtainium. ShizuBox’s export can be imported there again.",
+  "de": "Liest den JSON-Export von ObtainX und Obtainium. Der Export von ShizuBox lässt sich dort wieder importieren.",
+  "plural": false
+ },
+ "importing": {
+  "en": "Importing …",
+  "de": "Importiere …",
+  "plural": false
+ },
+ "export": {
+  "en": "Export",
+  "de": "Export",
+  "plural": false
+ },
+ "us_updates": {
+  "en": "Updates",
+  "de": "Aktualisierungen",
+  "plural": false
+ },
+ "us_check_now": {
+  "en": "Check for updates now",
+  "de": "Jetzt auf Updates prüfen",
+  "plural": false
+ },
+ "us_interval": {
+  "en": "Background check interval",
+  "de": "Prüfintervall im Hintergrund",
+  "plural": false
+ },
+ "h6": {
+  "en": "6 h",
+  "de": "6 Std",
+  "plural": false
+ },
+ "h12": {
+  "en": "12 h",
+  "de": "12 Std",
+  "plural": false
+ },
+ "d1": {
+  "en": "1 day",
+  "de": "1 Tag",
+  "plural": false
+ },
+ "d2": {
+  "en": "2 days",
+  "de": "2 Tage",
+  "plural": false
+ },
+ "w1": {
+  "en": "1 week",
+  "de": "1 Woche",
+  "plural": false
+ },
+ "us_bg_install": {
+  "en": "Install updates in the background",
+  "de": "Installation von Updates im Hintergrund",
+  "plural": false
+ },
+ "us_bg_install_sub": {
+  "en": "Silently via Shizuku",
+  "de": "Still über Shizuku",
+  "plural": false
+ },
+ "us_vt_gate": {
+  "en": "Only after a clean VirusTotal result",
+  "de": "Nur nach sauberem VirusTotal-Ergebnis",
+  "plural": false
+ },
+ "us_no_key": {
+  "en": "No key set – enter it in the settings",
+  "de": "Kein Schlüssel hinterlegt – in den Einstellungen eintragen",
+  "plural": false
+ },
+ "us_sig_never": {
+  "en": "A different signature is never installed automatically",
+  "de": "Andere Signatur wird nie automatisch installiert",
+  "plural": false
+ },
+ "us_wifi": {
+  "en": "Wi-Fi only",
+  "de": "Nur im WLAN",
+  "plural": false
+ },
+ "us_charging": {
+  "en": "Only while charging",
+  "de": "Nur während das Gerät lädt",
+  "plural": false
+ },
+ "us_on_start": {
+  "en": "Check for updates on start",
+  "de": "Beim Start auf Updates prüfen",
+  "plural": false
+ },
+ "us_prerelease": {
+  "en": "Include pre-releases by default",
+  "de": "Vorabversionen standardmäßig einbeziehen",
+  "plural": false
+ },
+ "us_source_specific": {
+  "en": "Source-specific",
+  "de": "Quellenspezifisch",
+  "plural": false
+ },
+ "us_token": {
+  "en": "Personal GitHub access token",
+  "de": "Persönlicher GitHub-Zugriffstoken",
+  "plural": false
+ },
+ "us_token_hint": {
+  "en": "Without a token GitHub allows only 60 requests per hour. A token without permissions is enough; it stays on this phone.",
+  "de": "Ohne Token erlaubt GitHub nur 60 Abfragen pro Stunde. Ein Token ohne Berechtigungen reicht; er bleibt auf diesem Handy.",
+  "plural": false
+ },
+ "us_create_token": {
+  "en": "Create token",
+  "de": "Token erstellen",
+  "plural": false
+ },
+ "us_credit": {
+  "en": "Works like Obtainium and ObtainX (GPL-3.0).",
+  "de": "Funktionsweise nach Obtainium und ObtainX (GPL-3.0).",
+  "plural": false
+ },
+ "srch_sources": {
+  "en": "Searchable sources",
+  "de": "Durchsuchbare Quellen",
+  "plural": false
+ },
+ "nothing_found": {
+  "en": "Nothing found",
+  "de": "Nichts gefunden",
+  "plural": false
+ },
+ "one_link_per_line": {
+  "en": "One link per line",
+  "de": "Ein Link pro Zeile",
+  "plural": false
+ },
+ "n_of_m_added": {
+  "en": "%1$d of %2$d added",
+  "de": "%1$d von %2$d hinzugefügt",
+  "plural": false
+ },
+ "stars_title": {
+  "en": "Import GitHub stars",
+  "de": "GitHub-Sterne importieren",
+  "plural": false
+ },
+ "gh_user": {
+  "en": "GitHub username",
+  "de": "GitHub-Benutzername",
+  "plural": false
+ },
+ "load": {
+  "en": "Load",
+  "de": "Laden",
+  "plural": false
+ },
+ "stars_result": {
+  "en": "%1$d of %2$d added (repos without APK releases are skipped)",
+  "de": "%1$d von %2$d hinzugefügt (Repos ohne APK-Release werden übersprungen)",
+  "plural": false
+ },
+ "adding": {
+  "en": "Adding …",
+  "de": "Füge hinzu …",
+  "plural": false
+ },
+ "add_n_repos": {
+  "en": {
+   "one": "Add %d repo",
+   "other": "Add %d repos"
+  },
+  "de": {
+   "one": "%d Repo hinzufügen",
+   "other": "%d Repos hinzufügen"
+  },
+  "plural": true
+ },
+ "do_import": {
+  "en": "Import",
+  "de": "Import",
+  "plural": false
+ },
+ "close": {
+  "en": "Close",
+  "de": "Schließen",
+  "plural": false
+ },
+ "downloading": {
+  "en": "Downloading …",
+  "de": "Lade herunter …",
+  "plural": false
+ },
+ "download_failed": {
+  "en": "Download failed: %1$s",
+  "de": "Download fehlgeschlagen: %1$s",
+  "plural": false
+ },
+ "by_author_source": {
+  "en": "by %1$s · %2$s",
+  "de": "von %1$s · %2$s",
+  "plural": false
+ },
+ "unsupported_source": {
+  "en": "unsupported source",
+  "de": "nicht unterstützte Quelle",
+  "plural": false
+ },
+ "st_update": {
+  "en": "Update available",
+  "de": "Update verfügbar",
+  "plural": false
+ },
+ "st_uptodate": {
+  "en": "Up to date",
+  "de": "Aktuell",
+  "plural": false
+ },
+ "st_notinstalled": {
+  "en": "Not installed",
+  "de": "Nicht installiert",
+  "plural": false
+ },
+ "st_unknown": {
+  "en": "Version not comparable",
+  "de": "Version nicht vergleichbar",
+  "plural": false
+ },
+ "latest_v": {
+  "en": "Latest: %1$s",
+  "de": "Neueste: %1$s",
+  "plural": false
+ },
+ "installed_v": {
+  "en": "Installed: %1$s",
+  "de": "Installiert: %1$s",
+  "plural": false
+ },
+ "apkmirror_hint": {
+  "en": "APKMirror doesn’t allow automatic downloads: tap the matching variant in the browser – ShizuBox then installs it directly.",
+  "de": "APKMirror erlaubt keine automatischen Downloads: Im Browser die passende Variante antippen – ShizuBox installiert sie dann direkt.",
+  "plural": false
+ },
+ "load_apkmirror": {
+  "en": "Download on APKMirror",
+  "de": "Auf APKMirror laden",
+  "plural": false
+ },
+ "update": {
+  "en": "Update",
+  "de": "Aktualisieren",
+  "plural": false
+ },
+ "reinstall": {
+  "en": "Reinstall",
+  "de": "Neu installieren",
+  "plural": false
+ },
+ "open_source": {
+  "en": "Open source page",
+  "de": "Quelle öffnen",
+  "plural": false
+ },
+ "mark_current": {
+  "en": "Mark as up to date",
+  "de": "Als aktuell markieren",
+  "plural": false
+ },
+ "apk_choice": {
+  "en": "APK choice",
+  "de": "APK-Auswahl",
+  "plural": false
+ },
+ "changes": {
+  "en": "Changes",
+  "de": "Änderungen",
+  "plural": false
+ },
+ "include_pre": {
+  "en": "Include pre-releases",
+  "de": "Vorabversionen einbeziehen",
+  "plural": false
+ },
+ "apk_filter": {
+  "en": "APK filter (regex)",
+  "de": "APK-Filter (Regex)",
+  "plural": false
+ },
+ "invert_filter": {
+  "en": "Invert filter",
+  "de": "Filter umkehren",
+  "plural": false
+ },
+ "pkg_of_installed": {
+  "en": "Package name of the installed app",
+  "de": "Paketname der installierten App",
+  "plural": false
+ },
+ "apply": {
+  "en": "Apply",
+  "de": "Übernehmen",
+  "plural": false
+ },
+ "remove": {
+  "en": "Remove",
+  "de": "Entfernen",
+  "plural": false
+ },
+ "untrack_q": {
+  "en": "Stop tracking?",
+  "de": "Nicht mehr verfolgen?",
+  "plural": false
+ },
+ "untrack_hint": {
+  "en": "The app stays installed, ShizuBox just stops checking for updates.",
+  "de": "Die App bleibt installiert, ShizuBox prüft nur keine Updates mehr.",
+  "plural": false
+ },
+ "cancel": {
+  "en": "Cancel",
+  "de": "Abbrechen",
+  "plural": false
+ },
+ "select_apps": {
+  "en": "Select apps",
+  "de": "Apps auswählen",
+  "plural": false
+ },
+ "user_apps": {
+  "en": "User apps",
+  "de": "Benutzer-Apps",
+  "plural": false
+ },
+ "system_apps": {
+  "en": "System apps",
+  "de": "System-Apps",
+  "plural": false
+ },
+ "all": {
+  "en": "All",
+  "de": "Alle",
+  "plural": false
+ },
+ "skip_tracked": {
+  "en": "Skip apps already tracked",
+  "de": "Schon überwachte Apps überspringen",
+  "plural": false
+ },
+ "selected_n": {
+  "en": "Selected: %1$d/%2$d",
+  "de": "Ausgewählt: %1$d/%2$d",
+  "plural": false
+ },
+ "select_all": {
+  "en": "Select all",
+  "de": "Alle auswählen",
+  "plural": false
+ },
+ "select_none": {
+  "en": "Clear selection",
+  "de": "Auswahl aufheben",
+  "plural": false
+ },
+ "checking_dots": {
+  "en": "Checking …",
+  "de": "Überprüfe …",
+  "plural": false
+ },
+ "checking_source": {
+  "en": "Checking %1$s …",
+  "de": "Überprüfe %1$s …",
+  "plural": false
+ },
+ "pending": {
+  "en": "Pending",
+  "de": "Ausstehend",
+  "plural": false
+ },
+ "searched_n": {
+  "en": "%1$d/%2$d searched",
+  "de": "%1$d/%2$d durchsucht",
+  "plural": false
+ },
+ "cancel_search": {
+  "en": "Cancel search",
+  "de": "Suche abbrechen",
+  "plural": false
+ },
+ "import_results": {
+  "en": "Import results",
+  "de": "Ergebnisse importieren",
+  "plural": false
+ },
+ "found": {
+  "en": "Found",
+  "de": "Gefunden",
+  "plural": false
+ },
+ "not_found_cap": {
+  "en": "Not found",
+  "de": "Nicht gefunden",
+  "plural": false
+ },
+ "cancelled": {
+  "en": "Cancelled",
+  "de": "Abgebrochen",
+  "plural": false
+ },
+ "found_n": {
+  "en": "Found (%1$d)",
+  "de": "Gefunden (%1$d)",
+  "plural": false
+ },
+ "add_found": {
+  "en": {
+   "one": "Add %d found app",
+   "other": "Add %d found apps"
+  },
+  "de": {
+   "one": "Füge %d gefundene App hinzu",
+   "other": "Füge %d gefundene Apps hinzu"
+  },
+  "plural": true
+ },
+ "saved_ok": {
+  "en": "Saved ✓",
+  "de": "Gespeichert ✓",
+  "plural": false
+ },
+ "extract_failed": {
+  "en": "⚠ Extracting failed: %1$s",
+  "de": "⚠ Extrahieren fehlgeschlagen: %1$s",
+  "plural": false
+ },
+ "loading": {
+  "en": "Loading …",
+  "de": "Lade …",
+  "plural": false
+ },
+ "system": {
+  "en": "System",
+  "de": "System",
+  "plural": false
+ },
+ "removed_for_user": {
+  "en": "Removed for this user",
+  "de": "Für diesen Nutzer entfernt",
+  "plural": false
+ },
+ "frozen_desc": {
+  "en": "Frozen – the app is disabled and hidden",
+  "de": "Eingefroren – die App ist deaktiviert und unsichtbar",
+  "plural": false
+ },
+ "active": {
+  "en": "Active",
+  "de": "Aktiv",
+  "plural": false
+ },
+ "restore": {
+  "en": "Restore",
+  "de": "Wiederherstellen",
+  "plural": false
+ },
+ "unfreeze": {
+  "en": "Unfreeze",
+  "de": "Auftauen",
+  "plural": false
+ },
+ "freeze": {
+  "en": "Freeze",
+  "de": "Einfrieren",
+  "plural": false
+ },
+ "force_stop": {
+  "en": "Force stop",
+  "de": "Beenden",
+  "plural": false
+ },
+ "uninstall": {
+  "en": "Uninstall",
+  "de": "Deinstallieren",
+  "plural": false
+ },
+ "app_info": {
+  "en": "App info",
+  "de": "App-Info",
+  "plural": false
+ },
+ "share_apk": {
+  "en": "Share APK",
+  "de": "APK teilen",
+  "plural": false
+ },
+ "extract": {
+  "en": "Extract",
+  "de": "Extrahieren",
+  "plural": false
+ },
+ "system_freeze_only": {
+  "en": "On Android 17 system apps can only be frozen without root, not removed.",
+  "de": "System-Apps lassen sich unter Android 17 ohne Root nur einfrieren, nicht entfernen.",
+  "plural": false
+ },
+ "vt_check": {
+  "en": "Check on VirusTotal",
+  "de": "VirusTotal prüfen",
+  "plural": false
+ },
+ "vt_check_sub": {
+  "en": "Checks the installed APK by its checksum.",
+  "de": "Prüft die installierte APK anhand ihrer Prüfsumme.",
+  "plural": false
+ },
+ "vt_check_sub_split": {
+  "en": "Checks the installed base APK by its checksum.",
+  "de": "Prüft die installierte Basis-APK anhand ihrer Prüfsumme.",
+  "plural": false
+ },
+ "in_profiles": {
+  "en": "In profiles",
+  "de": "In Profilen",
+  "plural": false
+ },
+ "battery": {
+  "en": "Battery",
+  "de": "Akku",
+  "plural": false
+ },
+ "standby_group": {
+  "en": "%1$s · Standby bucket: %2$s",
+  "de": "%1$s · Standby-Gruppe: %2$s",
+  "plural": false
+ },
+ "permissions": {
+  "en": "Permissions",
+  "de": "Berechtigungen",
+  "plural": false
+ },
+ "no_perms": {
+  "en": "No changeable permissions",
+  "de": "Keine änderbaren Berechtigungen",
+  "plural": false
+ },
+ "less": {
+  "en": "Less",
+  "de": "Weniger",
+  "plural": false
+ },
+ "all_n": {
+  "en": "All %1$d",
+  "de": "Alle %1$d",
+  "plural": false
+ },
+ "appops_hint": {
+  "en": "Finer rights below the permissions. allow = allowed, ignore = silently denied.",
+  "de": "Feinere Rechte unterhalb der Berechtigungen. allow = erlaubt, ignore = still verweigert.",
+  "plural": false
+ },
+ "uninstall_q": {
+  "en": "Uninstall?",
+  "de": "Deinstallieren?",
+  "plural": false
+ },
+ "uninstall_hint": {
+  "en": "%1$s will be removed with all its data.",
+  "de": "%1$s wird mit allen Daten entfernt.",
+  "plural": false
+ },
+ "f_user": {
+  "en": "User",
+  "de": "Nutzer",
+  "plural": false
+ },
+ "f_frozen": {
+  "en": "Frozen",
+  "de": "Eingefroren",
+  "plural": false
+ },
+ "s_name": {
+  "en": "Name",
+  "de": "Name",
+  "plural": false
+ },
+ "s_size": {
+  "en": "Size",
+  "de": "Größe",
+  "plural": false
+ },
+ "s_installed": {
+  "en": "Installed",
+  "de": "Installiert",
+  "plural": false
+ },
+ "s_updated": {
+  "en": "Updated",
+  "de": "Aktualisiert",
+  "plural": false
+ },
+ "apps": {
+  "en": "Apps",
+  "de": "Apps",
+  "plural": false
+ },
+ "apps_sub": {
+  "en": "Freeze, permissions, AppOps, battery",
+  "de": "Einfrieren, Berechtigungen, AppOps, Akku",
+  "plural": false
+ },
+ "profiles": {
+  "en": "Profiles",
+  "de": "Profile",
+  "plural": false
+ },
+ "shizuku_for_changes": {
+  "en": "Shizuku must be connected to make changes.",
+  "de": "Shizuku muss verbunden sein, um Änderungen vorzunehmen.",
+  "plural": false
+ },
+ "n_apps_size": {
+  "en": {
+   "one": "%1$d app · %2$s",
+   "other": "%1$d apps · %2$s"
+  },
+  "de": {
+   "one": "%1$d App · %2$s",
+   "other": "%1$d Apps · %2$s"
+  },
+  "plural": true
+ },
+ "loading_apps": {
+  "en": "Loading apps …",
+  "de": "Lade Apps …",
+  "plural": false
+ },
+ "removed": {
+  "en": "Removed",
+  "de": "Entfernt",
+  "plural": false
+ },
+ "installed_on": {
+  "en": "installed %1$s",
+  "de": "%1$s installiert",
+  "plural": false
+ },
+ "updated_on": {
+  "en": " · updated %1$s",
+  "de": " · aktualisiert %1$s",
+  "plural": false
+ },
+ "profiles_hint": {
+  "en": "Groups of apps that are frozen and unfrozen together. Add apps in the app details.",
+  "de": "Gruppen von Apps, die zusammen eingefroren und aufgetaut werden. Apps fügst du in den App-Details hinzu.",
+  "plural": false
+ },
+ "new_profile": {
+  "en": "New profile",
+  "de": "Neues Profil",
+  "plural": false
+ },
+ "profile_example": {
+  "en": "e.g. Social media",
+  "de": "z. B. Social Media",
+  "plural": false
+ },
+ "create": {
+  "en": "Create",
+  "de": "Anlegen",
+  "plural": false
+ },
+ "no_apps_yet": {
+  "en": "No apps yet",
+  "de": "Noch keine Apps",
+  "plural": false
+ },
+ "delete": {
+  "en": "Delete",
+  "de": "Löschen",
+  "plural": false
+ },
+ "unfreeze_all": {
+  "en": "Unfreeze all",
+  "de": "Alle auftauen",
+  "plural": false
+ },
+ "freeze_all": {
+  "en": "Freeze all",
+  "de": "Alle einfrieren",
+  "plural": false
+ },
+ "delete_profile_q": {
+  "en": "Delete profile?",
+  "de": "Profil löschen?",
+  "plural": false
+ },
+ "delete_profile_hint": {
+  "en": "The apps stay as they are.",
+  "de": "Die Apps bleiben, wie sie gerade sind.",
+  "plural": false
+ },
+ "bm_unrestricted": {
+  "en": "Unrestricted",
+  "de": "Uneingeschränkt",
+  "plural": false
+ },
+ "bm_unrestricted_sub": {
+  "en": "May do anything in the background, no battery optimization",
+  "de": "Darf im Hintergrund alles, keine Akku-Optimierung",
+  "plural": false
+ },
+ "bm_optimized": {
+  "en": "Optimized",
+  "de": "Optimiert",
+  "plural": false
+ },
+ "bm_optimized_sub": {
+  "en": "Android default",
+  "de": "Android-Standard",
+  "plural": false
+ },
+ "bm_restricted": {
+  "en": "Restricted",
+  "de": "Eingeschränkt",
+  "plural": false
+ },
+ "bm_restricted_sub": {
+  "en": "No background activity",
+  "de": "Keine Hintergrundaktivität",
+  "plural": false
+ },
+ "bk_exempt": {
+  "en": "Exempted",
+  "de": "Ausgenommen",
+  "plural": false
+ },
+ "bk_active": {
+  "en": "Active",
+  "de": "Aktiv",
+  "plural": false
+ },
+ "bk_working": {
+  "en": "Working set",
+  "de": "Arbeitssatz",
+  "plural": false
+ },
+ "bk_frequent": {
+  "en": "Frequent",
+  "de": "Häufig",
+  "plural": false
+ },
+ "bk_rare": {
+  "en": "Rare",
+  "de": "Selten",
+  "plural": false
+ },
+ "bk_restricted": {
+  "en": "Restricted",
+  "de": "Eingeschränkt",
+  "plural": false
+ },
+ "bk_never": {
+  "en": "Never",
+  "de": "Nie",
+  "plural": false
+ },
+ "open_play": {
+  "en": "Open in Play Store",
+  "de": "Im Play Store öffnen",
+  "plural": false
+ },
+ "open_fdroid": {
+  "en": "Open in F-Droid",
+  "de": "In F-Droid öffnen",
+  "plural": false
+ },
+ "open_store": {
+  "en": "Open in store",
+  "de": "Im Store öffnen",
+  "plural": false
+ },
+ "sys_sub": {
+  "en": "Gaming, installing, logs",
+  "de": "Gaming, Installieren, Logs",
+  "plural": false
+ },
+ "shizuku_must": {
+  "en": "Shizuku must be connected.",
+  "de": "Shizuku muss verbunden sein.",
+  "plural": false
+ },
+ "logcat_sub": {
+  "en": "View the system log, filter by app and level",
+  "de": "Systemprotokoll ansehen, nach App und Stufe filtern",
+  "plural": false
+ },
+ "gaming": {
+  "en": "Gaming mode",
+  "de": "Gaming-Modus",
+  "plural": false
+ },
+ "gaming_active": {
+  "en": "Active – restored exactly when switched off",
+  "de": "Aktiv – wird beim Ausschalten exakt zurückgesetzt",
+  "plural": false
+ },
+ "gaming_sub": {
+  "en": "Fewer interruptions, maximum smoothness",
+  "de": "Weniger Störungen, maximale Flüssigkeit",
+  "plural": false
+ },
+ "g_block": {
+  "en": "Block notifications (Do not disturb)",
+  "de": "Benachrichtigungen blockieren (Bitte nicht stören)",
+  "plural": false
+ },
+ "g_headsup": {
+  "en": "No pop-up notifications",
+  "de": "Keine Pop-up-Benachrichtigungen",
+  "plural": false
+ },
+ "g_refresh": {
+  "en": "Always maximum refresh rate",
+  "de": "Immer maximale Bildwiederholrate",
+  "plural": false
+ },
+ "g_brightness": {
+  "en": "Auto brightness off",
+  "de": "Automatische Helligkeit aus",
+  "plural": false
+ },
+ "g_kill": {
+  "en": "Kill background apps on start",
+  "de": "Hintergrund-Apps beim Start beenden",
+  "plural": false
+ },
+ "launch_games": {
+  "en": "Launch games",
+  "de": "Spiele starten",
+  "plural": false
+ },
+ "apk_installer": {
+  "en": "APK installer",
+  "de": "APK-Installer",
+  "plural": false
+ },
+ "universal": {
+  "en": "Universal",
+  "de": "Universal",
+  "plural": false
+ },
+ "quick": {
+  "en": "Quick",
+  "de": "Schnell",
+  "plural": false
+ },
+ "universal_hint": {
+  "en": "Universal Installer: shows app info, version and signature first and picks only the matching parts of APKS/XAPK/APKM. Also via “Open with ShizuBox” in your file manager.",
+  "de": "Universal Installer: zeigt App-Infos, Version und Signatur vorab, wählt bei APKS/XAPK/APKM nur die passenden Teile. Auch über „Öffnen mit ShizuBox“ im Dateimanager.",
+  "plural": false
+ },
+ "quick_hint": {
+  "en": "Installs instantly without preview. Several split APKs at once, too.",
+  "de": "Installiert sofort ohne Vorschau. Auch mehrere Split-APKs auf einmal.",
+  "plural": false
+ },
+ "pick_file": {
+  "en": "Choose file",
+  "de": "Datei auswählen",
+  "plural": false
+ },
+ "ui_based_on": {
+  "en": "Based on Universal Installer by pass-with-high-score (GPL-3.0)",
+  "de": "Basiert auf Universal Installer von pass-with-high-score (GPL-3.0)",
+  "plural": false
+ },
+ "pick_apk": {
+  "en": "Choose APK",
+  "de": "APK auswählen",
+  "plural": false
+ },
+ "installed_ok": {
+  "en": "Installed ✓",
+  "de": "Installiert ✓",
+  "plural": false
+ },
+ "error_msg": {
+  "en": "⚠ Error: %1$s",
+  "de": "⚠ Fehler: %1$s",
+  "plural": false
+ },
+ "file_unreadable": {
+  "en": "File not readable",
+  "de": "Datei nicht lesbar",
+  "plural": false
+ },
+ "vt_scan": {
+  "en": "Scan with VirusTotal",
+  "de": "Mit VirusTotal prüfen",
+  "plural": false
+ },
+ "vt_hashing": {
+  "en": "Checking checksum …",
+  "de": "Prüfe Prüfsumme …",
+  "plural": false
+ },
+ "vt_uploading": {
+  "en": "Uploading … %1$d %%",
+  "de": "Lade hoch … %1$d %%",
+  "plural": false
+ },
+ "vt_queued": {
+  "en": "In the queue …",
+  "de": "In der Warteschlange …",
+  "plural": false
+ },
+ "vt_analyzing": {
+  "en": "Being checked by the scanners …",
+  "de": "Wird von den Scannern geprüft …",
+  "plural": false
+ },
+ "vt_need_key": {
+  "en": "A free VirusTotal API key is required for the scan.",
+  "de": "Für den Scan brauchst du einen kostenlosen VirusTotal-API-Schlüssel.",
+  "plural": false
+ },
+ "vt_enter_key": {
+  "en": "Enter key",
+  "de": "Schlüssel eingeben",
+  "plural": false
+ },
+ "vt_bad_key": {
+  "en": "API key invalid",
+  "de": "API-Schlüssel ungültig",
+  "plural": false
+ },
+ "vt_change_key": {
+  "en": "Change key",
+  "de": "Schlüssel ändern",
+  "plural": false
+ },
+ "vt_limit": {
+  "en": "Limit reached (4 requests per minute)",
+  "de": "Limit erreicht (4 Anfragen pro Minute)",
+  "plural": false
+ },
+ "retry": {
+  "en": "Try again",
+  "de": "Erneut versuchen",
+  "plural": false
+ },
+ "vt_not_analyzed": {
+  "en": "VirusTotal knows the file but hasn’t finished analysing it.",
+  "de": "VirusTotal kennt die Datei, hat sie aber noch nicht fertig analysiert.",
+  "plural": false
+ },
+ "recheck": {
+  "en": "Check again",
+  "de": "Erneut prüfen",
+  "plural": false
+ },
+ "vt_too_large": {
+  "en": "File too large for VirusTotal (max. 650 MB)",
+  "de": "Datei zu groß für VirusTotal (max. 650 MB)",
+  "plural": false
+ },
+ "vt_unknown_file": {
+  "en": "VirusTotal doesn’t know this file yet.",
+  "de": "Diese Datei kennt VirusTotal noch nicht.",
+  "plural": false
+ },
+ "vt_upload": {
+  "en": "Upload & scan",
+  "de": "Hochladen & scannen",
+  "plural": false
+ },
+ "vt_clean": {
+  "en": "Clean · 0 of %1$d scanners",
+  "de": "Sauber · 0 von %1$d Scannern",
+  "plural": false
+ },
+ "vt_suspicious": {
+  "en": "Suspicious · %1$d of %2$d scanners",
+  "de": "Verdächtig · %1$d von %2$d Scannern",
+  "plural": false
+ },
+ "vt_malicious": {
+  "en": "Malicious · %1$d of %2$d scanners",
+  "de": "Schädlich · %1$d von %2$d Scannern",
+  "plural": false
+ },
+ "vt_hide_hits": {
+  "en": "Hide detections",
+  "de": "Treffer ausblenden",
+  "plural": false
+ },
+ "vt_show_hits": {
+  "en": "Show detections",
+  "de": "Treffer anzeigen",
+  "plural": false
+ },
+ "vt_report": {
+  "en": "Open report",
+  "de": "Bericht öffnen",
+  "plural": false
+ },
+ "vt_key_title": {
+  "en": "VirusTotal API key",
+  "de": "VirusTotal-API-Schlüssel",
+  "plural": false
+ },
+ "vt_key_help": {
+  "en": "Free: sign in at virustotal.com, then Profile → API Key. The key stays on this phone only.",
+  "de": "Kostenlos: auf virustotal.com anmelden, dann Profil → API Key. Der Schlüssel bleibt nur auf diesem Handy.",
+  "plural": false
+ },
+ "vt_open_site": {
+  "en": "Open virustotal.com",
+  "de": "virustotal.com öffnen",
+  "plural": false
+ },
+ "api_key_ph": {
+  "en": "API key",
+  "de": "API-Schlüssel",
+  "plural": false
+ },
+ "vt_upload_failed": {
+  "en": "Upload failed",
+  "de": "Upload fehlgeschlagen",
+  "plural": false
+ },
+ "vt_unknown_status": {
+  "en": "Unknown status",
+  "de": "Unbekannter Status",
+  "plural": false
+ },
+ "vt_too_long": {
+  "en": "Analysis takes too long – check again later",
+  "de": "Analyse dauert zu lange – später erneut prüfen",
+  "plural": false
+ },
+ "no_internet": {
+  "en": "No internet connection",
+  "de": "Keine Internetverbindung",
+  "plural": false
+ },
+ "lines_copied": {
+  "en": {
+   "one": "%d line copied",
+   "other": "%d lines copied"
+  },
+  "de": {
+   "one": "%d Zeile kopiert",
+   "other": "%d Zeilen kopiert"
+  },
+  "plural": true
+ },
+ "copy": {
+  "en": "Copy",
+  "de": "Kopieren",
+  "plural": false
+ },
+ "refresh": {
+  "en": "Refresh",
+  "de": "Aktualisieren",
+  "plural": false
+ },
+ "live": {
+  "en": "Live",
+  "de": "Live",
+  "plural": false
+ },
+ "package_": {
+  "en": "Package",
+  "de": "Paket",
+  "plural": false
+ },
+ "proc_not_running": {
+  "en": "Process %1$s is not running right now.",
+  "de": "Prozess %1$s läuft gerade nicht.",
+  "plural": false
+ },
+ "file_unreadable_n": {
+  "en": "File not readable: %1$s",
+  "de": "Datei nicht lesbar: %1$s",
+  "plural": false
+ },
+ "copy_failed": {
+  "en": "Copying failed",
+  "de": "Kopieren fehlgeschlagen",
+  "plural": false
+ },
+ "no_apk_found": {
+  "en": "No APK found",
+  "de": "Keine APK gefunden",
+  "plural": false
+ },
+ "installing": {
+  "en": "Installing …",
+  "de": "Installiere …",
+  "plural": false
+ },
+ "inst_failed": {
+  "en": "Installation failed",
+  "de": "Installation fehlgeschlagen",
+  "plural": false
+ },
+ "inst_conflict": {
+  "en": "Conflict with installed app",
+  "de": "Konflikt mit installierter App",
+  "plural": false
+ },
+ "inst_conflict_hint": {
+  "en": "Usually a different signature. Uninstall the installed version first.",
+  "de": "Meist eine andere Signatur. Die installierte Version zuerst deinstallieren.",
+  "plural": false
+ },
+ "inst_incompatible": {
+  "en": "Not compatible",
+  "de": "Nicht kompatibel",
+  "plural": false
+ },
+ "inst_abi": {
+  "en": "The app isn’t built for this phone’s CPU.",
+  "de": "Die App ist nicht für die CPU dieses Handys gebaut.",
+  "plural": false
+ },
+ "inst_unsupported": {
+  "en": "Android version or device not supported. %1$s",
+  "de": "Android-Version oder Gerät wird nicht unterstützt. %1$s",
+  "plural": false
+ },
+ "inst_invalid": {
+  "en": "Invalid file",
+  "de": "Ungültige Datei",
+  "plural": false
+ },
+ "inst_invalid_hint": {
+  "en": "The APK is damaged or incomplete. %1$s",
+  "de": "Die APK ist beschädigt oder unvollständig. %1$s",
+  "plural": false
+ },
+ "inst_storage": {
+  "en": "Not enough storage",
+  "de": "Zu wenig Speicher",
+  "plural": false
+ },
+ "inst_storage_hint": {
+  "en": "Free up space and try again.",
+  "de": "Speicher freigeben und erneut versuchen.",
+  "plural": false
+ },
+ "inst_blocked": {
+  "en": "Blocked",
+  "de": "Blockiert",
+  "plural": false
+ },
+ "inst_blocked_hint": {
+  "en": "The system prevented the installation. %1$s",
+  "de": "Das System hat die Installation verhindert. %1$s",
+  "plural": false
+ },
+ "inst_aborted": {
+  "en": "Aborted",
+  "de": "Abgebrochen",
+  "plural": false
+ },
+ "inst_aborted_hint": {
+  "en": "The installation was aborted.",
+  "de": "Die Installation wurde abgebrochen.",
+  "plural": false
+ },
+ "inst_timeout": {
+  "en": "Timeout",
+  "de": "Zeitüberschreitung",
+  "plural": false
+ },
+ "inst_downgrade_hint": {
+  "en": "Older version: turn on “Allow downgrade”.",
+  "de": "Ältere Version: „Downgrade erlauben“ einschalten.",
+  "plural": false
+ },
+ "unknown_error": {
+  "en": "Unknown error",
+  "de": "Unbekannter Fehler",
+  "plural": false
+ },
+ "file_unreadable_long": {
+  "en": "The file could not be read",
+  "de": "Datei konnte nicht gelesen werden",
+  "plural": false
+ },
+ "reading_file": {
+  "en": "Reading file …",
+  "de": "Lese Datei …",
+  "plural": false
+ },
+ "sig_mismatch_warn": {
+  "en": "Different signature than the installed app – the update will fail. Uninstall the installed version first.",
+  "de": "Andere Signatur als die installierte App – das Update wird fehlschlagen. Erst die installierte Version deinstallieren.",
+  "plural": false
+ },
+ "via_system_dialog": {
+  "en": "Installing via the system dialog",
+  "de": "Installation über den System-Dialog",
+  "plural": false
+ },
+ "via_system_set": {
+  "en": "Set this way (Settings → Installer).",
+  "de": "So eingestellt (Einstellungen → Installer).",
+  "plural": false
+ },
+ "via_system_noshz": {
+  "en": "Shizuku isn’t connected – Android asks once. Downgrade and permission options need Shizuku.",
+  "de": "Shizuku ist nicht verbunden – Android fragt einmal nach. Downgrade und Berechtigungs-Optionen gehen nur mit Shizuku.",
+  "plural": false
+ },
+ "blocked_sig": {
+  "en": "Blocked: different signature",
+  "de": "Blockiert: andere Signatur",
+  "plural": false
+ },
+ "shizuku_not_conn": {
+  "en": "Shizuku not connected",
+  "de": "Shizuku nicht verbunden",
+  "plural": false
+ },
+ "install_downgrade": {
+  "en": "Install downgrade",
+  "de": "Downgrade installieren",
+  "plural": false
+ },
+ "system_dialog_sfx": {
+  "en": " (system dialog)",
+  "de": " (System-Dialog)",
+  "plural": false
+ },
+ "parts_sfx": {
+  "en": " (%1$d parts, %2$s)",
+  "de": " (%1$d Teile, %2$s)",
+  "plural": false
+ },
+ "app_installed": {
+  "en": "%1$s installed",
+  "de": "%1$s installiert",
+  "plural": false
+ },
+ "open": {
+  "en": "Open",
+  "de": "Öffnen",
+  "plural": false
+ },
+ "v_new": {
+  "en": "New · %1$s",
+  "de": "Neu · %1$s",
+  "plural": false
+ },
+ "v_same": {
+  "en": "Same version · %1$s",
+  "de": "Gleiche Version · %1$s",
+  "plural": false
+ },
+ "options": {
+  "en": "Options",
+  "de": "Optionen",
+  "plural": false
+ },
+ "splits": {
+  "en": "Parts (splits)",
+  "de": "Teile (Splits)",
+  "plural": false
+ },
+ "splits_hint": {
+  "en": "Only what this phone needs is preselected: matching CPU, screen density and your languages.",
+  "de": "Vorausgewählt ist nur, was dieses Handy braucht: passende CPU, Bildschirmdichte und deine Sprachen.",
+  "plural": false
+ },
+ "sp_base": {
+  "en": "Base",
+  "de": "Basis",
+  "plural": false
+ },
+ "sp_libs": {
+  "en": "CPU architecture",
+  "de": "CPU-Architektur",
+  "plural": false
+ },
+ "sp_locale": {
+  "en": "Language",
+  "de": "Sprache",
+  "plural": false
+ },
+ "sp_density": {
+  "en": "Screen density",
+  "de": "Bildschirmdichte",
+  "plural": false
+ },
+ "sp_feature": {
+  "en": "Feature",
+  "de": "Feature",
+  "plural": false
+ },
+ "sp_other": {
+  "en": "Other",
+  "de": "Sonstige",
+  "plural": false
+ },
+ "e_404": {
+  "en": "Not found (404) – check the link",
+  "de": "Nicht gefunden (404) – Link prüfen",
+  "plural": false
+ },
+ "e_gh_limit": {
+  "en": "GitHub limit reached (60 requests/hour). Enter a GitHub token in the settings.",
+  "de": "GitHub-Limit erreicht (60 Abfragen/Stunde). In den Einstellungen einen GitHub-Token eintragen.",
+  "plural": false
+ },
+ "e_denied": {
+  "en": "Access denied (%1$d)",
+  "de": "Zugriff verweigert (%1$d)",
+  "plural": false
+ },
+ "e_no_releases": {
+  "en": "No releases found",
+  "de": "Keine Releases gefunden",
+  "plural": false
+ },
+ "e_no_apk_release": {
+  "en": "No release with a matching APK",
+  "de": "Kein Release mit passender APK",
+  "plural": false
+ },
+ "e_pre_excluded": {
+  "en": " (pre-releases excluded)",
+  "de": " (Vorabversionen ausgeschlossen)",
+  "plural": false
+ },
+ "e_no_pkg": {
+  "en": "Package name not in the link",
+  "de": "Paketname nicht im Link",
+  "plural": false
+ },
+ "e_no_versions": {
+  "en": "No versions",
+  "de": "Keine Versionen",
+  "plural": false
+ },
+ "e_no_versions_apkm": {
+  "en": "No versions in the APKMirror feed",
+  "de": "Keine Versionen im APKMirror-Feed",
+  "plural": false
+ },
+ "e_no_version_device": {
+  "en": "No version for this device",
+  "de": "Keine Version für dieses Gerät",
+  "plural": false
+ },
+ "e_unsupported": {
+  "en": "This source isn’t supported (yet)",
+  "de": "Diese Quelle wird (noch) nicht unterstützt",
+  "plural": false
+ },
+ "e_tracked": {
+  "en": "Already tracked: %1$s",
+  "de": "Wird schon verfolgt: %1$s",
+  "plural": false
+ },
+ "e_no_apk_rel": {
+  "en": "No release with an APK found",
+  "de": "Kein Release mit APK gefunden",
+  "plural": false
+ },
+ "e_source_unsupported": {
+  "en": "Source not supported",
+  "de": "Quelle wird nicht unterstützt",
+  "plural": false
+ },
+ "e_no_apk": {
+  "en": "No APK available",
+  "de": "Keine APK verfügbar",
+  "plural": false
+ },
+ "e_dl_http": {
+  "en": "Download failed (HTTP %1$d)",
+  "de": "Download fehlgeschlagen (HTTP %1$d)",
+  "plural": false
+ },
+ "e_redirects": {
+  "en": "Too many redirects",
+  "de": "Zu viele Weiterleitungen",
+  "plural": false
+ },
+ "h_apkm": {
+  "en": "only via the APKMirror page",
+  "de": "nur über APKMirror-Seite",
+  "plural": false
+ },
+ "h_sig": {
+  "en": "different signature than the installed app",
+  "de": "andere Signatur als die installierte App",
+  "plural": false
+ },
+ "h_malicious": {
+  "en": "malicious (%1$d)",
+  "de": "schädlich (%1$d)",
+  "plural": false
+ },
+ "h_suspicious": {
+  "en": "suspicious (%1$d)",
+  "de": "verdächtig (%1$d)",
+  "plural": false
+ },
+ "h_unknown": {
+  "en": "file not yet known",
+  "de": "Datei noch unbekannt",
+  "plural": false
+ },
+ "h_uncheckable": {
+  "en": "not checkable",
+  "de": "nicht prüfbar",
+  "plural": false
+ },
+ "w_preparing": {
+  "en": "Preparing updates …",
+  "de": "Bereite Updates vor …",
+  "plural": false
+ },
+ "w_updating": {
+  "en": "Updating apps",
+  "de": "Apps werden aktualisiert",
+  "plural": false
+ },
+ "ch_progress": {
+  "en": "Update progress",
+  "de": "Update-Fortschritt",
+  "plural": false
+ },
+ "ch_updates": {
+  "en": "App updates",
+  "de": "App-Updates",
+  "plural": false
+ },
+ "w_updated": {
+  "en": {
+   "one": "%d app updated",
+   "other": "%d apps updated"
+  },
+  "de": {
+   "one": "%d App aktualisiert",
+   "other": "%d Apps aktualisiert"
+  },
+  "plural": true
+ },
+ "w_not_sfx": {
+  "en": ", %1$d not",
+  "de": ", %1$d nicht",
+  "plural": false
+ },
+ "w_held": {
+  "en": {
+   "one": "%d update not installed",
+   "other": "%d updates not installed"
+  },
+  "de": {
+   "one": "%d Update nicht installiert",
+   "other": "%d Updates nicht installiert"
+  },
+  "plural": true
+ },
+ "w_pending": {
+  "en": {
+   "one": "%d update available",
+   "other": "%d updates available"
+  },
+  "de": {
+   "one": "%d Update verfügbar",
+   "other": "%d Updates verfügbar"
+  },
+  "plural": true
+ },
+ "w_not_installed": {
+  "en": "Not installed:",
+  "de": "Nicht installiert:",
+  "plural": false
+ },
+ "unpacking": {
+  "en": "Unpacking %1$s …",
+  "de": "Entpacke %1$s …",
+  "plural": false
+ },
+ "copying": {
+  "en": "Copying %1$s …",
+  "de": "Kopiere %1$s …",
+  "plural": false
+ },
+ "base_apk": {
+  "en": "Base APK",
+  "de": "Basis-APK",
+  "plural": false
+ },
+ "set_language": {
+  "en": "Language",
+  "de": "Sprache",
+  "plural": false
+ },
+ "lang_system": {
+  "en": "System default",
+  "de": "Systemstandard",
+  "plural": false
+ },
+ "lang_hint": {
+  "en": "Also changeable in the Android settings under Apps → ShizuBox → Language.",
+  "de": "Auch in den Android-Einstellungen unter Apps → ShizuBox → Sprache änderbar.",
+  "plural": false
+ }
+}

@@ -15,6 +15,13 @@ import kotlinx.coroutines.launch
  */
 class DebugReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.hasExtra("strings")) {
+            // Language check without unlocking: --ez strings true
+            val app = de.emil.shizubox.Str.context
+            Log.i(TAG, "locale=${app.resources.configuration.locales} settings=${de.emil.shizubox.t(de.emil.shizubox.R.string.settings)} " +
+                "plural=${de.emil.shizubox.tp(de.emil.shizubox.R.plurals.w_pending, 3, 3)}")
+            return
+        }
         intent.getStringExtra("pkgs")?.let { pkgs ->
             // Bulk import dry run: adb shell am broadcast -n …/.updates.DebugReceiver --es pkgs a,b,c
             BulkImport.reset()

@@ -103,7 +103,7 @@ object ShizukuApkInstaller {
             is InstallFailure.Blocked -> InstallResult.Failure(t(R.string.inst_blocked), t(R.string.inst_blocked_hint, raw))
             is InstallFailure.Aborted -> InstallResult.Failure(t(R.string.inst_aborted), raw.ifBlank { t(R.string.inst_aborted_hint) })
             is InstallFailure.Timeout -> InstallResult.Failure(t(R.string.inst_timeout), t(R.string.retry))
-            is InstallFailure.Exceptional -> InstallResult.Failure("Fehler", f.exception.message ?: raw)
+            is InstallFailure.Exceptional -> InstallResult.Failure(t(R.string.error), f.exception.message ?: raw)
             is InstallFailure.Generic -> InstallResult.Failure(
                 t(R.string.inst_failed),
                 if ("DOWNGRADE" in raw) t(R.string.inst_downgrade_hint) else raw.ifBlank { t(R.string.unknown_error) },

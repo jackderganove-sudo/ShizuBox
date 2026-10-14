@@ -519,5 +519,11 @@
         <item quantity="other">%d Updates verfügbar</item>
     </plurals>
     <string name="w_not_installed">Nicht installiert:</string>
+    <string name="unpacking">Entpacke %1$s …</string>
+    <string name="copying">Kopiere %1$s …</string>
+    <string name="base_apk">Basis-APK</string>
+    <string name="set_language">Sprache</string>
+    <string name="lang_system">Systemstandard</string>
+    <string name="lang_hint">Auch in den Android-Einstellungen unter Apps → ShizuBox → Sprache änderbar.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

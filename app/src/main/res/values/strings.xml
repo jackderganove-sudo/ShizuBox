@@ -521,4 +521,10 @@
         <item quantity="other">%d updates available</item>
     </plurals>
     <string name="w_not_installed">Not installed:</string>
+    <string name="unpacking">Unpacking %1$s …</string>
+    <string name="copying">Copying %1$s …</string>
+    <string name="base_apk">Base APK</string>
+    <string name="set_language">Language</string>
+    <string name="lang_system">System default</string>
+    <string name="lang_hint">Also changeable in the Android settings under Apps → ShizuBox → Language.</string>
 </resources>

@@ -5,6 +5,8 @@
  */
 package de.emil.shizubox.installer
 
+import de.emil.shizubox.R
+import de.emil.shizubox.t
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -87,7 +89,7 @@ object ApkParser {
                     is Apk.Base -> {
                         if (versionName.isEmpty()) versionName = apk.versionName
                         baseApkUri = apk.uri
-                        splits += SplitEntry("Basis-APK", SplitType.Base, apk.uri, apk.size)
+                        splits += SplitEntry(t(R.string.base_apk), SplitType.Base, apk.uri, apk.size)
                     }
                     is Apk.Libs -> {
                         abis += apk.abi.name
@@ -108,13 +110,13 @@ object ApkParser {
                 }
             }
             if (splits.isEmpty()) {
-                splits += SplitEntry("Basis-APK", SplitType.Base, uri, fileSize)
+                splits += SplitEntry(t(R.string.base_apk), SplitType.Base, uri, fileSize)
                 baseApkUri = uri
             }
             smartPick(splits, context)
         } catch (e: Exception) {
             Log.e(TAG, "Reading splits failed", e)
-            if (splits.isEmpty()) splits += SplitEntry("Basis-APK", SplitType.Base, uri, fileSize)
+            if (splits.isEmpty()) splits += SplitEntry(t(R.string.base_apk), SplitType.Base, uri, fileSize)
         }
 
         // Full manifest info (label, icon, permissions, SDK, signature) from the base APK.

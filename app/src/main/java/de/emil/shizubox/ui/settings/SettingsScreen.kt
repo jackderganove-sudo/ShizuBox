@@ -62,6 +62,7 @@ import de.emil.shizubox.installer.VirusTotal
 import de.emil.shizubox.settings.AppSettings
 import de.emil.shizubox.settings.ColorSource
 import de.emil.shizubox.settings.InstallMethod
+import de.emil.shizubox.settings.Language
 import de.emil.shizubox.settings.Palette
 import de.emil.shizubox.settings.ThemeMode
 import de.emil.shizubox.shizuku.ShizukuManager
@@ -101,6 +102,22 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
 
         // ------------------------------------------------------------ appearance
         item { Header(t(R.string.set_appearance)) }
+        if (Language.supported) item {
+            GlassCard(Modifier.fillMaxWidth()) {
+                Text(t(R.string.set_language), style = MaterialTheme.typography.titleMedium)
+                val current = remember { Language.current(context) }
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
+                    Language.OPTIONS.forEach { (tag, name) ->
+                        FilterChip(
+                            selected = current == tag,
+                            onClick = { if (current != tag) Language.set(context, tag) },
+                            label = { Text(name ?: t(R.string.lang_system)) },
+                        )
+                    }
+                }
+                Text(t(R.string.lang_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
+            }
+        }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.set_design), style = MaterialTheme.typography.titleMedium)

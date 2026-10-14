@@ -1,0 +1,498 @@
+sec_school	Mode école
+sec_school_sub	Téléphone allumé, mais il ne se passe absolument rien
+sec_custom	Personnalisation
+sec_custom_sub	Animations, DPI, barre d’état
+sec_apps	Applis
+sec_apps_sub	Geler, autorisations, AppOps, batterie
+sec_updates	Mises à jour
+sec_updates_sub	GitHub, F-Droid, APKPure …
+sec_system	Système
+sec_system_sub	Jeu, installateur, Logcat
+settings	Paramètres
+home_tagline	Outils système via Shizuku
+updates_available	%d mise à jour disponible|||%d mises à jour disponibles
+shz_connected	Shizuku connecté
+shz_mode	Fonctionne en mode %1$s
+shz_connecting	Connexion …
+shz_connecting_sub	Démarrage du service shell
+shz_need_access	Accès requis
+shz_need_access_sub	ShizuBox a besoin de l’autorisation Shizuku
+allow	Autoriser
+shz_denied	Accès refusé
+shz_denied_sub	Autorise-le dans l’appli Shizuku sous « Applis autorisées »
+open_shizuku	Ouvrir Shizuku
+shz_not_running	Shizuku ne fonctionne pas
+shz_works_without	Les mises à jour, l’installateur et la liste des applis fonctionnent quand même
+start	Démarrer
+shz_missing	Shizuku est absent
+install	Installer
+school_restore_pending	Restauration en attente
+school_off_ends	Désactivé · se termine après %1$s
+off	Désactivé
+on	Activé
+activating	Activation …
+activate	Activer
+back	Retour
+coming_soon	Bientôt
+built_later	Sera ajouté dans une version ultérieure.
+shell_test	Test shell
+run	Exécuter
+error	Erreur
+exit_done_title	Mode école terminé
+exit_restored	Tous les paramètres ont été restaurés.
+exit_not_restored	Shizuku ne fonctionne pas, les paramètres ne peuvent donc pas encore être restaurés.
+done	Terminé
+exit_step1	Active le Wi-Fi
+exit_step1_sub	Appuie sur Wi-Fi dans les réglages rapides (glisse vers le bas depuis le haut).
+exit_step2	Démarre Shizuku
+exit_step2_sub	Ouvre Shizuku et démarre-le via le débogage sans fil.
+exit_step3	Retour à ShizuBox
+exit_step3_sub	Dès que Shizuku fonctionne, tout est restauré automatiquement.
+restoring	Restauration …
+waiting_shizuku	En attente de Shizuku …
+school_active	Mode école actif
+shizuku_not_connected	Shizuku n’est pas connecté
+school_last_restore_open	La dernière restauration est toujours en attente
+dur_min	%1$d min
+dur_hours	%1$d h
+school_title_sub	Le téléphone reste allumé, mais il ne se passe absolument rien.
+school_what	Ce qui se passe
+school_what1	Mode avion activé ; Wi-Fi, Bluetooth et données mobiles désactivés
+school_what2	Ne pas déranger : aucune interruption, aucun son, aucune vibration
+school_what3	Écran toujours allumé, notifications sur l’écran de verrouillage et double pression pour l’appareil photo désactivés
+school_what4	Toutes les applis en pause (sauf téléphone/urgences, Paramètres, Shizuku)
+school_what5	Écran complètement noir, même par-dessus l’écran de verrouillage
+school_exit	Quitter
+school_exit_sub	Appuie 3 fois rapidement sur le bouton marche. Tout est ensuite restauré exactement comme avant.
+school_autoend	Terminer automatiquement après
+school_after_reboot	Après un redémarrage
+school_reboot_black	Noir tout de suite
+school_reboot_wait	Seulement avec Shizuku
+school_reboot_wait_sub	Le téléphone reste utilisable après le redémarrage. Dès que Shizuku fonctionne de nouveau, l’écran redevient noir – 3× marche restaure alors tout directement.
+school_reboot_black_sub	L’écran est noir juste après le redémarrage. Après 3× marche, un court guide t’aide à redémarrer Shizuku, puis tout est restauré automatiquement.
+school_activate	Activer le mode école
+shizuku_required	Shizuku doit être connecté.
+theme_system	Système
+theme_light	Clair
+theme_dark	Sombre
+pal_calm	Calme
+pal_vibrant	Vive
+pal_expressive	Expressive
+pal_neutral	Neutre
+pal_mono	Monochrome
+im_auto	Automatique
+im_auto_sub	Silencieux via Shizuku, sinon boîte de dialogue système
+im_shizuku	Shizuku uniquement
+im_shizuku_sub	Toujours silencieux, nécessite Shizuku
+im_system	Boîte de dialogue système
+im_system_sub	Sans Shizuku, confirmer chaque installation
+rm_adaptive	Adaptatif
+rm_60	60 Hz
+rm_max	Toujours max.
+cust_dpi_pending	Taille d’affichage %1$d dpi
+cust_res_pending	Résolution %1$d %% (%2$s)
+cust_instant	Les modifications s’appliquent immédiatement.
+reading_settings	Lecture des paramètres …
+cust_anim	Vitesse des animations
+cust_anim_hint	Plus petit = plus rapide, 0 = désactivé
+cust_refresh	Fréquence de rafraîchissement
+cust_refresh_adaptive	S’adapte (jusqu’à 120 Hz), économise la batterie
+cust_refresh_60	Max. 60 Hz, économise le plus de batterie
+cust_refresh_max	Toujours 120 Hz, le plus fluide, consomme plus
+cust_font	Police
+cust_bold	Gras
+cust_resolution	Résolution
+cust_res_hint	%1$s · plus bas économise la batterie, le contenu garde sa taille
+cust_statusbar	Barre d’état
+cust_statusbar_hint	Sur Android 17, on ne peut plus masquer des icônes individuelles, seulement ces groupes.
+cust_sb_system	Afficher les icônes système
+cust_sb_clock	Afficher l’horloge
+cust_sb_notif	Afficher les icônes de notification
+cust_immersive	Mode immersif par appli
+cust_immersive_sub	Plus possible : Google a supprimé le paramètre nécessaire (policy_control) dans Android 11.
+keep_q	Conserver ?
+keep	Conserver
+revert	Annuler
+cust_revert_in	%1$s\nAnnulé automatiquement dans %2$d s.
+cust_dpi	Taille d’affichage (DPI)
+cust_dpi_hint	Plus petit = plus de contenu à l’écran. Par défaut : %1$d dpi
+cust_reset_default	Rétablir par défaut
+set_appearance	Apparence
+set_design	Design
+set_amoled	Noir pur (AMOLED)
+set_colors	Couleurs
+set_colors_wallpaper	Couleurs du fond d’écran (Material You)
+set_colors_accent	Couleur d’accent personnalisée
+set_palette	Style de palette
+set_glass	Effet verre
+set_glass_blur	Flou derrière les cartes et la fenêtre
+set_strength	Intensité : %1$d %%
+set_anim_bg	Arrière-plan animé
+set_glass_hint	Désactiver le verre et l’animation économise un peu de batterie.
+set_installer_security	Installateur et sécurité
+set_install_method	Méthode d’installation
+set_allow_unknown	Autoriser « Installer des applis inconnues » pour ShizuBox
+set_default_options	Options par défaut (Shizuku uniquement)
+opt_downgrade	Autoriser la rétrogradation
+opt_grant_all	Accorder toutes les autorisations
+opt_play	Indiquer comme installation Play Store
+vt	VirusTotal
+set_vt_hint	Clé API gratuite sur virustotal.com (profil → API key). Reste uniquement sur ce téléphone.
+api_key	Clé API
+hide	Masquer
+show	Afficher
+key_saved	Clé enregistrée ✓
+save	Enregistrer
+get_key	Obtenir une clé
+set_vt_auto	Vérifier automatiquement lors de l’installation
+set_block_sig	Bloquer une signature différente
+set_block_sig_hint	Une signature différente de l’appli installée signifie : pas du même développeur (ou re-signée).
+set_areas	Sections
+set_link_updates	Mises à jour des applis
+set_link_updates_sub	Intervalle de vérification, installation en arrière-plan, jeton GitHub
+set_link_school_sub	Fin automatique, comportement après redémarrage
+set_notifications	Notifications
+set_notifications_sub	Canaux pour les mises à jour et le mode école
+shizuku	Shizuku
+set_status	Statut : %1$s
+st_connected	Connecté
+st_no_permission	Accès pas encore autorisé
+st_not_running	Ne fonctionne pas
+st_not_installed	Non installé
+set_manager_app	Appli de gestion : %1$s
+not_found	introuvable
+set_without_shizuku	Sans Shizuku, ceci fonctionne : mises à jour des applis (vérifier et installer via la boîte de dialogue système), Universal Installer, liste des applis avec détails, partager/extraire l’APK et VirusTotal. Le mode école, la personnalisation, le gel, AppOps, le mode jeu et Logcat nécessitent Shizuku.
+set_about	À propos
+set_license	Open source sous GPL-3.0
+releases	Versions
+set_self_tracked	ShizuBox est maintenant suivi dans les mises à jour des applis ✓
+set_self_update	Mettre à jour ShizuBox
+set_thanks	Remerciements
+wallpaper	Fond d’écran
+upd_all	Tout mettre à jour
+nav_apps	Applis
+nav_add	Ajouter
+nav_ie	Import/Export
+upd_all_done	Toutes les mises à jour installées ✓
+upd_not_auto	%d non installée automatiquement|||%d non installées automatiquement
+upd_not_auto_hint	Mets à jour ces applis une par une avec leur bouton – l’installateur affiche alors les détails.
+ok	OK
+search	Rechercher
+check	Vérifier
+search_app	Rechercher une appli
+upd_empty	Pas encore d’applis
+upd_empty_hint	Colle un lien sous « Ajouter », importe des applis installées – ou charge ton export ObtainX sous Import/Export.
+by_author	Par %1$s
+not_installed	non installée
+add_app	Ajouter une appli
+add_url	URL de la source de l’appli
+add_url_sub	GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, APKPure, APKMirror
+added_ok	%1$s ajoutée ✓
+checking	Vérification …
+add	Ajouter
+add_search	Rechercher dans les sources
+add_search_sub	GitHub, Codeberg, GitLab
+add_device	Importer les applis de l’appareil en masse
+add_device_sub	Rechercher sur F-Droid, IzzyOnDroid et APKPure
+add_urls	Importer depuis une liste d’URL
+add_stars	Importer les dépôts GitHub étoilés
+ie_imported	%1$d applis importées
+ie_unsupported	 (%1$d avec une source pas encore prise en charge)
+ie_import_failed	⚠ Échec de l’import : %1$s
+ie_exported	Exporté ✓
+ie_export_failed	⚠ Échec de l’export : %1$s
+ie_hint	Lit l’export JSON d’ObtainX et d’Obtainium. L’export de ShizuBox peut y être réimporté.
+importing	Import …
+export	Exporter
+us_updates	Mises à jour
+us_check_now	Rechercher des mises à jour maintenant
+us_interval	Intervalle de vérification en arrière-plan
+h6	6 h
+h12	12 h
+d1	1 jour
+d2	2 jours
+w1	1 semaine
+us_bg_install	Installer les mises à jour en arrière-plan
+us_bg_install_sub	En silence via Shizuku
+us_vt_gate	Seulement après un résultat VirusTotal propre
+us_no_key	Aucune clé – saisis-la dans les paramètres
+us_sig_never	Une signature différente n’est jamais installée automatiquement
+us_wifi	Wi-Fi uniquement
+us_charging	Seulement en charge
+us_on_start	Rechercher des mises à jour au démarrage
+us_prerelease	Inclure les préversions par défaut
+us_source_specific	Selon la source
+us_token	Jeton d’accès personnel GitHub
+us_token_hint	Sans jeton, GitHub n’autorise que 60 requêtes par heure. Un jeton sans autorisations suffit ; il reste sur ce téléphone.
+us_create_token	Créer un jeton
+us_credit	Fonctionne comme Obtainium et ObtainX (GPL-3.0).
+srch_sources	Sources consultables
+nothing_found	Aucun résultat
+one_link_per_line	Un lien par ligne
+n_of_m_added	%1$d sur %2$d ajoutées
+stars_title	Importer les étoiles GitHub
+gh_user	Nom d’utilisateur GitHub
+load	Charger
+stars_result	%1$d sur %2$d ajoutés (les dépôts sans versions APK sont ignorés)
+adding	Ajout …
+add_n_repos	Ajouter %d dépôt|||Ajouter %d dépôts
+do_import	Importer
+close	Fermer
+downloading	Téléchargement …
+download_failed	Échec du téléchargement : %1$s
+by_author_source	par %1$s · %2$s
+unsupported_source	source non prise en charge
+st_update	Mise à jour disponible
+st_uptodate	À jour
+st_notinstalled	Non installée
+st_unknown	Version non comparable
+latest_v	Dernière : %1$s
+installed_v	Installée : %1$s
+apkmirror_hint	APKMirror n’autorise pas les téléchargements automatiques : appuie sur la bonne variante dans le navigateur – ShizuBox l’installe alors directement.
+load_apkmirror	Télécharger sur APKMirror
+update	Mettre à jour
+reinstall	Réinstaller
+open_source	Ouvrir la page source
+mark_current	Marquer comme à jour
+apk_choice	Choix de l’APK
+changes	Modifications
+include_pre	Inclure les préversions
+apk_filter	Filtre APK (regex)
+invert_filter	Inverser le filtre
+pkg_of_installed	Nom de paquet de l’appli installée
+apply	Appliquer
+remove	Retirer
+untrack_q	Ne plus suivre ?
+untrack_hint	L’appli reste installée, ShizuBox arrête seulement de chercher des mises à jour.
+cancel	Annuler
+select_apps	Choisir des applis
+user_apps	Applis utilisateur
+system_apps	Applis système
+all	Toutes
+skip_tracked	Ignorer les applis déjà suivies
+selected_n	Sélectionnées : %1$d/%2$d
+select_all	Tout sélectionner
+select_none	Effacer la sélection
+checking_dots	Vérification …
+checking_source	Vérification de %1$s …
+pending	En attente
+searched_n	%1$d/%2$d recherchées
+cancel_search	Annuler la recherche
+import_results	Importer les résultats
+found	Trouvées
+not_found_cap	Introuvables
+cancelled	Annulé
+found_n	Trouvées (%1$d)
+add_found	Ajouter %d appli trouvée|||Ajouter %d applis trouvées
+saved_ok	Enregistré ✓
+extract_failed	⚠ Échec de l’extraction : %1$s
+loading	Chargement …
+system	Système
+removed_for_user	Supprimée pour cet utilisateur
+frozen_desc	Gelée – l’appli est désactivée et invisible
+active	Active
+restore	Restaurer
+unfreeze	Dégeler
+freeze	Geler
+force_stop	Forcer l’arrêt
+uninstall	Désinstaller
+app_info	Infos sur l’appli
+share_apk	Partager l’APK
+extract	Extraire
+system_freeze_only	Sur Android 17, sans root, les applis système peuvent seulement être gelées, pas supprimées.
+vt_check	Vérifier sur VirusTotal
+vt_check_sub	Vérifie l’APK installé grâce à sa somme de contrôle.
+vt_check_sub_split	Vérifie l’APK de base installé grâce à sa somme de contrôle.
+in_profiles	Dans les profils
+battery	Batterie
+standby_group	%1$s · Groupe de veille : %2$s
+permissions	Autorisations
+no_perms	Aucune autorisation modifiable
+less	Moins
+all_n	Toutes (%1$d)
+appops_hint	Droits plus fins sous les autorisations. allow = autorisé, ignore = refusé en silence.
+uninstall_q	Désinstaller ?
+uninstall_hint	%1$s sera supprimée avec toutes ses données.
+f_user	Utilisateur
+f_frozen	Gelées
+s_name	Nom
+s_size	Taille
+s_installed	Installation
+s_updated	Mise à jour
+apps	Applis
+apps_sub	Geler, autorisations, AppOps, batterie
+profiles	Profils
+shizuku_for_changes	Shizuku doit être connecté pour faire des modifications.
+n_apps_size	%1$d appli · %2$s|||%1$d applis · %2$s
+loading_apps	Chargement des applis …
+removed	Supprimée
+installed_on	installée le %1$s
+updated_on	 · mise à jour le %1$s
+profiles_hint	Groupes d’applis gelées et dégelées ensemble. Ajoute des applis depuis les détails de l’appli.
+new_profile	Nouveau profil
+profile_example	p. ex. Réseaux sociaux
+create	Créer
+no_apps_yet	Pas encore d’applis
+delete	Supprimer
+unfreeze_all	Tout dégeler
+freeze_all	Tout geler
+delete_profile_q	Supprimer le profil ?
+delete_profile_hint	Les applis restent telles quelles.
+bm_unrestricted	Sans restriction
+bm_unrestricted_sub	Peut tout faire en arrière-plan, pas d’optimisation de batterie
+bm_optimized	Optimisée
+bm_optimized_sub	Par défaut d’Android
+bm_restricted	Restreinte
+bm_restricted_sub	Aucune activité en arrière-plan
+bk_exempt	Exemptée
+bk_active	Active
+bk_working	Ensemble de travail
+bk_frequent	Fréquente
+bk_rare	Rare
+bk_restricted	Restreinte
+bk_never	Jamais
+open_play	Ouvrir dans le Play Store
+open_fdroid	Ouvrir dans F-Droid
+open_store	Ouvrir dans la boutique
+sys_sub	Jeu, installation, journaux
+shizuku_must	Shizuku doit être connecté.
+logcat_sub	Voir le journal système, filtrer par appli et niveau
+gaming	Mode jeu
+gaming_active	Actif – restauré exactement à la désactivation
+gaming_sub	Moins d’interruptions, fluidité maximale
+g_block	Bloquer les notifications (Ne pas déranger)
+g_headsup	Pas de notifications pop-up
+g_refresh	Toujours la fréquence maximale
+g_brightness	Luminosité automatique désactivée
+g_kill	Fermer les applis en arrière-plan au démarrage
+launch_games	Lancer des jeux
+apk_installer	Installateur d’APK
+universal	Universel
+quick	Rapide
+universal_hint	Universal Installer : affiche d’abord les infos, la version et la signature de l’appli et ne choisit que les parties adaptées des APKS/XAPK/APKM. Aussi via « Ouvrir avec ShizuBox » dans le gestionnaire de fichiers.
+quick_hint	Installe immédiatement sans aperçu. Plusieurs APK fractionnés à la fois aussi.
+pick_file	Choisir un fichier
+ui_based_on	Basé sur Universal Installer de pass-with-high-score (GPL-3.0)
+pick_apk	Choisir un APK
+installed_ok	Installé ✓
+error_msg	⚠ Erreur : %1$s
+file_unreadable	Fichier illisible
+vt_scan	Analyser avec VirusTotal
+vt_hashing	Vérification de la somme de contrôle …
+vt_uploading	Envoi … %1$d %%
+vt_queued	En file d’attente …
+vt_analyzing	Analyse par les scanners …
+vt_need_key	Une clé API VirusTotal gratuite est nécessaire pour l’analyse.
+vt_enter_key	Saisir la clé
+vt_bad_key	Clé API invalide
+vt_change_key	Changer de clé
+vt_limit	Limite atteinte (4 requêtes par minute)
+retry	Réessayer
+vt_not_analyzed	VirusTotal connaît le fichier mais n’a pas encore fini de l’analyser.
+recheck	Vérifier à nouveau
+vt_too_large	Fichier trop volumineux pour VirusTotal (max. 650 Mo)
+vt_unknown_file	VirusTotal ne connaît pas encore ce fichier.
+vt_upload	Envoyer et analyser
+vt_clean	Sain · 0 sur %1$d scanners
+vt_suspicious	Suspect · %1$d sur %2$d scanners
+vt_malicious	Malveillant · %1$d sur %2$d scanners
+vt_hide_hits	Masquer les détections
+vt_show_hits	Afficher les détections
+vt_report	Ouvrir le rapport
+vt_key_title	Clé API VirusTotal
+vt_key_help	Gratuit : connecte-toi sur virustotal.com, puis Profil → API Key. La clé reste uniquement sur ce téléphone.
+vt_open_site	Ouvrir virustotal.com
+api_key_ph	Clé API
+vt_upload_failed	Échec de l’envoi
+vt_unknown_status	Statut inconnu
+vt_too_long	L’analyse prend trop de temps – vérifie plus tard
+no_internet	Pas de connexion Internet
+lines_copied	%d ligne copiée|||%d lignes copiées
+copy	Copier
+refresh	Actualiser
+live	En direct
+package_	Paquet
+proc_not_running	Le processus %1$s ne tourne pas en ce moment.
+file_unreadable_n	Fichier illisible : %1$s
+copy_failed	Échec de la copie
+no_apk_found	Aucun APK trouvé
+installing	Installation …
+inst_failed	Échec de l’installation
+inst_conflict	Conflit avec l’appli installée
+inst_conflict_hint	Généralement une signature différente. Désinstalle d’abord la version installée.
+inst_incompatible	Incompatible
+inst_abi	L’appli n’est pas conçue pour le processeur de ce téléphone.
+inst_unsupported	Version d’Android ou appareil non pris en charge. %1$s
+inst_invalid	Fichier invalide
+inst_invalid_hint	L’APK est endommagé ou incomplet. %1$s
+inst_storage	Espace insuffisant
+inst_storage_hint	Libère de l’espace et réessaie.
+inst_blocked	Bloqué
+inst_blocked_hint	Le système a empêché l’installation. %1$s
+inst_aborted	Annulé
+inst_aborted_hint	L’installation a été annulée.
+inst_timeout	Délai dépassé
+inst_downgrade_hint	Version plus ancienne : active « Autoriser la rétrogradation ».
+unknown_error	Erreur inconnue
+file_unreadable_long	Le fichier n’a pas pu être lu
+reading_file	Lecture du fichier …
+sig_mismatch_warn	Signature différente de l’appli installée – la mise à jour va échouer. Désinstalle d’abord la version installée.
+via_system_dialog	Installation via la boîte de dialogue système
+via_system_set	Configuré ainsi (Paramètres → Installateur).
+via_system_noshz	Shizuku n’est pas connecté – Android demande une fois. Les options de rétrogradation et d’autorisations nécessitent Shizuku.
+blocked_sig	Bloqué : signature différente
+shizuku_not_conn	Shizuku non connecté
+install_downgrade	Installer la version antérieure
+system_dialog_sfx	 (boîte de dialogue système)
+parts_sfx	 (%1$d parties, %2$s)
+app_installed	%1$s installée
+open	Ouvrir
+v_new	Nouvelle · %1$s
+v_same	Même version · %1$s
+options	Options
+splits	Parties (splits)
+splits_hint	Seul ce dont ce téléphone a besoin est présélectionné : processeur adapté, densité d’écran et tes langues.
+sp_base	Base
+sp_libs	Architecture du processeur
+sp_locale	Langue
+sp_density	Densité d’écran
+sp_feature	Fonctionnalité
+sp_other	Autres
+e_404	Introuvable (404) – vérifie le lien
+e_gh_limit	Limite GitHub atteinte (60 requêtes/heure). Saisis un jeton GitHub dans les paramètres.
+e_denied	Accès refusé (%1$d)
+e_no_releases	Aucune version trouvée
+e_no_apk_release	Aucune version avec un APK adapté
+e_pre_excluded	 (préversions exclues)
+e_no_pkg	Nom de paquet absent du lien
+e_no_versions	Aucune version
+e_no_versions_apkm	Aucune version dans le flux APKMirror
+e_no_version_device	Aucune version pour cet appareil
+e_unsupported	Cette source n’est pas (encore) prise en charge
+e_tracked	Déjà suivie : %1$s
+e_no_apk_rel	Aucune version avec APK trouvée
+e_source_unsupported	Source non prise en charge
+e_no_apk	Aucun APK disponible
+e_dl_http	Échec du téléchargement (HTTP %1$d)
+e_redirects	Trop de redirections
+h_apkm	uniquement via la page APKMirror
+h_sig	signature différente de l’appli installée
+h_malicious	malveillant (%1$d)
+h_suspicious	suspect (%1$d)
+h_unknown	fichier encore inconnu
+h_uncheckable	non vérifiable
+w_preparing	Préparation des mises à jour …
+w_updating	Mise à jour des applis
+ch_progress	Progression des mises à jour
+ch_updates	Mises à jour des applis
+w_updated	%d appli mise à jour|||%d applis mises à jour
+w_not_sfx	, %1$d non
+w_held	%d mise à jour non installée|||%d mises à jour non installées
+w_pending	%d mise à jour disponible|||%d mises à jour disponibles
+w_not_installed	Non installées :
+unpacking	Décompression de %1$s …
+copying	Copie de %1$s …
+base_apk	APK de base
+set_language	Langue
+lang_system	Langue du système
+lang_hint	Modifiable aussi dans les paramètres Android sous Applis → ShizuBox → Langue.
