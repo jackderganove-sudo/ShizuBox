@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -15,6 +17,21 @@ android {
         versionName = "0.4.0"
     }
 
+    // Release key lives outside the repo (never commit it): ~/Android/keys/shizubox-release.properties
+    val releaseProps = File(System.getProperty("user.home"), "Android/keys/shizubox-release.properties")
+        .takeIf { it.exists() }
+        ?.let { f -> Properties().apply { f.inputStream().use { load(it) } } }
+    signingConfigs {
+        if (releaseProps != null) {
+            create("release") {
+                storeFile = file(releaseProps.getProperty("storeFile"))
+                storePassword = releaseProps.getProperty("storePassword")
+                keyAlias = releaseProps.getProperty("keyAlias")
+                keyPassword = releaseProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         // R8 also in debug: the icon library alone would make the APK ~60 MB,
         // too much for installing over wireless adb.
@@ -27,6 +44,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
 
