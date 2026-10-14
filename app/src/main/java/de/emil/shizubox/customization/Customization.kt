@@ -195,8 +195,8 @@ object Customization {
         val h = even(current.physicalHeight * percent / 100f)
         val relativeDensity = current.density.toFloat() / current.physicalDensity
         val d = (current.physicalDensity * percent / 100f * relativeDensity).roundToInt()
-        run(sizeCommand(w, h, current) + "; " + densityCommand(d, current.physicalDensity))
-        scheduleRevert("Auflösung $percent % (${w}×$h)", revert)
+        run(withoutOneHanded(sizeCommand(w, h, current) + "; " + densityCommand(d, current.physicalDensity)))
+        scheduleRevert("Auflösung $percent % (${w}×$h)", withoutOneHanded(revert))
     }
 
     fun confirm() {
@@ -237,6 +237,18 @@ object Customization {
 
     private fun sizeCommand(w: Int, h: Int, s: CustomState) =
         if (w == s.physicalWidth && h == s.physicalHeight) "wm size reset" else "wm size ${w}x$h"
+
+    /**
+     * Android 17 beta bug: SystemUI crashes (OneHandedController -> DisplayCutout.getSideOverride,
+     * index -1) when the display size changes while one-handed mode is enabled, and after the
+     * restart the status bar shows duplicate icons. Tested: with one-handed mode switched off
+     * during the change, nothing crashes, and re-enabling it afterwards (also rotating) is fine.
+     */
+    private fun withoutOneHanded(cmd: String) =
+        "oh=$(settings get secure one_handed_mode_enabled); " +
+            "[ \"\$oh\" = 1 ] && settings put secure one_handed_mode_enabled 0 && sleep 1; " +
+            "$cmd; " +
+            "[ \"\$oh\" = 1 ] && sleep 2 && settings put secure one_handed_mode_enabled 1"
 
     private fun even(v: Float) = (v / 2).roundToInt() * 2
 
