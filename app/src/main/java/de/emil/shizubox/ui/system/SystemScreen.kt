@@ -22,6 +22,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Notes
+import androidx.compose.material.icons.rounded.Memory
+import androidx.compose.material.icons.rounded.PhoneAndroid
+import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.AssistChip
@@ -51,14 +55,13 @@ import de.emil.shizubox.system.ApkInstaller
 import de.emil.shizubox.system.Gaming
 import de.emil.shizubox.ui.apps.AppIcon
 import de.emil.shizubox.ui.glass.GlassCard
-import de.emil.shizubox.ui.home.ShellConsole
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SystemScreen(
     shizukuReady: Boolean,
-    onOpenLogcat: () -> Unit,
+    onOpenPage: (String) -> Unit,
     onOpenUniversalInstaller: (Uri) -> Unit,
     onBack: () -> Unit,
 ) {
@@ -85,25 +88,21 @@ fun SystemScreen(
         if (!shizukuReady) {
             item { GlassCard(Modifier.fillMaxWidth()) { Text(t(R.string.shizuku_must)) } }
         }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                ToolTile(Icons.Rounded.PhoneAndroid, t(R.string.di_title), t(R.string.di_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.DEVICE) }
+                ToolTile(Icons.Rounded.Memory, t(R.string.pr_title), t(R.string.pr_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.PROCESSES) }
+            }
+        }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                ToolTile(Icons.Rounded.Terminal, t(R.string.term_title), t(R.string.term_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.TERMINAL) }
+                ToolTile(Icons.AutoMirrored.Rounded.Notes, "Logcat", t(R.string.logcat_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.LOGCAT) }
+            }
+        }
         item { GamingCard(shizukuReady) }
         item { TweaksCard(shizukuReady) }
         item { InstallerCard(shizukuReady, onOpenUniversalInstaller) }
-        item {
-            GlassCard(Modifier.fillMaxWidth(), onClick = onOpenLogcat) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f)) {
-                        Text("Logcat", style = MaterialTheme.typography.titleMedium)
-                        Text(
-                            t(R.string.logcat_sub),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Icon(Icons.Rounded.ChevronRight, null)
-                }
-            }
-        }
-        item { ShellConsole() }
     }
 }
 
@@ -256,5 +255,14 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
                 modifier = Modifier.padding(top = 8.dp),
             )
         }
+    }
+}
+
+@Composable
+private fun ToolTile(icon: androidx.compose.ui.graphics.vector.ImageVector, title: String, subtitle: String, modifier: Modifier, onClick: () -> Unit) {
+    GlassCard(modifier, onClick = onClick) {
+        Icon(icon, null, tint = MaterialTheme.colorScheme.primary)
+        Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp), maxLines = 1)
+        Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, minLines = 2, maxLines = 2)
     }
 }

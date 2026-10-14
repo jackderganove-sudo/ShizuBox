@@ -22,6 +22,29 @@ class DebugReceiver : BroadcastReceiver() {
                 "plural=${de.emil.shizubox.tp(de.emil.shizubox.R.plurals.w_pending, 3, 3)}")
             return
         }
+        intent.getStringExtra("test")?.let { what ->
+            // Backend checks without the UI: --es test processes|tweaks|cpu|device
+            val pending = goAsync()
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val result = when (what) {
+                        "processes" -> de.emil.shizubox.system.Processes.snapshot().let { s ->
+                            "summary=${s.summary} n=${s.processes.size} top=${s.processes.take(5).map { "${it.name}/${it.group}/${it.pssKb}" }}"
+                        }
+                        "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
+                        "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()
+                        "device" -> "${de.emil.shizubox.system.DeviceInfo.battery(context)} ${de.emil.shizubox.system.DeviceInfo.memory(context)} ${de.emil.shizubox.system.DeviceInfo.storage()} soc=${de.emil.shizubox.system.DeviceInfo.soc()}"
+                        else -> "unknown test"
+                    }
+                    Log.i(TAG, "test $what: $result")
+                } catch (e: Throwable) {
+                    Log.e(TAG, "test $what failed", e)
+                } finally {
+                    pending.finish()
+                }
+            }
+            return
+        }
         intent.getStringExtra("pkgs")?.let { pkgs ->
             // Bulk import dry run: adb shell am broadcast -n …/.updates.DebugReceiver --es pkgs a,b,c
             BulkImport.reset()

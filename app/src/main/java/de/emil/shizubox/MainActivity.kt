@@ -27,6 +27,10 @@ import androidx.lifecycle.lifecycleScope
 import de.emil.shizubox.school.SchoolMode
 import de.emil.shizubox.ui.apps.AppsScreen
 import de.emil.shizubox.ui.system.LogcatScreen
+import de.emil.shizubox.ui.system.DeviceInfoScreen
+import de.emil.shizubox.ui.system.ProcessesScreen
+import de.emil.shizubox.ui.system.SystemPage
+import de.emil.shizubox.ui.system.TerminalScreen
 import de.emil.shizubox.ui.settings.SettingsScreen
 import de.emil.shizubox.ui.system.SystemScreen
 import de.emil.shizubox.ui.system.UniversalInstallerScreen
@@ -76,7 +80,7 @@ class MainActivity : ComponentActivity() {
                 }
                 val trackedApps by Updates.apps.collectAsStateWithLifecycle()
                 val updateCount = remember(trackedApps) { Updates.updateCount() }
-                var logcatOpen by rememberSaveable { mutableStateOf(false) }
+                var systemPage by rememberSaveable { mutableStateOf<String?>(null) }
                 var settingsOpen by rememberSaveable { mutableStateOf(false) }
                 var installUri by remember { mutableStateOf<android.net.Uri?>(null) }
                 var busy by remember { mutableStateOf(false) }
@@ -90,8 +94,8 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 BackHandler(enabled = settingsOpen) { settingsOpen = false }
-                BackHandler(enabled = section != null && !logcatOpen && !settingsOpen) { section = null }
-                BackHandler(enabled = logcatOpen) { logcatOpen = false }
+                BackHandler(enabled = section != null && systemPage == null && !settingsOpen) { section = null }
+                BackHandler(enabled = systemPage != null) { systemPage = null }
                 BackHandler(enabled = installUri != null) { installUri = null }
 
                 GlassBackground(windowBlurActive = windowBlur.value) {
@@ -136,12 +140,19 @@ class MainActivity : ComponentActivity() {
                             val uri = installUri
                             if (uri != null) {
                                 UniversalInstallerScreen(uri, status == ShizukuStatus.Ready, onClose = { installUri = null })
-                            } else if (logcatOpen) {
-                                LogcatScreen(status == ShizukuStatus.Ready, onBack = { logcatOpen = false })
+                            } else if (systemPage != null) {
+                                val ready = status == ShizukuStatus.Ready
+                                val close = { systemPage = null }
+                                when (systemPage) {
+                                    SystemPage.LOGCAT -> LogcatScreen(ready, onBack = close)
+                                    SystemPage.DEVICE -> DeviceInfoScreen(onBack = close)
+                                    SystemPage.PROCESSES -> ProcessesScreen(ready, onBack = close)
+                                    SystemPage.TERMINAL -> TerminalScreen(ready, onBack = close)
+                                }
                             } else {
                                 SystemScreen(
                                     shizukuReady = status == ShizukuStatus.Ready,
-                                    onOpenLogcat = { logcatOpen = true },
+                                    onOpenPage = { systemPage = it },
                                     onOpenUniversalInstaller = { installUri = it },
                                     onBack = { section = null },
                                 )

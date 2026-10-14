@@ -511,3 +511,56 @@ tw_pointer_sub	Superposition avec les coordonnées tactiles
 tw_dark	Thème sombre (système)
 tw_timeout	Mise en veille de l’écran
 tw_tiles_hint	Astuce : le mode jeu, les animations, la fréquence de rafraîchissement et rester allumé existent aussi en tuiles de réglages rapides.
+bat_charging	En charge
+bat_discharging	En décharge
+bat_full	Pleine
+bat_not_charging	Ne charge pas
+bat_ac	Chargeur
+bat_wireless	Sans fil
+bat_good	Bon
+bat_overheat	Surchauffe
+bat_dead	Morte
+bat_cold	Trop froide
+bat_over_voltage	Surtension
+bat_unknown	Inconnu
+dur_days_short	%1$d j
+di_title	Infos appareil
+di_sub	Batterie, mémoire, CPU, système
+di_device	Appareil
+di_model	Modèle
+di_codename	Nom de code
+di_patch	Correctif de sécurité
+di_build	Build
+di_uptime	Temps de fonctionnement
+di_display	Écran
+di_density	Densité
+di_health	État
+di_temperature	Température
+di_voltage	Tension
+di_current	Courant
+di_cycles	Cycles de charge
+di_technology	Technologie
+di_memory	Mémoire
+di_ram	RAM
+di_storage	Stockage
+di_cores	%d cœur|||%d cœurs
+copied	Copié ✓
+pr_title	Processus
+pr_sub	RAM par appli, arrêter des applis
+pr_used_of	%1$s sur %2$s utilisés
+pr_free	%1$s libre (cache compris)
+pr_kill_bg	Nettoyer l’arrière-plan
+pr_killed	Processus d’arrière-plan en cache arrêtés ✓
+pr_all_procs	Tous les processus
+pr_reading	Lecture de l’utilisation mémoire …
+pr_n_procs	%1$d processus
+pr_user	Utilisateur %1$d
+pr_stopped	%1$s arrêtée ✓
+term_title	Terminal
+term_sub	Commandes shell avec droits ADB
+term_history	Historique
+term_clear	Effacer
+term_hint	Les commandes s’exécutent en tant qu’utilisateur shell (comme adb shell). Appuie sur un extrait pour l’insérer, appui long pour le supprimer.
+term_placeholder	Commande
+term_save_snippet	Enregistrer comme extrait
+term_delete_snippet	Supprimer l’extrait ?

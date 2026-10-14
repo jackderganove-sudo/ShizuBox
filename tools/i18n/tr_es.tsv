@@ -511,3 +511,56 @@ tw_pointer_sub	Superposición con coordenadas táctiles
 tw_dark	Tema oscuro (sistema)
 tw_timeout	Tiempo de espera de pantalla
 tw_tiles_hint	Consejo: el modo gaming, las animaciones, la frecuencia de actualización y mantener activo también están disponibles como iconos de ajustes rápidos.
+bat_charging	Cargando
+bat_discharging	Descargando
+bat_full	Llena
+bat_not_charging	No carga
+bat_ac	Cargador
+bat_wireless	Inalámbrica
+bat_good	Buena
+bat_overheat	Sobrecalentada
+bat_dead	Agotada
+bat_cold	Demasiado fría
+bat_over_voltage	Sobretensión
+bat_unknown	Desconocida
+dur_days_short	%1$d d
+di_title	Info del dispositivo
+di_sub	Batería, memoria, CPU, sistema
+di_device	Dispositivo
+di_model	Modelo
+di_codename	Nombre en clave
+di_patch	Parche de seguridad
+di_build	Compilación
+di_uptime	Tiempo activo
+di_display	Pantalla
+di_density	Densidad
+di_health	Estado
+di_temperature	Temperatura
+di_voltage	Voltaje
+di_current	Corriente
+di_cycles	Ciclos de carga
+di_technology	Tecnología
+di_memory	Memoria
+di_ram	RAM
+di_storage	Almacenamiento
+di_cores	%d núcleo|||%d núcleos
+copied	Copiado ✓
+pr_title	Procesos
+pr_sub	Uso de RAM por app, detener apps
+pr_used_of	%1$s de %2$s en uso
+pr_free	%1$s libre (incl. caché)
+pr_kill_bg	Limpiar segundo plano
+pr_killed	Procesos en segundo plano en caché finalizados ✓
+pr_all_procs	Todos los procesos
+pr_reading	Leyendo uso de memoria …
+pr_n_procs	%1$d procesos
+pr_user	Usuario %1$d
+pr_stopped	%1$s detenida ✓
+term_title	Terminal
+term_sub	Comandos shell con permisos ADB
+term_history	Historial
+term_clear	Borrar
+term_hint	Los comandos se ejecutan como usuario shell (como adb shell). Toca un fragmento para insertarlo, mantén pulsado para borrarlo.
+term_placeholder	Comando
+term_save_snippet	Guardar como fragmento
+term_delete_snippet	¿Eliminar fragmento?

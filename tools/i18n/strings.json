@@ -2617,5 +2617,276 @@
   "en": "Tip: Gaming mode, animations, refresh rate and stay awake are also available as quick settings tiles.",
   "de": "Tipp: Gaming-Modus, Animationen, Bildwiederholrate und „Wach bleiben“ gibt es auch als Schnelleinstellungs-Kacheln.",
   "plural": false
+ },
+ "bat_charging": {
+  "en": "Charging",
+  "de": "Lädt",
+  "plural": false
+ },
+ "bat_discharging": {
+  "en": "Discharging",
+  "de": "Entlädt",
+  "plural": false
+ },
+ "bat_full": {
+  "en": "Full",
+  "de": "Voll",
+  "plural": false
+ },
+ "bat_not_charging": {
+  "en": "Not charging",
+  "de": "Lädt nicht",
+  "plural": false
+ },
+ "bat_ac": {
+  "en": "Charger",
+  "de": "Netzteil",
+  "plural": false
+ },
+ "bat_wireless": {
+  "en": "Wireless",
+  "de": "Kabellos",
+  "plural": false
+ },
+ "bat_good": {
+  "en": "Good",
+  "de": "Gut",
+  "plural": false
+ },
+ "bat_overheat": {
+  "en": "Overheated",
+  "de": "Überhitzt",
+  "plural": false
+ },
+ "bat_dead": {
+  "en": "Dead",
+  "de": "Defekt",
+  "plural": false
+ },
+ "bat_cold": {
+  "en": "Too cold",
+  "de": "Zu kalt",
+  "plural": false
+ },
+ "bat_over_voltage": {
+  "en": "Overvoltage",
+  "de": "Überspannung",
+  "plural": false
+ },
+ "bat_unknown": {
+  "en": "Unknown",
+  "de": "Unbekannt",
+  "plural": false
+ },
+ "dur_days_short": {
+  "en": "%1$d d",
+  "de": "%1$d T",
+  "plural": false
+ },
+ "di_title": {
+  "en": "Device info",
+  "de": "Geräteinfo",
+  "plural": false
+ },
+ "di_sub": {
+  "en": "Battery, memory, CPU, system",
+  "de": "Akku, Speicher, CPU, System",
+  "plural": false
+ },
+ "di_device": {
+  "en": "Device",
+  "de": "Gerät",
+  "plural": false
+ },
+ "di_model": {
+  "en": "Model",
+  "de": "Modell",
+  "plural": false
+ },
+ "di_codename": {
+  "en": "Codename",
+  "de": "Codename",
+  "plural": false
+ },
+ "di_patch": {
+  "en": "Security patch",
+  "de": "Sicherheitspatch",
+  "plural": false
+ },
+ "di_build": {
+  "en": "Build",
+  "de": "Build",
+  "plural": false
+ },
+ "di_uptime": {
+  "en": "Uptime",
+  "de": "Laufzeit",
+  "plural": false
+ },
+ "di_display": {
+  "en": "Display",
+  "de": "Display",
+  "plural": false
+ },
+ "di_density": {
+  "en": "Density",
+  "de": "Dichte",
+  "plural": false
+ },
+ "di_health": {
+  "en": "Health",
+  "de": "Zustand",
+  "plural": false
+ },
+ "di_temperature": {
+  "en": "Temperature",
+  "de": "Temperatur",
+  "plural": false
+ },
+ "di_voltage": {
+  "en": "Voltage",
+  "de": "Spannung",
+  "plural": false
+ },
+ "di_current": {
+  "en": "Current",
+  "de": "Stromstärke",
+  "plural": false
+ },
+ "di_cycles": {
+  "en": "Charge cycles",
+  "de": "Ladezyklen",
+  "plural": false
+ },
+ "di_technology": {
+  "en": "Technology",
+  "de": "Technologie",
+  "plural": false
+ },
+ "di_memory": {
+  "en": "Memory",
+  "de": "Speicher",
+  "plural": false
+ },
+ "di_ram": {
+  "en": "RAM",
+  "de": "Arbeitsspeicher",
+  "plural": false
+ },
+ "di_storage": {
+  "en": "Storage",
+  "de": "Speicherplatz",
+  "plural": false
+ },
+ "di_cores": {
+  "en": {
+   "one": "%d core",
+   "other": "%d cores"
+  },
+  "de": {
+   "one": "%d Kern",
+   "other": "%d Kerne"
+  },
+  "plural": true
+ },
+ "copied": {
+  "en": "Copied ✓",
+  "de": "Kopiert ✓",
+  "plural": false
+ },
+ "pr_title": {
+  "en": "Processes",
+  "de": "Prozesse",
+  "plural": false
+ },
+ "pr_sub": {
+  "en": "RAM usage per app, stop apps",
+  "de": "RAM-Verbrauch pro App, Apps beenden",
+  "plural": false
+ },
+ "pr_used_of": {
+  "en": "%1$s of %2$s used",
+  "de": "%1$s von %2$s belegt",
+  "plural": false
+ },
+ "pr_free": {
+  "en": "%1$s free (incl. cache)",
+  "de": "%1$s frei (inkl. Cache)",
+  "plural": false
+ },
+ "pr_kill_bg": {
+  "en": "Clear background",
+  "de": "Hintergrund aufräumen",
+  "plural": false
+ },
+ "pr_killed": {
+  "en": "Cached background processes ended ✓",
+  "de": "Zwischengespeicherte Hintergrundprozesse beendet ✓",
+  "plural": false
+ },
+ "pr_all_procs": {
+  "en": "All processes",
+  "de": "Alle Prozesse",
+  "plural": false
+ },
+ "pr_reading": {
+  "en": "Reading memory usage …",
+  "de": "Lese Speicherverbrauch …",
+  "plural": false
+ },
+ "pr_n_procs": {
+  "en": "%1$d processes",
+  "de": "%1$d Prozesse",
+  "plural": false
+ },
+ "pr_user": {
+  "en": "User %1$d",
+  "de": "Nutzer %1$d",
+  "plural": false
+ },
+ "pr_stopped": {
+  "en": "%1$s stopped ✓",
+  "de": "%1$s beendet ✓",
+  "plural": false
+ },
+ "term_title": {
+  "en": "Terminal",
+  "de": "Terminal",
+  "plural": false
+ },
+ "term_sub": {
+  "en": "Shell commands with ADB rights",
+  "de": "Shell-Befehle mit ADB-Rechten",
+  "plural": false
+ },
+ "term_history": {
+  "en": "History",
+  "de": "Verlauf",
+  "plural": false
+ },
+ "term_clear": {
+  "en": "Clear",
+  "de": "Leeren",
+  "plural": false
+ },
+ "term_hint": {
+  "en": "Commands run as the shell user (like adb shell). Tap a snippet to insert it, long-press to delete it.",
+  "de": "Befehle laufen als Shell-Nutzer (wie adb shell). Tippe auf einen Baustein zum Einfügen, lange drücken zum Löschen.",
+  "plural": false
+ },
+ "term_placeholder": {
+  "en": "Command",
+  "de": "Befehl",
+  "plural": false
+ },
+ "term_save_snippet": {
+  "en": "Save as snippet",
+  "de": "Als Baustein speichern",
+  "plural": false
+ },
+ "term_delete_snippet": {
+  "en": "Delete snippet?",
+  "de": "Baustein löschen?",
+  "plural": false
  }
 }
