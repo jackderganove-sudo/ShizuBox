@@ -37,7 +37,9 @@ sealed class Source(val label: String) {
     abstract suspend fun latest(app: TrackedApp): Release
 
     companion object {
-        val ALL: List<Source> = listOf(GitHub, Codeberg, GitLab, FDroid, Izzy, ApkMirror, ApkPure)
+        // Lazy: the subclasses are nested objects of this class; building the list during the
+        // class's own static init would capture them as null (circular initialization).
+        val ALL: List<Source> by lazy { listOf(GitHub, Codeberg, GitLab, FDroid, Izzy, ApkMirror, ApkPure) }
 
         fun forUrl(url: String): Source? {
             val uri = Uri.parse(url.trim())

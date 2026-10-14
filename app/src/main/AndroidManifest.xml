@@ -191,6 +191,11 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".updates.DebugReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
