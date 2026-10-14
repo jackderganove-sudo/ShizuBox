@@ -147,33 +147,37 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             2 -> ImportExportPage()
             else -> SettingsPage()
         }
-        PillNav(
-            items = listOf(
-                Icons.Rounded.Apps to "Apps",
-                Icons.Rounded.Add to "Hinzufügen",
-                Icons.Rounded.CloudUpload to "Import/Export",
-                Icons.Rounded.Settings to "Einstellungen",
-            ),
-            selected = page,
-            onSelect = { page = it },
-            modifier = Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 12.dp),
-        )
-        // "Update all" like ObtainX: round button bottom left with the number of updates.
-        if (page == 0 && (updateCount > 0 || updatingAll?.first != null)) {
-            val running = updatingAll?.first != null
-            androidx.compose.material3.BadgedBox(
-                badge = { if (!running) androidx.compose.material3.Badge { Text("$updateCount") } },
-                modifier = Modifier.align(Alignment.BottomStart).navigationBarsPadding().padding(start = 16.dp, bottom = 84.dp),
-            ) {
-                androidx.compose.material3.FloatingActionButton(
-                    onClick = { if (!running) Updates.updateAllInBackground() },
-                    shape = CircleShape,
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+        // Bottom bar like ObtainX: "update all" button (with count) left of the navigation pill.
+        Row(
+            Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            if (page == 0 && (updateCount > 0 || updatingAll?.first != null)) {
+                val running = updatingAll?.first != null
+                androidx.compose.material3.BadgedBox(
+                    badge = { if (!running) androidx.compose.material3.Badge { Text("$updateCount") } },
                 ) {
-                    if (running) CircularProgressIndicator(Modifier.size(28.dp), strokeWidth = 3.dp)
-                    else Icon(Icons.Rounded.SystemUpdateAlt, "Alle aktualisieren")
+                    androidx.compose.material3.FloatingActionButton(
+                        onClick = { if (!running) Updates.updateAllInBackground() },
+                        shape = CircleShape,
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    ) {
+                        if (running) CircularProgressIndicator(Modifier.size(28.dp), strokeWidth = 3.dp)
+                        else Icon(Icons.Rounded.SystemUpdateAlt, "Alle aktualisieren")
+                    }
                 }
             }
+            PillNav(
+                items = listOf(
+                    Icons.Rounded.Apps to "Apps",
+                    Icons.Rounded.Add to "Hinzufügen",
+                    Icons.Rounded.CloudUpload to "Import/Export",
+                    Icons.Rounded.Settings to "Einstellungen",
+                ),
+                selected = page,
+                onSelect = { page = it },
+            )
         }
         // Result of "update all": what was held back and why.
         updatingAll?.let { (currentKey, failed) ->
