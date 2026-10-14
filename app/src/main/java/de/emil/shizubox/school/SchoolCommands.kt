@@ -166,9 +166,9 @@ object SchoolCommands {
         run(script.joinToString("; "))
     }
 
-    /** Closes the notification shade / quick settings if someone managed to open them. */
-    suspend fun collapseShade() {
-        run("cmd statusbar collapse")
+    /** Closes shade, quick settings and the power menu if someone managed to open them. */
+    suspend fun closeSystemDialogs() {
+        run("cmd statusbar collapse; am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS > /dev/null")
     }
 
     suspend fun screenOff() {

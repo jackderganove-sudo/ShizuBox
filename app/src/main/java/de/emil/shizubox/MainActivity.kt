@@ -83,6 +83,7 @@ class MainActivity : ComponentActivity() {
                                 busy = busy,
                                 onActivate = activate,
                                 onAutoEndChange = { lifecycleScope.launch { SchoolMode.setAutoEndMinutes(it) } },
+                                onWaitForShizukuChange = { lifecycleScope.launch { SchoolMode.setWaitForShizukuAfterReboot(it) } },
                                 onBack = { section = null },
                             )
                         } else {

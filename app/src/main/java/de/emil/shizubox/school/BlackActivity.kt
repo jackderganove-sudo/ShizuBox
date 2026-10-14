@@ -56,7 +56,7 @@ class BlackActivity : Activity() {
             hideBars()
         } else if (SchoolService.covering && ShizukuManager.isReady) {
             // Losing focus while visible = shade, quick settings or power menu opened on top.
-            SchoolMode.scope.launch { runCatching { SchoolCommands.collapseShade() } }
+            SchoolMode.scope.launch { runCatching { SchoolCommands.closeSystemDialogs() } }
         }
     }
 

@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import de.emil.shizubox.shizuku.ShizukuManager
 import de.emil.shizubox.shizuku.ShizukuStatus
 import kotlinx.coroutines.CoroutineScope
@@ -34,13 +33,23 @@ object SchoolMode {
 
     fun init(context: Context) {
         appContext = context.applicationContext
+        SchoolLog.init(appContext)
         store = SchoolStore(appContext)
         state = store.state.stateIn(scope, SharingStarted.Eagerly, SchoolState())
 
-        // Restore automatically as soon as Shizuku is back (e.g. after a reboot).
         scope.launch {
-            combine(store.state, ShizukuManager.status) { s, status -> s.pendingRestore && status == ShizukuStatus.Ready }
-                .collect { if (it) restore() }
+            combine(store.state, ShizukuManager.status) { s, status -> s to (status == ShizukuStatus.Ready) }
+                .collect { (s, shizukuReady) ->
+                    when {
+                        // Restore automatically as soon as Shizuku is back (e.g. after a reboot).
+                        s.pendingRestore && shizukuReady -> restore()
+                        // Optional reboot behavior: black screen returns together with Shizuku.
+                        s.active && shizukuReady && !SchoolService.running -> {
+                            SchoolLog.log(TAG, "Shizuku back while active, starting black screen")
+                            SchoolService.start(appContext)
+                        }
+                    }
+                }
         }
     }
 
@@ -65,10 +74,10 @@ object SchoolMode {
             SchoolService.start(appContext)
 
             SchoolCommands.apply(suspend)
-            Log.i(TAG, "activated, ${suspend.size} apps suspended")
+            SchoolLog.log(TAG, "activated, ${suspend.size} apps suspended, endAt=$endAt")
             delay(600)
             SchoolCommands.screenOff()
-        }.onFailure { Log.e(TAG, "activate failed", it) }
+        }.onFailure { SchoolLog.log(TAG, "activate failed", it) }
     }
 
     /**
@@ -89,19 +98,24 @@ object SchoolMode {
     private suspend fun restore(): Boolean = mutex.withLock {
         val s = store.current()
         if (!s.pendingRestore) return true
-        if (!ShizukuManager.isReady) return false
+        if (!ShizukuManager.isReady) {
+            SchoolLog.log(TAG, "restore pending: Shizuku not ready")
+            return false
+        }
         try {
             SchoolCommands.restore(JSONObject(s.snapshot ?: "{}"), s.suspended)
             store.clear()
-            Log.i(TAG, "restored")
+            SchoolLog.log(TAG, "restored")
             true
         } catch (e: Exception) {
-            Log.e(TAG, "restore failed", e)
+            SchoolLog.log(TAG, "restore failed", e)
             false
         }
     }
 
     suspend fun setAutoEndMinutes(minutes: Int) = store.setAutoEndMinutes(minutes)
+
+    suspend fun setWaitForShizukuAfterReboot(wait: Boolean) = store.setWaitForShizukuAfterReboot(wait)
 
     fun scheduleAutoEnd(endAt: Long) {
         if (endAt <= 0) return

@@ -48,6 +48,7 @@ fun SchoolScreen(
     busy: Boolean,
     onActivate: () -> Unit,
     onAutoEndChange: (Int) -> Unit,
+    onWaitForShizukuChange: (Boolean) -> Unit,
     onBack: () -> Unit,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -107,6 +108,34 @@ fun SchoolScreen(
                         )
                     }
                 }
+            }
+        }
+        item {
+            GlassCard(Modifier.fillMaxWidth()) {
+                Text("Nach einem Neustart", style = MaterialTheme.typography.titleMedium)
+                Spacer(Modifier.height(8.dp))
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(
+                        selected = !state.waitForShizukuAfterReboot,
+                        onClick = { onWaitForShizukuChange(false) },
+                        label = { Text("Sofort schwarz") },
+                    )
+                    FilterChip(
+                        selected = state.waitForShizukuAfterReboot,
+                        onClick = { onWaitForShizukuChange(true) },
+                        label = { Text("Erst mit Shizuku") },
+                    )
+                }
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    if (state.waitForShizukuAfterReboot) {
+                        "Das Handy bleibt nach dem Neustart bedienbar. Sobald Shizuku wieder läuft, wird der Bildschirm wieder schwarz – 3× Power stellt dann direkt alles wieder her."
+                    } else {
+                        "Der Bildschirm ist direkt nach dem Neustart schwarz. Nach 3× Power führt eine kurze Anleitung durch den Neustart von Shizuku, danach wird alles automatisch wiederhergestellt."
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colors.onSurfaceVariant,
+                )
             }
         }
         item {

@@ -12,10 +12,14 @@ class BootReceiver : BroadcastReceiver() {
         SchoolMode.scope.launch {
             try {
                 val s = SchoolMode.store.current()
+                SchoolLog.log("BootReceiver", "${intent.action}: active=${s.active} wait=${s.waitForShizukuAfterReboot}")
                 if (s.active) {
-                    SchoolService.start(context)
                     SchoolMode.scheduleAutoEnd(s.endAt)
+                    // Otherwise SchoolMode starts the service once Shizuku is back.
+                    if (!s.waitForShizukuAfterReboot) SchoolService.start(context)
                 }
+            } catch (e: Exception) {
+                SchoolLog.log("BootReceiver", "failed", e)
             } finally {
                 pending.finish()
             }

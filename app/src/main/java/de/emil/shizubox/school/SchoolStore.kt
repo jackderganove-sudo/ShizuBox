@@ -10,10 +10,10 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import androidx.datastore.preferences.preferencesDataStoreFile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.io.File
 
 data class SchoolState(
     /** Black screen + power detection are running. */
@@ -28,6 +28,11 @@ data class SchoolState(
     val endAt: Long = 0,
     /** User preference: auto-end after this many minutes, 0 = off. */
     val autoEndMinutes: Int = 0,
+    /**
+     * User preference for a reboot during school mode: false (default) = black screen right
+     * after boot; true = phone stays usable until Shizuku runs again, then the black screen returns.
+     */
+    val waitForShizukuAfterReboot: Boolean = false,
 )
 
 /**
@@ -35,8 +40,10 @@ data class SchoolState(
  * before the user unlocks the phone for the first time.
  */
 class SchoolStore(context: Context) {
+    // Not preferencesDataStoreFile(): it resolves applicationContext.filesDir, which is the
+    // credential-encrypted storage and stays locked until the first unlock after a reboot.
     private val store: DataStore<Preferences> = PreferenceDataStoreFactory.create {
-        context.createDeviceProtectedStorageContext().preferencesDataStoreFile("school_mode")
+        File(context.createDeviceProtectedStorageContext().filesDir, "datastore/school_mode.preferences_pb")
     }
 
     val state: Flow<SchoolState> = store.data.map { p ->
@@ -47,6 +54,7 @@ class SchoolStore(context: Context) {
             suspended = p[SUSPENDED] ?: emptySet(),
             endAt = p[END_AT] ?: 0,
             autoEndMinutes = p[AUTO_END_MINUTES] ?: 0,
+            waitForShizukuAfterReboot = p[WAIT_FOR_SHIZUKU] ?: false,
         )
     }
 
@@ -80,6 +88,8 @@ class SchoolStore(context: Context) {
 
     suspend fun setAutoEndMinutes(minutes: Int) = store.edit { it[AUTO_END_MINUTES] = minutes }
 
+    suspend fun setWaitForShizukuAfterReboot(wait: Boolean) = store.edit { it[WAIT_FOR_SHIZUKU] = wait }
+
     private companion object {
         val ACTIVE = booleanPreferencesKey("active")
         val PENDING_RESTORE = booleanPreferencesKey("pending_restore")
@@ -87,5 +97,6 @@ class SchoolStore(context: Context) {
         val SUSPENDED = stringSetPreferencesKey("suspended")
         val END_AT = longPreferencesKey("end_at")
         val AUTO_END_MINUTES = intPreferencesKey("auto_end_minutes")
+        val WAIT_FOR_SHIZUKU = booleanPreferencesKey("wait_for_shizuku_after_reboot")
     }
 }

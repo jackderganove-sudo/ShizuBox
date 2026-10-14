@@ -95,6 +95,7 @@ class SchoolService : Service() {
             ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE,
         )
         startedAt = SystemClock.elapsedRealtime()
+        running = true
         covering = true
         powerManager = getSystemService(PowerManager::class.java)
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ShizuBox:powerPresses")
@@ -109,7 +110,9 @@ class SchoolService : Service() {
         )
         // Started by the system (boot, sticky restart): only cover the screen if still active.
         mainScope.launch {
-            if (SchoolMode.store.current().active) {
+            val active = SchoolMode.store.current().active
+            SchoolLog.log(TAG, "service created, active=$active, overlay=${Settings.canDrawOverlays(this@SchoolService)}")
+            if (active) {
                 addOverlay()
                 BlackActivity.show(this@SchoolService)
             } else if (!exiting) {
@@ -140,12 +143,13 @@ class SchoolService : Service() {
         if (exiting) return
         exiting = true
         covering = false
-        Log.i(TAG, "exit requested")
+        SchoolLog.log(TAG, "exit requested")
         removeOverlay()
         BlackActivity.dismiss()
         SchoolMode.scope.launch {
             val restored = SchoolMode.exit()
             if (!restored) {
+                SchoolLog.log(TAG, "showing exit guide")
                 startActivity(
                     Intent(this@SchoolService, ExitGuideActivity::class.java)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
@@ -157,6 +161,7 @@ class SchoolService : Service() {
 
     override fun onDestroy() {
         covering = false
+        running = false
         handler.removeCallbacks(poll)
         if (wakeLock.isHeld) wakeLock.release()
         mainScope.cancel()
@@ -189,7 +194,7 @@ class SchoolService : Service() {
             getSystemService(WindowManager::class.java).addView(view, params)
             overlay = view
         } catch (e: Exception) {
-            Log.e(TAG, "overlay failed", e)
+            SchoolLog.log(TAG, "overlay failed", e)
         }
     }
 
@@ -229,6 +234,11 @@ class SchoolService : Service() {
         private const val EXIT_MAX_GAP_MS = 700L
         private const val POLL_INTERVAL_MS = 25L
         private const val POLL_DURATION_MS = 3000L
+
+        /** True from service creation until it is destroyed (including the exit phase). */
+        @Volatile
+        var running = false
+            private set
 
         /** True while the black screen should be shown; the activity checks this. */
         @Volatile
