@@ -36,7 +36,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import de.emil.shizubox.school.SchoolState
 import de.emil.shizubox.shizuku.ShizukuStatus
+import de.emil.shizubox.ui.school.autoEndLabel
 import de.emil.shizubox.ui.glass.GlassCard
 
 enum class Section(val title: String, val subtitle: String, val icon: ImageVector) {
@@ -50,7 +52,10 @@ enum class Section(val title: String, val subtitle: String, val icon: ImageVecto
 fun HomeScreen(
     shizukuStatus: ShizukuStatus,
     serverMode: String?,
+    school: SchoolState,
+    busy: Boolean,
     onShizukuAction: () -> Unit,
+    onActivateSchool: () -> Unit,
     onOpenSection: (Section) -> Unit,
 ) {
     LazyColumn(
@@ -70,7 +75,15 @@ fun HomeScreen(
             }
         }
         item { ShizukuCard(shizukuStatus, serverMode, onShizukuAction) }
-        item { SchoolCard(onClick = { onOpenSection(Section.School) }) }
+        item {
+            SchoolCard(
+                school = school,
+                canActivate = shizukuStatus == ShizukuStatus.Ready && !busy && !school.pendingRestore,
+                busy = busy,
+                onActivate = onActivateSchool,
+                onClick = { onOpenSection(Section.School) },
+            )
+        }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 SectionTile(Section.Customization, Modifier.weight(1f)) { onOpenSection(Section.Customization) }
@@ -122,7 +135,13 @@ private fun ShizukuCard(status: ShizukuStatus, serverMode: String?, onAction: ()
 }
 
 @Composable
-private fun SchoolCard(onClick: () -> Unit) {
+private fun SchoolCard(
+    school: SchoolState,
+    canActivate: Boolean,
+    busy: Boolean,
+    onActivate: () -> Unit,
+    onClick: () -> Unit,
+) {
     val colors = MaterialTheme.colorScheme
     GlassCard(
         Modifier.fillMaxWidth(),
@@ -136,7 +155,15 @@ private fun SchoolCard(onClick: () -> Unit) {
             Spacer(Modifier.width(16.dp))
             Column(Modifier.weight(1f)) {
                 Text(Section.School.title, style = MaterialTheme.typography.headlineSmall, color = colors.onPrimaryContainer)
-                Text("Aus", style = MaterialTheme.typography.bodyLarge, color = colors.onPrimaryContainer.copy(alpha = 0.75f))
+                Text(
+                    when {
+                        school.pendingRestore -> "Wiederherstellung ausstehend"
+                        school.autoEndMinutes > 0 -> "Aus · endet nach ${autoEndLabel(school.autoEndMinutes)}"
+                        else -> "Aus"
+                    },
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = colors.onPrimaryContainer.copy(alpha = 0.75f),
+                )
             }
         }
         Spacer(Modifier.height(16.dp))
@@ -147,14 +174,15 @@ private fun SchoolCard(onClick: () -> Unit) {
         )
         Spacer(Modifier.height(20.dp))
         FilledTonalButton(
-            onClick = onClick,
+            onClick = onActivate,
+            enabled = canActivate,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
         ) {
             Icon(Icons.Rounded.PowerSettingsNew, contentDescription = null)
             Spacer(Modifier.width(8.dp))
-            Text("Schulmodus öffnen", style = MaterialTheme.typography.titleMedium)
+            Text(if (busy) "Wird aktiviert …" else "Aktivieren", style = MaterialTheme.typography.titleMedium)
         }
     }
 }

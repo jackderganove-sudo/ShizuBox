@@ -14,9 +14,15 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import android.widget.Toast
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import de.emil.shizubox.school.SchoolMode
+import de.emil.shizubox.ui.school.SchoolScreen
+import kotlinx.coroutines.launch
 import de.emil.shizubox.shizuku.ShizukuManager
 import de.emil.shizubox.shizuku.ShizukuStatus
 import de.emil.shizubox.ui.glass.GlassBackground
@@ -40,7 +46,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             ShizuBoxTheme {
                 val status by ShizukuManager.status.collectAsStateWithLifecycle()
+                val school by SchoolMode.state.collectAsStateWithLifecycle()
                 var section by rememberSaveable { mutableStateOf<Section?>(null) }
+                var busy by remember { mutableStateOf(false) }
+                val activate: () -> Unit = {
+                    busy = true
+                    lifecycleScope.launch {
+                        SchoolMode.activate().onFailure {
+                            Toast.makeText(this@MainActivity, it.message ?: "Fehler", Toast.LENGTH_LONG).show()
+                        }
+                        busy = false
+                    }
+                }
                 BackHandler(enabled = section != null) { section = null }
 
                 GlassBackground(windowBlurActive = windowBlur.value) {
@@ -53,8 +70,20 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(
                                 shizukuStatus = status,
                                 serverMode = ShizukuManager.serverMode,
+                                school = school,
+                                busy = busy,
                                 onShizukuAction = { onShizukuAction(status) },
+                                onActivateSchool = activate,
                                 onOpenSection = { section = it },
+                            )
+                        } else if (current == Section.School) {
+                            SchoolScreen(
+                                state = school,
+                                shizukuReady = status == ShizukuStatus.Ready,
+                                busy = busy,
+                                onActivate = activate,
+                                onAutoEndChange = { lifecycleScope.launch { SchoolMode.setAutoEndMinutes(it) } },
+                                onBack = { section = null },
                             )
                         } else {
                             SectionScreen(current, onBack = { section = null })

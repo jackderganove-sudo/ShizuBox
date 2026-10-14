@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <queries>
         <package android:name="moe.shizuku.privileged.api" />
         <!-- Shizuku forks (e.g. com.hamondev.shevery) keep this action -->
@@ -13,6 +20,7 @@
         android:name=".ShizuBoxApp"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
+        android:directBootAware="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShizuBox">
@@ -26,6 +34,59 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".school.BlackActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity="de.emil.shizubox.black"
+            android:showWhenLocked="true"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode"
+            android:theme="@style/Theme.ShizuBox.Black" />
+
+        <activity
+            android:name=".school.ExitGuideActivity"
+            android:excludeFromRecents="true"
+            android:taskAffinity="de.emil.shizubox.exit"
+            android:theme="@style/Theme.ShizuBox" />
+
+        <service
+            android:name=".school.SchoolService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keeps the screen black during school mode and detects the power-button exit" />
+        </service>
+
+        <service
+            android:name=".school.SchoolTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_school"
+            android:label="Schulmodus"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".school.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".school.AutoEndReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".school.AdbExitReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP" />
 
         <provider
             android:name="rikka.shizuku.ShizukuProvider"
