@@ -151,6 +151,14 @@
                 <data android:pathPattern=".*\\.apkm" />
                 <data android:pathPattern=".*\\.APKM" />
             </intent-filter>
+            <!-- Files by Google sends bundles as octet-stream with an opaque content URI (no file
+                 name in the path). Non-package files are forwarded by InstallActivity. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:mimeType="application/octet-stream" />
+            </intent-filter>
             <!-- Opened by extension without any MIME type. -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

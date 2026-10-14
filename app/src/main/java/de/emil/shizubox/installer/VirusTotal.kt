@@ -18,7 +18,9 @@ import java.net.URL
 import java.security.MessageDigest
 
 enum class VtStatus {
-    CLEAN, MALICIOUS, SUSPICIOUS, NOT_FOUND, NO_API_KEY, INVALID_API_KEY, RATE_LIMITED, ERROR, TOO_LARGE,
+    CLEAN, MALICIOUS, SUSPICIOUS, NOT_FOUND,
+    /** Known to VirusTotal (e.g. just uploaded elsewhere) but no scanner has reported yet. */
+    NOT_ANALYZED, NO_API_KEY, INVALID_API_KEY, RATE_LIMITED, ERROR, TOO_LARGE,
     SCANNING, UPLOADING, QUEUED, ANALYZING,
 }
 
@@ -178,7 +180,9 @@ object VirusTotal {
 
     private fun parseFile(body: String): VtResult {
         val attrs = JSONObject(body).getJSONObject("data").getJSONObject("attributes")
-        return toResult(attrs.getJSONObject("last_analysis_stats"), engines(attrs.optJSONObject("last_analysis_results")))
+        val result = toResult(attrs.optJSONObject("last_analysis_stats") ?: JSONObject(), engines(attrs.optJSONObject("last_analysis_results")))
+        // "Clean, 0 of 0" would be misleading: the analysis simply has not run yet.
+        return if (result.total == 0) VtResult(VtStatus.NOT_ANALYZED) else result
     }
 
     private fun engines(obj: JSONObject?): List<VtEngineResult> {

@@ -94,6 +94,13 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                 Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.tertiary, "Limit erreicht (4 Anfragen pro Minute)")
                 TextButton(onClick = { keyVersion++ }) { Text("Erneut versuchen") }
             }
+            VtStatus.NOT_ANALYZED -> {
+                Text(
+                    "VirusTotal kennt die Datei, hat sie aber noch nicht fertig analysiert.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                TextButton(onClick = { keyVersion++ }) { Text("Erneut prüfen") }
+            }
             VtStatus.TOO_LARGE -> Text("Datei zu groß für VirusTotal (max. 650 MB)", style = MaterialTheme.typography.bodyMedium)
             VtStatus.ERROR -> {
                 Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, r.errorMessage.ifBlank { "Fehler" })

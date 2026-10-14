@@ -27,6 +27,10 @@ class InstallActivity : ComponentActivity() {
             finish()
             return
         }
+        if (!isPackageFile(uri)) {
+            forwardToOtherApps(uri)
+            return
+        }
         setContent {
             ShizuBoxTheme {
                 val status by ShizukuManager.status.collectAsStateWithLifecycle()
@@ -35,6 +39,35 @@ class InstallActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    /**
+     * Generic files (octet-stream) also reach us. Accept only APKs and bundles: known extension,
+     * or a zip that contains an AndroidManifest.xml (APK) or .apk entries (bundle).
+     */
+    private fun isPackageFile(uri: Uri): Boolean {
+        val name = ApkParser.fileName(this, uri).lowercase()
+        if (name.substringAfterLast('.', "") in setOf("apk", "apks", "xapk", "apkm")) return true
+        return runCatching {
+            contentResolver.openInputStream(uri)?.use { input ->
+                java.util.zip.ZipInputStream(input).use { zip ->
+                    generateSequence { zip.nextEntry }.take(200).any {
+                        it.name == "AndroidManifest.xml" || it.name.endsWith(".apk", ignoreCase = true)
+                    }
+                }
+            } ?: false
+        }.getOrDefault(false)
+    }
+
+    /** Not an app package: hand the file to the normal app chooser, without ShizuBox. */
+    private fun forwardToOtherApps(uri: Uri) {
+        val view = Intent(Intent.ACTION_VIEW)
+            .setDataAndType(uri, intent.type ?: contentResolver.getType(uri) ?: "*/*")
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val chooser = Intent.createChooser(view, null)
+            .putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, arrayOf(android.content.ComponentName(this, InstallActivity::class.java)))
+        runCatching { startActivity(chooser) }
+        finish()
     }
 
     override fun onResume() {
