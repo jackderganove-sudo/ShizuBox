@@ -21,6 +21,7 @@ import android.widget.Toast
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import de.emil.shizubox.school.SchoolMode
+import de.emil.shizubox.ui.apps.AppsScreen
 import de.emil.shizubox.ui.customization.CustomizationScreen
 import de.emil.shizubox.ui.school.SchoolScreen
 import kotlinx.coroutines.launch
@@ -85,6 +86,11 @@ class MainActivity : ComponentActivity() {
                                 onActivate = activate,
                                 onAutoEndChange = { lifecycleScope.launch { SchoolMode.setAutoEndMinutes(it) } },
                                 onWaitForShizukuChange = { lifecycleScope.launch { SchoolMode.setWaitForShizukuAfterReboot(it) } },
+                                onBack = { section = null },
+                            )
+                        } else if (current == Section.Apps) {
+                            AppsScreen(
+                                shizukuReady = status == ShizukuStatus.Ready,
                                 onBack = { section = null },
                             )
                         } else if (current == Section.Customization) {
