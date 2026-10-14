@@ -44,6 +44,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.emil.shizubox.apps.ApkExport
 import de.emil.shizubox.apps.AppDetails
 import de.emil.shizubox.apps.Apps
 import de.emil.shizubox.apps.BatteryMode
@@ -64,6 +65,17 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
     var showAllOps by remember { mutableStateOf(false) }
     var reload by remember { mutableStateOf(0) }
     val profiles by Profiles.profiles.collectAsStateWithLifecycle()
+    val extractLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/octet-stream"),
+    ) { target ->
+        val d = details ?: return@rememberLauncherForActivityResult
+        if (target != null) {
+            scope.launch {
+                message = runCatching { ApkExport.extract(context, d.entry, target) }
+                    .fold({ "Gespeichert ✓" }, { "Extrahieren fehlgeschlagen: ${it.message}" })
+            }
+        }
+    }
 
     LaunchedEffect(pkg, reload, shizukuReady) {
         details = runCatching { Apps.details(pkg) }.getOrNull()
@@ -138,6 +150,28 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                         )
                     }) { Text("App-Info") }
                 }
+                if (e.installed && !e.frozen) {
+                    Spacer(Modifier.height(8.dp))
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Apps.launchIntent(pkg)?.let { launch ->
+                            OutlinedButton(onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }) { Text("Öffnen") }
+                        }
+                        if (!e.isSystem) {
+                            OutlinedButton(onClick = {
+                                // Fall back to any store if the installing app can't show it.
+                                runCatching { context.startActivity(ApkExport.storeIntent(e)) }
+                                    .onFailure { runCatching { context.startActivity(ApkExport.storeIntent(e).setPackage(null)) } }
+                            }) { Text(ApkExport.storeLabel(e)) }
+                        }
+                        OutlinedButton(onClick = { scope.launch { runCatching { ApkExport.share(context, e) }.onFailure { message = it.message } } }) {
+                            Text("APK teilen")
+                        }
+                        OutlinedButton(onClick = { extractLauncher.launch(ApkExport.fileName(e)) }) { Text("Extrahieren") }
+                        if (!e.isSystem) {
+                            OutlinedButton(enabled = shizukuReady, onClick = { act { Apps.reinstallFromApks(pkg) } }) { Text("Neu installieren") }
+                        }
+                    }
+                }
                 if (e.isSystem) {
                     Text(
                         "System-Apps lassen sich unter Android 17 ohne Root nur einfrieren, nicht entfernen.",
@@ -147,7 +181,13 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                     )
                 }
                 message?.let {
-                    Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 8.dp))
+                    val ok = it.endsWith("✓")
+                    Text(
+                        it,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (ok) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(top = 8.dp),
+                    )
                 }
             }
         }

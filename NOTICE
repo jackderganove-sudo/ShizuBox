@@ -1,0 +1,14 @@
+ShizuBox
+Copyright (C) 2026 Emil
+
+This program is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version. See LICENSE.
+
+Third-party code
+----------------
+app/src/main/java/de/emil/shizubox/installer/ is ported from Universal Installer
+(https://github.com/pass-with-high-score/universal-installer),
+Copyright (C) pass-with-high-score and contributors, GPL-3.0.
+
+Libraries: Shizuku API (Apache-2.0), Ackpine (Apache-2.0), Haze (Apache-2.0), AndroidX (Apache-2.0).

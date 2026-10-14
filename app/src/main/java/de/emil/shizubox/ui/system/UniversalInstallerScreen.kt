@@ -1,0 +1,334 @@
+package de.emil.shizubox.ui.system
+
+import android.content.Intent
+import android.net.Uri
+import android.text.format.Formatter
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
+import de.emil.shizubox.installer.ApkInfo
+import de.emil.shizubox.installer.ApkParser
+import de.emil.shizubox.installer.InstallOptions
+import de.emil.shizubox.installer.InstallResult
+import de.emil.shizubox.installer.ShizukuApkInstaller
+import de.emil.shizubox.installer.SplitEntry
+import de.emil.shizubox.installer.SplitType
+import de.emil.shizubox.ui.glass.GlassCard
+import kotlinx.coroutines.launch
+
+private sealed interface Stage {
+    data object Parsing : Stage
+    data class Preview(val info: ApkInfo) : Stage
+    data class Installing(val info: ApkInfo) : Stage
+    data class Done(val info: ApkInfo, val result: InstallResult) : Stage
+    data class ParseError(val message: String) : Stage
+}
+
+/**
+ * Install flow based on Universal Installer: inspect the file, choose splits, install via Shizuku.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var stage by remember { mutableStateOf<Stage>(Stage.Parsing) }
+    val splits = remember { mutableStateListOf<SplitEntry>() }
+    var options by remember { mutableStateOf(InstallOptions()) }
+    var progress by remember { mutableFloatStateOf(0f) }
+    var showPermissions by remember { mutableStateOf(false) }
+
+    LaunchedEffect(uri) {
+        stage = runCatching { ApkParser.parse(context, uri) }.fold(
+            onSuccess = { info ->
+                splits.clear()
+                splits.addAll(info.splitEntries)
+                options = options.copy(allowDowngrade = info.isDowngrade)
+                Stage.Preview(info)
+            },
+            onFailure = { Stage.ParseError(it.message ?: "Datei konnte nicht gelesen werden") },
+        )
+    }
+
+    LazyColumn(
+        modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        item {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
+                IconButton(onClick = onClose) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Zurück") }
+                Text("Universal Installer", style = MaterialTheme.typography.titleLarge)
+            }
+        }
+        when (val s = stage) {
+            Stage.Parsing -> item {
+                GlassCard(Modifier.fillMaxWidth()) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        CircularProgressIndicator(Modifier.padding(end = 16.dp))
+                        Text("Lese Datei …")
+                    }
+                }
+            }
+            is Stage.ParseError -> item {
+                GlassCard(Modifier.fillMaxWidth()) {
+                    Text("Datei nicht lesbar", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error)
+                    Text(s.message, style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+            is Stage.Preview, is Stage.Installing, is Stage.Done -> {
+                val info = when (s) {
+                    is Stage.Preview -> s.info
+                    is Stage.Installing -> s.info
+                    is Stage.Done -> s.info
+                    else -> error("unreachable")
+                }
+                item { AppHeader(info) }
+                if (info.signatureMismatch == true) {
+                    item {
+                        GlassCard(Modifier.fillMaxWidth(), tint = MaterialTheme.colorScheme.errorContainer) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Rounded.Warning, null, tint = MaterialTheme.colorScheme.onErrorContainer)
+                                Spacer(Modifier.width(12.dp))
+                                Text(
+                                    "Andere Signatur als die installierte App – das Update wird fehlschlagen. " +
+                                        "Erst die installierte Version deinstallieren.",
+                                    color = MaterialTheme.colorScheme.onErrorContainer,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                            }
+                        }
+                    }
+                }
+                when (s) {
+                    is Stage.Preview -> {
+                        item { OptionsCard(info, options) { options = it } }
+                        if (splits.size > 1) {
+                            item { SplitsCard(splits) }
+                        }
+                        if (info.permissions.isNotEmpty()) {
+                            item {
+                                GlassCard(Modifier.fillMaxWidth()) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Text("${info.permissions.size} Berechtigungen", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                                        TextButton(onClick = { showPermissions = !showPermissions }) { Text(if (showPermissions) "Ausblenden" else "Anzeigen") }
+                                    }
+                                    if (showPermissions) {
+                                        info.permissions.sorted().forEach {
+                                            Text(it.removePrefix("android.permission."), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        item {
+                            val selected = splits.filter { it.selected }
+                            val hasBase = selected.any { it.type == SplitType.Base }
+                            Button(
+                                onClick = {
+                                    stage = Stage.Installing(info)
+                                    progress = 0f
+                                    scope.launch {
+                                        val result = ShizukuApkInstaller.install(
+                                            context, info.appName, selected.map { it.uri }, options,
+                                        ) { progress = it }
+                                        stage = Stage.Done(info, result)
+                                    }
+                                },
+                                enabled = shizukuReady && hasBase,
+                                modifier = Modifier.fillMaxWidth().height(60.dp),
+                            ) {
+                                Text(
+                                    when {
+                                        !shizukuReady -> "Shizuku nicht verbunden"
+                                        info.isUpdate -> "Aktualisieren"
+                                        info.isDowngrade -> "Downgrade installieren"
+                                        info.isReinstall -> "Neu installieren"
+                                        else -> "Installieren"
+                                    } + if (splits.size > 1) " (${selected.size} Teile, ${Formatter.formatShortFileSize(context, selected.sumOf { it.sizeBytes })})" else "",
+                                    style = MaterialTheme.typography.titleMedium,
+                                )
+                            }
+                        }
+                    }
+                    is Stage.Installing -> item {
+                        GlassCard(Modifier.fillMaxWidth()) {
+                            Text("Installiere …", style = MaterialTheme.typography.titleMedium)
+                            Spacer(Modifier.height(12.dp))
+                            LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
+                        }
+                    }
+                    is Stage.Done -> item {
+                        GlassCard(Modifier.fillMaxWidth()) {
+                            when (val r = s.result) {
+                                InstallResult.Success -> {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Icon(Icons.Rounded.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
+                                        Spacer(Modifier.width(12.dp))
+                                        Text("${info.appName} installiert", style = MaterialTheme.typography.titleMedium)
+                                    }
+                                    Spacer(Modifier.height(12.dp))
+                                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                        context.packageManager.getLaunchIntentForPackage(info.packageName)?.let { launch ->
+                                            Button(onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); onClose() }) { Text("Öffnen") }
+                                        }
+                                        FilledTonalButton(onClick = onClose) { Text("Fertig") }
+                                    }
+                                }
+                                is InstallResult.Failure -> {
+                                    Text(r.title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error)
+                                    Text(r.hint, style = MaterialTheme.typography.bodyMedium)
+                                    Spacer(Modifier.height(12.dp))
+                                    FilledTonalButton(onClick = { stage = Stage.Preview(info) }) { Text("Zurück") }
+                                }
+                            }
+                        }
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun AppHeader(info: ApkInfo) {
+    val context = LocalContext.current
+    GlassCard(Modifier.fillMaxWidth()) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            val bitmap = remember(info) { runCatching { info.icon?.toBitmap(128, 128)?.asImageBitmap() }.getOrNull() }
+            if (bitmap != null) {
+                Image(bitmap, null, modifier = Modifier.size(64.dp).clip(RoundedCornerShape(16.dp)))
+                Spacer(Modifier.width(16.dp))
+            }
+            Column(Modifier.weight(1f)) {
+                Text(info.appName, style = MaterialTheme.typography.headlineSmall)
+                Text(info.packageName, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        Spacer(Modifier.height(12.dp))
+        val version = when {
+            info.installedVersionName == null -> "Neu · ${info.versionName}"
+            info.isUpdate -> "Update · ${info.installedVersionName} → ${info.versionName}"
+            info.isDowngrade -> "Downgrade · ${info.installedVersionName} → ${info.versionName}"
+            else -> "Gleiche Version · ${info.versionName}"
+        }
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            AssistChip(onClick = {}, label = { Text(version) })
+            AssistChip(onClick = {}, label = { Text(info.fileFormat) })
+            if (info.fileSizeBytes > 0) AssistChip(onClick = {}, label = { Text(Formatter.formatShortFileSize(context, info.fileSizeBytes)) })
+            if (info.minSdkVersion > 0) AssistChip(onClick = {}, label = { Text("Android ${sdkName(info.minSdkVersion)}+") })
+            if (info.supportedAbis.isNotEmpty()) AssistChip(onClick = {}, label = { Text(info.supportedAbis.joinToString(", ")) })
+        }
+    }
+}
+
+@Composable
+private fun OptionsCard(info: ApkInfo, options: InstallOptions, onChange: (InstallOptions) -> Unit) {
+    GlassCard(Modifier.fillMaxWidth()) {
+        Text("Optionen", style = MaterialTheme.typography.titleMedium)
+        OptionRow("Downgrade erlauben", options.allowDowngrade, highlight = info.isDowngrade) { onChange(options.copy(allowDowngrade = it)) }
+        OptionRow("Alle Berechtigungen gewähren", options.grantAllPermissions) { onChange(options.copy(grantAllPermissions = it)) }
+        OptionRow("Als Play-Store-Installation ausgeben", options.spoofPlayStore) { onChange(options.copy(spoofPlayStore = it)) }
+    }
+}
+
+@Composable
+private fun OptionRow(label: String, checked: Boolean, highlight: Boolean = false, onChange: (Boolean) -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (highlight) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.weight(1f),
+        )
+        Switch(checked = checked, onCheckedChange = onChange)
+    }
+}
+
+@Composable
+private fun SplitsCard(splits: MutableList<SplitEntry>) {
+    val context = LocalContext.current
+    GlassCard(Modifier.fillMaxWidth()) {
+        Text("Teile (Splits)", style = MaterialTheme.typography.titleMedium)
+        Text(
+            "Vorausgewählt ist nur, was dieses Handy braucht: passende CPU, Bildschirmdichte und deine Sprachen.",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        SplitType.entries.forEach { type ->
+            val group = splits.withIndex().filter { it.value.type == type }
+            if (group.isEmpty()) return@forEach
+            Text(type.label, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+            group.forEach { (i, e) ->
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = e.selected,
+                        enabled = e.type != SplitType.Base,
+                        onCheckedChange = { splits[i] = e.copy(selected = it) },
+                    )
+                    Text(e.name, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+                    Text(Formatter.formatShortFileSize(context, e.sizeBytes), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
+    }
+}
+
+private fun sdkName(sdk: Int) = when (sdk) {
+    in 0..20 -> "4"
+    21, 22 -> "5"
+    23 -> "6"
+    24, 25 -> "7"
+    26, 27 -> "8"
+    28 -> "9"
+    else -> (sdk - 19).toString()
+}

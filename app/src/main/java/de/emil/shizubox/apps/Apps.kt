@@ -12,6 +12,7 @@ import de.emil.shizubox.shizuku.ShellResult
 import de.emil.shizubox.shizuku.ShizukuManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 
 data class AppEntry(
     val pkg: String,
@@ -22,6 +23,14 @@ data class AppEntry(
     /** False if uninstalled for the current user but still on the device. */
     val installed: Boolean,
     val versionName: String?,
+    /** Size of all APK files of the app (base + splits). */
+    val sizeBytes: Long = 0,
+    val firstInstall: Long = 0,
+    val lastUpdate: Long = 0,
+    /** Installed as split APKs (several files). */
+    val isSplit: Boolean = false,
+    /** Package that installed the app (Play Store, F-Droid, …), if known. */
+    val installer: String? = null,
 )
 
 data class PermissionEntry(val name: String, val label: String, val granted: Boolean)
@@ -66,6 +75,7 @@ object Apps {
 
     private fun PackageInfo.toEntry(): AppEntry {
         val ai = applicationInfo!!
+        val apks = apkPaths(ai)
         return AppEntry(
             pkg = packageName,
             label = ai.loadLabel(pm).toString(),
@@ -73,8 +83,24 @@ object Apps {
             frozen = !ai.enabled,
             installed = ai.flags and ApplicationInfo.FLAG_INSTALLED != 0,
             versionName = versionName,
+            sizeBytes = apks.sumOf { File(it).length() },
+            firstInstall = firstInstallTime,
+            lastUpdate = lastUpdateTime,
+            isSplit = !ai.splitSourceDirs.isNullOrEmpty(),
+            installer = runCatching { pm.getInstallSourceInfo(packageName).installingPackageName }.getOrNull(),
         )
     }
+
+    /** base.apk plus all split APKs of an installed app. */
+    fun apkPaths(ai: ApplicationInfo): List<String> =
+        listOfNotNull(ai.sourceDir) + ai.splitSourceDirs.orEmpty()
+
+    fun apkPaths(pkg: String): List<String> = apkPaths(pm.getApplicationInfo(pkg, 0))
+
+    fun launchIntent(pkg: String) = pm.getLaunchIntentForPackage(pkg)
+
+    /** Reinstalls the app from its own APK files (e.g. to repair it or reset the install source). */
+    suspend fun reinstallFromApks(pkg: String) = exec("pm install -r ${apkPaths(pkg).joinToString(" ")}")
 
     fun icon(pkg: String): Bitmap? {
         iconCache.get(pkg)?.let { return it }

@@ -29,6 +29,9 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,7 +54,12 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SystemScreen(shizukuReady: Boolean, onOpenLogcat: () -> Unit, onBack: () -> Unit) {
+fun SystemScreen(
+    shizukuReady: Boolean,
+    onOpenLogcat: () -> Unit,
+    onOpenUniversalInstaller: (Uri) -> Unit,
+    onBack: () -> Unit,
+) {
     LazyColumn(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.safeDrawing)
@@ -76,7 +84,7 @@ fun SystemScreen(shizukuReady: Boolean, onOpenLogcat: () -> Unit, onBack: () -> 
             item { GlassCard(Modifier.fillMaxWidth()) { Text("Shizuku muss verbunden sein.") } }
         }
         item { GamingCard(shizukuReady) }
-        item { InstallerCard(shizukuReady) }
+        item { InstallerCard(shizukuReady, onOpenUniversalInstaller) }
         item {
             GlassCard(Modifier.fillMaxWidth(), onClick = onOpenLogcat) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -167,9 +175,13 @@ private fun GamingCard(shizukuReady: Boolean) {
 }
 
 @Composable
-private fun InstallerCard(shizukuReady: Boolean) {
+private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri) -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    var universal by remember { mutableStateOf(true) }
+    val universalPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+        uri?.let(onOpenUniversalInstaller)
+    }
     var downgrade by remember { mutableStateOf(false) }
     var grantAll by remember { mutableStateOf(false) }
     var progress by remember { mutableStateOf<String?>(null) }
@@ -184,11 +196,36 @@ private fun InstallerCard(shizukuReady: Boolean) {
     }
     GlassCard(Modifier.fillMaxWidth()) {
         Text("APK-Installer", style = MaterialTheme.typography.titleMedium)
+        Spacer(Modifier.height(8.dp))
+        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
+            SegmentedButton(selected = universal, onClick = { universal = true }, shape = SegmentedButtonDefaults.itemShape(0, 2)) { Text("Universal") }
+            SegmentedButton(selected = !universal, onClick = { universal = false }, shape = SegmentedButtonDefaults.itemShape(1, 2)) { Text("Schnell") }
+        }
+        Spacer(Modifier.height(4.dp))
         Text(
-            "Installiert ohne Nachfrage. Auch Split-APKs (mehrere Dateien) und .apks/.xapk-Pakete.",
+            if (universal) {
+                "Universal Installer: zeigt App-Infos, Version und Signatur vorab, wählt bei APKS/XAPK/APKM nur die passenden Teile. Auch über „Öffnen mit ShizuBox“ im Dateimanager."
+            } else {
+                "Installiert sofort ohne Vorschau. Auch mehrere Split-APKs auf einmal."
+            },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        if (universal) {
+            Spacer(Modifier.height(8.dp))
+            Button(
+                onClick = { universalPicker.launch(arrayOf("*/*")) },
+                enabled = shizukuReady,
+                modifier = Modifier.fillMaxWidth(),
+            ) { Text("Datei auswählen") }
+            Text(
+                "Basiert auf Universal Installer von pass-with-high-score (GPL-3.0)",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+            return@GlassCard
+        }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Downgrade erlauben", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
             Switch(checked = downgrade, onCheckedChange = { downgrade = it })

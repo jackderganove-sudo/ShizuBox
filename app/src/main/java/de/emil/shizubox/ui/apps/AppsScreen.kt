@@ -65,6 +65,10 @@ import kotlinx.coroutines.withContext
 
 private enum class AppFilter(val label: String) { User("Nutzer"), System("System"), Frozen("Eingefroren") }
 
+private enum class AppSort(val label: String) { Name("Name"), Size("Größe"), Installed("Installiert"), Updated("Aktualisiert") }
+
+private val dateFormat = java.text.SimpleDateFormat("d. MMM yy", java.util.Locale.GERMAN)
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
@@ -82,15 +86,24 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
 
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf(AppFilter.User) }
-    val visible = remember(apps, query, filter) {
+    var sort by rememberSaveable { mutableStateOf(AppSort.Name) }
+    val visible = remember(apps, query, filter, sort) {
         apps.orEmpty().filter { a ->
             when (filter) {
                 AppFilter.User -> !a.isSystem
                 AppFilter.System -> a.isSystem
                 AppFilter.Frozen -> a.frozen || !a.installed
             } && (query.isBlank() || a.label.contains(query, true) || a.pkg.contains(query, true))
+        }.let { list ->
+            when (sort) {
+                AppSort.Name -> list
+                AppSort.Size -> list.sortedByDescending { it.sizeBytes }
+                AppSort.Installed -> list.sortedByDescending { it.firstInstall }
+                AppSort.Updated -> list.sortedByDescending { it.lastUpdate }
+            }
         }
     }
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     LazyColumn(
         modifier = Modifier
@@ -143,6 +156,26 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                     FilterChip(selected = filter == f, onClick = { filter = f }, label = { Text(f.label) })
                 }
             }
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp)) {
+                Text(
+                    "${visible.size} Apps · ${android.text.format.Formatter.formatShortFileSize(context, visible.sumOf { it.sizeBytes })}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.weight(1f),
+                )
+                var sortMenu by remember { mutableStateOf(false) }
+                Box {
+                    TextButton(onClick = { sortMenu = true }) { Text("${sort.label} ↓") }
+                    androidx.compose.material3.DropdownMenu(expanded = sortMenu, onDismissRequest = { sortMenu = false }) {
+                        AppSort.entries.forEach { s ->
+                            androidx.compose.material3.DropdownMenuItem(
+                                text = { Text(s.label) },
+                                onClick = { sort = s; sortMenu = false },
+                            )
+                        }
+                    }
+                }
+            }
         }
         if (apps == null) {
             item { Text("Lade Apps …", modifier = Modifier.padding(8.dp)) }
@@ -165,23 +198,48 @@ fun AppIcon(pkg: String, sizeDp: Int = 40) {
 
 @Composable
 private fun AppRow(app: AppEntry, onClick: () -> Unit) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     GlassCard(Modifier.fillMaxWidth(), contentPadding = 12.dp, onClick = onClick) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            AppIcon(app.pkg)
+            AppIcon(app.pkg, 44)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
-                Text(app.label, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        app.label,
+                        style = MaterialTheme.typography.titleSmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false),
+                    )
+                    if (app.isSplit) Badge("Split")
+                    when {
+                        !app.installed -> Badge("Entfernt")
+                        app.frozen -> Badge("Eingefroren")
+                    }
+                }
+                val small = MaterialTheme.typography.bodySmall
+                val dim = MaterialTheme.colorScheme.onSurfaceVariant
+                Text(app.pkg, style = small, color = dim, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(
-                    app.pkg,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    listOfNotNull(app.versionName?.let { "v$it" }, android.text.format.Formatter.formatShortFileSize(context, app.sizeBytes))
+                        .joinToString(" · "),
+                    style = small,
+                    color = dim,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-            }
-            when {
-                !app.installed -> Badge("Entfernt")
-                app.frozen -> Badge("Eingefroren")
+                if (app.firstInstall > 0 && !app.isSystem) {
+                    Text(
+                        buildString {
+                            append("${dateFormat.format(java.util.Date(app.firstInstall))} installiert")
+                            if (app.lastUpdate - app.firstInstall > 60_000) append(" · aktualisiert ${dateFormat.format(java.util.Date(app.lastUpdate))}")
+                        },
+                        style = small,
+                        color = dim,
+                        maxLines = 1,
+                    )
+                }
             }
         }
     }

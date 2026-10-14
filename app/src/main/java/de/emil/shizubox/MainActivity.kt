@@ -24,6 +24,7 @@ import de.emil.shizubox.school.SchoolMode
 import de.emil.shizubox.ui.apps.AppsScreen
 import de.emil.shizubox.ui.system.LogcatScreen
 import de.emil.shizubox.ui.system.SystemScreen
+import de.emil.shizubox.ui.system.UniversalInstallerScreen
 import de.emil.shizubox.ui.customization.CustomizationScreen
 import de.emil.shizubox.ui.school.SchoolScreen
 import kotlinx.coroutines.launch
@@ -53,6 +54,7 @@ class MainActivity : ComponentActivity() {
                 val school by SchoolMode.state.collectAsStateWithLifecycle()
                 var section by rememberSaveable { mutableStateOf<Section?>(null) }
                 var logcatOpen by rememberSaveable { mutableStateOf(false) }
+                var installUri by remember { mutableStateOf<android.net.Uri?>(null) }
                 var busy by remember { mutableStateOf(false) }
                 val activate: () -> Unit = {
                     busy = true
@@ -65,6 +67,7 @@ class MainActivity : ComponentActivity() {
                 }
                 BackHandler(enabled = section != null && !logcatOpen) { section = null }
                 BackHandler(enabled = logcatOpen) { logcatOpen = false }
+                BackHandler(enabled = installUri != null) { installUri = null }
 
                 GlassBackground(windowBlurActive = windowBlur.value) {
                     AnimatedContent(
@@ -93,12 +96,16 @@ class MainActivity : ComponentActivity() {
                                 onBack = { section = null },
                             )
                         } else if (current == Section.System) {
-                            if (logcatOpen) {
+                            val uri = installUri
+                            if (uri != null) {
+                                UniversalInstallerScreen(uri, status == ShizukuStatus.Ready, onClose = { installUri = null })
+                            } else if (logcatOpen) {
                                 LogcatScreen(status == ShizukuStatus.Ready, onBack = { logcatOpen = false })
                             } else {
                                 SystemScreen(
                                     shizukuReady = status == ShizukuStatus.Ready,
                                     onOpenLogcat = { logcatOpen = true },
+                                    onOpenUniversalInstaller = { installUri = it },
                                     onBack = { section = null },
                                 )
                             }

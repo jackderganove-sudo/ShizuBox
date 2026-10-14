@@ -8,6 +8,7 @@ coreKtx = "1.19.1"
 datastore = "1.2.1"
 shizuku = "13.1.5"
 haze = "2.0.1"
+ackpine = "0.25.4"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -25,6 +26,12 @@ shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
 shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-blur = { module = "dev.chrisbanes.haze:haze-blur", version.ref = "haze" }
+ackpine-core = { module = "ru.solrudev.ackpine:ackpine-core", version.ref = "ackpine" }
+ackpine-ktx = { module = "ru.solrudev.ackpine:ackpine-ktx", version.ref = "ackpine" }
+ackpine-splits = { module = "ru.solrudev.ackpine:ackpine-splits", version.ref = "ackpine" }
+ackpine-splits-ktx = { module = "ru.solrudev.ackpine:ackpine-splits-ktx", version.ref = "ackpine" }
+ackpine-shizuku = { module = "ru.solrudev.ackpine:ackpine-shizuku", version.ref = "ackpine" }
+ackpine-shizuku-ktx = { module = "ru.solrudev.ackpine:ackpine-shizuku-ktx", version.ref = "ackpine" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

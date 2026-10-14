@@ -55,4 +55,12 @@ dependencies {
     implementation(libs.shizuku.provider)
     implementation(libs.haze)
     implementation(libs.haze.blur)
+
+    // Install engine of Universal Installer (see installer/ package)
+    implementation(libs.ackpine.core)
+    implementation(libs.ackpine.ktx)
+    implementation(libs.ackpine.splits)
+    implementation(libs.ackpine.splits.ktx)
+    implementation(libs.ackpine.shizuku)
+    implementation(libs.ackpine.shizuku.ktx)
 }
