@@ -2,6 +2,7 @@ package de.emil.shizubox.shizuku
 
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.os.IBinder
@@ -40,6 +41,7 @@ enum class ShizukuStatus {
 object ShizukuManager {
     private const val TAG = "ShizukuManager"
     private const val SHIZUKU_PACKAGE = "moe.shizuku.privileged.api"
+    private const val SHIZUKU_PERMISSION_ACTION = "moe.shizuku.privileged.api.intent.action.REQUEST_PERMISSION"
     private const val PERMISSION_REQUEST_CODE = 4711
 
     private lateinit var appContext: Context
@@ -94,7 +96,7 @@ object ShizukuManager {
     fun refresh() {
         val running = Shizuku.pingBinder()
         _status.value = when {
-            !running && !isShizukuInstalled() -> ShizukuStatus.NotInstalled
+            !running && shizukuPackage == null -> ShizukuStatus.NotInstalled
             !running || Shizuku.isPreV11() -> ShizukuStatus.NotRunning
             Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED ->
                 if (Shizuku.shouldShowRequestPermissionRationale()) ShizukuStatus.PermissionDenied
@@ -112,14 +114,26 @@ object ShizukuManager {
         if (Shizuku.pingBinder()) Shizuku.requestPermission(PERMISSION_REQUEST_CODE)
     }
 
-    fun shizukuLaunchIntent() = appContext.packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE)
+    /**
+     * Package of the installed Shizuku manager app. Forks use their own package name
+     * but still handle Shizuku's permission action, so look it up by that.
+     */
+    val shizukuPackage: String?
+        get() {
+            val pm = appContext.packageManager
+            val byAction = pm.queryIntentActivities(Intent(SHIZUKU_PERMISSION_ACTION), 0)
+                .firstOrNull()?.activityInfo?.packageName
+            if (byAction != null) return byAction
+            return try {
+                pm.getPackageInfo(SHIZUKU_PACKAGE, 0)
+                SHIZUKU_PACKAGE
+            } catch (_: PackageManager.NameNotFoundException) {
+                null
+            }
+        }
 
-    private fun isShizukuInstalled() = try {
-        appContext.packageManager.getPackageInfo(SHIZUKU_PACKAGE, 0)
-        true
-    } catch (_: PackageManager.NameNotFoundException) {
-        false
-    }
+    fun shizukuLaunchIntent(): Intent? =
+        shizukuPackage?.let { appContext.packageManager.getLaunchIntentForPackage(it) }
 
     private fun bindService() {
         if (binding) return

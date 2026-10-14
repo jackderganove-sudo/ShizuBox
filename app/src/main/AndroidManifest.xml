@@ -3,6 +3,10 @@
 
     <queries>
         <package android:name="moe.shizuku.privileged.api" />
+        <!-- Shizuku forks (e.g. com.hamondev.shevery) keep this action -->
+        <intent>
+            <action android:name="moe.shizuku.privileged.api.intent.action.REQUEST_PERMISSION" />
+        </intent>
     </queries>
 
     <application
