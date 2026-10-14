@@ -33,6 +33,9 @@ object SchoolCommands {
         Triple("system", "notification_vibration_intensity", "0"),
         // A display woken by accident goes dark again quickly.
         Triple("system", "screen_off_timeout", "10000"),
+        // Long-press power and Quick Tap (back double-tap) would open the assistant (Gemini).
+        Triple("global", "power_button_long_press", "0"),
+        Triple("secure", "columbus_enabled", "0"),
         // No fingerprint/face unlock: unlocking would allow pulling down the shade.
         Triple("secure", "fingerprint_keyguard_enabled", "0"),
         Triple("secure", "face_keyguard_enabled", "0"),
