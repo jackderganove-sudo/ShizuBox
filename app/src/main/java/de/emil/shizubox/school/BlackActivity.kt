@@ -12,7 +12,9 @@ import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.window.OnBackInvokedDispatcher
 import android.window.SplashScreen
+import de.emil.shizubox.shizuku.ShizukuManager
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.launch
 
 /**
  * Pitch black, full-screen, shown above the lock screen. Hides the system bars and swallows
@@ -50,7 +52,12 @@ class BlackActivity : Activity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideBars()
+        if (hasFocus) {
+            hideBars()
+        } else if (SchoolService.covering && ShizukuManager.isReady) {
+            // Losing focus while visible = shade, quick settings or power menu opened on top.
+            SchoolMode.scope.launch { runCatching { SchoolCommands.collapseShade() } }
+        }
     }
 
     private fun hideBars() {

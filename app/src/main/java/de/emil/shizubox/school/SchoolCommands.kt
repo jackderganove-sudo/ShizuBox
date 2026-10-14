@@ -33,6 +33,9 @@ object SchoolCommands {
         Triple("system", "notification_vibration_intensity", "0"),
         // A display woken by accident goes dark again quickly.
         Triple("system", "screen_off_timeout", "10000"),
+        // No fingerprint/face unlock: unlocking would allow pulling down the shade.
+        Triple("secure", "fingerprint_keyguard_enabled", "0"),
+        Triple("secure", "face_keyguard_enabled", "0"),
         // Accessibility overlays (e.g. MT Island) are drawn above everything, even the lock
         // screen, and are not hidden when their app is suspended. Off for the duration.
         Triple("secure", "enabled_accessibility_services", null),
@@ -158,6 +161,11 @@ object SchoolCommands {
             }
         }
         run(script.joinToString("; "))
+    }
+
+    /** Closes the notification shade / quick settings if someone managed to open them. */
+    suspend fun collapseShade() {
+        run("cmd statusbar collapse")
     }
 
     suspend fun screenOff() {
