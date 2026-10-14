@@ -28,11 +28,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.emil.shizubox.BuildConfig
 import de.emil.shizubox.school.SchoolState
 import de.emil.shizubox.ui.glass.GlassCard
 
-val AUTO_END_OPTIONS = (if (BuildConfig.DEBUG) listOf(2) else emptyList()) + listOf(0, 45, 60, 120, 240, 360, 480)
+val AUTO_END_OPTIONS = listOf(0, 45, 60, 120, 240, 360, 480)
 
 fun autoEndLabel(minutes: Int) = when {
     minutes == 0 -> "Aus"
