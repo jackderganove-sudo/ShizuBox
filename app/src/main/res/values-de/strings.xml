@@ -525,5 +525,20 @@
     <string name="set_language">Sprache</string>
     <string name="lang_system">Systemstandard</string>
     <string name="lang_hint">Auch in den Android-Einstellungen unter Apps → ShizuBox → Sprache änderbar.</string>
+    <string name="night_auto">Automatisch</string>
+    <string name="dur_sec">%1$d s</string>
+    <string name="tile_animations">Animationen</string>
+    <string name="tile_stay_awake">Wach bleiben</string>
+    <string name="tw_title">Schnelle Schalter</string>
+    <string name="tw_sub">Praktische Systemeinstellungen an einem Ort</string>
+    <string name="tw_stay_awake">Beim Laden wach bleiben</string>
+    <string name="tw_stay_awake_sub">Der Bildschirm geht am Ladekabel nie aus</string>
+    <string name="tw_battery_saver">Energiesparmodus</string>
+    <string name="tw_show_touches">Berührungen anzeigen</string>
+    <string name="tw_pointer">Zeigerposition</string>
+    <string name="tw_pointer_sub">Overlay mit Berührungskoordinaten</string>
+    <string name="tw_dark">Dunkles Design (System)</string>
+    <string name="tw_timeout">Bildschirm-Timeout</string>
+    <string name="tw_tiles_hint">Tipp: Gaming-Modus, Animationen, Bildwiederholrate und „Wach bleiben“ gibt es auch als Schnelleinstellungs-Kacheln.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

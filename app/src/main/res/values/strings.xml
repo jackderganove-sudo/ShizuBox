@@ -527,4 +527,19 @@
     <string name="set_language">Language</string>
     <string name="lang_system">System default</string>
     <string name="lang_hint">Also changeable in the Android settings under Apps → ShizuBox → Language.</string>
+    <string name="night_auto">Automatic</string>
+    <string name="dur_sec">%1$d s</string>
+    <string name="tile_animations">Animations</string>
+    <string name="tile_stay_awake">Stay awake</string>
+    <string name="tw_title">Quick switches</string>
+    <string name="tw_sub">Handy system settings in one place</string>
+    <string name="tw_stay_awake">Stay awake while charging</string>
+    <string name="tw_stay_awake_sub">The screen never turns off while plugged in</string>
+    <string name="tw_battery_saver">Battery saver</string>
+    <string name="tw_show_touches">Show taps</string>
+    <string name="tw_pointer">Pointer location</string>
+    <string name="tw_pointer_sub">Overlay with touch coordinates</string>
+    <string name="tw_dark">Dark theme (system)</string>
+    <string name="tw_timeout">Screen timeout</string>
+    <string name="tw_tiles_hint">Tip: Gaming mode, animations, refresh rate and stay awake are also available as quick settings tiles.</string>
 </resources>

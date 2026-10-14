@@ -2542,5 +2542,80 @@
   "en": "Also changeable in the Android settings under Apps → ShizuBox → Language.",
   "de": "Auch in den Android-Einstellungen unter Apps → ShizuBox → Sprache änderbar.",
   "plural": false
+ },
+ "night_auto": {
+  "en": "Automatic",
+  "de": "Automatisch",
+  "plural": false
+ },
+ "dur_sec": {
+  "en": "%1$d s",
+  "de": "%1$d s",
+  "plural": false
+ },
+ "tile_animations": {
+  "en": "Animations",
+  "de": "Animationen",
+  "plural": false
+ },
+ "tile_stay_awake": {
+  "en": "Stay awake",
+  "de": "Wach bleiben",
+  "plural": false
+ },
+ "tw_title": {
+  "en": "Quick switches",
+  "de": "Schnelle Schalter",
+  "plural": false
+ },
+ "tw_sub": {
+  "en": "Handy system settings in one place",
+  "de": "Praktische Systemeinstellungen an einem Ort",
+  "plural": false
+ },
+ "tw_stay_awake": {
+  "en": "Stay awake while charging",
+  "de": "Beim Laden wach bleiben",
+  "plural": false
+ },
+ "tw_stay_awake_sub": {
+  "en": "The screen never turns off while plugged in",
+  "de": "Der Bildschirm geht am Ladekabel nie aus",
+  "plural": false
+ },
+ "tw_battery_saver": {
+  "en": "Battery saver",
+  "de": "Energiesparmodus",
+  "plural": false
+ },
+ "tw_show_touches": {
+  "en": "Show taps",
+  "de": "Berührungen anzeigen",
+  "plural": false
+ },
+ "tw_pointer": {
+  "en": "Pointer location",
+  "de": "Zeigerposition",
+  "plural": false
+ },
+ "tw_pointer_sub": {
+  "en": "Overlay with touch coordinates",
+  "de": "Overlay mit Berührungskoordinaten",
+  "plural": false
+ },
+ "tw_dark": {
+  "en": "Dark theme (system)",
+  "de": "Dunkles Design (System)",
+  "plural": false
+ },
+ "tw_timeout": {
+  "en": "Screen timeout",
+  "de": "Bildschirm-Timeout",
+  "plural": false
+ },
+ "tw_tiles_hint": {
+  "en": "Tip: Gaming mode, animations, refresh rate and stay awake are also available as quick settings tiles.",
+  "de": "Tipp: Gaming-Modus, Animationen, Bildwiederholrate und „Wach bleiben“ gibt es auch als Schnelleinstellungs-Kacheln.",
+  "plural": false
  }
 }

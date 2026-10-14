@@ -523,5 +523,20 @@
 "base_apk": "Temel APK",
 "set_language": "Dil",
 "lang_system": "Sistem varsayılanı",
-"lang_hint": "Android ayarlarında Uygulamalar → ShizuBox → Dil altından da değiştirilebilir."
+"lang_hint": "Android ayarlarında Uygulamalar → ShizuBox → Dil altından da değiştirilebilir.",
+"night_auto": "Otomatik",
+"dur_sec": "%1$d sn",
+"tile_animations": "Animasyonlar",
+"tile_stay_awake": "Uyanık kal",
+"tw_title": "Hızlı anahtarlar",
+"tw_sub": "Kullanışlı sistem ayarları tek yerde",
+"tw_stay_awake": "Şarj olurken uyanık kal",
+"tw_stay_awake_sub": "Şarja takılıyken ekran hiç kapanmaz",
+"tw_battery_saver": "Pil tasarrufu",
+"tw_show_touches": "Dokunmaları göster",
+"tw_pointer": "İşaretçi konumu",
+"tw_pointer_sub": "Dokunma koordinatlarını gösteren katman",
+"tw_dark": "Koyu tema (sistem)",
+"tw_timeout": "Ekran zaman aşımı",
+"tw_tiles_hint": "İpucu: Oyun modu, animasyonlar, yenileme hızı ve uyanık kal hızlı ayar kutucukları olarak da mevcut."
 }

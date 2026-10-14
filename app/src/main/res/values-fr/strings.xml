@@ -525,4 +525,19 @@
     <string name="set_language">Langue</string>
     <string name="lang_system">Langue du système</string>
     <string name="lang_hint">Modifiable aussi dans les paramètres Android sous Applis → ShizuBox → Langue.</string>
+    <string name="night_auto">Automatique</string>
+    <string name="dur_sec">%1$d s</string>
+    <string name="tile_animations">Animations</string>
+    <string name="tile_stay_awake">Rester allumé</string>
+    <string name="tw_title">Interrupteurs rapides</string>
+    <string name="tw_sub">Réglages système pratiques au même endroit</string>
+    <string name="tw_stay_awake">Rester allumé pendant la charge</string>
+    <string name="tw_stay_awake_sub">L’écran ne s’éteint jamais quand il est branché</string>
+    <string name="tw_battery_saver">Économiseur de batterie</string>
+    <string name="tw_show_touches">Afficher les appuis</string>
+    <string name="tw_pointer">Emplacement du pointeur</string>
+    <string name="tw_pointer_sub">Superposition avec les coordonnées tactiles</string>
+    <string name="tw_dark">Thème sombre (système)</string>
+    <string name="tw_timeout">Mise en veille de l’écran</string>
+    <string name="tw_tiles_hint">Astuce : le mode jeu, les animations, la fréquence de rafraîchissement et rester allumé existent aussi en tuiles de réglages rapides.</string>
 </resources>

@@ -523,5 +523,20 @@
 "base_apk": "APK base",
 "set_language": "Idioma",
 "lang_system": "Predeterminado del sistema",
-"lang_hint": "También se puede cambiar en los ajustes de Android en Apps → ShizuBox → Idioma."
+"lang_hint": "También se puede cambiar en los ajustes de Android en Apps → ShizuBox → Idioma.",
+"night_auto": "Automático",
+"dur_sec": "%1$d s",
+"tile_animations": "Animaciones",
+"tile_stay_awake": "Mantener activo",
+"tw_title": "Interruptores rápidos",
+"tw_sub": "Ajustes útiles del sistema en un solo lugar",
+"tw_stay_awake": "Mantener activo mientras carga",
+"tw_stay_awake_sub": "La pantalla nunca se apaga mientras está conectado",
+"tw_battery_saver": "Ahorro de batería",
+"tw_show_touches": "Mostrar toques",
+"tw_pointer": "Ubicación del puntero",
+"tw_pointer_sub": "Superposición con coordenadas táctiles",
+"tw_dark": "Tema oscuro (sistema)",
+"tw_timeout": "Tiempo de espera de pantalla",
+"tw_tiles_hint": "Consejo: el modo gaming, las animaciones, la frecuencia de actualización y mantener activo también están disponibles como iconos de ajustes rápidos."
 }

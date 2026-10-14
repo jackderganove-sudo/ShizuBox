@@ -525,4 +525,19 @@
     <string name="set_language">Idioma</string>
     <string name="lang_system">Predeterminado del sistema</string>
     <string name="lang_hint">También se puede cambiar en los ajustes de Android en Apps → ShizuBox → Idioma.</string>
+    <string name="night_auto">Automático</string>
+    <string name="dur_sec">%1$d s</string>
+    <string name="tile_animations">Animaciones</string>
+    <string name="tile_stay_awake">Mantener activo</string>
+    <string name="tw_title">Interruptores rápidos</string>
+    <string name="tw_sub">Ajustes útiles del sistema en un solo lugar</string>
+    <string name="tw_stay_awake">Mantener activo mientras carga</string>
+    <string name="tw_stay_awake_sub">La pantalla nunca se apaga mientras está conectado</string>
+    <string name="tw_battery_saver">Ahorro de batería</string>
+    <string name="tw_show_touches">Mostrar toques</string>
+    <string name="tw_pointer">Ubicación del puntero</string>
+    <string name="tw_pointer_sub">Superposición con coordenadas táctiles</string>
+    <string name="tw_dark">Tema oscuro (sistema)</string>
+    <string name="tw_timeout">Tiempo de espera de pantalla</string>
+    <string name="tw_tiles_hint">Consejo: el modo gaming, las animaciones, la frecuencia de actualización y mantener activo también están disponibles como iconos de ajustes rápidos.</string>
 </resources>

@@ -77,7 +77,51 @@
             android:name=".school.SchoolTileService"
             android:exported="true"
             android:icon="@drawable/ic_tile_school"
-            android:label="Schulmodus"
+            android:label="@string/sec_school"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".tiles.GamingTile"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_gaming"
+            android:label="@string/gaming"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".tiles.AnimationsTile"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_animation"
+            android:label="@string/tile_animations"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".tiles.RefreshTile"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_refresh"
+            android:label="@string/cust_refresh"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".tiles.StayAwakeTile"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_coffee"
+            android:label="@string/tile_stay_awake"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

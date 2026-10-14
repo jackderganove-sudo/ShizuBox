@@ -525,4 +525,19 @@
     <string name="set_language">Dil</string>
     <string name="lang_system">Sistem varsayılanı</string>
     <string name="lang_hint">Android ayarlarında Uygulamalar → ShizuBox → Dil altından da değiştirilebilir.</string>
+    <string name="night_auto">Otomatik</string>
+    <string name="dur_sec">%1$d sn</string>
+    <string name="tile_animations">Animasyonlar</string>
+    <string name="tile_stay_awake">Uyanık kal</string>
+    <string name="tw_title">Hızlı anahtarlar</string>
+    <string name="tw_sub">Kullanışlı sistem ayarları tek yerde</string>
+    <string name="tw_stay_awake">Şarj olurken uyanık kal</string>
+    <string name="tw_stay_awake_sub">Şarja takılıyken ekran hiç kapanmaz</string>
+    <string name="tw_battery_saver">Pil tasarrufu</string>
+    <string name="tw_show_touches">Dokunmaları göster</string>
+    <string name="tw_pointer">İşaretçi konumu</string>
+    <string name="tw_pointer_sub">Dokunma koordinatlarını gösteren katman</string>
+    <string name="tw_dark">Koyu tema (sistem)</string>
+    <string name="tw_timeout">Ekran zaman aşımı</string>
+    <string name="tw_tiles_hint">İpucu: Oyun modu, animasyonlar, yenileme hızı ve uyanık kal hızlı ayar kutucukları olarak da mevcut.</string>
 </resources>

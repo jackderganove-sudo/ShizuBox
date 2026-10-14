@@ -86,6 +86,7 @@ fun SystemScreen(
             item { GlassCard(Modifier.fillMaxWidth()) { Text(t(R.string.shizuku_must)) } }
         }
         item { GamingCard(shizukuReady) }
+        item { TweaksCard(shizukuReady) }
         item { InstallerCard(shizukuReady, onOpenUniversalInstaller) }
         item {
             GlassCard(Modifier.fillMaxWidth(), onClick = onOpenLogcat) {

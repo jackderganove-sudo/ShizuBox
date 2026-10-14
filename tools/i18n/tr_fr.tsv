@@ -496,3 +496,18 @@ base_apk	APK de base
 set_language	Langue
 lang_system	Langue du système
 lang_hint	Modifiable aussi dans les paramètres Android sous Applis → ShizuBox → Langue.
+night_auto	Automatique
+dur_sec	%1$d s
+tile_animations	Animations
+tile_stay_awake	Rester allumé
+tw_title	Interrupteurs rapides
+tw_sub	Réglages système pratiques au même endroit
+tw_stay_awake	Rester allumé pendant la charge
+tw_stay_awake_sub	L’écran ne s’éteint jamais quand il est branché
+tw_battery_saver	Économiseur de batterie
+tw_show_touches	Afficher les appuis
+tw_pointer	Emplacement du pointeur
+tw_pointer_sub	Superposition avec les coordonnées tactiles
+tw_dark	Thème sombre (système)
+tw_timeout	Mise en veille de l’écran
+tw_tiles_hint	Astuce : le mode jeu, les animations, la fréquence de rafraîchissement et rester allumé existent aussi en tuiles de réglages rapides.

@@ -132,6 +132,21 @@ object Customization {
         return (parts.getOrNull(0)?.toIntOrNull() ?: 0) to (parts.getOrNull(1)?.toIntOrNull() ?: 0)
     }
 
+    /** Lightweight reads for the quick settings tiles. */
+    suspend fun animationScale(): Float =
+        ShizukuManager.exec("settings get global animator_duration_scale").out.trim().toFloatOrNull() ?: 1f
+
+    suspend fun refreshMode(): RefreshMode {
+        val out = ShizukuManager.exec("settings get system peak_refresh_rate; settings get system min_refresh_rate").out.lines()
+        val peak = out.getOrNull(0)?.trim()?.toFloatOrNull() ?: Float.POSITIVE_INFINITY
+        val min = out.getOrNull(1)?.trim()?.toFloatOrNull() ?: 0f
+        return when {
+            min >= 120f || min.isInfinite() -> RefreshMode.AlwaysMax
+            peak <= 60f -> RefreshMode.Fixed60
+            else -> RefreshMode.Adaptive
+        }
+    }
+
     suspend fun setAnimationScale(scale: Float) = run(
         listOf("window_animation_scale", "transition_animation_scale", "animator_duration_scale")
             .joinToString("; ") { "settings put global $it $scale" },
