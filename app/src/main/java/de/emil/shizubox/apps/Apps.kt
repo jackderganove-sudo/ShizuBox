@@ -130,10 +130,13 @@ object Apps {
             )
         }.distinctBy { it.name }.sortedBy { it.label }
 
-        val out = exec(
-            "appops get $pkg; echo '###'; am get-standby-bucket $pkg; echo '###'; " +
-                "dumpsys deviceidle whitelist | grep -c \",$pkg,\"",
-        ).out.split("###")
+        // Without Shizuku the shell parts are simply empty: the rest of the page still works.
+        val out = (if (!ShizukuManager.isReady) "" else runCatching {
+            exec(
+                "appops get $pkg; echo '###'; am get-standby-bucket $pkg; echo '###'; " +
+                    "dumpsys deviceidle whitelist | grep -c \",$pkg,\"",
+            ).out
+        }.getOrDefault("")).split("###")
         val ops = parseAppOps(out.getOrElse(0) { "" })
         val bucket = out.getOrElse(1) { "" }.trim().toIntOrNull()
         val whitelisted = (out.getOrElse(2) { "" }.trim().toIntOrNull() ?: 0) > 0

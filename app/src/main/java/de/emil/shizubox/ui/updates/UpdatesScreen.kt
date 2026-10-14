@@ -158,8 +158,22 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 androidx.compose.material3.BadgedBox(
                     badge = { if (!running) androidx.compose.material3.Badge { Text("$updateCount") } },
                 ) {
+                    val context = LocalContext.current
+                    val scope = rememberCoroutineScope()
                     androidx.compose.material3.FloatingActionButton(
-                        onClick = { if (!running) Updates.updateAllInBackground() },
+                        onClick = {
+                            if (running) return@FloatingActionButton
+                            if (de.emil.shizubox.installer.ShizukuApkInstaller.useShizuku() && de.emil.shizubox.shizuku.ShizukuManager.isReady) {
+                                Updates.updateAllInBackground()
+                            } else {
+                                // Without Shizuku: open the installer (system dialog) for each update in turn.
+                                scope.launch {
+                                    for (app in apps.filter { Updates.state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true }) {
+                                        runCatching { Updates.download(app) {} }.onSuccess { (_, uri) -> openInstaller(context, uri) }
+                                    }
+                                }
+                            }
+                        },
                         shape = CircleShape,
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                     ) {

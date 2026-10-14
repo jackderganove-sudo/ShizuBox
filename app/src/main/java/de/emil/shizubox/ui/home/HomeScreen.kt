@@ -24,6 +24,7 @@ import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.PowerSettingsNew
 import androidx.compose.material.icons.rounded.School
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material3.FilledTonalButton
@@ -60,6 +61,7 @@ fun HomeScreen(
     onShizukuAction: () -> Unit,
     onActivateSchool: () -> Unit,
     onOpenSection: (Section) -> Unit,
+    onOpenSettings: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
@@ -68,7 +70,12 @@ fun HomeScreen(
     ) {
         // Big empty header area keeps everything interactive in the lower, thumb-friendly part.
         item {
-            Column(Modifier.padding(start = 8.dp, top = 96.dp, bottom = 20.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                androidx.compose.material3.IconButton(onClick = onOpenSettings) {
+                    Icon(androidx.compose.material.icons.Icons.Rounded.Settings, "Einstellungen")
+                }
+            }
+            Column(Modifier.padding(start = 8.dp, top = 48.dp, bottom = 20.dp)) {
                 Text("ShizuBox", style = MaterialTheme.typography.displaySmall)
                 Text(
                     "Systemwerkzeuge über Shizuku",
@@ -114,8 +121,8 @@ private fun ShizukuCard(status: ShizukuStatus, serverMode: String?, onAction: ()
         ShizukuStatus.Connecting -> Triple("Verbinde …", "Shell-Dienst wird gestartet", null)
         ShizukuStatus.NoPermission -> Triple("Zugriff nötig", "ShizuBox braucht die Shizuku-Berechtigung", "Erlauben")
         ShizukuStatus.PermissionDenied -> Triple("Zugriff verweigert", "In der Shizuku-App unter „Autorisierte Apps“ erlauben", "Shizuku öffnen")
-        ShizukuStatus.NotRunning -> Triple("Shizuku läuft nicht", "Shizuku öffnen und per kabellosem Debugging starten", "Shizuku öffnen")
-        ShizukuStatus.NotInstalled -> Triple("Shizuku fehlt", "Shizuku aus dem Play Store installieren", "Installieren")
+        ShizukuStatus.NotRunning -> Triple("Shizuku läuft nicht", "Updates, Installer und App-Liste gehen trotzdem", "Starten")
+        ShizukuStatus.NotInstalled -> Triple("Shizuku fehlt", "Updates, Installer und App-Liste gehen trotzdem", "Installieren")
     }
     val dot = when (status) {
         ShizukuStatus.Ready -> Color(0xFF4CD964)

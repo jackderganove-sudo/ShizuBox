@@ -81,7 +81,17 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
     val scope = rememberCoroutineScope()
     var stage by remember { mutableStateOf<Stage>(Stage.Parsing) }
     val splits = remember { mutableStateListOf<SplitEntry>() }
-    var options by remember { mutableStateOf(InstallOptions()) }
+    val appSettings = de.emil.shizubox.settings.AppSettings.current
+    var options by remember {
+        mutableStateOf(
+            InstallOptions(
+                allowDowngrade = appSettings.defaultDowngrade,
+                grantAllPermissions = appSettings.defaultGrantAll,
+                spoofPlayStore = appSettings.defaultPlayStoreSource,
+            ),
+        )
+    }
+    val silent = ShizukuApkInstaller.useShizuku()
     var progress by remember { mutableFloatStateOf(0f) }
     var showPermissions by remember { mutableStateOf(false) }
 
@@ -90,7 +100,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
             onSuccess = { info ->
                 splits.clear()
                 splits.addAll(info.splitEntries)
-                options = options.copy(allowDowngrade = info.isDowngrade)
+                options = options.copy(allowDowngrade = options.allowDowngrade || info.isDowngrade)
                 Stage.Preview(info)
             },
             onFailure = { Stage.ParseError(it.message ?: "Datei konnte nicht gelesen werden") },
@@ -135,6 +145,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                     item {
                         VirusTotalCard(
                             key = uri,
+                            autoScan = appSettings.vtAutoScan,
                             open = { context.contentResolver.openInputStream(uri) },
                             asFile = {
                                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
@@ -164,7 +175,20 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                 }
                 when (s) {
                     is Stage.Preview -> {
-                        item { OptionsCard(info, options) { options = it } }
+                        if (silent) {
+                            item { OptionsCard(info, options) { options = it } }
+                        } else {
+                            item {
+                                GlassCard(Modifier.fillMaxWidth()) {
+                                    Text("Installation über den System-Dialog", style = MaterialTheme.typography.titleMedium)
+                                    Text(
+                                        if (shizukuReady) "So eingestellt (Einstellungen → Installer)." else "Shizuku ist nicht verbunden – Android fragt einmal nach. Downgrade und Berechtigungs-Optionen gehen nur mit Shizuku.",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+                        }
                         if (splits.size > 1) {
                             item { SplitsCard(splits) }
                         }
@@ -186,6 +210,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                         item {
                             val selected = splits.filter { it.selected }
                             val hasBase = selected.any { it.type == SplitType.Base }
+                            val blocked = appSettings.blockSignatureMismatch && info.signatureMismatch == true
                             Button(
                                 onClick = {
                                     stage = Stage.Installing(info)
@@ -197,17 +222,18 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                                         stage = Stage.Done(info, result)
                                     }
                                 },
-                                enabled = shizukuReady && hasBase,
+                                enabled = (shizukuReady || !silent) && hasBase && !blocked,
                                 modifier = Modifier.fillMaxWidth().height(60.dp),
                             ) {
                                 Text(
                                     when {
-                                        !shizukuReady -> "Shizuku nicht verbunden"
+                                        blocked -> "Blockiert: andere Signatur"
+                                        silent && !shizukuReady -> "Shizuku nicht verbunden"
                                         info.isUpdate -> "Aktualisieren"
                                         info.isDowngrade -> "Downgrade installieren"
                                         info.isReinstall -> "Neu installieren"
                                         else -> "Installieren"
-                                    } + if (splits.size > 1) " (${selected.size} Teile, ${Formatter.formatShortFileSize(context, selected.sumOf { it.sizeBytes })})" else "",
+                                    } + (if (!silent && !blocked) " (System-Dialog)" else "") + if (splits.size > 1) " (${selected.size} Teile, ${Formatter.formatShortFileSize(context, selected.sumOf { it.sizeBytes })})" else "",
                                     style = MaterialTheme.typography.titleMedium,
                                 )
                             }

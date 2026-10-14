@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons)
+    implementation(libs.material.kolor)
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.shizuku.api)

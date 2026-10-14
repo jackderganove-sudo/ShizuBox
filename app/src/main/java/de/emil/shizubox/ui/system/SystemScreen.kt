@@ -215,7 +215,6 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
             Spacer(Modifier.height(8.dp))
             Button(
                 onClick = { universalPicker.launch(arrayOf("*/*")) },
-                enabled = shizukuReady,
                 modifier = Modifier.fillMaxWidth(),
             ) { Text("Datei auswählen") }
             Text(

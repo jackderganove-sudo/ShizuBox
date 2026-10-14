@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- System installer fallback when Shizuku is not available -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- VirusTotal scan -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- App manager: needs to see every installed package. -->

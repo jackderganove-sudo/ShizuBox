@@ -6,7 +6,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.LaunchedEffect
+import de.emil.shizubox.settings.AppSettings
+import de.emil.shizubox.ui.theme.LocalDarkTheme
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -23,6 +27,7 @@ import androidx.lifecycle.lifecycleScope
 import de.emil.shizubox.school.SchoolMode
 import de.emil.shizubox.ui.apps.AppsScreen
 import de.emil.shizubox.ui.system.LogcatScreen
+import de.emil.shizubox.ui.settings.SettingsScreen
 import de.emil.shizubox.ui.system.SystemScreen
 import de.emil.shizubox.ui.system.UniversalInstallerScreen
 import de.emil.shizubox.ui.updates.UpdatesScreen
@@ -43,15 +48,27 @@ class MainActivity : ComponentActivity() {
     private val windowBlur = mutableStateOf(false)
     private val blurListener = java.util.function.Consumer<Boolean> { enabled ->
         windowBlur.value = enabled
-        window.setBackgroundBlurRadius(if (enabled) WINDOW_BLUR_RADIUS else 0)
+        applyWindowBlur()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        // Blur radius follows the glass settings live.
+        lifecycleScope.launch { AppSettings.state.collect { applyWindowBlur() } }
+
         setContent {
             ShizuBoxTheme {
+                // Status bar icons must follow the app's own light/dark choice, not only the system's.
+                val dark = LocalDarkTheme.current
+                LaunchedEffect(dark) {
+                    val transparent = android.graphics.Color.TRANSPARENT
+                    enableEdgeToEdge(
+                        statusBarStyle = if (dark) SystemBarStyle.dark(transparent) else SystemBarStyle.light(transparent, transparent),
+                        navigationBarStyle = if (dark) SystemBarStyle.dark(transparent) else SystemBarStyle.light(transparent, transparent),
+                    )
+                }
                 val status by ShizukuManager.status.collectAsStateWithLifecycle()
                 val school by SchoolMode.state.collectAsStateWithLifecycle()
                 var section by rememberSaveable {
@@ -60,6 +77,7 @@ class MainActivity : ComponentActivity() {
                 val trackedApps by Updates.apps.collectAsStateWithLifecycle()
                 val updateCount = remember(trackedApps) { Updates.updateCount() }
                 var logcatOpen by rememberSaveable { mutableStateOf(false) }
+                var settingsOpen by rememberSaveable { mutableStateOf(false) }
                 var installUri by remember { mutableStateOf<android.net.Uri?>(null) }
                 var busy by remember { mutableStateOf(false) }
                 val activate: () -> Unit = {
@@ -71,11 +89,20 @@ class MainActivity : ComponentActivity() {
                         busy = false
                     }
                 }
-                BackHandler(enabled = section != null && !logcatOpen) { section = null }
+                BackHandler(enabled = settingsOpen) { settingsOpen = false }
+                BackHandler(enabled = section != null && !logcatOpen && !settingsOpen) { section = null }
                 BackHandler(enabled = logcatOpen) { logcatOpen = false }
                 BackHandler(enabled = installUri != null) { installUri = null }
 
                 GlassBackground(windowBlurActive = windowBlur.value) {
+                    if (settingsOpen) {
+                        SettingsScreen(
+                            onBack = { settingsOpen = false },
+                            onOpenUpdates = { settingsOpen = false; section = Section.Updates },
+                            onOpenSchool = { settingsOpen = false; section = Section.School },
+                        )
+                        return@GlassBackground
+                    }
                     AnimatedContent(
                         targetState = section,
                         transitionSpec = { (fadeIn() + scaleIn(initialScale = 0.96f)) togetherWith fadeOut() },
@@ -90,6 +117,7 @@ class MainActivity : ComponentActivity() {
                                 updateCount = updateCount,
                                 onShizukuAction = { onShizukuAction(status) },
                                 onActivateSchool = activate,
+                                onOpenSettings = { settingsOpen = true },
                                 onOpenSection = { section = it },
                             )
                         } else if (current == Section.School) {
@@ -143,6 +171,12 @@ class MainActivity : ComponentActivity() {
             checkedThisProcess = true
             Updates.checkAllInBackground()
         }
+    }
+
+    private fun applyWindowBlur() {
+        val s = AppSettings.current
+        val on = windowBlur.value && s.glass
+        window.setBackgroundBlurRadius(if (on) WINDOW_BLUR_RADIUS * s.blurStrength / 100 else 0)
     }
 
     override fun onAttachedToWindow() {

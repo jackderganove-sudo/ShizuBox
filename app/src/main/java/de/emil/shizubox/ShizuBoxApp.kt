@@ -4,6 +4,7 @@ import android.app.Application
 import de.emil.shizubox.apps.Apps
 import de.emil.shizubox.apps.Profiles
 import de.emil.shizubox.customization.Customization
+import de.emil.shizubox.settings.AppSettings
 import de.emil.shizubox.installer.VirusTotal
 import de.emil.shizubox.system.Gaming
 import de.emil.shizubox.updates.UpdateWorker
@@ -14,6 +15,7 @@ import de.emil.shizubox.shizuku.ShizukuManager
 class ShizuBoxApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        AppSettings.init(this)
         Customization.init(this)
         Apps.init(this)
         Profiles.init(this)

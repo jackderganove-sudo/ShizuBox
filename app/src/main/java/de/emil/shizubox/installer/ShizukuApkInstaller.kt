@@ -33,8 +33,15 @@ sealed interface InstallResult {
     data class Failure(val title: String, val hint: String) : InstallResult
 }
 
-/** Silent install of the selected splits through Shizuku, as one package session. */
+/** Installs the selected splits as one package session: silently via Shizuku, or via the system dialog. */
 object ShizukuApkInstaller {
+
+    /** Whether the next install runs silently through Shizuku (per the install-method setting). */
+    fun useShizuku(): Boolean = when (de.emil.shizubox.settings.AppSettings.current.installMethod) {
+        de.emil.shizubox.settings.InstallMethod.Shizuku -> true
+        de.emil.shizubox.settings.InstallMethod.System -> false
+        de.emil.shizubox.settings.InstallMethod.Auto -> de.emil.shizubox.shizuku.ShizukuManager.isReady
+    }
 
     @OptIn(DelicateAckpineApi::class)
     suspend fun install(
@@ -45,16 +52,21 @@ object ShizukuApkInstaller {
         onProgress: (Float) -> Unit,
     ): InstallResult = coroutineScope {
         val installer = PackageInstaller.getInstance(context)
+        val silent = useShizuku()
         val session = installer.createSession(uris) {
             this.name = name
             confirmation = Confirmation.IMMEDIATE
-            shizuku {
-                // Without it an update of an installed app fails with INSTALL_FAILED_ALREADY_EXISTS.
-                replaceExisting = true
-                requestDowngrade = options.allowDowngrade
-                grantAllRequestedPermissions = options.grantAllPermissions
-                if (options.spoofPlayStore) installerPackageName = "com.android.vending"
+            if (silent) {
+                shizuku {
+                    // Without it an update of an installed app fails with INSTALL_FAILED_ALREADY_EXISTS.
+                    replaceExisting = true
+                    requestDowngrade = options.allowDowngrade
+                    grantAllRequestedPermissions = options.grantAllPermissions
+                    if (options.spoofPlayStore) installerPackageName = "com.android.vending"
+                }
             }
+            // Otherwise: normal system installer with its confirmation dialog (works without Shizuku;
+            // downgrade / grant-all / installer spoofing need privileges and are not available).
         }
         val progressJob = session.progress
             .onEach { if (it.max > 0) onProgress(it.progress.toFloat() / it.max) }

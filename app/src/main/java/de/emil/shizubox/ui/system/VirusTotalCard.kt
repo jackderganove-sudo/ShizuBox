@@ -49,15 +49,16 @@ import java.io.InputStream
  * for uploading (only called if VirusTotal does not know the file yet and the user asks for it).
  */
 @Composable
-fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> File?) {
+fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> File?, autoScan: Boolean = true) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var result by remember(key) { mutableStateOf<VtResult?>(null) }
     var askKey by remember { mutableStateOf(false) }
-    var keyVersion by remember { mutableIntStateOf(0) }
+    var keyVersion by remember { mutableIntStateOf(if (autoScan) 0 else -1) }
     var showEngines by remember { mutableStateOf(false) }
 
     LaunchedEffect(key, keyVersion) {
+        if (keyVersion < 0) return@LaunchedEffect // auto scan off: wait for the button
         if (VirusTotal.apiKey.isBlank()) {
             result = VtResult(VtStatus.NO_API_KEY)
             return@LaunchedEffect
@@ -71,6 +72,10 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
         Text("VirusTotal", style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(6.dp))
         val r = result
+        if (keyVersion < 0 && r == null) {
+            FilledTonalButton(onClick = { keyVersion = 0 }) { Text("Mit VirusTotal prüfen") }
+            return@GlassCard
+        }
         when (r?.status) {
             null, VtStatus.SCANNING -> Busy("Prüfe Prüfsumme …")
             VtStatus.UPLOADING -> {

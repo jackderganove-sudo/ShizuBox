@@ -8,8 +8,8 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -32,6 +32,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.emil.shizubox.settings.AppSettings
+import de.emil.shizubox.ui.theme.LocalDarkTheme
 import dev.chrisbanes.haze.HazeInput
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.blur.HazeBlurStyle
@@ -55,21 +58,27 @@ fun GlassBackground(
 ) {
     val hazeState = rememberHazeState()
     val colors = MaterialTheme.colorScheme
-    val dark = isSystemInDarkTheme()
-    // Without window blur (e.g. battery saver) the wallpaper would be too busy, so cover it more.
+    val dark = LocalDarkTheme.current
+    val settings by AppSettings.state.collectAsStateWithLifecycle()
+    // Without window blur (battery saver, or glass switched off) the wallpaper would be too busy.
     val scrimAlpha = when {
-        !windowBlurActive -> 0.92f
+        settings.amoled && dark -> 1f
+        !windowBlurActive || !settings.glass -> 0.94f
         dark -> 0.55f
         else -> 0.45f
     }
 
-    val transition = rememberInfiniteTransition(label = "blobs")
-    val phase by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = (2 * Math.PI).toFloat(),
-        animationSpec = infiniteRepeatable(tween(40_000, easing = LinearEasing), RepeatMode.Restart),
-        label = "phase",
-    )
+    // Seamless loop: every motion below uses whole multiples of the phase, so the end of one
+    // cycle is exactly its start (a 1.3× frequency used to make the blobs jump every 40 s).
+    val phase = if (settings.animatedBackground) {
+        val transition = rememberInfiniteTransition(label = "blobs")
+        transition.animateFloat(
+            initialValue = 0f,
+            targetValue = (2 * Math.PI).toFloat(),
+            animationSpec = infiniteRepeatable(tween(60_000, easing = LinearEasing), RepeatMode.Restart),
+            label = "phase",
+        ).value
+    } else 0f
 
     Box(Modifier.fillMaxSize()) {
         Canvas(
@@ -85,11 +94,12 @@ fun GlassBackground(
                 Triple(colors.tertiary, Offset(0.85f, 0.45f), 0.5f),
                 Triple(colors.secondary, Offset(0.3f, 0.85f), 0.6f),
             )
+            if (settings.amoled && dark) return@Canvas
             blobs.forEachIndexed { i, (color, pos, radius) ->
                 val drift = phase + i * 2.1f
                 val center = Offset(
                     w * (pos.x + 0.08f * cos(drift)),
-                    h * (pos.y + 0.05f * sin(drift * 1.3f)),
+                    h * (pos.y + 0.05f * sin(2 * drift)),
                 )
                 val r = w * radius
                 drawCircle(
@@ -118,17 +128,20 @@ fun GlassCard(
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(28.dp),
     tint: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
-    tintAlpha: Float = if (isSystemInDarkTheme()) 0.45f else 0.55f,
+    tintAlpha: Float = if (LocalDarkTheme.current) 0.45f else 0.55f,
     blurRadius: Dp = 28.dp,
     contentPadding: Dp = 20.dp,
     onClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val hazeState = LocalHazeState.current
-    val dark = isSystemInDarkTheme()
-    val style = remember(tint, tintAlpha, blurRadius) {
+    val settings by AppSettings.state.collectAsStateWithLifecycle()
+    // Glass off: no blur pass at all, a slightly more opaque tint instead (cheaper).
+    val hazeState = LocalHazeState.current.takeIf { settings.glass }
+    val dark = LocalDarkTheme.current
+    val radius = blurRadius * (settings.blurStrength / 100f)
+    val style = remember(tint, tintAlpha, radius) {
         HazeBlurStyle {
-            blurRadius(blurRadius)
+            blurRadius(radius)
             backgroundColor(tint)
             noiseFactor(0.06f)
             colorEffects(listOf(HazeColorEffect.tint(tint.copy(alpha = tintAlpha))))
@@ -145,7 +158,7 @@ fun GlassCard(
             .clip(shape)
             .then(
                 if (hazeState != null) Modifier.hazeBlur(HazeInput.Sources(hazeState), style)
-                else Modifier,
+                else Modifier.background(tint.copy(alpha = (tintAlpha + 0.25f).coerceAtMost(0.95f)))
             )
             .border(1.dp, edge, shape)
             .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
