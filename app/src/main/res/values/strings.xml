@@ -598,4 +598,17 @@
     <string name="term_placeholder">Command</string>
     <string name="term_save_snippet">Save as snippet</string>
     <string name="term_delete_snippet">Delete snippet?</string>
+    <string name="perm_dev">Developer permission · grantable via ADB</string>
+    <string name="app_lang">App language</string>
+    <string name="app_lang_sub">The app offers %1$d languages.</string>
+    <string name="app_lang_undeclared">The app doesn’t declare its languages – a change only works if the app supports it.</string>
+    <string name="act_title">Activities (%1$d)</string>
+    <string name="act_sub">%1$d can be started directly or pinned as a shortcut. Tap to show.</string>
+    <string name="act_shortcut">Add shortcut</string>
+    <string name="tech_title">Technical details</string>
+    <string name="tech_version_code">Version code</string>
+    <string name="tech_installer">Installed by</string>
+    <string name="tech_data">Data directory</string>
+    <string name="tech_signature">Signature (SHA-256)</string>
+    <string name="tech_copy_hint">Tap a value to copy it.</string>
 </resources>

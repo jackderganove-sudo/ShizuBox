@@ -594,5 +594,18 @@
 "term_hint": "Los comandos se ejecutan como usuario shell (como adb shell). Toca un fragmento para insertarlo, mantén pulsado para borrarlo.",
 "term_placeholder": "Comando",
 "term_save_snippet": "Guardar como fragmento",
-"term_delete_snippet": "¿Eliminar fragmento?"
+"term_delete_snippet": "¿Eliminar fragmento?",
+"perm_dev": "Permiso de desarrollador · se concede vía ADB",
+"app_lang": "Idioma de la app",
+"app_lang_sub": "La app ofrece %1$d idiomas.",
+"app_lang_undeclared": "La app no declara sus idiomas: el cambio solo funciona si la app lo admite.",
+"act_title": "Actividades (%1$d)",
+"act_sub": "%1$d se pueden iniciar directamente o anclar como acceso directo. Toca para mostrar.",
+"act_shortcut": "Añadir acceso directo",
+"tech_title": "Detalles técnicos",
+"tech_version_code": "Código de versión",
+"tech_installer": "Instalada por",
+"tech_data": "Carpeta de datos",
+"tech_signature": "Firma (SHA-256)",
+"tech_copy_hint": "Toca un valor para copiarlo."
 }

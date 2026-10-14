@@ -596,4 +596,17 @@
     <string name="term_placeholder">Komut</string>
     <string name="term_save_snippet">Parça olarak kaydet</string>
     <string name="term_delete_snippet">Parça silinsin mi?</string>
+    <string name="perm_dev">Geliştirici izni · ADB ile verilebilir</string>
+    <string name="app_lang">Uygulama dili</string>
+    <string name="app_lang_sub">Uygulama %1$d dil sunuyor.</string>
+    <string name="app_lang_undeclared">Uygulama dillerini belirtmiyor – değişiklik yalnızca uygulama destekliyorsa işe yarar.</string>
+    <string name="act_title">Etkinlikler (%1$d)</string>
+    <string name="act_sub">%1$d tanesi doğrudan başlatılabilir veya kısayol olarak eklenebilir. Göstermek için dokun.</string>
+    <string name="act_shortcut">Kısayol ekle</string>
+    <string name="tech_title">Teknik ayrıntılar</string>
+    <string name="tech_version_code">Sürüm kodu</string>
+    <string name="tech_installer">Yükleyen</string>
+    <string name="tech_data">Veri klasörü</string>
+    <string name="tech_signature">İmza (SHA-256)</string>
+    <string name="tech_copy_hint">Kopyalamak için bir değere dokun.</string>
 </resources>

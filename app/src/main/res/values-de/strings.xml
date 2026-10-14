@@ -596,5 +596,18 @@
     <string name="term_placeholder">Befehl</string>
     <string name="term_save_snippet">Als Baustein speichern</string>
     <string name="term_delete_snippet">Baustein löschen?</string>
+    <string name="perm_dev">Entwickler-Berechtigung · per ADB erteilbar</string>
+    <string name="app_lang">App-Sprache</string>
+    <string name="app_lang_sub">Die App bietet %1$d Sprachen an.</string>
+    <string name="app_lang_undeclared">Die App gibt ihre Sprachen nicht an – eine Änderung wirkt nur, wenn die App sie unterstützt.</string>
+    <string name="act_title">Aktivitäten (%1$d)</string>
+    <string name="act_sub">%1$d lassen sich direkt starten oder als Verknüpfung anlegen. Tippen zum Anzeigen.</string>
+    <string name="act_shortcut">Verknüpfung anlegen</string>
+    <string name="tech_title">Technische Details</string>
+    <string name="tech_version_code">Versionscode</string>
+    <string name="tech_installer">Installiert von</string>
+    <string name="tech_data">Datenordner</string>
+    <string name="tech_signature">Signatur (SHA-256)</string>
+    <string name="tech_copy_hint">Tippe auf einen Wert, um ihn zu kopieren.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

@@ -35,7 +35,27 @@ data class AppEntry(
     val installer: String? = null,
 )
 
-data class PermissionEntry(val name: String, val label: String, val granted: Boolean)
+/** [development]: signature|development permission like WRITE_SECURE_SETTINGS, grantable via `pm grant`. */
+data class PermissionEntry(val name: String, val label: String, val granted: Boolean, val development: Boolean = false)
+
+data class ActivityEntry(val name: String, val exported: Boolean, val label: String?)
+
+/** Technical facts for the details page. */
+data class AppTech(
+    val versionCode: Long,
+    val targetSdk: Int,
+    val minSdk: Int,
+    val uid: Int,
+    val apkPath: String,
+    val dataDir: String?,
+    val signatureSha256: String?,
+    val installerLabel: String?,
+    /** Per-app language ("" = follows the system), null if unknown (no Shizuku). */
+    val locale: String?,
+    /** Languages the app declares in its localeConfig; empty if it declares none. */
+    val supportedLocales: List<String>,
+    val activities: List<ActivityEntry>,
+)
 
 data class AppOpEntry(val op: String, val mode: String)
 
@@ -54,6 +74,7 @@ data class AppDetails(
     val appOps: List<AppOpEntry>,
     val battery: BatteryMode,
     val standbyBucket: Int?,
+    val tech: AppTech,
 )
 
 /**
@@ -64,12 +85,14 @@ data class AppDetails(
  */
 object Apps {
     private lateinit var pm: PackageManager
+    private lateinit var appContext: Context
     private val iconCache = LruCache<String, Bitmap>(200)
 
     val APP_OP_MODES = listOf("allow", "ignore", "deny", "foreground", "default")
 
     fun init(context: Context) {
         pm = context.packageManager
+        appContext = context.applicationContext
     }
 
     suspend fun list(): List<AppEntry> = withContext(Dispatchers.IO) {
@@ -96,6 +119,38 @@ object Apps {
         )
     }
 
+    private fun PackageInfo.toTech(locale: String?): AppTech {
+        val ai = applicationInfo!!
+        val cert = signingInfo?.let { if (it.hasMultipleSigners()) it.apkContentsSigners else it.signingCertificateHistory }?.lastOrNull()
+        val sha = cert?.let {
+            java.security.MessageDigest.getInstance("SHA-256").digest(it.toByteArray()).joinToString(":") { b -> "%02X".format(b) }
+        }
+        val installer = runCatching { pm.getInstallSourceInfo(packageName).installingPackageName }.getOrNull()
+        val supported = runCatching {
+            val lc = android.app.LocaleConfig(appContext.createPackageContext(packageName, 0))
+            val list = lc.supportedLocales
+            if (lc.status == android.app.LocaleConfig.STATUS_SUCCESS && list != null) List(list.size()) { list[it].toLanguageTag() } else emptyList()
+        }.getOrDefault(emptyList())
+        return AppTech(
+            versionCode = longVersionCode,
+            targetSdk = ai.targetSdkVersion,
+            minSdk = ai.minSdkVersion,
+            uid = ai.uid,
+            apkPath = ai.sourceDir.orEmpty(),
+            dataDir = ai.dataDir,
+            signatureSha256 = sha,
+            installerLabel = installer?.let { i -> runCatching { pm.getApplicationInfo(i, 0).loadLabel(pm).toString() }.getOrDefault(i) },
+            locale = locale,
+            supportedLocales = supported,
+            activities = activities.orEmpty().map {
+                ActivityEntry(it.name, it.exported && it.enabled, it.nonLocalizedLabel?.toString() ?: runCatching { if (it.labelRes != 0) it.loadLabel(pm).toString() else null }.getOrNull())
+            }.sortedWith(compareBy({ !it.exported }, { it.name })),
+        )
+    }
+
+    /** Per-app language through the system's locale manager ("" resets to the system language). */
+    suspend fun setLocale(pkg: String, tag: String) = exec("cmd locale set-app-locales $pkg --locales \"$tag\"")
+
     /** base.apk plus all split APKs of an installed app. */
     fun apkPaths(ai: ApplicationInfo): List<String> =
         listOfNotNull(ai.sourceDir) + ai.splitSourceDirs.orEmpty()
@@ -120,26 +175,32 @@ object Apps {
         @Suppress("DEPRECATION")
         val info = pm.getPackageInfo(
             pkg,
-            PackageManager.GET_PERMISSIONS or PackageManager.MATCH_UNINSTALLED_PACKAGES or PackageManager.MATCH_DISABLED_COMPONENTS,
+            PackageManager.GET_PERMISSIONS or PackageManager.MATCH_UNINSTALLED_PACKAGES or PackageManager.MATCH_DISABLED_COMPONENTS or
+                PackageManager.GET_ACTIVITIES or PackageManager.GET_SIGNING_CERTIFICATES,
         )
         val requested = info.requestedPermissions.orEmpty()
         val flags = info.requestedPermissionsFlags ?: IntArray(0)
         val permissions = requested.mapIndexedNotNull { i, name ->
             val pi = try { pm.getPermissionInfo(name, 0) } catch (_: Exception) { return@mapIndexedNotNull null }
-            // Only runtime ("dangerous") permissions can be granted/revoked.
-            if (pi.protection != PermissionInfo.PROTECTION_DANGEROUS) return@mapIndexedNotNull null
+            // Runtime ("dangerous") and development permissions can be granted/revoked.
+            val development = pi.protection == PermissionInfo.PROTECTION_SIGNATURE &&
+                pi.protectionFlags and PermissionInfo.PROTECTION_FLAG_DEVELOPMENT != 0 &&
+                // App-op permissions (overlay, usage access) are switched through AppOps instead.
+                pi.protectionFlags and PermissionInfo.PROTECTION_FLAG_APPOP == 0
+            if (pi.protection != PermissionInfo.PROTECTION_DANGEROUS && !development) return@mapIndexedNotNull null
             PermissionEntry(
                 name = name,
-                label = pi.loadLabel(pm).toString().replaceFirstChar { it.uppercase() },
+                label = if (development) name.substringAfterLast('.') else pi.loadLabel(pm).toString().replaceFirstChar { it.uppercase() },
                 granted = flags.getOrElse(i) { 0 } and PackageInfo.REQUESTED_PERMISSION_GRANTED != 0,
+                development = development,
             )
-        }.distinctBy { it.name }.sortedBy { it.label }
+        }.distinctBy { it.name }.sortedWith(compareBy({ it.development }, { it.label }))
 
         // Without Shizuku the shell parts are simply empty: the rest of the page still works.
         val out = (if (!ShizukuManager.isReady) "" else runCatching {
             exec(
                 "appops get $pkg; echo '###'; am get-standby-bucket $pkg; echo '###'; " +
-                    "dumpsys deviceidle whitelist | grep -c \",$pkg,\"",
+                    "dumpsys deviceidle whitelist | grep -c \",$pkg,\"; echo '###'; cmd locale get-app-locales $pkg",
             ).out
         }.getOrDefault("")).split("###")
         val ops = parseAppOps(out.getOrElse(0) { "" })
@@ -156,6 +217,10 @@ object Apps {
                 else -> BatteryMode.Optimized
             },
             standbyBucket = bucket,
+            tech = info.toTech(
+                // "Locales for com.foo for user 0 are [de]"
+                locale = out.getOrNull(3)?.let { l -> if ('[' in l) l.substringAfter('[').substringBefore(']').split(',').first().trim() else null },
+            ),
         )
     }
 

@@ -594,5 +594,18 @@
 "term_hint": "Les commandes s’exécutent en tant qu’utilisateur shell (comme adb shell). Appuie sur un extrait pour l’insérer, appui long pour le supprimer.",
 "term_placeholder": "Commande",
 "term_save_snippet": "Enregistrer comme extrait",
-"term_delete_snippet": "Supprimer l’extrait ?"
+"term_delete_snippet": "Supprimer l’extrait ?",
+"perm_dev": "Autorisation développeur · accordable via ADB",
+"app_lang": "Langue de l’appli",
+"app_lang_sub": "L’appli propose %1$d langues.",
+"app_lang_undeclared": "L’appli ne déclare pas ses langues – le changement ne fonctionne que si elle le prend en charge.",
+"act_title": "Activités (%1$d)",
+"act_sub": "%1$d peuvent être lancées directement ou épinglées en raccourci. Appuie pour afficher.",
+"act_shortcut": "Ajouter un raccourci",
+"tech_title": "Détails techniques",
+"tech_version_code": "Code de version",
+"tech_installer": "Installée par",
+"tech_data": "Dossier de données",
+"tech_signature": "Signature (SHA-256)",
+"tech_copy_hint": "Appuie sur une valeur pour la copier."
 }

@@ -34,7 +34,12 @@ class DebugReceiver : BroadcastReceiver() {
                         "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
                         "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()
                         "device" -> "${de.emil.shizubox.system.DeviceInfo.battery(context)} ${de.emil.shizubox.system.DeviceInfo.memory(context)} ${de.emil.shizubox.system.DeviceInfo.storage()} soc=${de.emil.shizubox.system.DeviceInfo.soc()}"
-                        else -> "unknown test"
+                        else -> if (what.startsWith("app:")) {
+                            de.emil.shizubox.apps.Apps.details(what.removePrefix("app:")).let { d ->
+                                "tech=${d.tech.copy(activities = emptyList())} activities=${d.tech.activities.size}/${d.tech.activities.count { it.exported }} " +
+                                    "devPerms=${d.permissions.filter { it.development }}"
+                            }
+                        } else "unknown test"
                     }
                     Log.i(TAG, "test $what: $result")
                 } catch (e: Throwable) {

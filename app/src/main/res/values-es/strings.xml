@@ -596,4 +596,17 @@
     <string name="term_placeholder">Comando</string>
     <string name="term_save_snippet">Guardar como fragmento</string>
     <string name="term_delete_snippet">¿Eliminar fragmento?</string>
+    <string name="perm_dev">Permiso de desarrollador · se concede vía ADB</string>
+    <string name="app_lang">Idioma de la app</string>
+    <string name="app_lang_sub">La app ofrece %1$d idiomas.</string>
+    <string name="app_lang_undeclared">La app no declara sus idiomas: el cambio solo funciona si la app lo admite.</string>
+    <string name="act_title">Actividades (%1$d)</string>
+    <string name="act_sub">%1$d se pueden iniciar directamente o anclar como acceso directo. Toca para mostrar.</string>
+    <string name="act_shortcut">Añadir acceso directo</string>
+    <string name="tech_title">Detalles técnicos</string>
+    <string name="tech_version_code">Código de versión</string>
+    <string name="tech_installer">Instalada por</string>
+    <string name="tech_data">Carpeta de datos</string>
+    <string name="tech_signature">Firma (SHA-256)</string>
+    <string name="tech_copy_hint">Toca un valor para copiarlo.</string>
 </resources>

@@ -596,4 +596,17 @@
     <string name="term_placeholder">Commande</string>
     <string name="term_save_snippet">Enregistrer comme extrait</string>
     <string name="term_delete_snippet">Supprimer l’extrait ?</string>
+    <string name="perm_dev">Autorisation développeur · accordable via ADB</string>
+    <string name="app_lang">Langue de l’appli</string>
+    <string name="app_lang_sub">L’appli propose %1$d langues.</string>
+    <string name="app_lang_undeclared">L’appli ne déclare pas ses langues – le changement ne fonctionne que si elle le prend en charge.</string>
+    <string name="act_title">Activités (%1$d)</string>
+    <string name="act_sub">%1$d peuvent être lancées directement ou épinglées en raccourci. Appuie pour afficher.</string>
+    <string name="act_shortcut">Ajouter un raccourci</string>
+    <string name="tech_title">Détails techniques</string>
+    <string name="tech_version_code">Code de version</string>
+    <string name="tech_installer">Installée par</string>
+    <string name="tech_data">Dossier de données</string>
+    <string name="tech_signature">Signature (SHA-256)</string>
+    <string name="tech_copy_hint">Appuie sur une valeur pour la copier.</string>
 </resources>

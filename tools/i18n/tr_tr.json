@@ -594,5 +594,18 @@
 "term_hint": "Komutlar kabuk kullanıcısı olarak çalışır (adb shell gibi). Eklemek için bir parçaya dokun, silmek için uzun bas.",
 "term_placeholder": "Komut",
 "term_save_snippet": "Parça olarak kaydet",
-"term_delete_snippet": "Parça silinsin mi?"
+"term_delete_snippet": "Parça silinsin mi?",
+"perm_dev": "Geliştirici izni · ADB ile verilebilir",
+"app_lang": "Uygulama dili",
+"app_lang_sub": "Uygulama %1$d dil sunuyor.",
+"app_lang_undeclared": "Uygulama dillerini belirtmiyor – değişiklik yalnızca uygulama destekliyorsa işe yarar.",
+"act_title": "Etkinlikler (%1$d)",
+"act_sub": "%1$d tanesi doğrudan başlatılabilir veya kısayol olarak eklenebilir. Göstermek için dokun.",
+"act_shortcut": "Kısayol ekle",
+"tech_title": "Teknik ayrıntılar",
+"tech_version_code": "Sürüm kodu",
+"tech_installer": "Yükleyen",
+"tech_data": "Veri klasörü",
+"tech_signature": "İmza (SHA-256)",
+"tech_copy_hint": "Kopyalamak için bir değere dokun."
 }

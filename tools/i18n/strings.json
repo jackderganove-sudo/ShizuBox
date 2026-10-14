@@ -2888,5 +2888,70 @@
   "en": "Delete snippet?",
   "de": "Baustein löschen?",
   "plural": false
+ },
+ "perm_dev": {
+  "en": "Developer permission · grantable via ADB",
+  "de": "Entwickler-Berechtigung · per ADB erteilbar",
+  "plural": false
+ },
+ "app_lang": {
+  "en": "App language",
+  "de": "App-Sprache",
+  "plural": false
+ },
+ "app_lang_sub": {
+  "en": "The app offers %1$d languages.",
+  "de": "Die App bietet %1$d Sprachen an.",
+  "plural": false
+ },
+ "app_lang_undeclared": {
+  "en": "The app doesn’t declare its languages – a change only works if the app supports it.",
+  "de": "Die App gibt ihre Sprachen nicht an – eine Änderung wirkt nur, wenn die App sie unterstützt.",
+  "plural": false
+ },
+ "act_title": {
+  "en": "Activities (%1$d)",
+  "de": "Aktivitäten (%1$d)",
+  "plural": false
+ },
+ "act_sub": {
+  "en": "%1$d can be started directly or pinned as a shortcut. Tap to show.",
+  "de": "%1$d lassen sich direkt starten oder als Verknüpfung anlegen. Tippen zum Anzeigen.",
+  "plural": false
+ },
+ "act_shortcut": {
+  "en": "Add shortcut",
+  "de": "Verknüpfung anlegen",
+  "plural": false
+ },
+ "tech_title": {
+  "en": "Technical details",
+  "de": "Technische Details",
+  "plural": false
+ },
+ "tech_version_code": {
+  "en": "Version code",
+  "de": "Versionscode",
+  "plural": false
+ },
+ "tech_installer": {
+  "en": "Installed by",
+  "de": "Installiert von",
+  "plural": false
+ },
+ "tech_data": {
+  "en": "Data directory",
+  "de": "Datenordner",
+  "plural": false
+ },
+ "tech_signature": {
+  "en": "Signature (SHA-256)",
+  "de": "Signatur (SHA-256)",
+  "plural": false
+ },
+ "tech_copy_hint": {
+  "en": "Tap a value to copy it.",
+  "de": "Tippe auf einen Wert, um ihn zu kopieren.",
+  "plural": false
  }
 }

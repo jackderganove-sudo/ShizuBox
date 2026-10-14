@@ -249,6 +249,9 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                 }
             }
         }
+        if (e.installed && d.tech.locale != null) {
+            item { AppLanguageCard(d.tech, shizukuReady) { tag -> act { Apps.setLocale(pkg, tag) } } }
+        }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.permissions), style = MaterialTheme.typography.titleMedium)
@@ -259,7 +262,11 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(p.label, style = MaterialTheme.typography.bodyLarge)
-                            Text(p.name.substringAfterLast('.'), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(
+                                if (p.development) t(R.string.perm_dev) else p.name.substringAfterLast('.'),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if (p.development) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
                         Switch(
                             checked = p.granted,
@@ -299,6 +306,10 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                 }
             }
         }
+        if (d.tech.activities.isNotEmpty()) {
+            item { ActivitiesCard(pkg, e.label, d.tech.activities) }
+        }
+        item { TechCard(d.tech) }
     }
 
     if (confirmUninstall) {
