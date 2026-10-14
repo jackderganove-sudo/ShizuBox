@@ -16,8 +16,17 @@ android {
     }
 
     buildTypes {
+        // R8 also in debug: the icon library alone would make the APK ~60 MB,
+        // too much for installing over wireless adb.
+        debug {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
