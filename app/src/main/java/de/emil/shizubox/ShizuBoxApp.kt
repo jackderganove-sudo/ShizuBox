@@ -6,6 +6,8 @@ import de.emil.shizubox.apps.Profiles
 import de.emil.shizubox.customization.Customization
 import de.emil.shizubox.installer.VirusTotal
 import de.emil.shizubox.system.Gaming
+import de.emil.shizubox.updates.UpdateWorker
+import de.emil.shizubox.updates.Updates
 import de.emil.shizubox.school.SchoolMode
 import de.emil.shizubox.shizuku.ShizukuManager
 
@@ -17,6 +19,8 @@ class ShizuBoxApp : Application() {
         Profiles.init(this)
         Gaming.init(this)
         VirusTotal.init(this)
+        Updates.init(this)
+        UpdateWorker.schedule(this)
         ShizukuManager.init(this)
         SchoolMode.init(this)
     }

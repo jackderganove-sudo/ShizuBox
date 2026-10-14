@@ -11,4 +11,8 @@ app/src/main/java/de/emil/shizubox/installer/ is ported from Universal Installer
 (https://github.com/pass-with-high-score/universal-installer),
 Copyright (C) pass-with-high-score and contributors, GPL-3.0.
 
-Libraries: Shizuku API (Apache-2.0), Ackpine (Apache-2.0), Haze (Apache-2.0), AndroidX (Apache-2.0).
+app/src/main/java/de/emil/shizubox/updates/ follows the design of Obtainium
+(https://github.com/ImranR98/Obtainium) and ObtainX (https://github.com/bikram-agarwal/ObtainX),
+both GPL-3.0; the app list export is compatible with their JSON format.
+
+Libraries: Shizuku API (Apache-2.0), Ackpine (Apache-2.0), Haze (Apache-2.0), AndroidX incl. WorkManager (Apache-2.0).

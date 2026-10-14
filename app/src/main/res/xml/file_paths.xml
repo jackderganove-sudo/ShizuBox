@@ -2,4 +2,5 @@
 <paths>
     <cache-path name="apk_parse_fallback" path="apk_parse_fallback/" />
     <cache-path name="shared_apks" path="shared_apks/" />
+    <cache-path name="updates" path="updates/" />
 </paths>

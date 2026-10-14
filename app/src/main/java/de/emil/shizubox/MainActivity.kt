@@ -25,6 +25,8 @@ import de.emil.shizubox.ui.apps.AppsScreen
 import de.emil.shizubox.ui.system.LogcatScreen
 import de.emil.shizubox.ui.system.SystemScreen
 import de.emil.shizubox.ui.system.UniversalInstallerScreen
+import de.emil.shizubox.ui.updates.UpdatesScreen
+import de.emil.shizubox.updates.Updates
 import de.emil.shizubox.ui.customization.CustomizationScreen
 import de.emil.shizubox.ui.school.SchoolScreen
 import kotlinx.coroutines.launch
@@ -52,7 +54,11 @@ class MainActivity : ComponentActivity() {
             ShizuBoxTheme {
                 val status by ShizukuManager.status.collectAsStateWithLifecycle()
                 val school by SchoolMode.state.collectAsStateWithLifecycle()
-                var section by rememberSaveable { mutableStateOf<Section?>(null) }
+                var section by rememberSaveable {
+                    mutableStateOf(intent.getStringExtra(EXTRA_SECTION)?.let { name -> Section.entries.firstOrNull { it.name == name } })
+                }
+                val trackedApps by Updates.apps.collectAsStateWithLifecycle()
+                val updateCount = remember(trackedApps) { Updates.updateCount() }
                 var logcatOpen by rememberSaveable { mutableStateOf(false) }
                 var installUri by remember { mutableStateOf<android.net.Uri?>(null) }
                 var busy by remember { mutableStateOf(false) }
@@ -81,6 +87,7 @@ class MainActivity : ComponentActivity() {
                                 serverMode = ShizukuManager.serverMode,
                                 school = school,
                                 busy = busy,
+                                updateCount = updateCount,
                                 onShizukuAction = { onShizukuAction(status) },
                                 onActivateSchool = activate,
                                 onOpenSection = { section = it },
@@ -95,6 +102,8 @@ class MainActivity : ComponentActivity() {
                                 onWaitForShizukuChange = { lifecycleScope.launch { SchoolMode.setWaitForShizukuAfterReboot(it) } },
                                 onBack = { section = null },
                             )
+                        } else if (current == Section.Updates) {
+                            UpdatesScreen(status == ShizukuStatus.Ready, onBack = { section = null })
                         } else if (current == Section.System) {
                             val uri = installUri
                             if (uri != null) {
@@ -128,6 +137,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (!checkedThisProcess && Updates.settings.value.checkOnStart && Updates.apps.value.isNotEmpty()) {
+            checkedThisProcess = true
+            lifecycleScope.launch { Updates.checkAll() }
+        }
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         windowManager.addCrossWindowBlurEnabledListener(mainExecutor, blurListener)
@@ -153,7 +170,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private companion object {
-        const val WINDOW_BLUR_RADIUS = 90
+    companion object {
+        private const val WINDOW_BLUR_RADIUS = 90
+        const val EXTRA_SECTION = "section"
+        private var checkedThisProcess = false
     }
 }

@@ -24,6 +24,7 @@ import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.PowerSettingsNew
 import androidx.compose.material.icons.rounded.School
+import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -45,7 +46,8 @@ enum class Section(val title: String, val subtitle: String, val icon: ImageVecto
     School("Schulmodus", "Handy an, aber absolut nichts passiert", Icons.Rounded.School),
     Customization("Customization", "Animationen, DPI, Statusleiste", Icons.Rounded.Palette),
     Apps("Apps", "Freezer, Berechtigungen, AppOps, Akku", Icons.Rounded.Apps),
-    System("System", "Gaming, APK-Installer, Logcat, Shell", Icons.Rounded.Terminal),
+    Updates("Updates", "GitHub, F-Droid, APKPure …", Icons.Rounded.SystemUpdate),
+    System("System", "Gaming, Installer, Logcat", Icons.Rounded.Terminal),
 }
 
 @Composable
@@ -54,6 +56,7 @@ fun HomeScreen(
     serverMode: String?,
     school: SchoolState,
     busy: Boolean,
+    updateCount: Int,
     onShizukuAction: () -> Unit,
     onActivateSchool: () -> Unit,
     onOpenSection: (Section) -> Unit,
@@ -90,7 +93,16 @@ fun HomeScreen(
                 SectionTile(Section.Apps, Modifier.weight(1f)) { onOpenSection(Section.Apps) }
             }
         }
-        item { SectionRow(Section.System) { onOpenSection(Section.System) } }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                SectionTile(
+                    Section.Updates,
+                    Modifier.weight(1f),
+                    subtitle = if (updateCount > 0) "$updateCount Update${if (updateCount > 1) "s" else ""} verfügbar" else null,
+                ) { onOpenSection(Section.Updates) }
+                SectionTile(Section.System, Modifier.weight(1f)) { onOpenSection(Section.System) }
+            }
+        }
     }
 }
 
@@ -188,16 +200,16 @@ private fun SchoolCard(
 }
 
 @Composable
-private fun SectionTile(section: Section, modifier: Modifier, onClick: () -> Unit) {
+private fun SectionTile(section: Section, modifier: Modifier, subtitle: String? = null, onClick: () -> Unit) {
     val colors = MaterialTheme.colorScheme
     GlassCard(modifier.height(148.dp), onClick = onClick) {
         IconBubble(section.icon, colors.secondaryContainer, colors.onSecondaryContainer, 44)
         Spacer(Modifier.weight(1f))
         Text(section.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
         Text(
-            section.subtitle,
+            subtitle ?: section.subtitle,
             style = MaterialTheme.typography.bodySmall,
-            color = colors.onSurfaceVariant,
+            color = if (subtitle != null) colors.primary else colors.onSurfaceVariant,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
         )
