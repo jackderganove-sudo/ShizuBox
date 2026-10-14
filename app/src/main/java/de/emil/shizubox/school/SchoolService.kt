@@ -86,9 +86,11 @@ class SchoolService : Service() {
         val now = SystemClock.elapsedRealtime()
         // Ignore the screen-off right after activation.
         if (now - startedAt < START_GRACE_MS) return
+        // A slow press resets the sequence: only quick, deliberate triple presses count.
+        if (transitions.isNotEmpty() && now - transitions.last() > EXIT_MAX_GAP_MS) transitions.clear()
         transitions.addLast(now)
         while (transitions.isNotEmpty() && now - transitions.first() > EXIT_WINDOW_MS) transitions.removeFirst()
-        Log.d(TAG, "screen transitions in window: ${transitions.size}")
+        Log.d(TAG, "screen transition, ${transitions.size} in sequence")
         if (transitions.size >= EXIT_PRESSES) exit()
     }
 
@@ -172,9 +174,13 @@ class SchoolService : Service() {
         private const val NOTIFICATION_ID = 1
         const val ACTION_EXIT = "de.emil.shizubox.action.EXIT_SCHOOL_MODE"
 
-        /** 3 screen changes = 3 power presses. 5 would be the emergency SOS, so stay well below. */
+        /**
+         * 3 screen changes = 3 power presses. 5 would be the emergency SOS, so stay well below.
+         * Tested: pressing power "to check" has ~1 s gaps, a deliberate quick triple ~0.2–0.4 s.
+         */
         private const val EXIT_PRESSES = 3
-        private const val EXIT_WINDOW_MS = 2500L
+        private const val EXIT_WINDOW_MS = 1500L
+        private const val EXIT_MAX_GAP_MS = 800L
         private const val START_GRACE_MS = 2000L
 
         fun start(context: Context) {

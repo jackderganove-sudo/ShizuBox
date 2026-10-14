@@ -16,6 +16,8 @@ object SchoolCommands {
         Triple("secure", "doze_always_on", "0"),
         Triple("secure", "lock_screen_show_notifications", "0"),
         Triple("secure", "camera_double_tap_power_gesture_disabled", "1"),
+        // Android 16+: power double-press is its own gesture (camera or wallet).
+        Triple("secure", "double_tap_power_button_gesture_enabled", "0"),
         // Anything that could light up the display on its own.
         Triple("secure", "wake_gesture_enabled", "0"),
         Triple("secure", "double_tap_to_wake", "0"),
