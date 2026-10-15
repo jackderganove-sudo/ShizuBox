@@ -149,6 +149,7 @@ class MainActivity : ComponentActivity() {
                                     SystemPage.DEVICE -> DeviceInfoScreen(onBack = close)
                                     SystemPage.PROCESSES -> ProcessesScreen(ready, onBack = close)
                                     SystemPage.TERMINAL -> TerminalScreen(ready, onBack = close)
+                                    SystemPage.SCREEN_TIME -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, onBack = close)
                                 }
                             } else {
                                 SystemScreen(

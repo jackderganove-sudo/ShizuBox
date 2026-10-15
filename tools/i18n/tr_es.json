@@ -685,5 +685,18 @@
 "sch_end_manual": "Termina con 3× encendido; arriba puedes fijar un fin automático.",
 "sch_skip_next": "Omitir el próximo inicio",
 "sch_channel": "Horario del modo escuela",
-"sch_failed": "No se pudo iniciar el modo escuela"
+"sch_failed": "No se pudo iniciar el modo escuela",
+"st_title": "Tiempo de pantalla",
+"st_sub": "Cuánto usaste cada app",
+"st_no_access": "Falta el acceso de uso: conecta Shizuku una vez y ShizuBox se lo concede.",
+"st_today": "Hoy",
+"st_7days": "7 días",
+"st_today_total": "Hoy en total",
+"st_avg": "Ø %1$s al día",
+"st_under_min": "< 1 min",
+"dur_h_min": "%1$d h %2$d min",
+"st_opened": {
+"one": "abierta %d vez",
+"other": "abierta %d veces"
+}
 }

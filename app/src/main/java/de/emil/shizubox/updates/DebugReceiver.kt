@@ -43,6 +43,7 @@ class DebugReceiver : BroadcastReceiver() {
                     "device" -> de.emil.shizubox.ui.system.DeviceInfoScreen(noop)
                     "processes" -> de.emil.shizubox.ui.system.ProcessesScreen(ready, noop)
                     "terminal" -> de.emil.shizubox.ui.system.TerminalScreen(ready, noop)
+                    "screentime" -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, noop)
                     "apps" -> de.emil.shizubox.ui.apps.AppsScreen(ready, noop)
                     "app" -> de.emil.shizubox.ui.apps.AppDetailScreen(pkg, ready, noop)
                     "updates" -> de.emil.shizubox.ui.updates.UpdatesScreen(ready, noop)

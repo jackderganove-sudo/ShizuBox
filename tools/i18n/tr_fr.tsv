@@ -649,3 +649,13 @@ sch_end_manual	Se termine avec 3× marche – tu peux définir une fin automatiq
 sch_skip_next	Sauter le prochain démarrage
 sch_channel	Planification du mode école
 sch_failed	Le mode école n’a pas pu démarrer
+st_title	Temps d’écran
+st_sub	Combien de temps tu as utilisé chaque appli
+st_no_access	Accès aux données d’utilisation manquant – connecte Shizuku une fois, ShizuBox se l’accorde.
+st_today	Aujourd’hui
+st_7days	7 jours
+st_today_total	Aujourd’hui au total
+st_avg	Ø %1$s par jour
+st_under_min	< 1 min
+dur_h_min	%1$d h %2$d min
+st_opened	ouverte %d fois|||ouverte %d fois

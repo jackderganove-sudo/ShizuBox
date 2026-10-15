@@ -685,5 +685,18 @@
 "sch_end_manual": "3× güç tuşuyla biter – istersen yukarıda otomatik bitiş ayarla.",
 "sch_skip_next": "Sonraki başlangıcı atla",
 "sch_channel": "Okul modu zamanlaması",
-"sch_failed": "Okul modu başlatılamadı"
+"sch_failed": "Okul modu başlatılamadı",
+"st_title": "Ekran süresi",
+"st_sub": "Hangi uygulamayı ne kadar kullandın",
+"st_no_access": "Kullanım erişimi yok – Shizuku’yu bir kez bağla, ShizuBox bunu kendine verir.",
+"st_today": "Bugün",
+"st_7days": "7 gün",
+"st_today_total": "Bugün toplam",
+"st_avg": "Günde ort. %1$s",
+"st_under_min": "< 1 dk",
+"dur_h_min": "%1$d sa %2$d dk",
+"st_opened": {
+"one": "%d kez açıldı",
+"other": "%d kez açıldı"
+}
 }

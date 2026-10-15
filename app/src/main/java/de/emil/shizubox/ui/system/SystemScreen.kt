@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.rounded.Memory
+import androidx.compose.material.icons.rounded.HourglassBottom
 import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -98,6 +99,12 @@ fun SystemScreen(
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ToolTile(Icons.Rounded.Terminal, t(R.string.term_title), t(R.string.term_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.TERMINAL) }
                 ToolTile(Icons.AutoMirrored.Rounded.Notes, "Logcat", t(R.string.logcat_tile_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.LOGCAT) }
+            }
+        }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                ToolTile(Icons.Rounded.HourglassBottom, t(R.string.st_title), t(R.string.st_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.SCREEN_TIME) }
+                androidx.compose.foundation.layout.Spacer(Modifier.weight(1f))
             }
         }
         item { GamingCard(shizukuReady) }

@@ -3325,5 +3325,61 @@
   "en": "School mode could not start",
   "de": "Schulmodus konnte nicht starten",
   "plural": false
+ },
+ "st_title": {
+  "en": "Screen time",
+  "de": "Bildschirmzeit",
+  "plural": false
+ },
+ "st_sub": {
+  "en": "How long you used which app",
+  "de": "Wie lange du welche App genutzt hast",
+  "plural": false
+ },
+ "st_no_access": {
+  "en": "Usage access is missing – connect Shizuku once, ShizuBox then grants it to itself.",
+  "de": "Nutzungszugriff fehlt – verbinde einmal Shizuku, dann erteilt ShizuBox ihn sich selbst.",
+  "plural": false
+ },
+ "st_today": {
+  "en": "Today",
+  "de": "Heute",
+  "plural": false
+ },
+ "st_7days": {
+  "en": "7 days",
+  "de": "7 Tage",
+  "plural": false
+ },
+ "st_today_total": {
+  "en": "Today in total",
+  "de": "Heute insgesamt",
+  "plural": false
+ },
+ "st_avg": {
+  "en": "Ø %1$s per day",
+  "de": "Ø %1$s pro Tag",
+  "plural": false
+ },
+ "st_under_min": {
+  "en": "< 1 min",
+  "de": "< 1 Min",
+  "plural": false
+ },
+ "dur_h_min": {
+  "en": "%1$d h %2$d min",
+  "de": "%1$d Std %2$d Min",
+  "plural": false
+ },
+ "st_opened": {
+  "en": {
+   "one": "opened %d time",
+   "other": "opened %d times"
+  },
+  "de": {
+   "one": "%d-mal geöffnet",
+   "other": "%d-mal geöffnet"
+  },
+  "plural": true
  }
 }

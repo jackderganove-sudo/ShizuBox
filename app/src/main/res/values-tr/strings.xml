@@ -687,4 +687,17 @@
     <string name="sch_skip_next">Sonraki başlangıcı atla</string>
     <string name="sch_channel">Okul modu zamanlaması</string>
     <string name="sch_failed">Okul modu başlatılamadı</string>
+    <string name="st_title">Ekran süresi</string>
+    <string name="st_sub">Hangi uygulamayı ne kadar kullandın</string>
+    <string name="st_no_access">Kullanım erişimi yok – Shizuku’yu bir kez bağla, ShizuBox bunu kendine verir.</string>
+    <string name="st_today">Bugün</string>
+    <string name="st_7days">7 gün</string>
+    <string name="st_today_total">Bugün toplam</string>
+    <string name="st_avg">Günde ort. %1$s</string>
+    <string name="st_under_min">&lt; 1 dk</string>
+    <string name="dur_h_min">%1$d sa %2$d dk</string>
+    <plurals name="st_opened">
+        <item quantity="one">%d kez açıldı</item>
+        <item quantity="other">%d kez açıldı</item>
+    </plurals>
 </resources>

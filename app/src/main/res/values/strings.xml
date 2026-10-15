@@ -689,4 +689,17 @@
     <string name="sch_skip_next">Skip next start</string>
     <string name="sch_channel">School mode schedule</string>
     <string name="sch_failed">School mode could not start</string>
+    <string name="st_title">Screen time</string>
+    <string name="st_sub">How long you used which app</string>
+    <string name="st_no_access">Usage access is missing – connect Shizuku once, ShizuBox then grants it to itself.</string>
+    <string name="st_today">Today</string>
+    <string name="st_7days">7 days</string>
+    <string name="st_today_total">Today in total</string>
+    <string name="st_avg">Ø %1$s per day</string>
+    <string name="st_under_min">&lt; 1 min</string>
+    <string name="dur_h_min">%1$d h %2$d min</string>
+    <plurals name="st_opened">
+        <item quantity="one">opened %d time</item>
+        <item quantity="other">opened %d times</item>
+    </plurals>
 </resources>

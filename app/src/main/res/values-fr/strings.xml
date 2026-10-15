@@ -687,4 +687,17 @@
     <string name="sch_skip_next">Sauter le prochain démarrage</string>
     <string name="sch_channel">Planification du mode école</string>
     <string name="sch_failed">Le mode école n’a pas pu démarrer</string>
+    <string name="st_title">Temps d’écran</string>
+    <string name="st_sub">Combien de temps tu as utilisé chaque appli</string>
+    <string name="st_no_access">Accès aux données d’utilisation manquant – connecte Shizuku une fois, ShizuBox se l’accorde.</string>
+    <string name="st_today">Aujourd’hui</string>
+    <string name="st_7days">7 jours</string>
+    <string name="st_today_total">Aujourd’hui au total</string>
+    <string name="st_avg">Ø %1$s par jour</string>
+    <string name="st_under_min">&lt; 1 min</string>
+    <string name="dur_h_min">%1$d h %2$d min</string>
+    <plurals name="st_opened">
+        <item quantity="one">ouverte %d fois</item>
+        <item quantity="other">ouverte %d fois</item>
+    </plurals>
 </resources>

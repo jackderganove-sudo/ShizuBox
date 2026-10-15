@@ -687,5 +687,18 @@
     <string name="sch_skip_next">Nächsten Start aussetzen</string>
     <string name="sch_channel">Schulmodus-Zeitplan</string>
     <string name="sch_failed">Schulmodus konnte nicht starten</string>
+    <string name="st_title">Bildschirmzeit</string>
+    <string name="st_sub">Wie lange du welche App genutzt hast</string>
+    <string name="st_no_access">Nutzungszugriff fehlt – verbinde einmal Shizuku, dann erteilt ShizuBox ihn sich selbst.</string>
+    <string name="st_today">Heute</string>
+    <string name="st_7days">7 Tage</string>
+    <string name="st_today_total">Heute insgesamt</string>
+    <string name="st_avg">Ø %1$s pro Tag</string>
+    <string name="st_under_min">&lt; 1 Min</string>
+    <string name="dur_h_min">%1$d Std %2$d Min</string>
+    <plurals name="st_opened">
+        <item quantity="one">%d-mal geöffnet</item>
+        <item quantity="other">%d-mal geöffnet</item>
+    </plurals>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

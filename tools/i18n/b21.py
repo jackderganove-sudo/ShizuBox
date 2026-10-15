@@ -1,0 +1,12 @@
+from i18n import *
+S5('st_title','Screen time','Bildschirmzeit','Ekran süresi','Tiempo de pantalla','Temps d’écran')
+S5('st_sub','How long you used which app','Wie lange du welche App genutzt hast','Hangi uygulamayı ne kadar kullandın','Cuánto usaste cada app','Combien de temps tu as utilisé chaque appli')
+S5('st_no_access','Usage access is missing – connect Shizuku once, ShizuBox then grants it to itself.','Nutzungszugriff fehlt – verbinde einmal Shizuku, dann erteilt ShizuBox ihn sich selbst.','Kullanım erişimi yok – Shizuku’yu bir kez bağla, ShizuBox bunu kendine verir.','Falta el acceso de uso: conecta Shizuku una vez y ShizuBox se lo concede.','Accès aux données d’utilisation manquant – connecte Shizuku une fois, ShizuBox se l’accorde.')
+S5('st_today','Today','Heute','Bugün','Hoy','Aujourd’hui')
+S5('st_7days','7 days','7 Tage','7 gün','7 días','7 jours')
+S5('st_today_total','Today in total','Heute insgesamt','Bugün toplam','Hoy en total','Aujourd’hui au total')
+S5('st_avg','Ø %1$s per day','Ø %1$s pro Tag','Günde ort. %1$s','Ø %1$s al día','Ø %1$s par jour')
+S5('st_under_min','< 1 min','< 1 Min','< 1 dk','< 1 min','< 1 min')
+S5('dur_h_min','%1$d h %2$d min','%1$d Std %2$d Min','%1$d sa %2$d dk','%1$d h %2$d min','%1$d h %2$d min')
+S5('st_opened',('opened %d time','opened %d times'),('%d-mal geöffnet','%d-mal geöffnet'),('%d kez açıldı','%d kez açıldı'),('abierta %d vez','abierta %d veces'),('ouverte %d fois','ouverte %d fois'),plural=True)
+save()
