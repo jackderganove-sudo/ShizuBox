@@ -61,6 +61,25 @@ object Tweaks {
 
     suspend fun stayAwake(): Boolean = (exec("settings get global stay_on_while_plugged_in").trim().toIntOrNull() ?: 0) != 0
 
+    /** Screen timeout used as "never" (tested on Android 17: accepted and kept). */
+    private const val CAFFEINE_TIMEOUT = Int.MAX_VALUE
+
+    /** Caffeine: screen stays on no matter if charging – the screen timeout is set to "never". */
+    suspend fun caffeine(): Boolean = (exec("settings get system screen_off_timeout").trim().toLongOrNull() ?: 0) >= CAFFEINE_TIMEOUT
+
+    /** Turning it off restores the timeout that was set before. */
+    suspend fun setCaffeine(on: Boolean) {
+        val prefs = de.emil.shizubox.Str.context.createDeviceProtectedStorageContext()
+            .getSharedPreferences("tiles", android.content.Context.MODE_PRIVATE)
+        if (on) {
+            val current = exec("settings get system screen_off_timeout").trim().toIntOrNull()
+            if (current != null && current < CAFFEINE_TIMEOUT) prefs.edit().putInt("caffeine_prev", current).apply()
+            setScreenTimeout(CAFFEINE_TIMEOUT)
+        } else {
+            setScreenTimeout(prefs.getInt("caffeine_prev", 120_000))
+        }
+    }
+
     suspend fun setStayAwake(on: Boolean) = exec("settings put global stay_on_while_plugged_in ${if (on) STAY_ON_ALL else 0}")
     suspend fun setShowTouches(on: Boolean) = exec("settings put system show_touches ${if (on) 1 else 0}")
     suspend fun setPointerLocation(on: Boolean) = exec("settings put system pointer_location ${if (on) 1 else 0}")

@@ -71,6 +71,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        intent.getIntExtra(de.emil.shizubox.downloader.DownloadService.EXTRA_PAGE, -1).takeIf { it >= 0 }
+            ?.let { de.emil.shizubox.ui.downloader.DownloaderNav.page.value = it }
 
         // Blur radius follows the glass settings live.
         lifecycleScope.launch { AppSettings.state.collect { applyWindowBlur() } }
@@ -185,6 +187,7 @@ class MainActivity : ComponentActivity() {
                     Section.Updates -> UpdatesScreen(ready, onBack = back)
                     Section.Apps -> AppsScreen(shizukuReady = ready, onBack = back)
                     Section.Customization -> CustomizationScreen(shizukuReady = ready, onBack = back)
+                    Section.Downloader -> de.emil.shizubox.ui.downloader.DownloaderScreen(onBack = back)
                     Section.System -> AnimatedContent(
                         targetState = installUri ?: systemPage,
                         transitionSpec = { openClose(opening = targetState != null) },

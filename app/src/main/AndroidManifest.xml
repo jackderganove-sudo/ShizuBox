@@ -184,6 +184,28 @@
             android:exported="true"
             android:permission="android.permission.DUMP" />
 
+        <!-- Video downloader: queue runs in this service while the app is closed. -->
+        <service
+            android:name=".downloader.DownloadService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- "Download with ShizuBox" in the share menu (links from YouTube, browsers, …). -->
+        <activity
+            android:name=".downloader.DownloadShareActivity"
+            android:label="@string/dl_share_label"
+            android:icon="@mipmap/ic_launcher"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:taskAffinity="de.emil.shizubox.download"
+            android:theme="@style/Theme.ShizuBox">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
         <!-- Universal Installer flow; also offered as "open with" for APK files. -->
         <activity
             android:name=".installer.InstallActivity"

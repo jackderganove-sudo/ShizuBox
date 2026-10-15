@@ -677,3 +677,74 @@ al_copied_act	Nom de l’activité copié ✓
 al_favorite	Favori
 al_hint	Appui long pour copier le nom du paquet ou de l’activité. ★ l’épingle en haut.
 al_nothing	Aucune activité trouvée
+sec_downloader	Téléchargeur
+sec_downloader_sub	Vidéos et musique de YouTube et plus
+dl_share_label	Télécharger avec ShizuBox
+dl_saving	Enregistrement …
+dl_ch_progress	Progression des téléchargements
+dl_ch_done	Téléchargements terminés
+dl_running	Téléchargement de %d vidéo|||Téléchargement de %d vidéos
+dl_waiting_n	%1$d en attente
+dl_done_title	Téléchargement terminé
+dl_reading_link	Lecture du lien … (quelques secondes la première fois)
+dl_n_videos	%1$d vidéos
+dl_download_all_n	Tout télécharger (%1$d)
+dl_download	Télécharger
+dl_video	Vidéo
+dl_audio	Audio seul
+dl_quality	Qualité
+dl_best	Meilleure
+dl_container	Format
+dl_audio_format	Format audio
+dl_embed_thumb	Intégrer la miniature
+dl_embed_meta	Intégrer les métadonnées
+dl_nav_start	Accueil
+dl_nav_downloads	Téléchargements
+dl_nav_queue	File d’attente
+dl_nav_more	Plus
+dl_search_hint	Rechercher ou coller une URL
+dl_subscriptions	Abonnements
+dl_trends	Tendances
+dl_no_subs	Pas encore d’abonnements
+dl_no_subs_hint	Cherche une chaîne et appuie sur « S’abonner » – enregistré seulement sur ce téléphone, sans compte.
+dl_feed	Fil
+dl_subscribe	S’abonner
+dl_unsubscribe	Se désabonner
+dl_play	Lire
+dl_tab_running	En cours (%1$d)
+dl_tab_waiting	En attente (%1$d)
+dl_tab_failed	Échecs (%1$d)
+dl_parallel	Téléchargements simultanés
+dl_retry_all	Tout réessayer
+dl_queue_empty	Rien ici
+dl_starting	Démarrage …
+dl_paused	En pause
+dl_pause	Pause
+dl_resume	Reprendre
+dl_show_folder	Afficher le dossier
+dl_sort_added	Date d’ajout
+dl_none_yet	Pas encore de téléchargements
+dl_none_yet_hint	Cherche sur Accueil, colle un lien ou partage-le depuis YouTube avec « Télécharger avec ShizuBox ».
+dl_delete_q	Supprimer le téléchargement ?
+dl_no_app	Aucune appli pour l’ouvrir
+dl_folder	Dossier de téléchargement
+dl_folder_pick	Choisir un dossier
+dl_default_format	Format par défaut
+dl_cookies	Cookies
+dl_cookies_hint	Pour les vidéos soumises à une limite d’âge : importe un cookies.txt (format Netscape) exporté de ton navigateur. Il reste sur ce téléphone et n’est pas sauvegardé.
+dl_cookies_invalid	Ce n’est pas un cookies.txt au format Netscape
+dl_cookies_ok	Cookies importés ✓
+dl_cookies_active	Les cookies sont utilisés pour les téléchargements
+dl_convert	Convertir une vidéo en audio
+dl_convert_hint	Hors ligne avec FFmpeg – la vidéo reste, le fichier audio s’ajoute aux téléchargements.
+dl_convert_pick	Choisir une vidéo
+dl_convert_start	Convertir
+dl_converting	Conversion …
+dl_converted	Converti ✓
+dl_temp	Fichiers temporaires
+dl_ytdlp_update	Mettre à jour yt-dlp
+dl_ytdlp_current	yt-dlp est à jour ✓
+dl_ytdlp_updated	yt-dlp mis à jour en %1$s ✓
+dl_more_hint	L’apparence et la sauvegarde sont dans les réglages ShizuBox ; les réglages du téléchargeur et les abonnements font partie de la sauvegarde.
+dl_no_link	Aucun lien trouvé dans le texte partagé
+dl_queued	Ajouté à la file ✓

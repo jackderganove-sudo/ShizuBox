@@ -32,6 +32,7 @@ import androidx.compose.material.icons.rounded.School
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.Terminal
+import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -78,6 +79,7 @@ enum class Section(private val titleRes: Int, private val subtitleRes: Int, val 
     Apps(R.string.sec_apps, R.string.sec_apps_sub, Icons.Rounded.Apps),
     Updates(R.string.sec_updates, R.string.sec_updates_sub, Icons.Rounded.SystemUpdate),
     System(R.string.sec_system, R.string.sec_system_sub, Icons.Rounded.Terminal),
+    Downloader(R.string.sec_downloader, R.string.sec_downloader_sub, Icons.Rounded.Download),
     ;
 
     // Resolved on every access, so a language change applies immediately.

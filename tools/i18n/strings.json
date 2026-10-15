@@ -3471,5 +3471,366 @@
   "en": "No activities found",
   "de": "Keine Activities gefunden",
   "plural": false
+ },
+ "sec_downloader": {
+  "en": "Downloader",
+  "de": "Downloader",
+  "plural": false
+ },
+ "sec_downloader_sub": {
+  "en": "Videos & music from YouTube and more",
+  "de": "Videos & Musik von YouTube und mehr",
+  "plural": false
+ },
+ "dl_share_label": {
+  "en": "Download with ShizuBox",
+  "de": "Mit ShizuBox herunterladen",
+  "plural": false
+ },
+ "dl_saving": {
+  "en": "Saving …",
+  "de": "Speichere …",
+  "plural": false
+ },
+ "dl_ch_progress": {
+  "en": "Download progress",
+  "de": "Download-Fortschritt",
+  "plural": false
+ },
+ "dl_ch_done": {
+  "en": "Finished downloads",
+  "de": "Fertige Downloads",
+  "plural": false
+ },
+ "dl_running": {
+  "en": {
+   "one": "Downloading %d video",
+   "other": "Downloading %d videos"
+  },
+  "de": {
+   "one": "Lade %d Video herunter",
+   "other": "Lade %d Videos herunter"
+  },
+  "plural": true
+ },
+ "dl_waiting_n": {
+  "en": "%1$d waiting",
+  "de": "%1$d wartend",
+  "plural": false
+ },
+ "dl_done_title": {
+  "en": "Download finished",
+  "de": "Download fertig",
+  "plural": false
+ },
+ "dl_reading_link": {
+  "en": "Reading link … (the first time takes a few seconds)",
+  "de": "Lese Link … (beim ersten Mal ein paar Sekunden)",
+  "plural": false
+ },
+ "dl_n_videos": {
+  "en": "%1$d videos",
+  "de": "%1$d Videos",
+  "plural": false
+ },
+ "dl_download_all_n": {
+  "en": "Download all (%1$d)",
+  "de": "Alle herunterladen (%1$d)",
+  "plural": false
+ },
+ "dl_download": {
+  "en": "Download",
+  "de": "Herunterladen",
+  "plural": false
+ },
+ "dl_video": {
+  "en": "Video",
+  "de": "Video",
+  "plural": false
+ },
+ "dl_audio": {
+  "en": "Audio only",
+  "de": "Nur Audio",
+  "plural": false
+ },
+ "dl_quality": {
+  "en": "Quality",
+  "de": "Qualität",
+  "plural": false
+ },
+ "dl_best": {
+  "en": "Best",
+  "de": "Beste",
+  "plural": false
+ },
+ "dl_container": {
+  "en": "Format",
+  "de": "Format",
+  "plural": false
+ },
+ "dl_audio_format": {
+  "en": "Audio format",
+  "de": "Audioformat",
+  "plural": false
+ },
+ "dl_embed_thumb": {
+  "en": "Embed thumbnail",
+  "de": "Vorschaubild einbetten",
+  "plural": false
+ },
+ "dl_embed_meta": {
+  "en": "Embed metadata",
+  "de": "Metadaten einbetten",
+  "plural": false
+ },
+ "dl_nav_start": {
+  "en": "Start",
+  "de": "Start",
+  "plural": false
+ },
+ "dl_nav_downloads": {
+  "en": "Downloads",
+  "de": "Downloads",
+  "plural": false
+ },
+ "dl_nav_queue": {
+  "en": "Queue",
+  "de": "Warteschlange",
+  "plural": false
+ },
+ "dl_nav_more": {
+  "en": "More",
+  "de": "Mehr",
+  "plural": false
+ },
+ "dl_search_hint": {
+  "en": "Search or paste URL",
+  "de": "Suchen oder URL einfügen",
+  "plural": false
+ },
+ "dl_subscriptions": {
+  "en": "Subscriptions",
+  "de": "Abos",
+  "plural": false
+ },
+ "dl_trends": {
+  "en": "Trends",
+  "de": "Trends",
+  "plural": false
+ },
+ "dl_no_subs": {
+  "en": "No subscriptions yet",
+  "de": "Noch keine Abos",
+  "plural": false
+ },
+ "dl_no_subs_hint": {
+  "en": "Search for a channel and tap “Subscribe” – stored only on this phone, no account needed.",
+  "de": "Suche einen Kanal und tippe auf „Abonnieren“ – nur auf diesem Handy gespeichert, ohne Konto.",
+  "plural": false
+ },
+ "dl_feed": {
+  "en": "Feed",
+  "de": "Feed",
+  "plural": false
+ },
+ "dl_subscribe": {
+  "en": "Subscribe",
+  "de": "Abonnieren",
+  "plural": false
+ },
+ "dl_unsubscribe": {
+  "en": "Unsubscribe",
+  "de": "Deabonnieren",
+  "plural": false
+ },
+ "dl_play": {
+  "en": "Play",
+  "de": "Abspielen",
+  "plural": false
+ },
+ "dl_tab_running": {
+  "en": "Running (%1$d)",
+  "de": "Läuft (%1$d)",
+  "plural": false
+ },
+ "dl_tab_waiting": {
+  "en": "Waiting (%1$d)",
+  "de": "Wartend (%1$d)",
+  "plural": false
+ },
+ "dl_tab_failed": {
+  "en": "Failed (%1$d)",
+  "de": "Fehlgeschlagen (%1$d)",
+  "plural": false
+ },
+ "dl_parallel": {
+  "en": "Parallel downloads",
+  "de": "Parallele Downloads",
+  "plural": false
+ },
+ "dl_retry_all": {
+  "en": "Retry all",
+  "de": "Alle erneut versuchen",
+  "plural": false
+ },
+ "dl_queue_empty": {
+  "en": "Nothing here",
+  "de": "Hier ist nichts",
+  "plural": false
+ },
+ "dl_starting": {
+  "en": "Starting …",
+  "de": "Starte …",
+  "plural": false
+ },
+ "dl_paused": {
+  "en": "Paused",
+  "de": "Pausiert",
+  "plural": false
+ },
+ "dl_pause": {
+  "en": "Pause",
+  "de": "Pausieren",
+  "plural": false
+ },
+ "dl_resume": {
+  "en": "Resume",
+  "de": "Fortsetzen",
+  "plural": false
+ },
+ "dl_show_folder": {
+  "en": "Show folder",
+  "de": "Im Ordner anzeigen",
+  "plural": false
+ },
+ "dl_sort_added": {
+  "en": "Date added",
+  "de": "Hinzugefügt am",
+  "plural": false
+ },
+ "dl_none_yet": {
+  "en": "No downloads yet",
+  "de": "Noch keine Downloads",
+  "plural": false
+ },
+ "dl_none_yet_hint": {
+  "en": "Search on Start, paste a link or share one from YouTube with “Download with ShizuBox”.",
+  "de": "Suche unter Start, füge einen Link ein oder teile ihn aus YouTube mit „Mit ShizuBox herunterladen“.",
+  "plural": false
+ },
+ "dl_delete_q": {
+  "en": "Delete download?",
+  "de": "Download löschen?",
+  "plural": false
+ },
+ "dl_no_app": {
+  "en": "No app found to open this",
+  "de": "Keine App zum Öffnen gefunden",
+  "plural": false
+ },
+ "dl_folder": {
+  "en": "Download folder",
+  "de": "Download-Ordner",
+  "plural": false
+ },
+ "dl_folder_pick": {
+  "en": "Choose folder",
+  "de": "Ordner wählen",
+  "plural": false
+ },
+ "dl_default_format": {
+  "en": "Default format",
+  "de": "Standard-Format",
+  "plural": false
+ },
+ "dl_cookies": {
+  "en": "Cookies",
+  "de": "Cookies",
+  "plural": false
+ },
+ "dl_cookies_hint": {
+  "en": "For age-restricted videos: import a cookies.txt (Netscape format) exported from your browser. It stays on this phone and is not part of backups.",
+  "de": "Für altersbeschränkte Videos: cookies.txt (Netscape-Format) aus dem Browser importieren. Bleibt nur auf diesem Handy und ist nicht in der Sicherung.",
+  "plural": false
+ },
+ "dl_cookies_invalid": {
+  "en": "Not a cookies.txt in Netscape format",
+  "de": "Keine cookies.txt im Netscape-Format",
+  "plural": false
+ },
+ "dl_cookies_ok": {
+  "en": "Cookies imported ✓",
+  "de": "Cookies importiert ✓",
+  "plural": false
+ },
+ "dl_cookies_active": {
+  "en": "Cookies are used for downloads",
+  "de": "Cookies werden für Downloads verwendet",
+  "plural": false
+ },
+ "dl_convert": {
+  "en": "Convert video to audio",
+  "de": "Video in Audio umwandeln",
+  "plural": false
+ },
+ "dl_convert_hint": {
+  "en": "Offline with FFmpeg – the video stays, the audio file is added to Downloads.",
+  "de": "Offline mit FFmpeg – das Video bleibt, die Audiodatei kommt zu den Downloads.",
+  "plural": false
+ },
+ "dl_convert_pick": {
+  "en": "Choose video",
+  "de": "Video wählen",
+  "plural": false
+ },
+ "dl_convert_start": {
+  "en": "Convert",
+  "de": "Umwandeln",
+  "plural": false
+ },
+ "dl_converting": {
+  "en": "Converting …",
+  "de": "Wandle um …",
+  "plural": false
+ },
+ "dl_converted": {
+  "en": "Converted ✓",
+  "de": "Umgewandelt ✓",
+  "plural": false
+ },
+ "dl_temp": {
+  "en": "Temporary files",
+  "de": "Temporäre Dateien",
+  "plural": false
+ },
+ "dl_ytdlp_update": {
+  "en": "Update yt-dlp",
+  "de": "yt-dlp aktualisieren",
+  "plural": false
+ },
+ "dl_ytdlp_current": {
+  "en": "yt-dlp is up to date ✓",
+  "de": "yt-dlp ist aktuell ✓",
+  "plural": false
+ },
+ "dl_ytdlp_updated": {
+  "en": "yt-dlp updated to %1$s ✓",
+  "de": "yt-dlp auf %1$s aktualisiert ✓",
+  "plural": false
+ },
+ "dl_more_hint": {
+  "en": "Appearance and backup are in the normal ShizuBox settings; downloader settings and subscriptions are part of the backup.",
+  "de": "Design und Sicherung findest du in den normalen ShizuBox-Einstellungen; Downloader-Einstellungen und Abos sind Teil der Sicherung.",
+  "plural": false
+ },
+ "dl_no_link": {
+  "en": "No link found in the shared text",
+  "de": "Kein Link im geteilten Text gefunden",
+  "plural": false
+ },
+ "dl_queued": {
+  "en": "Added to the queue ✓",
+  "de": "Zur Warteschlange hinzugefügt ✓",
+  "plural": false
  }
 }

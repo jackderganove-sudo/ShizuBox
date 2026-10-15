@@ -32,6 +32,7 @@ object Backup {
         "virustotal" to emptySet(),
         "tiles" to emptySet(),
         "activity_launcher" to emptySet(),
+        "downloader" to emptySet(),
     )
 
     /** Only exported when the user asks for it. */
@@ -94,6 +95,7 @@ object Backup {
         Gaming.init(context)
         VirusTotal.init(context)
         de.emil.shizubox.apps.ActivityLauncher.reload()
+        de.emil.shizubox.downloader.DownloaderSettings.load()
         Updates.init(context)
         UpdateWorker.schedule(context)
         root.optJSONObject("school")?.let { s ->

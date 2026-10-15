@@ -92,7 +92,7 @@ class RefreshTile : ShellTile() {
     override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Refresh, current)
 }
 
-/** Screen stays on while charging (developer option). */
+/** Caffeine: the screen stays on (timeout "never") until switched off again. */
 class StayAwakeTile : ShellTile() {
     override suspend fun read() = QuickActions.read(QuickAction.StayAwake)
     override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.StayAwake, current)

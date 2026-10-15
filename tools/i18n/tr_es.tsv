@@ -677,3 +677,74 @@ al_copied_act	Nombre de actividad copiado ✓
 al_favorite	Favorito
 al_hint	Mantén pulsado para copiar el nombre del paquete o actividad. ★ la fija arriba.
 al_nothing	No se encontraron actividades
+sec_downloader	Descargas
+sec_downloader_sub	Vídeos y música de YouTube y más
+dl_share_label	Descargar con ShizuBox
+dl_saving	Guardando …
+dl_ch_progress	Progreso de descarga
+dl_ch_done	Descargas finalizadas
+dl_running	Descargando %d vídeo|||Descargando %d vídeos
+dl_waiting_n	%1$d en espera
+dl_done_title	Descarga completada
+dl_reading_link	Leyendo enlace … (la primera vez tarda unos segundos)
+dl_n_videos	%1$d vídeos
+dl_download_all_n	Descargar todo (%1$d)
+dl_download	Descargar
+dl_video	Vídeo
+dl_audio	Solo audio
+dl_quality	Calidad
+dl_best	Mejor
+dl_container	Formato
+dl_audio_format	Formato de audio
+dl_embed_thumb	Incrustar miniatura
+dl_embed_meta	Incrustar metadatos
+dl_nav_start	Inicio
+dl_nav_downloads	Descargas
+dl_nav_queue	Cola
+dl_nav_more	Más
+dl_search_hint	Buscar o pegar URL
+dl_subscriptions	Suscripciones
+dl_trends	Tendencias
+dl_no_subs	Aún no hay suscripciones
+dl_no_subs_hint	Busca un canal y toca “Suscribirse”: se guarda solo en este teléfono, sin cuenta.
+dl_feed	Feed
+dl_subscribe	Suscribirse
+dl_unsubscribe	Desuscribirse
+dl_play	Reproducir
+dl_tab_running	En curso (%1$d)
+dl_tab_waiting	En espera (%1$d)
+dl_tab_failed	Fallidas (%1$d)
+dl_parallel	Descargas en paralelo
+dl_retry_all	Reintentar todas
+dl_queue_empty	No hay nada aquí
+dl_starting	Iniciando …
+dl_paused	En pausa
+dl_pause	Pausar
+dl_resume	Reanudar
+dl_show_folder	Mostrar carpeta
+dl_sort_added	Fecha de adición
+dl_none_yet	Aún no hay descargas
+dl_none_yet_hint	Busca en Inicio, pega un enlace o compártelo desde YouTube con “Descargar con ShizuBox”.
+dl_delete_q	¿Eliminar descarga?
+dl_no_app	No hay ninguna app para abrirlo
+dl_folder	Carpeta de descargas
+dl_folder_pick	Elegir carpeta
+dl_default_format	Formato predeterminado
+dl_cookies	Cookies
+dl_cookies_hint	Para vídeos con restricción de edad: importa un cookies.txt (formato Netscape) exportado de tu navegador. Se queda en este teléfono y no entra en las copias.
+dl_cookies_invalid	No es un cookies.txt en formato Netscape
+dl_cookies_ok	Cookies importadas ✓
+dl_cookies_active	Las cookies se usan para las descargas
+dl_convert	Convertir vídeo en audio
+dl_convert_hint	Sin conexión con FFmpeg: el vídeo se queda y el audio se añade a Descargas.
+dl_convert_pick	Elegir vídeo
+dl_convert_start	Convertir
+dl_converting	Convirtiendo …
+dl_converted	Convertido ✓
+dl_temp	Archivos temporales
+dl_ytdlp_update	Actualizar yt-dlp
+dl_ytdlp_current	yt-dlp está actualizado ✓
+dl_ytdlp_updated	yt-dlp actualizado a %1$s ✓
+dl_more_hint	La apariencia y la copia están en los ajustes normales de ShizuBox; los ajustes del descargador y las suscripciones forman parte de la copia.
+dl_no_link	No se encontró ningún enlace en el texto compartido
+dl_queued	Añadido a la cola ✓

@@ -32,7 +32,7 @@ object QuickActions {
             TileInfo(scale > 0f, if (scale > 0f) "${scale.toString().removeSuffix(".0")}×" else t(R.string.off))
         }
         QuickAction.Refresh -> Customization.refreshMode().let { TileInfo(it != RefreshMode.Adaptive, it.label) }
-        QuickAction.StayAwake -> onOff(Tweaks.stayAwake())
+        QuickAction.StayAwake -> onOff(Tweaks.caffeine())
     }
 
     suspend fun toggle(a: QuickAction, current: TileInfo) {
@@ -48,7 +48,7 @@ object QuickActions {
                 val entries = RefreshMode.entries
                 Customization.setRefresh(entries[(entries.indexOf(Customization.refreshMode()) + 1) % entries.size])
             }
-            QuickAction.StayAwake -> Tweaks.setStayAwake(!current.active)
+            QuickAction.StayAwake -> Tweaks.setCaffeine(!current.active)
         }
         QuickWidgets.refreshAsync(Str.context)
     }
