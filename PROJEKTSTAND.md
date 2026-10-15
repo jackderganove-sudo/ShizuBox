@@ -80,8 +80,8 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Suche und Trends über NewPipe Extractor, Kanäle abonnieren (lokal), Abo-Feed (RSS) | ✅ getestet |
 | „Alle herunterladen“ für Feed, Suche, Playlists, Kanäle | ✅ |
 | Mehr: Standard-Format, temporäre Dateien, Video→Audio (FFmpeg), yt-dlp-Update (2025.11.12 → 2026.08.19), Abos | ✅ getestet |
-| Mehr: eigener Ordner (SAF), Cookies-Import | 🟡 gebaut, noch nicht auf dem Gerät getestet |
-| Warteschlange: Pause/Fortsetzen bei langen Downloads | 🟡 gebaut, noch nicht auf dem Gerät getestet |
+| Mehr: eigener Ordner (SAF), Cookies-Import | ✅ vom Nutzer bestätigt |
+| Warteschlange: Pause/Fortsetzen bei langen Downloads | ✅ vom Nutzer bestätigt |
 
 ### Kacheln & Widget (`tiles/`)
 | Funktion | Status |

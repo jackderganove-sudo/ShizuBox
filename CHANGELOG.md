@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.0 (unveröffentlicht) – Sitzung 2026-10-15 (Nachmittag)
+## 0.6.0 (unveröffentlicht) – Sitzung 2026-10-15 (Nachmittag) – vom Nutzer auf dem Pixel bestätigt
 - Doku: PROJEKTSTAND.md, CHANGELOG.md, CLAUDE.md
 - Animationen (Material 3 Expressive, Material3 1.5.0-beta01):
   - zentrale Federn in `ui/motion/Motion.kt`, `MotionScheme.expressive()` im Theme
