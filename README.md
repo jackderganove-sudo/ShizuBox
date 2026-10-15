@@ -26,6 +26,8 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 - Laufzeit- und Entwickler-Berechtigungen (z. B. `WRITE_SECURE_SETTINGS`), AppOps, Akku-Einschränkung
 - **App-Sprache** pro App, **Aktivitäten** starten oder als Verknüpfung anlegen, technische Details (SDK, UID, Signatur)
 - **Activity Launcher**: alle Activities aller Apps (auch System-Apps) durchsuchen – auch nach Activity-Namen –, starten (bei Bedarf über Shizuku), Favoriten, Verknüpfungen, Namen kopieren; ideal für versteckte Einstellungsmenüs
+- **Internet-Sperre pro App ohne VPN** (WLAN und mobile Daten, verträgt sich mit jedem VPN): Schalter in den App-Details, Filter „Kein Internet“, Mehrfachauswahl; wird nach einem Neustart automatisch wiederhergestellt
+- **Debloat-Vorschläge**: vorinstallierte Pixel-/Google-Apps mit verständlicher Erklärung und Einstufung (sicher · mit Vorsicht · nicht anfassen) auf Basis der Universal-Android-Debloater-Liste; Mehrfachauswahl, Einfrieren, Protokoll mit Rückgängig; wichtige Systemteile sind gesperrt
 - **Berechtigungsübersicht**: welche Apps dürfen Kamera, Mikrofon, Standort, Kontakte, … – mit „Entziehen“
 - APK teilen, extrahieren (APK bzw. APKS), neu installieren, VirusTotal-Prüfung
 
@@ -34,6 +36,14 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 - Suche, Massenimport installierter Apps, Import/Export im ObtainX-/Obtainium-Format
 - Alle aktualisieren im Hintergrund mit Fortschrittsbenachrichtigung, optional nur nach sauberem VirusTotal-Ergebnis
 - Version überspringen, Sortierung nach Name/Veröffentlichung/Quelle
+- **Benachrichtigung bei neuen Updates** mit „Installieren“ / „Alle installieren“ / „Überspringen“ – still über Shizuku, sonst System-Dialog
+- Verständliche Hinweise, wenn ein VPN oder DNS-Filter (NextDNS) APKPure blockiert
+
+### Automationen
+Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
+- Auslöser: App geöffnet/geschlossen, Uhrzeit + Wochentage, Kopfhörer, Bluetooth-Gerät, Ladekabel, Akku unter X %, WLAN (bestimmtes Netz)
+- Aktionen: Gaming-Modus, Lautstärke, Boost, Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, Wach bleiben, Internet-Sperre, App oder Activity starten, Shell-Befehl
+- „Danach zurücksetzen“, wenn der Auslöser endet; akkuschonend (Callbacks statt Dauerabfrage); pausiert während des Schulmodus
 
 ### System
 - **Geräteinfo**: Akku (Temperatur, Spannung, Ladezyklen), RAM, Speicher, CPU-Takt pro Kern, System
@@ -42,6 +52,9 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 - **Terminal** mit Verlauf und eigenen Befehls-Bausteinen
 - **Schnelle Schalter**: beim Laden wach bleiben, Energiesparmodus, Berührungen anzeigen, Zeigerposition, dunkles Design, Bildschirm-Timeout
 - **Universal Installer**: APK, APKS, XAPK, APKM mit Vorschau, Versionsvergleich, Signaturprüfung, automatischer Split-Auswahl und VirusTotal-Scan; stille Installation über Shizuku; als Standard-Installer nutzbar
+- **Lautstärke-Boost** bis +100 % über das Maximum, getrennte Stufen für Lautsprecher und Kopfhörer, einstellbare Obergrenze, Gehörschutz-Schalldosis zurücksetzen
+- **Benachrichtigungs-Verlauf**: alle Benachrichtigungen lokal gespeichert (nicht im Backup), nach App oder chronologisch, Suche, **gelöschte/zurückgezogene Nachrichten** markiert, Bilder, Fingerabdruck-Sperre
+- **Cache aufräumen**: Cache pro App nach Größe, „Alles aufräumen“ mit rollender Anzeige des freien Platzes
 - Gaming-Modus (Benachrichtigungen, Bildwiederholrate, Helligkeit, Hintergrund-Apps – wird exakt zurückgesetzt)
 - Logcat-Viewer mit Filtern
 
@@ -55,7 +68,7 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 - Speicherort wählbar (Standard `Download/ShizuBox`), Cookies für altersbeschränkte Videos, Video→Audio offline, yt-dlp-Update in der App
 
 ### Kacheln & Widget
-Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate und Wach bleiben (Caffeine). Die letzten vier gibt es auch als Schnellaktionen auf der Startseite und als **Homescreen-Widget** (Material-You-Farben).
+Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate, Wach bleiben (Caffeine), Lautstärke-Boost und Cache aufräumen. Gaming bis Cache gibt es auch als Schnellaktionen auf der Startseite, die ersten vier zusätzlich als **Homescreen-Widget** (Material-You-Farben).
 
 ### Einstellungen
 Sprache, Design (System/Hell/Dunkel, AMOLED, Farben, Paletten, Glas-Effekt), Startseite (Startbereich, Bereiche ein-/ausblenden), Installationsart, VirusTotal-Schlüssel, **Sichern & Wiederherstellen** aller Einstellungen in einer Datei.

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.0 (in Arbeit) – Sitzung 2026-10-15 (Abend)
+## 0.7.0 – Sitzung 2026-10-15 (Abend)
 - Update-Benachrichtigungen: einzelnes Update mit App-Icon und alt → neu, mehrere gebündelt (aufklappbar);
   Knöpfe „Installieren“/„Alle installieren“ (still per Shizuku mit Fortschritt, sonst System-Dialog) und „Überspringen“;
   VirusTotal- und Signatur-Sperre gelten; Abschluss-Benachrichtigung öffnet den Updater; Schalter in den Update-Einstellungen
