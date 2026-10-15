@@ -70,10 +70,21 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Universal Installer (APK/APKS/XAPK/APKM, Split-Auswahl, Signatur, VirusTotal, Öffnen-mit) | ✅ |
 | Schnell-Installer, Logcat-Viewer | ✅ |
 
+### Downloader (`downloader/`, `ui/downloader/`) – ohne Shizuku
+| Funktion | Status |
+|---|---|
+| URL-Download mit Format-Dialog (Video bis 2160p/MP4/MKV/WebM, Audio MP3/M4A/Opus, Thumbnail/Metadaten einbetten) | ✅ getestet (MP4) |
+| Warteschlange (Läuft/Wartend/Fehlgeschlagen, Pause/Fortsetzen/Abbrechen/Erneut, parallele Downloads) im Foreground-Service mit Benachrichtigung | ✅ |
+| Teilen-Menü „Mit ShizuBox herunterladen“ (`DownloadShareActivity`) | ✅ getestet |
+| Downloads-Liste (Suche, Sortierung, Filter Audio/Video, Abspielen/Teilen/Löschen/Ordner) | ✅ |
+| Suche und Trends über NewPipe Extractor, Kanäle abonnieren (lokal), Abo-Feed (RSS) | ✅ Trends getestet |
+| „Alle herunterladen“ für Feed, Suche, Playlists, Kanäle | ✅ |
+| Mehr: Ordner (MediaStore oder SAF), Standard-Format, Cookies, temporäre Dateien, Video→Audio (FFmpeg), yt-dlp-Update, Abos | 🟡 Umwandeln/Cookies/Update noch nicht auf dem Gerät getestet |
+
 ### Kacheln & Widget (`tiles/`)
 | Funktion | Status |
 |---|---|
-| Kacheln: Schulmodus, Gaming, Animationen, Bildwiederholrate, Wach bleiben | ✅ |
+| Kacheln: Schulmodus, Gaming, Animationen, Bildwiederholrate, Wach bleiben (Caffeine: Timeout „nie“, unabhängig vom Laden) | ✅ |
 | Schnellaktionen auf der Startseite (gleiche Logik `QuickActions`) | ✅ |
 | Homescreen-Widget (RemoteViews, Material-You-Farben) | ✅ |
 
@@ -113,6 +124,7 @@ app/src/main/java/de/emil/shizubox/
   tiles/                QuickActions, TileServices, Widget
   settings/             AppSettings, Language, Backup
   debug/                ScreenRenderer (Offscreen-Screenshots per adb)
+  downloader/           Ytdl (yt-dlp/FFmpeg), DownloadQueue, DownloadService, DlStorage, Discover (NewPipe), Settings, ShareActivity
   ui/motion/            Motion (Federn, pressScale, RollingText, Stagger), Shared (Container-Übergang), EmptyState
   ui/                   Compose-Screens je Bereich, ui/glass (GlassCard, GlassBackground), ui/theme
 tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Generator
@@ -120,6 +132,7 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 
 ## Technik
 - **Kotlin + Jetpack Compose + Material 3**, AGP 9.4.1 (eingebautes Kotlin 2.4.21), Compose-BOM 2026.09.00
+- Downloader: youtubedl-android 0.18.1 (yt-dlp + Python + FFmpeg, nur arm64-v8a, `useLegacyPackaging`), NewPipe Extractor v0.26.5 (JitPack). APK ≈ 61 MB.
 - Material3 **1.5.0-beta01** (Expressive-APIs: MotionScheme, ButtonShapes, MaterialShapes)
 - Libraries: Shizuku API 13.1.5, Haze 2.0.1 (Glas), Ackpine 0.25.4 (Installer), WorkManager 2.12.0, MaterialKolor 5.0.1, DataStore
 - **Shizuku-Befehle**: `ShizukuManager.exec(cmd)` → AIDL `IShellService` (UserService im Shell-Prozess) führt `sh -c` aus,
@@ -142,6 +155,8 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - Nicht exportierte Activities (z. B. Settings-Testmenü unter Android 17) kann nur die App selbst starten – auch nicht per Shizuku
 - APKPure-CDN wird von manchen DNS-Filtern (NextDNS) blockiert
 - APKMirror erlaubt keine automatischen Downloads
+- R8: commons-compress (youtubedl-android) und NewPipe/Rhino brauchen Keep-Regeln, sonst scheitert das Entpacken bzw. die Extraktion
+- uiautomator wird durch die pulsierende Shizuku-Animation nie „idle“ → Koordinaten per Screenshot bestimmen
 
 ## Offene Ideen
 - Schulmodus-Statistik, Debloat-Vorschläge mit Rückgängig, weitere Kacheln, Update-Benachrichtigung mit „Installieren“

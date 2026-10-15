@@ -45,8 +45,17 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 - Gaming-Modus (Benachrichtigungen, Bildwiederholrate, Helligkeit, Hintergrund-Apps – wird exakt zurückgesetzt)
 - Logcat-Viewer mit Filtern
 
+### Downloader (ohne Shizuku)
+- Videos und Musik von YouTube und vielen anderen Seiten über **yt-dlp** und **FFmpeg**
+- „Suchen oder URL einfügen“, Trends und lokal abonnierte Kanäle (über **NewPipe Extractor**, kein Konto, keine API-Keys)
+- Download-Dialog: Video (bis 2160p, MP4/MKV/WebM) oder nur Audio (MP3/M4A/Opus), Thumbnail und Metadaten einbetten
+- Warteschlange mit Pause/Fortsetzen/Erneut, parallele Downloads, läuft im Hintergrund mit Fortschritts-Benachrichtigung
+- Downloads-Liste mit Suche, Sortierung, Filter, Abspielen/Teilen/Löschen; „Alle herunterladen“ für Playlists, Kanäle und den Feed
+- Teilen-Menü: „Mit ShizuBox herunterladen“ direkt aus YouTube oder dem Browser
+- Speicherort wählbar (Standard `Download/ShizuBox`), Cookies für altersbeschränkte Videos, Video→Audio offline, yt-dlp-Update in der App
+
 ### Kacheln & Widget
-Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate und Wach bleiben. Die letzten vier gibt es auch als Schnellaktionen auf der Startseite und als **Homescreen-Widget** (Material-You-Farben).
+Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate und Wach bleiben (Caffeine). Die letzten vier gibt es auch als Schnellaktionen auf der Startseite und als **Homescreen-Widget** (Material-You-Farben).
 
 ### Einstellungen
 Sprache, Design (System/Hell/Dunkel, AMOLED, Farben, Paletten, Glas-Effekt), Startseite (Startbereich, Bereiche ein-/ausblenden), Installationsart, VirusTotal-Schlüssel, **Sichern & Wiederherstellen** aller Einstellungen in einer Datei.
@@ -54,7 +63,7 @@ Sprache, Design (System/Hell/Dunkel, AMOLED, Farben, Paletten, Glas-Effekt), Sta
 Ohne Shizuku funktionieren: App-Updates, Universal Installer (über den System-Dialog), App-Liste mit Details, APK teilen/extrahieren, VirusTotal und Geräteinfo.
 
 ## Voraussetzungen
-- Android 12 oder neuer
+- Android 12 oder neuer, 64-Bit-ARM (arm64-v8a)
 - [Shizuku](https://shizuku.rikka.app/) (oder ein Fork) über kabelloses Debugging gestartet
 
 ## Installation

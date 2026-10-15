@@ -17,6 +17,11 @@
 - Activity Launcher (Apps → Activity Launcher): alle Apps inkl. System, Suche auch nach Activity-Namen,
   Filter System/startbar, Favoriten, Start mit Shizuku-Fallback (`am start -n`), Verknüpfungen, Namen kopieren,
   Cache; App-Details nutzen dieselbe Logik
+- Updater-Karten im gleichen Glas-Look wie der Rest der App
+- „Wach bleiben“ ist jetzt ein echtes Caffeine (Bildschirm bleibt an, auch ohne Ladekabel)
+- Downloader (neuer Startseiten-Bereich, ohne Shizuku): yt-dlp + FFmpeg + NewPipe Extractor, Download-Dialog,
+  Warteschlange im Foreground-Service, Teilen-Menü, Downloads-Liste, Suche, Trends, lokale Abos mit Feed,
+  „Alle herunterladen“, Ordnerwahl, Cookies, Video→Audio, yt-dlp-Update; APK jetzt nur arm64-v8a (~61 MB)
 
 ## 0.5.1 – 2026-10-15
 - Bildschirmzeit pro App (heute / 7 Tage), Nutzungszugriff per Shizuku
