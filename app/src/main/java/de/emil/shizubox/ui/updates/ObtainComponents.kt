@@ -71,16 +71,14 @@ fun ObCard(
     padding: Int = 16,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Surface(
+    // Same frosted glass as the rest of the app (blur, transparency, press spring).
+    de.emil.shizubox.ui.glass.GlassCard(
         modifier = modifier,
         shape = RoundedCornerShape(24.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.92f),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f)),
-        onClick = onClick ?: {},
-        enabled = onClick != null,
-    ) {
-        Column(Modifier.padding(padding.dp), content = content)
-    }
+        contentPadding = padding.dp,
+        onClick = onClick,
+        content = content,
+    )
 }
 
 /** Logo per source (from ObtainX's assets), null for unknown sources. */
@@ -120,7 +118,7 @@ fun VersionChip(version: String?, date: String?, highlight: Boolean) {
     Column(
         Modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(if (highlight) MaterialTheme.colorScheme.surfaceContainerHighest else Color.Transparent)
+            .background(if (highlight) MaterialTheme.colorScheme.primary.copy(alpha = 0.16f) else Color.Transparent)
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .width(92.dp),
         horizontalAlignment = Alignment.End,

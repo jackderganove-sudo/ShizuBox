@@ -15,7 +15,12 @@ android {
         targetSdk = 37
         versionCode = 4
         versionName = "0.5.1"
+        // The downloader bundles Python/yt-dlp and FFmpeg per ABI; only 64-bit ARM keeps the APK small.
+        ndk { abiFilters += "arm64-v8a" }
     }
+
+    // youtubedl-android runs its bundled binaries from the extracted native library dir.
+    packaging { jniLibs { useLegacyPackaging = true } }
 
     // Release key lives outside the repo (never commit it): ~/Android/keys/shizubox-release.properties
     val releaseProps = File(System.getProperty("user.home"), "Android/keys/shizubox-release.properties")
@@ -83,4 +88,9 @@ dependencies {
     implementation(libs.ackpine.splits.ktx)
     implementation(libs.ackpine.shizuku)
     implementation(libs.ackpine.shizuku.ktx)
+
+    // Video downloader: yt-dlp + FFmpeg, search/feed without account
+    implementation(libs.ytdl.library)
+    implementation(libs.ytdl.ffmpeg)
+    implementation(libs.newpipe.extractor)
 }

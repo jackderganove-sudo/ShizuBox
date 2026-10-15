@@ -11,6 +11,8 @@ haze = "2.0.1"
 ackpine = "0.25.4"
 work = "2.12.0"
 materialKolor = "5.0.1"
+ytdl = "0.18.1"
+newpipe = "v0.26.5"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -36,6 +38,9 @@ ackpine-splits = { module = "ru.solrudev.ackpine:ackpine-splits", version.ref = 
 ackpine-splits-ktx = { module = "ru.solrudev.ackpine:ackpine-splits-ktx", version.ref = "ackpine" }
 ackpine-shizuku = { module = "ru.solrudev.ackpine:ackpine-shizuku", version.ref = "ackpine" }
 ackpine-shizuku-ktx = { module = "ru.solrudev.ackpine:ackpine-shizuku-ktx", version.ref = "ackpine" }
+ytdl-library = { module = "io.github.junkfood02.youtubedl-android:library", version.ref = "ytdl" }
+ytdl-ffmpeg = { module = "io.github.junkfood02.youtubedl-android:ffmpeg", version.ref = "ytdl" }
+newpipe-extractor = { module = "com.github.TeamNewPipe:NewPipeExtractor", version.ref = "newpipe" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
