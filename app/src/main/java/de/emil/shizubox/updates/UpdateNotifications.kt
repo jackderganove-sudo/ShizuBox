@@ -33,10 +33,9 @@ object UpdateNotifications {
     const val EXTRA_KEYS = "keys"
     const val ACTION_SKIP = "de.emil.shizubox.UPDATE_SKIP"
 
-    fun available(context: Context) {
+    fun available(context: Context, apps: List<TrackedApp> = Updates.installableUpdates()) {
         val nm = context.getSystemService(NotificationManager::class.java)
         if (context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return
-        val apps = Updates.installableUpdates()
         if (apps.isEmpty()) {
             nm.cancel(ID)
             return

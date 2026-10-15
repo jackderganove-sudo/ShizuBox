@@ -202,6 +202,14 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
+        <receiver
+            android:name=".downloader.DownloadResumeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
         <!-- "Download with ShizuBox" in the share menu (links from YouTube, browsers, …). -->
         <activity
             android:name=".downloader.DownloadShareActivity"

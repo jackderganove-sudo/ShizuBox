@@ -57,6 +57,7 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Hintergrundprüfung, „Alle aktualisieren“ als Vordergrund-Arbeit mit Fortschritt | ✅ |
 | Sicherheit: VirusTotal-Sperre, Signatur-Sperre | ✅ |
 | Version überspringen, Sortierung, Anheften | ✅ |
+| Benachrichtigung mit „Installieren“/„Alle installieren“/„Überspringen“ (`UpdateNotifications`) | ✅ Darstellung getestet (Test-Einträge), Installation nutzt den getesteten Update-Pfad |
 
 ### System (`system/`, `ui/system/`)
 | Funktion | Status |

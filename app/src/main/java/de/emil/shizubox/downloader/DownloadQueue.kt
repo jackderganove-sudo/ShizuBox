@@ -40,6 +40,8 @@ object DownloadQueue {
             val a = JSONArray(file.readText())
             (0 until a.length()).map { DownloadTask.fromJson(a.getJSONObject(it)) }
         }.getOrDefault(emptyList())
+        // A progress notification can survive a killed process (e.g. app update); drop it if idle.
+        if (!active) runCatching { appContext.getSystemService(android.app.NotificationManager::class.java).cancel(7) }
     }
 
     private fun save() = runCatching { file.writeText(JSONArray(_tasks.value.map { it.toJson() }).toString()) }

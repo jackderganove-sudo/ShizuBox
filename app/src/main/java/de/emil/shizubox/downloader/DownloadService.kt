@@ -118,3 +118,15 @@ class DownloadService : Service() {
         }
     }
 }
+
+/**
+ * After an app update (also ShizuBox updating itself) the process was killed mid-download:
+ * continue the queue right away. MY_PACKAGE_REPLACED may start foreground services.
+ */
+class DownloadResumeReceiver : android.content.BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == Intent.ACTION_MY_PACKAGE_REPLACED && DownloadQueue.active) {
+            runCatching { DownloadService.start(context) }
+        }
+    }
+}

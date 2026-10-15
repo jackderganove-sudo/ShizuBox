@@ -104,6 +104,14 @@ class DebugReceiver : BroadcastReceiver() {
                             UpdateNotifications.available(context)
                             "installable=${Updates.installableUpdates().map { "${it.name} ${it.installedVersion}->${it.latestVersion}" }}"
                         }
+                        "updnotify_fake" -> {
+                            // Visual check only: fake keys, so "Install" just opens the updater.
+                            val n = intent.getIntExtra("n", 1)
+                            val real = Updates.apps.value.take(n).map { it.copy(url = "fake:" + it.url, latestVersion = (it.latestVersion ?: "1") + ".1") }
+                            UpdateNotifications.available(context, real)
+                            "shown ${real.map { it.name }}"
+                        }
+                        "queue" -> de.emil.shizubox.downloader.DownloadQueue.tasks.value.groupingBy { it.state }.eachCount().toString()
                         "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
                         "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()
                         "device" -> "${de.emil.shizubox.system.DeviceInfo.battery(context)} ${de.emil.shizubox.system.DeviceInfo.memory(context)} ${de.emil.shizubox.system.DeviceInfo.storage()} soc=${de.emil.shizubox.system.DeviceInfo.soc()}"

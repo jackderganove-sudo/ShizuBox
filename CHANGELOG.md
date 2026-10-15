@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0 (in Arbeit) – Sitzung 2026-10-15 (Abend)
+- Update-Benachrichtigungen: einzelnes Update mit App-Icon und alt → neu, mehrere gebündelt (aufklappbar);
+  Knöpfe „Installieren“/„Alle installieren“ (still per Shizuku mit Fortschritt, sonst System-Dialog) und „Überspringen“;
+  VirusTotal- und Signatur-Sperre gelten; Abschluss-Benachrichtigung öffnet den Updater; Schalter in den Update-Einstellungen
+- Downloads laufen nach einem App-Update automatisch weiter; hängengebliebene Fortschritts-Benachrichtigung wird entfernt
+
 ## 0.6.0 – Sitzung 2026-10-15 (Nachmittag) – vom Nutzer auf dem Pixel bestätigt
 - Doku: PROJEKTSTAND.md, CHANGELOG.md, CLAUDE.md
 - Animationen (Material 3 Expressive, Material3 1.5.0-beta01):
