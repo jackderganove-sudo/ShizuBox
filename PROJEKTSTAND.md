@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.6.0** (versionCode 5, noch nicht veröffentlicht) |
+| Version | **0.6.0** (versionCode 5, veröffentlicht 2026-10-15) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
