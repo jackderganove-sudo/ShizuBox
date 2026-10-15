@@ -54,6 +54,7 @@ class DebugReceiver : BroadcastReceiver() {
                             modifier = androidx.compose.ui.Modifier.fillMaxWidth().height(96.dp),
                         )
                     }
+                    "debloat" -> de.emil.shizubox.ui.apps.DebloatScreen(ready, noop)
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
                     "screentime" -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, noop)
                     "nhistory" -> de.emil.shizubox.ui.system.NotificationHistoryScreen(ready, noop, intent.getStringExtra("pkg"), intent.getStringExtra("conv"))
@@ -203,6 +204,21 @@ class DebugReceiver : BroadcastReceiver() {
                             "rules=${R.rules.value.map { "${it.name}:${it.enabled}" }} active=${E.active.value.mapNotNull { id -> R.rules.value.firstOrNull { it.id == id }?.name }} " +
                                 "state=fg:${s.foreground} hp:${s.headphones} bt:${s.bluetooth.size} chg:${s.charging} bat:${s.battery} wifi:${s.ssid?.let { if (it.isEmpty()) "unnamed" else "named" }} " +
                                 "calc=${ShizukuManager.exec("cmd connectivity get-package-networking-enabled $calc").out.trim()}"
+                        }
+                        "debloat" -> {
+                            // --es mode freeze|undo (on com.android.egg only)
+                            val d = de.emil.shizubox.apps.Debloat
+                            val all = d.items()
+                            when (intent.getStringExtra("mode")) {
+                                "freeze" -> d.freeze(all.filter { it.pkg == "com.android.egg" })
+                                "undo" -> d.undoAll()
+                                "clearlog" -> d.clearUndone()
+                            }
+                            val after = d.items()
+                            "n=${after.size} ${after.groupingBy { it.rating }.eachCount()} locked=${after.filter { it.locked }.map { it.pkg }} " +
+                                "egg=${after.firstOrNull { it.pkg == "com.android.egg" }?.let { "${it.rating} frozen=${it.frozen}" }} " +
+                                "asi=${after.firstOrNull { it.pkg == "com.google.android.as" }?.rating} gril=${after.firstOrNull { it.pkg == "com.google.android.grilservice" }?.rating} " +
+                                "explained=${after.count { it.explainRes != null }} log=${d.log.value}"
                         }
                         "netblock" -> {
                             // --es pkg <p> --es mode block|allow|restore

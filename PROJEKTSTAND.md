@@ -47,6 +47,7 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Berechtigungsübersicht nach Kategorie mit „Entziehen“ | ✅ |
 | Activity Launcher (`ActivityLauncher`): alle Apps, Suche nach Activity, Favoriten, Shizuku-Fallback, Cache | ✅ |
 | APK teilen/extrahieren/neu installieren, VirusTotal | ✅ |
+| Debloat-Vorschläge (`Debloat`, Apps → Debloat-Vorschläge): Basis UAD-ng-Liste (GPL-3.0, Auszug in `assets/debloat_uad.json`, in NOTICE), Einstufung sicher/Vorsicht/nicht anfassen mit Pixel-Overrides, eigene Erklärungen für 32 Apps (5 Sprachen) + UAD-Details, Mehrfachauswahl, nur einfrieren, Protokoll mit Einzel-/Komplett-Rückgängig, gesperrt: Telefon, Einstellungen, System UI, Shizuku, Launcher, Tastatur, Play-Dienste/Store, Shell u. a. | ✅ getestet (Osterei einfrieren + rückgängig) |
 | Internet-Sperre pro App ohne VPN (`NetBlock`): Firewall-Kette OEM_DENY_3 (`cmd connectivity set-chain3-enabled` + `set-package-networking-enabled`, Android 17 ✓ – gesperrte App hat gar kein Netz), Schalter in App-Details, Filter „Kein Internet“ + Badge, Mehrfachauswahl, Wiederherstellung sobald Shizuku läuft (Regeln sind nach Neustart weg), System-UIDs und ShizuBox gesperrt, Kette aus wenn nichts gesperrt | ✅ getestet (Rechner-App, ShizuBox selbst, simulierter Neustart) |
 
 ### Updates (`updates/`, `ui/updates/`) – nach Obtainium/ObtainX

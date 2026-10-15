@@ -16,6 +16,9 @@
   Uhrzeit/Wochentage, Kopfhörer, Bluetooth-Gerät, Ladekabel, Akku unter X %, WLAN; Aktionen Gaming, Lautstärke, Boost,
   Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, wach bleiben, Internet-Sperre, App/Activity starten, Shell;
   „Danach zurücksetzen“, akkuschonend (Callbacks, Wecker), pausiert während des Schulmodus
+- Debloat-Vorschläge (Apps): vorinstallierte Pixel-/Google-Apps mit Erklärung und Einstufung (sicher · mit Vorsicht ·
+  nicht anfassen) auf Basis der Universal-Android-Debloater-Liste, Mehrfachauswahl, Einfrieren, Protokoll mit Rückgängig
+  (einzeln oder alles), wichtige Systemteile gesperrt
 - Internet-Sperre pro App ohne VPN (Apps): Schalter in den App-Details, Filter „Kein Internet“, Mehrfachauswahl
   „Internet sperren/erlauben“; Sperren werden nach einem Neustart automatisch wiederhergestellt, sobald Shizuku läuft
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab

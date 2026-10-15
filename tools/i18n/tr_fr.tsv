@@ -873,3 +873,52 @@ au_tpl_battery	Batterie sous 15 % → Économiser
 au_tpl_night	22:30 → Mode nuit
 au_tpl_morning	07:00 → Bonjour
 au_running	Automatisations : %1$d règle active|||Automatisations : %1$d règles actives
+db_title	Suggestions de nettoyage
+db_sub	Applis préinstallées avec explication et évaluation
+db_intro	Geler désactive complètement une appli – elle reste sur l'appareil et peut être réactivée à tout moment. Sous Android 17, les applis système ne peuvent être que gelées sans root.
+db_credit	Basé sur la liste d'Universal Android Debloater (GPL-3.0), adaptée aux Pixel
+db_safe	Sûr
+db_caution	Prudence
+db_dont	Ne pas toucher
+db_safe_hint	Peuvent être gelées sans effet secondaire pour le système. Touche pour en choisir plusieurs.
+db_caution_hint	Certaines fonctions ne marcheront plus (voir l'explication). Ne gèle que si tu es sûr de ne pas en avoir besoin.
+db_dont_hint	Importantes pour le système ou éléments essentiels – ShizuBox ne les gèle pas.
+db_frozen_hint	Applis gelées – réactive-les ici.
+db_locked	Verrouillée : élément essentiel du système
+db_uad_details	Détails de la liste UAD (anglais)
+db_log	Journal
+db_log_n	%1$d appli gelée ici – touche pour afficher|||%1$d applis gelées ici – touche pour afficher
+db_undo	Annuler
+db_undo_all	Tout annuler
+db_undone	annulé
+db_youtube	YouTube. Sans risque si tu regardes dans le navigateur ou une autre appli.
+db_ytmusic	YouTube Music. Sans risque si tu utilises une autre appli de musique.
+db_videos	Google TV (films et séries). Sans risque si tu n'achètes ni ne loues de films chez Google.
+db_gmail	Gmail. Sans elle, plus de notifications pour les comptes Google, sauf avec une autre appli mail.
+db_maps	Google Maps. Les autres applis qui ouvrent des liens de carte passeront par le navigateur.
+db_drive	Google Drive. Sans risque si tu n'utilises pas de fichiers Drive sur le téléphone.
+db_photos	Google Photos. Tes photos restent dans la galerie ; seules la sauvegarde et l'édition via Photos s'arrêtent.
+db_keep	Notes Google Keep. Sans risque si tu n'y as pas de notes.
+db_calendar	Google Agenda. Les rendez-vous restent dans le compte ; il faut une autre appli pour les voir.
+db_calculator	Calculatrice. Sans risque si tu en utilises une autre.
+db_recorder	Enregistreur Pixel (mémos vocaux avec transcription). Sans risque si tu n'enregistres rien.
+db_tips	Astuces Pixel. N'affiche que des conseils – sans risque.
+db_gemini	Gemini (l'assistant IA de Google). Sans risque si tu ne l'utilises pas.
+db_weather	Appli Météo Pixel. « En un coup d'œil » et l'écran de verrouillage affichent toujours la météo.
+db_arcore	Services Google Play pour la RA. Seulement pour les applis et jeux en réalité augmentée.
+db_meet	Google Meet (ex-Duo). Sans risque si tu ne passes pas d'appels vidéo avec.
+db_betterbug	Android Beta Feedback. Uniquement pour signaler des bugs en version bêta.
+db_support	Dépannage Pixel. Utile seulement si tu contactes l'assistance Google.
+db_egg	L'easter egg d'Android (touche la version dans les paramètres). Aucune fonction.
+db_traceur	Traçage système pour développeurs. Sans risque en usage normal.
+db_hotword	Détection vocale « Hey Google ». À geler si tu ne lances jamais l'assistant à la voix.
+db_asi	Android System Intelligence : Sous-titres instantanés, « En écoute », sélection intelligente et suggestions ne marcheront plus.
+db_adm	Localiser mon appareil. Sans elle, impossible de localiser ou verrouiller un téléphone perdu – mieux vaut la garder.
+db_files	Files de Google. D'autres gestionnaires peuvent prendre le relais ; certaines applis ouvrent des fichiers avec.
+db_aiwall	Fonds d'écran IA. Uniquement pour créer des fonds d'écran par IA.
+db_amplifier	Amplificateur de son (accessibilité). Sans risque si tu ne l'utilises pas.
+db_bookmarks	Favoris partenaires pour Chrome. Aucune utilité pour toi.
+db_feedback	Envoie les rapports de plantage à Google. Sans risque – le bouton « Envoyer des commentaires » disparaît.
+db_familylink	Contrôle parental Family Link. Ne jamais geler sur un téléphone supervisé.
+db_playprotect	Service Play Protect (analyse les applis contre les logiciels malveillants). Mieux vaut le garder.
+db_tag	Lit les tags NFC (inutile pour le paiement mobile). Sans risque si tu ne scannes pas de tags.

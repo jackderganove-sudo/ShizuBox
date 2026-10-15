@@ -4475,5 +4475,256 @@
    "other": "Automationen: %1$d Regeln aktiv"
   },
   "plural": true
+ },
+ "db_title": {
+  "en": "Debloat suggestions",
+  "de": "Debloat-Vorschläge",
+  "plural": false
+ },
+ "db_sub": {
+  "en": "Preinstalled apps with explanation and rating",
+  "de": "Vorinstallierte Apps mit Erklärung und Einstufung",
+  "plural": false
+ },
+ "db_intro": {
+  "en": "Freezing turns an app off completely – it stays on the device and can be turned back on anytime. On Android 17, system apps can only be frozen without root.",
+  "de": "Einfrieren schaltet eine App komplett ab – sie bleibt auf dem Gerät und lässt sich jederzeit wieder einschalten. Unter Android 17 lassen sich System-Apps ohne Root nur einfrieren.",
+  "plural": false
+ },
+ "db_credit": {
+  "en": "Based on the Universal Android Debloater list (GPL-3.0), adjusted for Pixel",
+  "de": "Basis: Liste des Universal Android Debloater (GPL-3.0), für Pixel angepasst",
+  "plural": false
+ },
+ "db_safe": {
+  "en": "Safe",
+  "de": "Sicher",
+  "plural": false
+ },
+ "db_caution": {
+  "en": "Caution",
+  "de": "Mit Vorsicht",
+  "plural": false
+ },
+ "db_dont": {
+  "en": "Don't touch",
+  "de": "Nicht anfassen",
+  "plural": false
+ },
+ "db_safe_hint": {
+  "en": "Can be frozen without side effects for the system. Tap to select several.",
+  "de": "Lassen sich ohne Nebenwirkungen fürs System einfrieren. Tippen wählt mehrere aus.",
+  "plural": false
+ },
+ "db_caution_hint": {
+  "en": "Some features stop working (see explanation). Only freeze if you know you don't need them.",
+  "de": "Manche Funktionen fallen weg (siehe Erklärung). Nur einfrieren, wenn du sie sicher nicht brauchst.",
+  "plural": false
+ },
+ "db_dont_hint": {
+  "en": "Important for the system or core parts – ShizuBox doesn't freeze these.",
+  "de": "Wichtig fürs System oder Kernbestandteile – ShizuBox friert diese nicht ein.",
+  "plural": false
+ },
+ "db_frozen_hint": {
+  "en": "Frozen apps – turn them back on here.",
+  "de": "Eingefrorene Apps – hier wieder einschalten.",
+  "plural": false
+ },
+ "db_locked": {
+  "en": "Locked: core part of the system",
+  "de": "Gesperrt: wichtiger Systemteil",
+  "plural": false
+ },
+ "db_uad_details": {
+  "en": "Details from the UAD list (English)",
+  "de": "Details aus der UAD-Liste (Englisch)",
+  "plural": false
+ },
+ "db_log": {
+  "en": "Log",
+  "de": "Protokoll",
+  "plural": false
+ },
+ "db_log_n": {
+  "en": {
+   "one": "%1$d app frozen here – tap to show",
+   "other": "%1$d apps frozen here – tap to show"
+  },
+  "de": {
+   "one": "%1$d App hier eingefroren – tippen zum Anzeigen",
+   "other": "%1$d Apps hier eingefroren – tippen zum Anzeigen"
+  },
+  "plural": true
+ },
+ "db_undo": {
+  "en": "Undo",
+  "de": "Rückgängig",
+  "plural": false
+ },
+ "db_undo_all": {
+  "en": "Undo all",
+  "de": "Alles rückgängig",
+  "plural": false
+ },
+ "db_undone": {
+  "en": "undone",
+  "de": "rückgängig gemacht",
+  "plural": false
+ },
+ "db_youtube": {
+  "en": "YouTube. Safe if you watch in the browser or another app.",
+  "de": "YouTube. Sicher, wenn du im Browser oder einer anderen App schaust.",
+  "plural": false
+ },
+ "db_ytmusic": {
+  "en": "YouTube Music. Safe if you use another music app.",
+  "de": "YouTube Music. Sicher, wenn du eine andere Musik-App nutzt.",
+  "plural": false
+ },
+ "db_videos": {
+  "en": "Google TV (films & series). Safe if you don't buy or rent films from Google.",
+  "de": "Google TV (Filme & Serien). Sicher, wenn du bei Google keine Filme kaufst oder leihst.",
+  "plural": false
+ },
+ "db_gmail": {
+  "en": "Gmail. Without it, no mail notifications for Google accounts unless you use another mail app.",
+  "de": "Gmail. Ohne die App keine Mail-Benachrichtigungen für Google-Konten, außer du nutzt eine andere Mail-App.",
+  "plural": false
+ },
+ "db_maps": {
+  "en": "Google Maps. Other apps that open map links then fall back to the browser.",
+  "de": "Google Maps. Andere Apps, die Kartenlinks öffnen, landen dann im Browser.",
+  "plural": false
+ },
+ "db_drive": {
+  "en": "Google Drive. Safe if you don't use Drive files on the phone.",
+  "de": "Google Drive. Sicher, wenn du keine Drive-Dateien auf dem Handy nutzt.",
+  "plural": false
+ },
+ "db_photos": {
+  "en": "Google Photos. Your photos stay in the gallery folder; only backup and editing via Photos stop.",
+  "de": "Google Fotos. Deine Bilder bleiben im Galerie-Ordner; nur Sicherung und Bearbeiten über Fotos fallen weg.",
+  "plural": false
+ },
+ "db_keep": {
+  "en": "Google Keep notes. Safe if you don't keep notes there.",
+  "de": "Google Notizen (Keep). Sicher, wenn du dort keine Notizen hast.",
+  "plural": false
+ },
+ "db_calendar": {
+  "en": "Google Calendar. Appointments stay in your account; you need another calendar app to see them.",
+  "de": "Google Kalender. Termine bleiben im Konto; zum Ansehen brauchst du dann eine andere Kalender-App.",
+  "plural": false
+ },
+ "db_calculator": {
+  "en": "Calculator. Safe if you use another calculator app.",
+  "de": "Taschenrechner. Sicher, wenn du einen anderen Rechner nutzt.",
+  "plural": false
+ },
+ "db_recorder": {
+  "en": "Pixel Recorder (voice memos with transcript). Safe if you don't record audio.",
+  "de": "Pixel-Rekorder (Sprachmemos mit Transkript). Sicher, wenn du nichts aufnimmst.",
+  "plural": false
+ },
+ "db_tips": {
+  "en": "Pixel Tips. Only shows hints about features – safe.",
+  "de": "Pixel-Tipps. Zeigt nur Hinweise zu Funktionen – sicher.",
+  "plural": false
+ },
+ "db_gemini": {
+  "en": "Gemini (Google's AI assistant). Safe if you don't use it.",
+  "de": "Gemini (KI-Assistent von Google). Sicher, wenn du ihn nicht nutzt.",
+  "plural": false
+ },
+ "db_weather": {
+  "en": "Pixel Weather app. At a Glance and the lock screen still show the weather.",
+  "de": "Pixel-Wetter-App. „Auf einen Blick“ und der Sperrbildschirm zeigen das Wetter weiterhin.",
+  "plural": false
+ },
+ "db_arcore": {
+  "en": "Google Play Services for AR. Only needed for augmented-reality apps and games.",
+  "de": "Google Play-Dienste für AR. Nur für Augmented-Reality-Apps und -Spiele nötig.",
+  "plural": false
+ },
+ "db_meet": {
+  "en": "Google Meet (formerly Duo). Safe if you don't make video calls with it.",
+  "de": "Google Meet (früher Duo). Sicher, wenn du damit keine Videoanrufe machst.",
+  "plural": false
+ },
+ "db_betterbug": {
+  "en": "Android Beta Feedback. Only for bug reports in beta versions.",
+  "de": "Android Beta Feedback. Nur für Fehlerberichte in Beta-Versionen.",
+  "plural": false
+ },
+ "db_support": {
+  "en": "Pixel troubleshooting. Only needed when you contact Google support.",
+  "de": "Pixel-Fehlerbehebung. Nur nötig, wenn du den Google-Support kontaktierst.",
+  "plural": false
+ },
+ "db_egg": {
+  "en": "The Android easter egg (tap the version in settings). No function.",
+  "de": "Das Android-Osterei (Version in den Einstellungen antippen). Keine Funktion.",
+  "plural": false
+ },
+ "db_traceur": {
+  "en": "System tracing for developers. Safe for normal use.",
+  "de": "Systemaufzeichnung für Entwickler. Für normale Nutzung sicher.",
+  "plural": false
+ },
+ "db_hotword": {
+  "en": "\"Hey Google\" voice detection. Freeze if you never start the assistant by voice.",
+  "de": "„Hey Google“-Spracherkennung. Einfrieren, wenn du den Assistenten nie per Stimme startest.",
+  "plural": false
+ },
+ "db_asi": {
+  "en": "Android System Intelligence: Live Caption, Now Playing, smart text selection and suggestions stop working.",
+  "de": "Android System Intelligence: Live Caption, „Now Playing“, intelligente Textauswahl und Vorschläge funktionieren dann nicht mehr.",
+  "plural": false
+ },
+ "db_adm": {
+  "en": "Find My Device. Without it you can't locate or lock a lost phone – better keep it.",
+  "de": "Mein Gerät finden. Ohne die App kannst du ein verlorenes Handy nicht orten oder sperren – lieber behalten.",
+  "plural": false
+ },
+ "db_files": {
+  "en": "Files by Google. Other file managers can take over; some apps use it for opening files.",
+  "de": "Files von Google. Andere Dateimanager können übernehmen; manche Apps öffnen Dateien darüber.",
+  "plural": false
+ },
+ "db_aiwall": {
+  "en": "AI wallpapers. Only for creating wallpapers with AI.",
+  "de": "KI-Hintergründe. Nur zum Erstellen von Hintergrundbildern mit KI.",
+  "plural": false
+ },
+ "db_amplifier": {
+  "en": "Sound Amplifier (accessibility). Safe if you don't use it.",
+  "de": "Lautstärkeverstärker (Bedienungshilfe). Sicher, wenn du ihn nicht nutzt.",
+  "plural": false
+ },
+ "db_bookmarks": {
+  "en": "Partner bookmarks for Chrome. No function for you.",
+  "de": "Partner-Lesezeichen für Chrome. Für dich ohne Funktion.",
+  "plural": false
+ },
+ "db_feedback": {
+  "en": "Sends crash reports to Google. Safe – the \"Send feedback\" button in crash dialogs disappears.",
+  "de": "Sendet Absturzberichte an Google. Sicher – der „Feedback senden“-Knopf in Absturzdialogen fällt weg.",
+  "plural": false
+ },
+ "db_familylink": {
+  "en": "Family Link parental controls. Never freeze on a supervised phone.",
+  "de": "Family-Link-Elternkontrolle. Auf einem beaufsichtigten Handy nie einfrieren.",
+  "plural": false
+ },
+ "db_playprotect": {
+  "en": "Play Protect service (checks apps for malware). Better keep it.",
+  "de": "Play-Protect-Dienst (prüft Apps auf Schadsoftware). Lieber behalten.",
+  "plural": false
+ },
+ "db_tag": {
+  "en": "Reads NFC tags (not needed for paying by phone). Safe if you don't scan tags.",
+  "de": "Liest NFC-Tags (nicht nötig fürs Bezahlen mit dem Handy). Sicher, wenn du keine Tags scannst.",
+  "plural": false
  }
 }

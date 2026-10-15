@@ -15,6 +15,11 @@ app/src/main/java/de/emil/shizubox/updates/ follows the design of Obtainium
 (https://github.com/ImranR98/Obtainium) and ObtainX (https://github.com/bikram-agarwal/ObtainX),
 both GPL-3.0; the app list export is compatible with their JSON format.
 
+app/src/main/assets/debloat_uad.json is an excerpt (Google/AOSP lists and packages found on Pixel phones) of
+uad_lists.json from Universal Android Debloater Next Generation
+(https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation, commit 76992ec),
+Copyright (C) the Universal Debloater Alliance and contributors, GPL-3.0. Ratings are adjusted for Pixels in apps/Debloat.kt.
+
 Libraries: Shizuku API (Apache-2.0), Ackpine (Apache-2.0), Haze (Apache-2.0), AndroidX incl. WorkManager (Apache-2.0),
 MaterialKolor (MIT).
 
