@@ -5,6 +5,10 @@
   Knöpfe „Installieren“/„Alle installieren“ (still per Shizuku mit Fortschritt, sonst System-Dialog) und „Überspringen“;
   VirusTotal- und Signatur-Sperre gelten; Abschluss-Benachrichtigung öffnet den Updater; Schalter in den Update-Einstellungen
 - Downloads laufen nach einem App-Update automatisch weiter; hängengebliebene Fortschritts-Benachrichtigung wird entfernt
+- Lautstärke-Boost (System): bis +100 % über das Maximum (`LoudnessEnhancer` auf dem globalen Output-Mix), Foreground-Service,
+  einstellbare Obergrenze, getrennte Stufen für Lautsprecher/Kopfhörer (automatisch), Warnung bei viel Boost mit Kopfhörern,
+  Gehörschutz-Schalldosis zurücksetzen und wiederherstellen, Kachel „Boost“ und Schnellaktion auf der Startseite, im Backup
+- Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 
 ## 0.6.0 – Sitzung 2026-10-15 (Nachmittag) – vom Nutzer auf dem Pixel bestätigt
 - Doku: PROJEKTSTAND.md, CHANGELOG.md, CLAUDE.md

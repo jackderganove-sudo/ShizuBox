@@ -799,4 +799,24 @@
     <string name="un_installing">Instalando en segundo plano …</string>
     <string name="un_setting">Avisar de actualizaciones</string>
     <string name="un_setting_sub">Con “Instalar” y “Omitir” en la propia notificación</string>
+    <string name="vb_title">Refuerzo de volumen</string>
+    <string name="vb_tile">Boost</string>
+    <string name="vb_sub">Más alto que el máximo, para todas las apps</string>
+    <string name="vb_active">+%1$d %% · %2$s</string>
+    <string name="vb_notif">Refuerzo de volumen +%1$d %%</string>
+    <string name="vb_out_speaker">Altavoz</string>
+    <string name="vb_out_headphones">Auriculares</string>
+    <string name="vb_speaker">Altavoz</string>
+    <string name="vb_headphones">Auriculares</string>
+    <string name="vb_level">Refuerzo</string>
+    <string name="vb_stop">Desactivar</string>
+    <string name="vb_split">Niveles separados</string>
+    <string name="vb_split_sub">Cambia automáticamente al conectar auriculares</string>
+    <string name="vb_limit">Límite superior</string>
+    <string name="vb_hint" formatted="false">+100 % ≈ +10 dB. Los niveles altos pueden distorsionar y forzar los altavoces.</string>
+    <string name="vb_warn">⚠ Mucho refuerzo con auriculares puede dañar tu oído. Mejor mantenlo más bajo.</string>
+    <string name="vb_dose_title">Aviso de protección auditiva</string>
+    <string name="vb_dose_sub">Android avisa cuando la dosis de sonido semanal llega al 100 %% (ahora %1$d %%). No se puede desactivar, pero sí restablecer la dosis.</string>
+    <string name="vb_dose_reset">Restablecer dosis</string>
+    <string name="vb_dose_restore">Restaurar</string>
 </resources>

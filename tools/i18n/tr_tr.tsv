@@ -755,3 +755,23 @@ un_skip	Atla
 un_installing	Arka planda yükleniyor …
 un_setting	Güncellemelerde bildir
 un_setting_sub	Bildirimde doğrudan “Yükle” ve “Atla” ile
+vb_title	Ses yükseltici
+vb_tile	Boost
+vb_sub	Tüm uygulamalar için maksimumdan daha yüksek ses
+vb_active	+%1$d %% · %2$s
+vb_notif	Ses yükseltici +%1$d %%
+vb_out_speaker	Hoparlör
+vb_out_headphones	Kulaklık
+vb_speaker	Hoparlör
+vb_headphones	Kulaklık
+vb_level	Yükseltme
+vb_stop	Kapat
+vb_split	Ayrı seviyeler
+vb_split_sub	Kulaklık bağlandığında otomatik geçiş yapar
+vb_limit	Üst sınır
+vb_hint	+100 % ≈ +10 dB. Yüksek seviyeler ses bozulmasına ve hoparlörlerin zorlanmasına yol açabilir.
+vb_warn	⚠ Kulaklıkla yüksek yükseltme işitmenize zarar verebilir. Daha düşük tutun.
+vb_dose_title	İşitme koruma uyarısı
+vb_dose_sub	Android, haftalık ses dozu %%100'e ulaştığında uyarır (şu an %%%1$d). Kapatılamaz ama doz sıfırlanabilir.
+vb_dose_reset	Dozu sıfırla
+vb_dose_restore	Geri yükle

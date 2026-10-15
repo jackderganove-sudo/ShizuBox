@@ -799,5 +799,25 @@
     <string name="un_installing">Installiere im Hintergrund …</string>
     <string name="un_setting">Bei Updates benachrichtigen</string>
     <string name="un_setting_sub">Mit „Installieren“ und „Überspringen“ direkt in der Benachrichtigung</string>
+    <string name="vb_title">Lautstärke-Boost</string>
+    <string name="vb_tile">Boost</string>
+    <string name="vb_sub">Lauter als das Maximum, für alle Apps</string>
+    <string name="vb_active">+%1$d %% · %2$s</string>
+    <string name="vb_notif">Lautstärke-Boost +%1$d %%</string>
+    <string name="vb_out_speaker">Lautsprecher</string>
+    <string name="vb_out_headphones">Kopfhörer</string>
+    <string name="vb_speaker">Lautsprecher</string>
+    <string name="vb_headphones">Kopfhörer</string>
+    <string name="vb_level">Verstärkung</string>
+    <string name="vb_stop">Ausschalten</string>
+    <string name="vb_split">Getrennte Stufen</string>
+    <string name="vb_split_sub">Schaltet automatisch um, wenn Kopfhörer verbunden sind</string>
+    <string name="vb_limit">Obergrenze</string>
+    <string name="vb_hint" formatted="false">+100 % ≈ +10 dB. Hohe Stufen können verzerren und die Lautsprecher belasten.</string>
+    <string name="vb_warn">⚠ Viel Boost mit Kopfhörern kann dem Gehör schaden. Lieber niedriger halten.</string>
+    <string name="vb_dose_title">Gehörschutz-Warnung</string>
+    <string name="vb_dose_sub">Android warnt, wenn die Wochen-Schalldosis 100 %% erreicht (jetzt %1$d %%). Abschalten geht nicht, aber die Dosis lässt sich zurücksetzen.</string>
+    <string name="vb_dose_reset">Dosis zurücksetzen</string>
+    <string name="vb_dose_restore">Wiederherstellen</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

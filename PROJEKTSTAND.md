@@ -70,6 +70,8 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Gaming-Modus mit exakter Wiederherstellung | ✅ |
 | Universal Installer (APK/APKS/XAPK/APKM, Split-Auswahl, Signatur, VirusTotal, Öffnen-mit) | ✅ |
 | Schnell-Installer, Logcat-Viewer | ✅ |
+| Lautstärke-Boost (`VolumeBoost`, `BoostService`): `LoudnessEnhancer` auf Session 0 (Android 17: Steuerung ✓, liegt im Output-Mix), bis +100 % (= +10 dB), Obergrenze, getrennte Stufen Lautsprecher/Kopfhörer mit Auto-Umschaltung, Kopfhörer-Warnung, Kachel + Schnellaktion, startet nach Neustart/Update wieder | ✅ Ein/Aus/Service getestet; Lautstärke per Ohr noch vom Nutzer zu prüfen |
+| Gehörschutz: Schalldosis (CSD) zurücksetzen/wiederherstellen (`cmd audio set-sound-dose-value`); abschalten geht per Shell nicht | ✅ |
 
 ### Downloader (`downloader/`, `ui/downloader/`) – ohne Shizuku
 | Funktion | Status |

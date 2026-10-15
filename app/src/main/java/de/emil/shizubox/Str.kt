@@ -17,7 +17,9 @@ object Str {
     }
 }
 
-fun t(@StringRes id: Int, vararg args: Any?): String = Str.context.getString(id, *args)
+/** Without arguments the text is not formatted, so a plain "%" (marked formatted="false") is fine. */
+fun t(@StringRes id: Int, vararg args: Any?): String =
+    if (args.isEmpty()) Str.context.getString(id) else Str.context.getString(id, *args)
 
 fun tp(@androidx.annotation.PluralsRes id: Int, count: Int, vararg args: Any?): String =
     Str.context.resources.getQuantityString(id, count, *args)

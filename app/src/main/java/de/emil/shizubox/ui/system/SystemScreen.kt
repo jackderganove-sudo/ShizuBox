@@ -111,6 +111,7 @@ fun SystemScreen(
             }
         }
         item { GamingCard(shizukuReady) }
+        item { BoostCard(shizukuReady) }
         item { TweaksCard(shizukuReady) }
         item { InstallerCard(shizukuReady, onOpenUniversalInstaller) }
     }

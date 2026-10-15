@@ -25,6 +25,7 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.downloader.Ytdl.init(this)
         de.emil.shizubox.downloader.DownloaderSettings.init(this)
         de.emil.shizubox.downloader.DownloadQueue.init(this)
+        de.emil.shizubox.system.VolumeBoost.init(this)
         VirusTotal.init(this)
         Updates.init(this)
         UpdateWorker.schedule(this)

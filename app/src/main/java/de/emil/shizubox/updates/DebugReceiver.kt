@@ -111,6 +111,60 @@ class DebugReceiver : BroadcastReceiver() {
                             UpdateNotifications.available(context, real)
                             "shown ${real.map { it.name }}"
                         }
+                        "apkpure" -> buildString {
+                            // VPN/DNS diagnosis: resolve, query the API, read the first KB of the download.
+                            for (h in listOf("tapi.pureapk.com", "data.winudf.com", "d.apkpure.com")) {
+                                append("dns $h=").append(runCatching { java.net.InetAddress.getAllByName(h).joinToString { it.hostAddress ?: "?" } }.getOrElse { "ERR ${it.javaClass.simpleName}: ${it.message}" }).append('\n')
+                            }
+                            val api = "https://tapi.pureapk.com/v3/get_app_his_version?package_name=com.x8bit.bitwarden&hl=en"
+                            var dl: String? = null
+                            runCatching {
+                                val c = java.net.URL(api).openConnection() as java.net.HttpURLConnection
+                                c.setRequestProperty("Ual-Access-Businessid", "projecta")
+                                c.setRequestProperty("Ual-Access-ProjectA", "{\"device_info\":{\"os_ver\":\"37\"}}")
+                                c.connectTimeout = 15000; c.readTimeout = 15000
+                                val code = c.responseCode
+                                val body = (if (code < 400) c.inputStream else c.errorStream)?.bufferedReader()?.readText().orEmpty()
+                                append("api http=$code len=${body.length} head=${body.take(160).replace('\n', ' ')}\n")
+                                dl = runCatching { org.json.JSONObject(body).getJSONArray("version_list").getJSONObject(0).getJSONObject("asset").getString("url") }.getOrNull()
+                            }.onFailure { append("api ERR ${it.javaClass.name}: ${it.message}\n") }
+                            dl?.let { u ->
+                                runCatching {
+                                    val c = java.net.URL(u).openConnection() as java.net.HttpURLConnection
+                                    c.setRequestProperty("Range", "bytes=0-1023")
+                                    c.connectTimeout = 15000; c.readTimeout = 15000
+                                    val code = c.responseCode
+                                    val body = (if (code < 400) c.inputStream else c.errorStream)?.readBytes() ?: ByteArray(0)
+                                    append("dl http=$code url=${c.url.host} bytes=${body.size} type=${c.contentType} head=${String(body.take(120).toByteArray()).replace('\n', ' ')}\n")
+                                }.onFailure { append("dl ERR ${it.javaClass.name}: ${it.message}\n") }
+                            }
+                            // Is a VPN active?
+                            val cm = context.getSystemService(android.net.ConnectivityManager::class.java)
+                            val caps = cm.getNetworkCapabilities(cm.activeNetwork)
+                            append("vpn=${caps?.hasTransport(android.net.NetworkCapabilities.TRANSPORT_VPN)} privateDns=${cm.getLinkProperties(cm.activeNetwork)?.privateDnsServerName}")
+                        }
+                        "boostfx" -> buildString {
+                            // Can we attach effects to the global output mix (session 0) on this Android version?
+                            runCatching {
+                                val e = android.media.audiofx.LoudnessEnhancer(0)
+                                e.setTargetGain(500); e.enabled = true
+                                append("loudness ok control=${e.hasControl()} enabled=${e.enabled} gain=${e.targetGain}; ")
+                                e.release()
+                            }.onFailure { append("loudness ERR ${it.javaClass.simpleName}: ${it.message}; ") }
+                            runCatching {
+                                val d = android.media.audiofx.DynamicsProcessing(0)
+                                append("dynamics ok control=${d.hasControl()} channels=${d.channelCount}; ")
+                                d.release()
+                            }.onFailure { append("dynamics ERR ${it.javaClass.simpleName}: ${it.message}; ") }
+                            append("dose=${de.emil.shizubox.system.VolumeBoost.soundDose()}")
+                        }
+                        "boost" -> {
+                            val pct = intent.getIntExtra("n", -1)
+                            de.emil.shizubox.system.VolumeBoost.update { if (pct < 0) it.copy(enabled = false) else it.copy(enabled = true, speaker = pct, headphones = pct) }
+                            de.emil.shizubox.system.BoostService.sync(context)
+                            kotlinx.coroutines.delay(800)
+                            "settings=${de.emil.shizubox.system.VolumeBoost.settings.value} hp=${de.emil.shizubox.system.VolumeBoost.headphonesConnected.value} fx=${de.emil.shizubox.system.VolumeBoost.status()}"
+                        }
                         "queue" -> de.emil.shizubox.downloader.DownloadQueue.tasks.value.groupingBy { it.state }.eachCount().toString()
                         "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
                         "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()

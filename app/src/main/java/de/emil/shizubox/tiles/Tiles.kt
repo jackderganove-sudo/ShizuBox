@@ -97,3 +97,24 @@ class StayAwakeTile : ShellTile() {
     override suspend fun read() = QuickActions.read(QuickAction.StayAwake)
     override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.StayAwake, current)
 }
+
+/** Volume boost on/off. Works without Shizuku (the effect is a normal app API). */
+class BoostTile : TileService() {
+    override fun onStartListening() = refresh()
+
+    override fun onClick() {
+        val on = !de.emil.shizubox.system.VolumeBoost.settings.value.enabled
+        de.emil.shizubox.system.VolumeBoost.update { it.copy(enabled = on) }
+        de.emil.shizubox.system.BoostService.sync(this)
+        refresh()
+    }
+
+    private fun refresh() {
+        val s = de.emil.shizubox.system.VolumeBoost.settings.value
+        qsTile?.apply {
+            state = if (s.enabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+            subtitle = if (s.enabled) "+${de.emil.shizubox.system.VolumeBoost.currentPercent(s)} %" else t(R.string.off)
+            updateTile()
+        }
+    }
+}

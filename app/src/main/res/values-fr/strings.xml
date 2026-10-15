@@ -799,4 +799,24 @@
     <string name="un_installing">Installation en arrière-plan …</string>
     <string name="un_setting">Notifier les mises à jour</string>
     <string name="un_setting_sub">Avec « Installer » et « Ignorer » directement dans la notification</string>
+    <string name="vb_title">Boost du volume</string>
+    <string name="vb_tile">Boost</string>
+    <string name="vb_sub">Plus fort que le maximum, pour toutes les applis</string>
+    <string name="vb_active">+%1$d %% · %2$s</string>
+    <string name="vb_notif">Boost du volume +%1$d %%</string>
+    <string name="vb_out_speaker">Haut-parleur</string>
+    <string name="vb_out_headphones">Écouteurs</string>
+    <string name="vb_speaker">Haut-parleur</string>
+    <string name="vb_headphones">Écouteurs</string>
+    <string name="vb_level">Amplification</string>
+    <string name="vb_stop">Désactiver</string>
+    <string name="vb_split">Niveaux séparés</string>
+    <string name="vb_split_sub">Bascule automatiquement quand des écouteurs sont connectés</string>
+    <string name="vb_limit">Limite supérieure</string>
+    <string name="vb_hint" formatted="false">+100 % ≈ +10 dB. Des niveaux élevés peuvent saturer et fatiguer les haut-parleurs.</string>
+    <string name="vb_warn">⚠ Trop d\'amplification avec des écouteurs peut abîmer l\'audition. Mieux vaut rester plus bas.</string>
+    <string name="vb_dose_title">Avertissement de protection auditive</string>
+    <string name="vb_dose_sub">Android avertit quand la dose sonore hebdomadaire atteint 100 %% (actuellement %1$d %%). Impossible de le désactiver, mais la dose peut être remise à zéro.</string>
+    <string name="vb_dose_reset">Remettre à zéro</string>
+    <string name="vb_dose_restore">Restaurer</string>
 </resources>

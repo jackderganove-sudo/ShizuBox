@@ -50,6 +50,7 @@ private fun QuickAction.icon() = when (this) {
     QuickAction.Animations -> R.drawable.ic_tile_animation
     QuickAction.Refresh -> R.drawable.ic_tile_refresh
     QuickAction.StayAwake -> R.drawable.ic_tile_coffee
+    QuickAction.Boost -> R.drawable.ic_tile_boost
 }
 
 /** The quick settings tiles, also on the home screen. */

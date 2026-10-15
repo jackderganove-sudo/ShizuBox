@@ -755,3 +755,23 @@ un_skip	Omitir
 un_installing	Instalando en segundo plano …
 un_setting	Avisar de actualizaciones
 un_setting_sub	Con “Instalar” y “Omitir” en la propia notificación
+vb_title	Refuerzo de volumen
+vb_tile	Boost
+vb_sub	Más alto que el máximo, para todas las apps
+vb_active	+%1$d %% · %2$s
+vb_notif	Refuerzo de volumen +%1$d %%
+vb_out_speaker	Altavoz
+vb_out_headphones	Auriculares
+vb_speaker	Altavoz
+vb_headphones	Auriculares
+vb_level	Refuerzo
+vb_stop	Desactivar
+vb_split	Niveles separados
+vb_split_sub	Cambia automáticamente al conectar auriculares
+vb_limit	Límite superior
+vb_hint	+100 % ≈ +10 dB. Los niveles altos pueden distorsionar y forzar los altavoces.
+vb_warn	⚠ Mucho refuerzo con auriculares puede dañar tu oído. Mejor mantenlo más bajo.
+vb_dose_title	Aviso de protección auditiva
+vb_dose_sub	Android avisa cuando la dosis de sonido semanal llega al 100 %% (ahora %1$d %%). No se puede desactivar, pero sí restablecer la dosis.
+vb_dose_reset	Restablecer dosis
+vb_dose_restore	Restaurar

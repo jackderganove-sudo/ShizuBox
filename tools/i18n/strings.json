@@ -3867,5 +3867,105 @@
   "en": "With “Install” and “Skip” right in the notification",
   "de": "Mit „Installieren“ und „Überspringen“ direkt in der Benachrichtigung",
   "plural": false
+ },
+ "vb_title": {
+  "en": "Volume boost",
+  "de": "Lautstärke-Boost",
+  "plural": false
+ },
+ "vb_tile": {
+  "en": "Boost",
+  "de": "Boost",
+  "plural": false
+ },
+ "vb_sub": {
+  "en": "Louder than the maximum, for all apps",
+  "de": "Lauter als das Maximum, für alle Apps",
+  "plural": false
+ },
+ "vb_active": {
+  "en": "+%1$d %% · %2$s",
+  "de": "+%1$d %% · %2$s",
+  "plural": false
+ },
+ "vb_notif": {
+  "en": "Volume boost +%1$d %%",
+  "de": "Lautstärke-Boost +%1$d %%",
+  "plural": false
+ },
+ "vb_out_speaker": {
+  "en": "Speaker",
+  "de": "Lautsprecher",
+  "plural": false
+ },
+ "vb_out_headphones": {
+  "en": "Headphones",
+  "de": "Kopfhörer",
+  "plural": false
+ },
+ "vb_speaker": {
+  "en": "Speaker",
+  "de": "Lautsprecher",
+  "plural": false
+ },
+ "vb_headphones": {
+  "en": "Headphones",
+  "de": "Kopfhörer",
+  "plural": false
+ },
+ "vb_level": {
+  "en": "Boost",
+  "de": "Verstärkung",
+  "plural": false
+ },
+ "vb_stop": {
+  "en": "Turn off",
+  "de": "Ausschalten",
+  "plural": false
+ },
+ "vb_split": {
+  "en": "Separate levels",
+  "de": "Getrennte Stufen",
+  "plural": false
+ },
+ "vb_split_sub": {
+  "en": "Switches automatically when headphones are connected",
+  "de": "Schaltet automatisch um, wenn Kopfhörer verbunden sind",
+  "plural": false
+ },
+ "vb_limit": {
+  "en": "Upper limit",
+  "de": "Obergrenze",
+  "plural": false
+ },
+ "vb_hint": {
+  "en": "+100 % ≈ +10 dB. High levels can distort and strain speakers.",
+  "de": "+100 % ≈ +10 dB. Hohe Stufen können verzerren und die Lautsprecher belasten.",
+  "plural": false
+ },
+ "vb_warn": {
+  "en": "⚠ A lot of boost with headphones can damage your hearing. Better keep it lower.",
+  "de": "⚠ Viel Boost mit Kopfhörern kann dem Gehör schaden. Lieber niedriger halten.",
+  "plural": false
+ },
+ "vb_dose_title": {
+  "en": "Hearing protection warning",
+  "de": "Gehörschutz-Warnung",
+  "plural": false
+ },
+ "vb_dose_sub": {
+  "en": "Android warns when the weekly sound dose reaches 100 %% (now %1$d %%). It can't be switched off, but the dose can be reset.",
+  "de": "Android warnt, wenn die Wochen-Schalldosis 100 %% erreicht (jetzt %1$d %%). Abschalten geht nicht, aber die Dosis lässt sich zurücksetzen.",
+  "plural": false
+ },
+ "vb_dose_reset": {
+  "en": "Reset dose",
+  "de": "Dosis zurücksetzen",
+  "plural": false
+ },
+ "vb_dose_restore": {
+  "en": "Restore",
+  "de": "Wiederherstellen",
+  "plural": false
  }
 }

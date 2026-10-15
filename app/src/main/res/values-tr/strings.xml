@@ -799,4 +799,24 @@
     <string name="un_installing">Arka planda yükleniyor …</string>
     <string name="un_setting">Güncellemelerde bildir</string>
     <string name="un_setting_sub">Bildirimde doğrudan “Yükle” ve “Atla” ile</string>
+    <string name="vb_title">Ses yükseltici</string>
+    <string name="vb_tile">Boost</string>
+    <string name="vb_sub">Tüm uygulamalar için maksimumdan daha yüksek ses</string>
+    <string name="vb_active">+%1$d %% · %2$s</string>
+    <string name="vb_notif">Ses yükseltici +%1$d %%</string>
+    <string name="vb_out_speaker">Hoparlör</string>
+    <string name="vb_out_headphones">Kulaklık</string>
+    <string name="vb_speaker">Hoparlör</string>
+    <string name="vb_headphones">Kulaklık</string>
+    <string name="vb_level">Yükseltme</string>
+    <string name="vb_stop">Kapat</string>
+    <string name="vb_split">Ayrı seviyeler</string>
+    <string name="vb_split_sub">Kulaklık bağlandığında otomatik geçiş yapar</string>
+    <string name="vb_limit">Üst sınır</string>
+    <string name="vb_hint" formatted="false">+100 % ≈ +10 dB. Yüksek seviyeler ses bozulmasına ve hoparlörlerin zorlanmasına yol açabilir.</string>
+    <string name="vb_warn">⚠ Kulaklıkla yüksek yükseltme işitmenize zarar verebilir. Daha düşük tutun.</string>
+    <string name="vb_dose_title">İşitme koruma uyarısı</string>
+    <string name="vb_dose_sub">Android, haftalık ses dozu %%100\'e ulaştığında uyarır (şu an %%%1$d). Kapatılamaz ama doz sıfırlanabilir.</string>
+    <string name="vb_dose_reset">Dozu sıfırla</string>
+    <string name="vb_dose_restore">Geri yükle</string>
 </resources>

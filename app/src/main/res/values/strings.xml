@@ -801,4 +801,24 @@
     <string name="un_installing">Installing in the background …</string>
     <string name="un_setting">Notify about updates</string>
     <string name="un_setting_sub">With “Install” and “Skip” right in the notification</string>
+    <string name="vb_title">Volume boost</string>
+    <string name="vb_tile">Boost</string>
+    <string name="vb_sub">Louder than the maximum, for all apps</string>
+    <string name="vb_active">+%1$d %% · %2$s</string>
+    <string name="vb_notif">Volume boost +%1$d %%</string>
+    <string name="vb_out_speaker">Speaker</string>
+    <string name="vb_out_headphones">Headphones</string>
+    <string name="vb_speaker">Speaker</string>
+    <string name="vb_headphones">Headphones</string>
+    <string name="vb_level">Boost</string>
+    <string name="vb_stop">Turn off</string>
+    <string name="vb_split">Separate levels</string>
+    <string name="vb_split_sub">Switches automatically when headphones are connected</string>
+    <string name="vb_limit">Upper limit</string>
+    <string name="vb_hint" formatted="false">+100 % ≈ +10 dB. High levels can distort and strain speakers.</string>
+    <string name="vb_warn">⚠ A lot of boost with headphones can damage your hearing. Better keep it lower.</string>
+    <string name="vb_dose_title">Hearing protection warning</string>
+    <string name="vb_dose_sub">Android warns when the weekly sound dose reaches 100 %% (now %1$d %%). It can\'t be switched off, but the dose can be reset.</string>
+    <string name="vb_dose_reset">Reset dose</string>
+    <string name="vb_dose_restore">Restore</string>
 </resources>

@@ -33,6 +33,7 @@ object Backup {
         "tiles" to emptySet(),
         "activity_launcher" to emptySet(),
         "downloader" to emptySet(),
+        "boost" to setOf("enabled", "dose_before_reset"),
     )
 
     /** Only exported when the user asks for it. */
@@ -96,6 +97,7 @@ object Backup {
         VirusTotal.init(context)
         de.emil.shizubox.apps.ActivityLauncher.reload()
         de.emil.shizubox.downloader.DownloaderSettings.load()
+        de.emil.shizubox.system.VolumeBoost.load()
         Updates.init(context)
         UpdateWorker.schedule(context)
         root.optJSONObject("school")?.let { s ->
