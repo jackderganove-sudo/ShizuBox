@@ -937,3 +937,6 @@ cc_hint	Android 17 tek tek uygulamaları yalnızca ayarlardan temizletir – “
 cc_clear	Temizle
 cc_open	Aç
 cc_tap	Dokun
+e_apkpure_vpn	⚠ APKPure'a ulaşılamıyor (%1$s). Bir VPN açık – APKPure VPN'leri sık engeller (ör. Google VPN). VPN'i kısa süre duraklatıp tekrar dene.
+e_apkpure_dns	⚠ APKPure'a ulaşılamıyor (%1$s). Özel DNS „%2$s“ ayarlı – NextDNS gibi filtreler APKPure'u sık engeller. Orada apkpure.com, pureapk.com ve winudf.com'a izin ver ya da kısa süre duraklat.
+e_apkpure_net	⚠ APKPure'a ulaşılamıyor (%1$s). Bağlantıyı kontrol edip daha sonra tekrar dene.

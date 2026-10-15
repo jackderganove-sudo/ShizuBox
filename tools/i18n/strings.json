@@ -4801,5 +4801,20 @@
   "en": "Tap",
   "de": "Tippen",
   "plural": false
+ },
+ "e_apkpure_vpn": {
+  "en": "⚠ APKPure can't be reached (%1$s). A VPN is on – APKPure often blocks VPNs (e.g. the Google VPN). Pause the VPN briefly and try again.",
+  "de": "⚠ APKPure nicht erreichbar (%1$s). Ein VPN ist aktiv – APKPure blockiert VPNs oft (z. B. das Google-VPN). VPN kurz pausieren und erneut versuchen.",
+  "plural": false
+ },
+ "e_apkpure_dns": {
+  "en": "⚠ APKPure can't be reached (%1$s). Private DNS „%2$s“ is set – filters like NextDNS often block APKPure. Allow apkpure.com, pureapk.com and winudf.com there or pause it briefly.",
+  "de": "⚠ APKPure nicht erreichbar (%1$s). Privates DNS „%2$s“ ist eingestellt – Filter wie NextDNS blockieren APKPure oft. Dort apkpure.com, pureapk.com und winudf.com erlauben oder kurz pausieren.",
+  "plural": false
+ },
+ "e_apkpure_net": {
+  "en": "⚠ APKPure can't be reached (%1$s). Check the connection and try again later.",
+  "de": "⚠ APKPure nicht erreichbar (%1$s). Verbindung prüfen und später erneut versuchen.",
+  "plural": false
  }
 }

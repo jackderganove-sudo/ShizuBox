@@ -937,3 +937,6 @@ cc_hint	Android 17 solo deja vaciar apps sueltas en ajustes: «Abrir» te lleva 
 cc_clear	Vaciar
 cc_open	Abrir
 cc_tap	Tocar
+e_apkpure_vpn	⚠ No se puede acceder a APKPure (%1$s). Hay una VPN activa: APKPure suele bloquear VPN (p. ej. la VPN de Google). Pausa la VPN un momento y vuelve a intentarlo.
+e_apkpure_dns	⚠ No se puede acceder a APKPure (%1$s). Está configurado el DNS privado «%2$s»: filtros como NextDNS suelen bloquear APKPure. Permite apkpure.com, pureapk.com y winudf.com o páusalo un momento.
+e_apkpure_net	⚠ No se puede acceder a APKPure (%1$s). Revisa la conexión e inténtalo más tarde.

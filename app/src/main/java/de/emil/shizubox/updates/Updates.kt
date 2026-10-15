@@ -264,7 +264,9 @@ object Updates {
         val dayAgo = System.currentTimeMillis() - 24 * 3600_000L
         dir.listFiles()?.filter { it.lastModified() < dayAgo }?.forEach { it.delete() }
         val target = File(dir, "${System.currentTimeMillis()}_" + asset.name.replace(Regex("[^A-Za-z0-9._-]"), "_"))
-        val conn = openFollowingRedirects(asset.url)
+        val conn = if (isApkPureHost(asset.url)) withNetHint {
+            openFollowingRedirects(asset.url).also { if (it.responseCode == 403 || it.responseCode >= 500) throw SourceException("HTTP ${it.responseCode}") }
+        } else openFollowingRedirects(asset.url)
         if (conn.responseCode !in 200..299) throw SourceException(t(R.string.e_dl_http, conn.responseCode))
         val total = conn.contentLengthLong
         conn.inputStream.use { input ->

@@ -993,5 +993,8 @@
     <string name="cc_clear">Leeren</string>
     <string name="cc_open">Öffnen</string>
     <string name="cc_tap">Tippen</string>
+    <string name="e_apkpure_vpn">⚠ APKPure nicht erreichbar (%1$s). Ein VPN ist aktiv – APKPure blockiert VPNs oft (z. B. das Google-VPN). VPN kurz pausieren und erneut versuchen.</string>
+    <string name="e_apkpure_dns">⚠ APKPure nicht erreichbar (%1$s). Privates DNS „%2$s“ ist eingestellt – Filter wie NextDNS blockieren APKPure oft. Dort apkpure.com, pureapk.com und winudf.com erlauben oder kurz pausieren.</string>
+    <string name="e_apkpure_net">⚠ APKPure nicht erreichbar (%1$s). Verbindung prüfen und später erneut versuchen.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

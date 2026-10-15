@@ -172,7 +172,8 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - Pixel meldet Akku-Zustand 11 (herstellerspezifisch) → Zeile wird ausgeblendet
 - Kachel-Tipps bei gesperrtem Gerät hält SystemUI bis zum Entsperren zurück
 - Nicht exportierte Activities (z. B. Settings-Testmenü unter Android 17) kann nur die App selbst starten – auch nicht per Shizuku
-- APKPure-CDN wird von manchen DNS-Filtern (NextDNS) blockiert
+- APKPure-CDN wird von manchen DNS-Filtern (NextDNS) und VPNs (Google-VPN) blockiert: ShizuBox versucht es ein zweites Mal und zeigt dann einen Hinweis mit Ursache (VPN aktiv / privates DNS mit Namen / sonst Netz). Genaue Ursache beim Google-VPN noch zu messen (`--es test apkpure` bei eingeschaltetem VPN)
+- `pm clear --cache-only` hängt auf Android 17 dauerhaft (auch `cmd package clear --user 0 …`) und löscht nichts
 - APKMirror erlaubt keine automatischen Downloads
 - R8: commons-compress (youtubedl-android) und NewPipe/Rhino brauchen Keep-Regeln, sonst scheitert das Entpacken bzw. die Extraktion
 - uiautomator wird durch die pulsierende Shizuku-Animation nie „idle“ → Koordinaten per Screenshot bestimmen

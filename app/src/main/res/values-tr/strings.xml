@@ -993,4 +993,7 @@
     <string name="cc_clear">Temizle</string>
     <string name="cc_open">Aç</string>
     <string name="cc_tap">Dokun</string>
+    <string name="e_apkpure_vpn">⚠ APKPure\'a ulaşılamıyor (%1$s). Bir VPN açık – APKPure VPN\'leri sık engeller (ör. Google VPN). VPN\'i kısa süre duraklatıp tekrar dene.</string>
+    <string name="e_apkpure_dns">⚠ APKPure\'a ulaşılamıyor (%1$s). Özel DNS „%2$s“ ayarlı – NextDNS gibi filtreler APKPure\'u sık engeller. Orada apkpure.com, pureapk.com ve winudf.com\'a izin ver ya da kısa süre duraklat.</string>
+    <string name="e_apkpure_net">⚠ APKPure\'a ulaşılamıyor (%1$s). Bağlantıyı kontrol edip daha sonra tekrar dene.</string>
 </resources>

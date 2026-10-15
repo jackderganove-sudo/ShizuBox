@@ -268,13 +268,15 @@ sealed class Source(val label: String) {
 
         override suspend fun latest(app: TrackedApp): Release {
             val pkg = pathParts(Uri.parse(app.url)).last { it.contains('.') }
-            val body = get(
-                "https://tapi.pureapk.com/v3/get_app_his_version?package_name=$pkg&hl=en",
-                mapOf(
-                    "Ual-Access-Businessid" to "projecta",
-                    "Ual-Access-ProjectA" to """{"device_info":{"os_ver":"${Build.VERSION.SDK_INT}"}}""",
-                ),
-            )
+            val body = withNetHint {
+                get(
+                    "https://tapi.pureapk.com/v3/get_app_his_version?package_name=$pkg&hl=en",
+                    mapOf(
+                        "Ual-Access-Businessid" to "projecta",
+                        "Ual-Access-ProjectA" to """{"device_info":{"os_ver":"${Build.VERSION.SDK_INT}"}}""",
+                    ),
+                )
+            }
             val list = JSONObject(body).optJSONArray("version_list") ?: throw SourceException(t(R.string.e_no_versions))
             val variants = (0 until list.length()).map { list.getJSONObject(it) }
             if (variants.isEmpty()) throw SourceException(t(R.string.e_no_versions))
@@ -338,5 +340,49 @@ object ApkFilters {
             }
         }
         return list
+    }
+}
+
+/** Hosts that VPNs and DNS filters like to block (APKPure API and CDN). */
+fun isApkPureHost(url: String) = Regex("""(^|\.)(pureapk\.com|apkpure\.(com|net)|winudf\.com)(/|$|:)""").containsMatchIn(url.substringAfter("://"))
+
+/**
+ * Runs an APKPure request with one retry. Network errors (DNS, TLS, refused, timeout) and
+ * 403/5xx become a readable hint that names the likely cause: an active VPN or a private DNS
+ * filter such as NextDNS.
+ */
+suspend fun <T> withNetHint(block: suspend () -> T): T {
+    var last: Throwable? = null
+    repeat(2) { attempt ->
+        try {
+            return block()
+        } catch (e: java.io.IOException) {
+            last = e
+        } catch (e: SourceException) {
+            // 404 and "no versions" are real answers, only blocks are worth a retry.
+            if (e.message?.contains("403") != true && e.message?.startsWith("HTTP 5") != true) throw e
+            last = e
+        }
+        if (attempt == 0) kotlinx.coroutines.delay(1500)
+    }
+    throw SourceException(apkPureHint(last))
+}
+
+fun apkPureHint(e: Throwable?): String {
+    val ctx = de.emil.shizubox.Str.context
+    val cm = ctx.getSystemService(android.net.ConnectivityManager::class.java)
+    val vpn = cm.allNetworks.any { cm.getNetworkCapabilities(it)?.hasTransport(android.net.NetworkCapabilities.TRANSPORT_VPN) == true }
+    val dns = cm.getLinkProperties(cm.activeNetwork)?.privateDnsServerName
+    val why = when (e) {
+        is java.net.UnknownHostException -> "DNS"
+        is javax.net.ssl.SSLException -> "TLS"
+        is java.net.SocketTimeoutException -> "Timeout"
+        null -> "?"
+        else -> e.message?.take(60) ?: e.javaClass.simpleName
+    }
+    return when {
+        vpn -> t(R.string.e_apkpure_vpn, why)
+        dns != null -> t(R.string.e_apkpure_dns, why, dns)
+        else -> t(R.string.e_apkpure_net, why)
     }
 }

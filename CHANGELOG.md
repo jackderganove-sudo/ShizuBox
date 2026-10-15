@@ -23,6 +23,8 @@
   „Internet sperren/erlauben“; Sperren werden nach einem Neustart automatisch wiederhergestellt, sobald Shizuku läuft
 - Cache aufräumen (System): Cache pro App nach Größe, „Alles aufräumen“ über Shizuku, freigegebener Platz mit rollenden Ziffern,
   Schnellaktion und Kachel; Einzel-Apps öffnen ihre Speicher-Einstellungen (Android 17 erlaubt es per Shell nicht)
+- APKPure: automatische Wiederholung und verständliche Fehlermeldung statt kryptischer Fehler – erkennt aktives VPN
+  („VPN kurz pausieren“) und privates DNS wie NextDNS (Domains zum Freigeben werden genannt)
 - Fix: Update-APKs blieben nach der stillen Installation im Cache liegen (bei mir fast 900 MB) – werden jetzt sofort gelöscht
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 

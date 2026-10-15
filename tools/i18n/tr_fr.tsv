@@ -937,3 +937,6 @@ cc_hint	Android 17 ne permet de vider une appli que dans les paramètres – « 
 cc_clear	Vider
 cc_open	Ouvrir
 cc_tap	Toucher
+e_apkpure_vpn	⚠ APKPure injoignable (%1$s). Un VPN est actif – APKPure bloque souvent les VPN (p. ex. le VPN de Google). Mets le VPN en pause et réessaie.
+e_apkpure_dns	⚠ APKPure injoignable (%1$s). Le DNS privé « %2$s » est défini – des filtres comme NextDNS bloquent souvent APKPure. Autorise apkpure.com, pureapk.com et winudf.com ou mets-le en pause.
+e_apkpure_net	⚠ APKPure injoignable (%1$s). Vérifie la connexion et réessaie plus tard.
