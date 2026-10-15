@@ -193,6 +193,8 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         }
 
         // ------------------------------------------------------------ installer & security
+        item { Header(t(R.string.home_title)) }
+        item { HomeSettingsCard(s) }
         item { Header(t(R.string.set_installer_security)) }
         item {
             GlassCard(Modifier.fillMaxWidth()) {

@@ -650,4 +650,12 @@
     <string name="bk_restore">Geri yükle</string>
     <string name="bk_exported">Yedek kaydedildi ✓</string>
     <string name="bk_imported">Ayarlar geri yüklendi, %1$d takip edilen uygulama ✓</string>
+    <string name="qa_title">Hızlı işlemler</string>
+    <string name="home_title">Ana ekran</string>
+    <string name="home_start">Açılışta aç</string>
+    <string name="home_home">Ana ekran</string>
+    <string name="home_shown">Ana ekrandaki bölümler</string>
+    <string name="home_shown_hint">Gizlenen bölümlere başlangıç sayfası ve bildirimler üzerinden yine ulaşılabilir.</string>
+    <string name="home_school_card">Büyük okul modu kartı</string>
+    <string name="home_quick_actions">Ana ekranda hızlı işlemler</string>
 </resources>

@@ -648,5 +648,13 @@
 "bk_secrets": "Inclure la clé API et le jeton GitHub",
 "bk_restore": "Restaurer",
 "bk_exported": "Sauvegarde enregistrée ✓",
-"bk_imported": "Paramètres restaurés, %1$d applis suivies ✓"
+"bk_imported": "Paramètres restaurés, %1$d applis suivies ✓",
+"qa_title": "Actions rapides",
+"home_title": "Écran d’accueil",
+"home_start": "Ouvrir au démarrage",
+"home_home": "Accueil",
+"home_shown": "Sections sur l’accueil",
+"home_shown_hint": "Les sections masquées restent accessibles comme page de démarrage et via les notifications.",
+"home_school_card": "Grande carte du mode école",
+"home_quick_actions": "Actions rapides sur l’accueil"
 }

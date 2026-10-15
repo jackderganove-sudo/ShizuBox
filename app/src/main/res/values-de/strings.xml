@@ -650,5 +650,13 @@
     <string name="bk_restore">Wiederherstellen</string>
     <string name="bk_exported">Sicherung gespeichert ✓</string>
     <string name="bk_imported">Einstellungen wiederhergestellt, %1$d verfolgte Apps ✓</string>
+    <string name="qa_title">Schnellaktionen</string>
+    <string name="home_title">Startseite</string>
+    <string name="home_start">Beim Start öffnen</string>
+    <string name="home_home">Startseite</string>
+    <string name="home_shown">Bereiche auf der Startseite</string>
+    <string name="home_shown_hint">Ausgeblendete Bereiche bleiben als Startbereich und über Benachrichtigungen erreichbar.</string>
+    <string name="home_school_card">Große Schulmodus-Karte</string>
+    <string name="home_quick_actions">Schnellaktionen auf der Startseite</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

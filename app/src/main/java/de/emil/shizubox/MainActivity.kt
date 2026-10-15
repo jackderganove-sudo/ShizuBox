@@ -76,7 +76,8 @@ class MainActivity : ComponentActivity() {
                 val status by ShizukuManager.status.collectAsStateWithLifecycle()
                 val school by SchoolMode.state.collectAsStateWithLifecycle()
                 var section by rememberSaveable {
-                    mutableStateOf(intent.getStringExtra(EXTRA_SECTION)?.let { name -> Section.entries.firstOrNull { it.name == name } })
+                    val name = intent.getStringExtra(EXTRA_SECTION) ?: AppSettings.current.startSection
+                    mutableStateOf(Section.entries.firstOrNull { it.name == name })
                 }
                 val trackedApps by Updates.apps.collectAsStateWithLifecycle()
                 val updateCount = remember(trackedApps) { Updates.updateCount() }

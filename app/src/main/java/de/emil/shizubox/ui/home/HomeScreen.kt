@@ -37,6 +37,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
@@ -71,6 +73,7 @@ fun HomeScreen(
     onOpenSection: (Section) -> Unit,
     onOpenSettings: () -> Unit,
 ) {
+    val settings by de.emil.shizubox.settings.AppSettings.state.collectAsStateWithLifecycle()
     LazyColumn(
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
@@ -93,29 +96,36 @@ fun HomeScreen(
             }
         }
         item { ShizukuCard(shizukuStatus, serverMode, onShizukuAction) }
-        item {
-            SchoolCard(
-                school = school,
-                canActivate = shizukuStatus == ShizukuStatus.Ready && !busy && !school.pendingRestore,
-                busy = busy,
-                onActivate = onActivateSchool,
-                onClick = { onOpenSection(Section.School) },
-            )
-        }
-        item {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                SectionTile(Section.Customization, Modifier.weight(1f)) { onOpenSection(Section.Customization) }
-                SectionTile(Section.Apps, Modifier.weight(1f)) { onOpenSection(Section.Apps) }
+        if (settings.showSchoolCard && Section.School.name !in settings.hiddenSections) {
+            item {
+                SchoolCard(
+                    school = school,
+                    canActivate = shizukuStatus == ShizukuStatus.Ready && !busy && !school.pendingRestore,
+                    busy = busy,
+                    onActivate = onActivateSchool,
+                    onClick = { onOpenSection(Section.School) },
+                )
             }
         }
-        item {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                SectionTile(
-                    Section.Updates,
-                    Modifier.weight(1f),
-                    subtitle = if (updateCount > 0) tp(R.plurals.updates_available, updateCount, updateCount) else null,
-                ) { onOpenSection(Section.Updates) }
-                SectionTile(Section.System, Modifier.weight(1f)) { onOpenSection(Section.System) }
+        if (settings.showQuickActions && shizukuStatus == ShizukuStatus.Ready) {
+            item { QuickActionsCard() }
+        }
+        // School mode gets a small tile when its big card is turned off.
+        val tiles = Section.entries.filter {
+            it.name !in settings.hiddenSections && (it != Section.School || !settings.showSchoolCard)
+        }
+        tiles.chunked(2).forEach { pair ->
+            item {
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    pair.forEach { sec ->
+                        SectionTile(
+                            sec,
+                            Modifier.weight(1f),
+                            subtitle = if (sec == Section.Updates && updateCount > 0) tp(R.plurals.updates_available, updateCount, updateCount) else null,
+                        ) { onOpenSection(sec) }
+                    }
+                    if (pair.size == 1) androidx.compose.foundation.layout.Spacer(Modifier.weight(1f))
+                }
             }
         }
     }

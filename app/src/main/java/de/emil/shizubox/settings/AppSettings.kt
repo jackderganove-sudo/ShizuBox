@@ -51,6 +51,12 @@ data class Settings(
     val vtAutoScan: Boolean = true,
     /** Refuse installs whose signature differs from the installed app. */
     val blockSignatureMismatch: Boolean = true,
+    /** Section opened at app start ("" = home screen). */
+    val startSection: String = "",
+    val showSchoolCard: Boolean = true,
+    val showQuickActions: Boolean = true,
+    /** Section names hidden from the home screen. */
+    val hiddenSections: Set<String> = emptySet(),
 )
 
 /** App-wide settings in device-protected storage (also readable before the first unlock). */
@@ -78,6 +84,10 @@ object AppSettings {
             defaultPlayStoreSource = prefs.getBoolean("def_play", d.defaultPlayStoreSource),
             vtAutoScan = prefs.getBoolean("vt_auto", d.vtAutoScan),
             blockSignatureMismatch = prefs.getBoolean("block_sig", d.blockSignatureMismatch),
+            startSection = prefs.getString("start_section", d.startSection).orEmpty(),
+            showSchoolCard = prefs.getBoolean("show_school_card", d.showSchoolCard),
+            showQuickActions = prefs.getBoolean("show_quick_actions", d.showQuickActions),
+            hiddenSections = prefs.getString("hidden_sections", "").orEmpty().split(',').filter { it.isNotBlank() }.toSet(),
         )
     }
 
@@ -99,6 +109,10 @@ object AppSettings {
             .putBoolean("def_play", s.defaultPlayStoreSource)
             .putBoolean("vt_auto", s.vtAutoScan)
             .putBoolean("block_sig", s.blockSignatureMismatch)
+            .putString("start_section", s.startSection)
+            .putBoolean("show_school_card", s.showSchoolCard)
+            .putBoolean("show_quick_actions", s.showQuickActions)
+            .putString("hidden_sections", s.hiddenSections.joinToString(","))
             .apply()
     }
 

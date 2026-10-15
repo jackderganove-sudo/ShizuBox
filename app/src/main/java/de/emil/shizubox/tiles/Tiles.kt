@@ -1,18 +1,13 @@
 package de.emil.shizubox.tiles
 
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import de.emil.shizubox.MainActivity
 import de.emil.shizubox.R
-import de.emil.shizubox.customization.Customization
-import de.emil.shizubox.customization.RefreshMode
 import de.emil.shizubox.shizuku.ShizukuManager
 import de.emil.shizubox.shizuku.ShizukuStatus
-import de.emil.shizubox.system.Gaming
-import de.emil.shizubox.system.Tweaks
 import de.emil.shizubox.t
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -80,47 +75,25 @@ abstract class ShellTile : TileService() {
     }
 }
 
-private fun onOff(active: Boolean) = TileInfo(active, if (active) t(R.string.on) else t(R.string.off))
-
 class GamingTile : ShellTile() {
-    override suspend fun read() = onOff(Gaming.active.value)
-    override suspend fun toggle(current: TileInfo) = if (current.active) Gaming.disable() else Gaming.enable()
+    override suspend fun read() = QuickActions.read(QuickAction.Gaming)
+    override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Gaming, current)
 }
 
 /** Animations off ↔ the last speed that was used. */
 class AnimationsTile : ShellTile() {
-    private val prefs get() = createDeviceProtectedStorageContext().getSharedPreferences("tiles", Context.MODE_PRIVATE)
-
-    override suspend fun read(): TileInfo {
-        val scale = Customization.animationScale()
-        return TileInfo(scale > 0f, if (scale > 0f) "${scale.toString().removeSuffix(".0")}×" else t(R.string.off))
-    }
-
-    override suspend fun toggle(current: TileInfo) {
-        if (current.active) {
-            prefs.edit().putFloat("last_anim", Customization.animationScale()).apply()
-            Customization.setAnimationScale(0f)
-        } else {
-            Customization.setAnimationScale(prefs.getFloat("last_anim", 1f).takeIf { it > 0f } ?: 1f)
-        }
-    }
+    override suspend fun read() = QuickActions.read(QuickAction.Animations)
+    override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Animations, current)
 }
 
 /** Cycles adaptive → 60 Hz → always max. */
 class RefreshTile : ShellTile() {
-    override suspend fun read(): TileInfo {
-        val mode = Customization.refreshMode()
-        return TileInfo(mode != RefreshMode.Adaptive, mode.label)
-    }
-
-    override suspend fun toggle(current: TileInfo) {
-        val entries = RefreshMode.entries
-        Customization.setRefresh(entries[(entries.indexOf(Customization.refreshMode()) + 1) % entries.size])
-    }
+    override suspend fun read() = QuickActions.read(QuickAction.Refresh)
+    override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Refresh, current)
 }
 
 /** Screen stays on while charging (developer option). */
 class StayAwakeTile : ShellTile() {
-    override suspend fun read() = onOff(Tweaks.stayAwake())
-    override suspend fun toggle(current: TileInfo) { Tweaks.setStayAwake(!current.active) }
+    override suspend fun read() = QuickActions.read(QuickAction.StayAwake)
+    override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.StayAwake, current)
 }

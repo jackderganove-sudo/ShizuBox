@@ -3140,5 +3140,45 @@
   "en": "Settings restored, %1$d tracked apps ✓",
   "de": "Einstellungen wiederhergestellt, %1$d verfolgte Apps ✓",
   "plural": false
+ },
+ "qa_title": {
+  "en": "Quick actions",
+  "de": "Schnellaktionen",
+  "plural": false
+ },
+ "home_title": {
+  "en": "Home screen",
+  "de": "Startseite",
+  "plural": false
+ },
+ "home_start": {
+  "en": "Open on start",
+  "de": "Beim Start öffnen",
+  "plural": false
+ },
+ "home_home": {
+  "en": "Home",
+  "de": "Startseite",
+  "plural": false
+ },
+ "home_shown": {
+  "en": "Sections on the home screen",
+  "de": "Bereiche auf der Startseite",
+  "plural": false
+ },
+ "home_shown_hint": {
+  "en": "Hidden sections stay reachable as start page and from notifications.",
+  "de": "Ausgeblendete Bereiche bleiben als Startbereich und über Benachrichtigungen erreichbar.",
+  "plural": false
+ },
+ "home_school_card": {
+  "en": "Large school mode card",
+  "de": "Große Schulmodus-Karte",
+  "plural": false
+ },
+ "home_quick_actions": {
+  "en": "Quick actions on the home screen",
+  "de": "Schnellaktionen auf der Startseite",
+  "plural": false
  }
 }

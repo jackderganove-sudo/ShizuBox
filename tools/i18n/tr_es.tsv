@@ -612,3 +612,11 @@ bk_secrets	Incluir clave API y token de GitHub
 bk_restore	Restaurar
 bk_exported	Copia guardada ✓
 bk_imported	Ajustes restaurados, %1$d apps seguidas ✓
+qa_title	Acciones rápidas
+home_title	Pantalla de inicio
+home_start	Abrir al iniciar
+home_home	Inicio
+home_shown	Secciones en el inicio
+home_shown_hint	Las secciones ocultas siguen accesibles como página de inicio y desde las notificaciones.
+home_school_card	Tarjeta grande del modo escuela
+home_quick_actions	Acciones rápidas en el inicio

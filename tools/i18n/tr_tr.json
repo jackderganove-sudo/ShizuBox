@@ -648,5 +648,13 @@
 "bk_secrets": "API anahtarını ve GitHub tokenını dahil et",
 "bk_restore": "Geri yükle",
 "bk_exported": "Yedek kaydedildi ✓",
-"bk_imported": "Ayarlar geri yüklendi, %1$d takip edilen uygulama ✓"
+"bk_imported": "Ayarlar geri yüklendi, %1$d takip edilen uygulama ✓",
+"qa_title": "Hızlı işlemler",
+"home_title": "Ana ekran",
+"home_start": "Açılışta aç",
+"home_home": "Ana ekran",
+"home_shown": "Ana ekrandaki bölümler",
+"home_shown_hint": "Gizlenen bölümlere başlangıç sayfası ve bildirimler üzerinden yine ulaşılabilir.",
+"home_school_card": "Büyük okul modu kartı",
+"home_quick_actions": "Ana ekranda hızlı işlemler"
 }

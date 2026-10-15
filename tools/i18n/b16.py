@@ -1,0 +1,10 @@
+from i18n import *
+S5('qa_title','Quick actions','Schnellaktionen','Hızlı işlemler','Acciones rápidas','Actions rapides')
+S5('home_title','Home screen','Startseite','Ana ekran','Pantalla de inicio','Écran d’accueil')
+S5('home_start','Open on start','Beim Start öffnen','Açılışta aç','Abrir al iniciar','Ouvrir au démarrage')
+S5('home_home','Home','Startseite','Ana ekran','Inicio','Accueil')
+S5('home_shown','Sections on the home screen','Bereiche auf der Startseite','Ana ekrandaki bölümler','Secciones en el inicio','Sections sur l’accueil')
+S5('home_shown_hint','Hidden sections stay reachable as start page and from notifications.','Ausgeblendete Bereiche bleiben als Startbereich und über Benachrichtigungen erreichbar.','Gizlenen bölümlere başlangıç sayfası ve bildirimler üzerinden yine ulaşılabilir.','Las secciones ocultas siguen accesibles como página de inicio y desde las notificaciones.','Les sections masquées restent accessibles comme page de démarrage et via les notifications.')
+S5('home_school_card','Large school mode card','Große Schulmodus-Karte','Büyük okul modu kartı','Tarjeta grande del modo escuela','Grande carte du mode école')
+S5('home_quick_actions','Quick actions on the home screen','Schnellaktionen auf der Startseite','Ana ekranda hızlı işlemler','Acciones rápidas en el inicio','Actions rapides sur l’accueil')
+save()

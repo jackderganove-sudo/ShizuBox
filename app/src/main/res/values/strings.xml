@@ -652,4 +652,12 @@
     <string name="bk_restore">Restore</string>
     <string name="bk_exported">Backup saved ✓</string>
     <string name="bk_imported">Settings restored, %1$d tracked apps ✓</string>
+    <string name="qa_title">Quick actions</string>
+    <string name="home_title">Home screen</string>
+    <string name="home_start">Open on start</string>
+    <string name="home_home">Home</string>
+    <string name="home_shown">Sections on the home screen</string>
+    <string name="home_shown_hint">Hidden sections stay reachable as start page and from notifications.</string>
+    <string name="home_school_card">Large school mode card</string>
+    <string name="home_quick_actions">Quick actions on the home screen</string>
 </resources>

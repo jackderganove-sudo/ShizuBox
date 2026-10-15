@@ -650,4 +650,12 @@
     <string name="bk_restore">Restaurar</string>
     <string name="bk_exported">Copia guardada ✓</string>
     <string name="bk_imported">Ajustes restaurados, %1$d apps seguidas ✓</string>
+    <string name="qa_title">Acciones rápidas</string>
+    <string name="home_title">Pantalla de inicio</string>
+    <string name="home_start">Abrir al iniciar</string>
+    <string name="home_home">Inicio</string>
+    <string name="home_shown">Secciones en el inicio</string>
+    <string name="home_shown_hint">Las secciones ocultas siguen accesibles como página de inicio y desde las notificaciones.</string>
+    <string name="home_school_card">Tarjeta grande del modo escuela</string>
+    <string name="home_quick_actions">Acciones rápidas en el inicio</string>
 </resources>
