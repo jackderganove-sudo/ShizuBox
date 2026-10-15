@@ -37,14 +37,15 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 ### System
 - **Geräteinfo**: Akku (Temperatur, Spannung, Ladezyklen), RAM, Speicher, CPU-Takt pro Kern, System
 - **Prozesse**: RAM-Verbrauch pro App, Apps beenden, Hintergrund aufräumen
+- **Bildschirmzeit** pro App (heute / 7 Tage) – den Nutzungszugriff erteilt sich ShizuBox selbst über Shizuku
 - **Terminal** mit Verlauf und eigenen Befehls-Bausteinen
 - **Schnelle Schalter**: beim Laden wach bleiben, Energiesparmodus, Berührungen anzeigen, Zeigerposition, dunkles Design, Bildschirm-Timeout
 - **Universal Installer**: APK, APKS, XAPK, APKM mit Vorschau, Versionsvergleich, Signaturprüfung, automatischer Split-Auswahl und VirusTotal-Scan; stille Installation über Shizuku; als Standard-Installer nutzbar
 - Gaming-Modus (Benachrichtigungen, Bildwiederholrate, Helligkeit, Hintergrund-Apps – wird exakt zurückgesetzt)
 - Logcat-Viewer mit Filtern
 
-### Schnelleinstellungs-Kacheln
-Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate, Wach bleiben – die letzten vier auch als Schnellaktionen auf der Startseite.
+### Kacheln & Widget
+Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate und Wach bleiben. Die letzten vier gibt es auch als Schnellaktionen auf der Startseite und als **Homescreen-Widget** (Material-You-Farben).
 
 ### Einstellungen
 Sprache, Design (System/Hell/Dunkel, AMOLED, Farben, Paletten, Glas-Effekt), Startseite (Startbereich, Bereiche ein-/ausblenden), Installationsart, VirusTotal-Schlüssel, **Sichern & Wiederherstellen** aller Einstellungen in einer Datei.

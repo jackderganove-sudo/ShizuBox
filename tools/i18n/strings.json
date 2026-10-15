@@ -3381,5 +3381,10 @@
    "other": "%d-mal geöffnet"
   },
   "plural": true
+ },
+ "widget_desc": {
+  "en": "Gaming mode, animations, refresh rate and stay awake with one tap",
+  "de": "Gaming-Modus, Animationen, Bildwiederholrate und Wach bleiben mit einem Tipp",
+  "plural": false
  }
 }

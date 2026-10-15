@@ -700,4 +700,5 @@
         <item quantity="one">%d kez açıldı</item>
         <item quantity="other">%d kez açıldı</item>
     </plurals>
+    <string name="widget_desc">Tek dokunuşla oyun modu, animasyonlar, yenileme hızı ve uyanık kal</string>
 </resources>

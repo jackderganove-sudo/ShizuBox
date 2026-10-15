@@ -50,5 +50,6 @@ object QuickActions {
             }
             QuickAction.StayAwake -> Tweaks.setStayAwake(!current.active)
         }
+        QuickWidgets.refreshAsync(Str.context)
     }
 }

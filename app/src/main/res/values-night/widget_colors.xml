@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_bg">@android:color/system_neutral1_900</color>
+    <color name="widget_on">@android:color/system_accent1_200</color>
+    <color name="widget_off">@android:color/system_neutral2_800</color>
+    <color name="widget_icon_on">@android:color/system_neutral1_900</color>
+    <color name="widget_icon_off">@android:color/system_neutral1_100</color>
+    <color name="widget_text">@android:color/system_neutral1_50</color>
+    <color name="widget_subtext">@android:color/system_neutral2_300</color>
+</resources>

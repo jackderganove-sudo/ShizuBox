@@ -13,8 +13,8 @@ android {
         applicationId = "de.emil.shizubox"
         minSdk = 31
         targetSdk = 37
-        versionCode = 3
-        versionName = "0.5.0"
+        versionCode = 4
+        versionName = "0.5.1"
     }
 
     // Release key lives outside the repo (never commit it): ~/Android/keys/shizubox-release.properties

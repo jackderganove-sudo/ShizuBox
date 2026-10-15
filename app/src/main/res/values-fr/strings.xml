@@ -700,4 +700,5 @@
         <item quantity="one">ouverte %d fois</item>
         <item quantity="other">ouverte %d fois</item>
     </plurals>
+    <string name="widget_desc">Mode jeu, animations, fréquence et rester allumé en un appui</string>
 </resources>

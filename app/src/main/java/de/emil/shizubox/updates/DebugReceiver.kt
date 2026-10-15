@@ -4,6 +4,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import de.emil.shizubox.shizuku.ShizukuManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +31,7 @@ class DebugReceiver : BroadcastReceiver() {
             // Offscreen screenshot: --es shot home|settings|system|device|processes|terminal|apps|app|updates|custom|school [--ei h 2400] [--es pkg x]
             val pending = goAsync()
             val ready = ShizukuManager.isReady
+            val widget = if (name == "widget") kotlinx.coroutines.runBlocking { de.emil.shizubox.tiles.QuickWidgets.build(context) } else null
             val pkg = intent.getStringExtra("pkg") ?: context.packageName
             de.emil.shizubox.debug.ScreenRenderer.render(
                 context, name, intent.getIntExtra("h", 2400), intent.getLongExtra("delay", 3500L), onDone = { pending.finish() },
@@ -43,6 +48,12 @@ class DebugReceiver : BroadcastReceiver() {
                     "device" -> de.emil.shizubox.ui.system.DeviceInfoScreen(noop)
                     "processes" -> de.emil.shizubox.ui.system.ProcessesScreen(ready, noop)
                     "terminal" -> de.emil.shizubox.ui.system.TerminalScreen(ready, noop)
+                    "widget" -> androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.padding(top = 200.dp, start = 16.dp, end = 16.dp)) {
+                        androidx.compose.ui.viewinterop.AndroidView(
+                            factory = { ctx -> widget!!.apply(ctx, android.widget.FrameLayout(ctx)) },
+                            modifier = androidx.compose.ui.Modifier.fillMaxWidth().height(96.dp),
+                        )
+                    }
                     "screentime" -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, noop)
                     "apps" -> de.emil.shizubox.ui.apps.AppsScreen(ready, noop)
                     "app" -> de.emil.shizubox.ui.apps.AppDetailScreen(pkg, ready, noop)

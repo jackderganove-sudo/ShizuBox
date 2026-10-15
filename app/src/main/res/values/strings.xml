@@ -702,4 +702,5 @@
         <item quantity="one">opened %d time</item>
         <item quantity="other">opened %d times</item>
     </plurals>
+    <string name="widget_desc">Gaming mode, animations, refresh rate and stay awake with one tap</string>
 </resources>

@@ -698,5 +698,6 @@
 "st_opened": {
 "one": "abierta %d vez",
 "other": "abierta %d veces"
-}
+},
+"widget_desc": "Modo gaming, animaciones, frecuencia y mantener activo con un toque"
 }

@@ -700,4 +700,5 @@
         <item quantity="one">abierta %d vez</item>
         <item quantity="other">abierta %d veces</item>
     </plurals>
+    <string name="widget_desc">Modo gaming, animaciones, frecuencia y mantener activo con un toque</string>
 </resources>

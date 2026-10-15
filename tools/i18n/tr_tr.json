@@ -698,5 +698,6 @@
 "st_opened": {
 "one": "%d kez açıldı",
 "other": "%d kez açıldı"
-}
+},
+"widget_desc": "Tek dokunuşla oyun modu, animasyonlar, yenileme hızı ve uyanık kal"
 }

@@ -99,6 +99,7 @@ object Gaming {
         }
         if (cmds.isNotEmpty()) ShizukuManager.exec(cmds.joinToString("; "))
         _active.value = true
+        de.emil.shizubox.tiles.QuickWidgets.refreshAsync(de.emil.shizubox.Str.context)
     }
 
     suspend fun disable() {
@@ -123,5 +124,6 @@ object Gaming {
         ShizukuManager.exec(cmds.joinToString("; "))
         prefs.edit().remove("snapshot").commit()
         _active.value = false
+        de.emil.shizubox.tiles.QuickWidgets.refreshAsync(de.emil.shizubox.Str.context)
     }
 }

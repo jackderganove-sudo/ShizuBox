@@ -700,5 +700,6 @@
         <item quantity="one">%d-mal geöffnet</item>
         <item quantity="other">%d-mal geöffnet</item>
     </plurals>
+    <string name="widget_desc">Gaming-Modus, Animationen, Bildwiederholrate und Wach bleiben mit einem Tipp</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

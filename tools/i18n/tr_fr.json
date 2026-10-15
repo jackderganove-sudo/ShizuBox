@@ -698,5 +698,6 @@
 "st_opened": {
 "one": "ouverte %d fois",
 "other": "ouverte %d fois"
-}
+},
+"widget_desc": "Mode jeu, animations, fréquence et rester allumé en un appui"
 }
