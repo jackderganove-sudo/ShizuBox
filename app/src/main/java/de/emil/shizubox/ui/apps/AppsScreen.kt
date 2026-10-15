@@ -83,7 +83,7 @@ import kotlinx.coroutines.withContext
 private const val LAUNCHER = "#launcher"
 
 private enum class AppFilter(private val labelRes: Int) {
-    User(R.string.f_user), System(R.string.system), Frozen(R.string.f_frozen);
+    User(R.string.f_user), System(R.string.system), Frozen(R.string.f_frozen), NoInternet(R.string.nb_filter);
     val label get() = t(labelRes)
 }
 
@@ -149,9 +149,11 @@ private fun AppsList(
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf(AppFilter.User) }
     var sort by rememberSaveable { mutableStateOf(AppSort.Name) }
-    val visible = remember(apps, query, filter, sort) {
+    val netBlocked by de.emil.shizubox.apps.NetBlock.blocked.collectAsStateWithLifecycle()
+    val visible = remember(apps, query, filter, sort, netBlocked) {
         apps.orEmpty().filter { a ->
             when (filter) {
+                AppFilter.NoInternet -> a.pkg in netBlocked
                 AppFilter.User -> !a.isSystem
                 AppFilter.System -> a.isSystem
                 AppFilter.Frozen -> a.frozen || !a.installed
@@ -348,6 +350,7 @@ private fun AppRow(app: AppEntry, isSelected: Boolean, onClick: () -> Unit, onLo
                         !app.installed -> Badge(t(R.string.removed))
                         app.frozen -> Badge(t(R.string.f_frozen))
                     }
+                    if (app.pkg in de.emil.shizubox.apps.NetBlock.blocked.collectAsStateWithLifecycle().value) Badge(t(R.string.nb_badge))
                 }
                 val small = MaterialTheme.typography.bodySmall
                 val dim = MaterialTheme.colorScheme.onSurfaceVariant

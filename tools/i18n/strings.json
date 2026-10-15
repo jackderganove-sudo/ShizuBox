@@ -4139,5 +4139,50 @@
   "en": "%1$d removed",
   "de": "%1$d entfernt",
   "plural": false
+ },
+ "nb_title": {
+  "en": "Internet access",
+  "de": "Internetzugriff",
+  "plural": false
+ },
+ "nb_allowed": {
+  "en": "Wi-Fi and mobile data allowed",
+  "de": "WLAN und mobile Daten erlaubt",
+  "plural": false
+ },
+ "nb_blocked": {
+  "en": "Blocked – no Wi-Fi, no mobile data (without VPN)",
+  "de": "Gesperrt – kein WLAN, keine mobilen Daten (ohne VPN)",
+  "plural": false
+ },
+ "nb_filter": {
+  "en": "No internet",
+  "de": "Kein Internet",
+  "plural": false
+ },
+ "nb_badge": {
+  "en": "Offline",
+  "de": "Offline",
+  "plural": false
+ },
+ "nb_block": {
+  "en": "Block internet",
+  "de": "Internet sperren",
+  "plural": false
+ },
+ "nb_allow": {
+  "en": "Allow internet",
+  "de": "Internet erlauben",
+  "plural": false
+ },
+ "nb_done_block": {
+  "en": "Internet blocked for %1$d apps ✓",
+  "de": "Internet für %1$d Apps gesperrt ✓",
+  "plural": false
+ },
+ "nb_done_allow": {
+  "en": "Internet allowed for %1$d apps ✓",
+  "de": "Internet für %1$d Apps erlaubt ✓",
+  "plural": false
  }
 }

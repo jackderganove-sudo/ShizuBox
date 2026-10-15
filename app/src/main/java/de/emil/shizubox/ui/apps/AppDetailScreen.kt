@@ -197,6 +197,9 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                 }
             }
         }
+        if (e.installed && de.emil.shizubox.apps.NetBlock.canBlock(pkg)) {
+            item { InternetCard(pkg, shizukuReady) }
+        }
         if (e.installed) {
             item {
                 var check by remember { mutableStateOf(false) }
@@ -340,5 +343,35 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
             },
             dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { confirmUninstall = false }) { Text(t(R.string.cancel)) } },
         )
+    }
+}
+
+/** Wi-Fi and mobile data for this app, blocked without a VPN (see NetBlock). */
+@Composable
+private fun InternetCard(pkg: String, shizukuReady: Boolean) {
+    val scope = rememberCoroutineScope()
+    val blocked by de.emil.shizubox.apps.NetBlock.blocked.collectAsStateWithLifecycle()
+    var error by remember { mutableStateOf<String?>(null) }
+    GlassCard(Modifier.fillMaxWidth()) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+                Text(t(R.string.nb_title), style = MaterialTheme.typography.titleMedium)
+                Text(
+                    if (pkg in blocked) t(R.string.nb_blocked) else t(R.string.nb_allowed),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (pkg in blocked) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Switch(
+                checked = pkg !in blocked,
+                enabled = shizukuReady,
+                onCheckedChange = { allow ->
+                    scope.launch {
+                        error = runCatching { de.emil.shizubox.apps.NetBlock.set(listOf(pkg), !allow) }.exceptionOrNull()?.let { "⚠ ${it.message}" }
+                    }
+                },
+            )
+        }
+        error?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
     }
 }

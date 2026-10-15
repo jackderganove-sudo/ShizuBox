@@ -859,4 +859,13 @@
         <item quantity="other">%1$d entries</item>
     </plurals>
     <string name="nh_removed_n">%1$d removed</string>
+    <string name="nb_title">Internet access</string>
+    <string name="nb_allowed">Wi-Fi and mobile data allowed</string>
+    <string name="nb_blocked">Blocked – no Wi-Fi, no mobile data (without VPN)</string>
+    <string name="nb_filter">No internet</string>
+    <string name="nb_badge">Offline</string>
+    <string name="nb_block">Block internet</string>
+    <string name="nb_allow">Allow internet</string>
+    <string name="nb_done_block">Internet blocked for %1$d apps ✓</string>
+    <string name="nb_done_allow">Internet allowed for %1$d apps ✓</string>
 </resources>

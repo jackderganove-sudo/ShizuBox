@@ -27,6 +27,7 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.downloader.DownloadQueue.init(this)
         de.emil.shizubox.system.VolumeBoost.init(this)
         de.emil.shizubox.notifications.NotifHistory.init(this)
+        de.emil.shizubox.apps.NetBlock.init(this)
         VirusTotal.init(this)
         Updates.init(this)
         UpdateWorker.schedule(this)

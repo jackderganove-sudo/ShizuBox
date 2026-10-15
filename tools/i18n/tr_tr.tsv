@@ -807,3 +807,12 @@ nh_delete_all	Tümünü sil
 nh_delete_all_q	Tüm geçmiş silinsin mi?
 nh_entries	%1$d kayıt|||%1$d kayıt
 nh_removed_n	%1$d kaldırıldı
+nb_title	İnternet erişimi
+nb_allowed	Wi-Fi ve mobil veri izinli
+nb_blocked	Engellendi – Wi-Fi ve mobil veri yok (VPN olmadan)
+nb_filter	İnternet yok
+nb_badge	Çevrimdışı
+nb_block	İnterneti engelle
+nb_allow	İnternete izin ver
+nb_done_block	%1$d uygulama için internet engellendi ✓
+nb_done_allow	%1$d uygulama için internete izin verildi ✓

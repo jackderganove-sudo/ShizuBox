@@ -176,6 +176,19 @@ class DebugReceiver : BroadcastReceiver() {
                                 else -> "access=${h.hasAccess(context)} " + h.entries(pkg = "com.android.shell").joinToString("\n") { "${it.conv} | ${it.sender} | ${it.text} | ${it.state} | msg=${it.message} img=${it.image != null}" }
                             }
                         }
+                        "netblock" -> {
+                            // --es pkg <p> --es mode block|allow|restore
+                            val nb = de.emil.shizubox.apps.NetBlock
+                            val p = intent.getStringExtra("pkg") ?: "com.google.android.calculator"
+                            when (intent.getStringExtra("mode")) {
+                                "block" -> nb.set(listOf(p), true)
+                                "allow" -> nb.set(listOf(p), false)
+                                "restore" -> nb.restore()
+                                else -> Unit
+                            }
+                            val sh = ShizukuManager.exec("cmd connectivity get-chain3-enabled; cmd connectivity get-package-networking-enabled $p").out.replace('\n', ' ')
+                            "blocked=${nb.blocked.value} canBlock($p)=${nb.canBlock(p)} canBlock(settings)=${nb.canBlock("com.android.settings")} shell=$sh"
+                        }
                         "boostfx" -> buildString {
                             // Can we attach effects to the global output mix (session 0) on this Android version?
                             runCatching {

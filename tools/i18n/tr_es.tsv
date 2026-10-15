@@ -807,3 +807,12 @@ nh_delete_all	Borrar todo
 nh_delete_all_q	¿Borrar todo el historial?
 nh_entries	%1$d entrada|||%1$d entradas
 nh_removed_n	%1$d eliminadas
+nb_title	Acceso a internet
+nb_allowed	Wi-Fi y datos móviles permitidos
+nb_blocked	Bloqueado: sin Wi-Fi ni datos móviles (sin VPN)
+nb_filter	Sin internet
+nb_badge	Sin red
+nb_block	Bloquear internet
+nb_allow	Permitir internet
+nb_done_block	Internet bloqueado para %1$d apps ✓
+nb_done_allow	Internet permitido para %1$d apps ✓

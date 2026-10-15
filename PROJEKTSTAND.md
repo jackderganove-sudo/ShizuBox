@@ -47,6 +47,7 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Berechtigungsübersicht nach Kategorie mit „Entziehen“ | ✅ |
 | Activity Launcher (`ActivityLauncher`): alle Apps, Suche nach Activity, Favoriten, Shizuku-Fallback, Cache | ✅ |
 | APK teilen/extrahieren/neu installieren, VirusTotal | ✅ |
+| Internet-Sperre pro App ohne VPN (`NetBlock`): Firewall-Kette OEM_DENY_3 (`cmd connectivity set-chain3-enabled` + `set-package-networking-enabled`, Android 17 ✓ – gesperrte App hat gar kein Netz), Schalter in App-Details, Filter „Kein Internet“ + Badge, Mehrfachauswahl, Wiederherstellung sobald Shizuku läuft (Regeln sind nach Neustart weg), System-UIDs und ShizuBox gesperrt, Kette aus wenn nichts gesperrt | ✅ getestet (Rechner-App, ShizuBox selbst, simulierter Neustart) |
 
 ### Updates (`updates/`, `ui/updates/`) – nach Obtainium/ObtainX
 | Funktion | Status |

@@ -857,4 +857,13 @@
         <item quantity="other">%1$d entrées</item>
     </plurals>
     <string name="nh_removed_n">%1$d retirées</string>
+    <string name="nb_title">Accès à Internet</string>
+    <string name="nb_allowed">Wi-Fi et données mobiles autorisés</string>
+    <string name="nb_blocked">Bloqué – ni Wi-Fi ni données mobiles (sans VPN)</string>
+    <string name="nb_filter">Sans Internet</string>
+    <string name="nb_badge">Hors ligne</string>
+    <string name="nb_block">Bloquer Internet</string>
+    <string name="nb_allow">Autoriser Internet</string>
+    <string name="nb_done_block">Internet bloqué pour %1$d applis ✓</string>
+    <string name="nb_done_allow">Internet autorisé pour %1$d applis ✓</string>
 </resources>

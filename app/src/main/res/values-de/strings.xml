@@ -857,5 +857,14 @@
         <item quantity="other">%1$d Einträge</item>
     </plurals>
     <string name="nh_removed_n">%1$d entfernt</string>
+    <string name="nb_title">Internetzugriff</string>
+    <string name="nb_allowed">WLAN und mobile Daten erlaubt</string>
+    <string name="nb_blocked">Gesperrt – kein WLAN, keine mobilen Daten (ohne VPN)</string>
+    <string name="nb_filter">Kein Internet</string>
+    <string name="nb_badge">Offline</string>
+    <string name="nb_block">Internet sperren</string>
+    <string name="nb_allow">Internet erlauben</string>
+    <string name="nb_done_block">Internet für %1$d Apps gesperrt ✓</string>
+    <string name="nb_done_allow">Internet für %1$d Apps erlaubt ✓</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

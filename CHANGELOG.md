@@ -12,6 +12,8 @@
   Zugriff erteilt sich ShizuBox per Shizuku selbst; Ansichten „Alle“, „Nach App“ (Unterhaltungen zusammengeführt) und „Entfernt“,
   Suche und App-Filter, gelöschte/zurückgezogene Nachrichten markiert, Bilder gespeichert, Apps ausschließen,
   automatisches Löschen nach X Tagen, alles löschen, optionale Fingerabdruck-Sperre
+- Internet-Sperre pro App ohne VPN (Apps): Schalter in den App-Details, Filter „Kein Internet“, Mehrfachauswahl
+  „Internet sperren/erlauben“; Sperren werden nach einem Neustart automatisch wiederhergestellt, sobald Shizuku läuft
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 
 ## 0.6.0 – Sitzung 2026-10-15 (Nachmittag) – vom Nutzer auf dem Pixel bestätigt

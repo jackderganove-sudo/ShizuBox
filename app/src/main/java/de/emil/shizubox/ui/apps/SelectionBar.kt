@@ -95,6 +95,12 @@ fun SelectionBar(
             AssistChip(enabled = enabled, onClick = { run { Apps.freeze(selection); t(R.string.sel_done) } }, label = { Text(t(R.string.freeze)) })
             AssistChip(enabled = enabled, onClick = { run { Apps.unfreeze(selection); t(R.string.sel_done) } }, label = { Text(t(R.string.unfreeze)) })
             AssistChip(enabled = enabled, onClick = { run { Apps.forceStop(selection); t(R.string.sel_done) } }, label = { Text(t(R.string.force_stop)) })
+            AssistChip(enabled = enabled, onClick = {
+                run { de.emil.shizubox.apps.NetBlock.set(selection, true).let { t(R.string.nb_done_block, it.size) } }
+            }, label = { Text(t(R.string.nb_block)) })
+            AssistChip(enabled = enabled, onClick = {
+                run { de.emil.shizubox.apps.NetBlock.set(selection, false).let { t(R.string.nb_done_allow, it.size) } }
+            }, label = { Text(t(R.string.nb_allow)) })
             if (removable.isNotEmpty()) {
                 AssistChip(enabled = enabled, onClick = { confirmUninstall = true }, label = { Text(t(R.string.sel_uninstall_n, removable.size)) })
             }

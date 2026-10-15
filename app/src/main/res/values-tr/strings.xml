@@ -857,4 +857,13 @@
         <item quantity="other">%1$d kayıt</item>
     </plurals>
     <string name="nh_removed_n">%1$d kaldırıldı</string>
+    <string name="nb_title">İnternet erişimi</string>
+    <string name="nb_allowed">Wi-Fi ve mobil veri izinli</string>
+    <string name="nb_blocked">Engellendi – Wi-Fi ve mobil veri yok (VPN olmadan)</string>
+    <string name="nb_filter">İnternet yok</string>
+    <string name="nb_badge">Çevrimdışı</string>
+    <string name="nb_block">İnterneti engelle</string>
+    <string name="nb_allow">İnternete izin ver</string>
+    <string name="nb_done_block">%1$d uygulama için internet engellendi ✓</string>
+    <string name="nb_done_allow">%1$d uygulama için internete izin verildi ✓</string>
 </resources>
