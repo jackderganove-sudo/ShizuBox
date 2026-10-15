@@ -643,4 +643,11 @@
     <string name="sel_uninstall_hint">Bu uygulamalar tüm verileriyle kaldırılacak: %1$s</string>
     <string name="sel_failed">Başarısız: %1$s</string>
     <string name="sel_hint">İpucu: Birden fazla seçmek için bir uygulamaya uzun bas.</string>
+    <string name="bk_title">Yedekleme</string>
+    <string name="bk_card">Ayarları yedekle ve geri yükle</string>
+    <string name="bk_hint">Görünüm, yükleyici seçenekleri, profiller, oyun seçenekleri, terminal parçaları, takip edilen uygulamalar ve güncelleme ayarlarını içeren tek dosya. Yeni telefon veya yeniden kurulum için kullanışlı.</string>
+    <string name="bk_secrets">API anahtarını ve GitHub tokenını dahil et</string>
+    <string name="bk_restore">Geri yükle</string>
+    <string name="bk_exported">Yedek kaydedildi ✓</string>
+    <string name="bk_imported">Ayarlar geri yüklendi, %1$d takip edilen uygulama ✓</string>
 </resources>

@@ -34,6 +34,13 @@ class DebugReceiver : BroadcastReceiver() {
                         "perms" -> de.emil.shizubox.apps.PermissionOverview.load(context).entries.joinToString { (g, l) ->
                             "${g.name}=${l.count { !it.isSystem }}/${l.size}"
                         }
+                        "backup" -> {
+                            fun strip(j: String) = org.json.JSONObject(j).apply { remove("created") }.toString()
+                            val a = de.emil.shizubox.settings.Backup.export(context, includeSecrets = false)
+                            val r = de.emil.shizubox.settings.Backup.import(context, a)
+                            val b = de.emil.shizubox.settings.Backup.export(context, includeSecrets = false)
+                            "roundtrip equal=${strip(a) == strip(b)} result=$r size=${a.length} keys=${org.json.JSONObject(a).getJSONObject("prefs").keys().asSequence().toList()} vtKeyKept=${de.emil.shizubox.installer.VirusTotal.apiKey.isNotBlank()}"
+                        }
                         "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
                         "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()
                         "device" -> "${de.emil.shizubox.system.DeviceInfo.battery(context)} ${de.emil.shizubox.system.DeviceInfo.memory(context)} ${de.emil.shizubox.system.DeviceInfo.storage()} soc=${de.emil.shizubox.system.DeviceInfo.soc()}"

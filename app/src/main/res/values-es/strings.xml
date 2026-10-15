@@ -643,4 +643,11 @@
     <string name="sel_uninstall_hint">Estas apps se eliminarán con todos sus datos: %1$s</string>
     <string name="sel_failed">Fallaron: %1$s</string>
     <string name="sel_hint">Consejo: mantén pulsada una app para seleccionar varias.</string>
+    <string name="bk_title">Copia de seguridad</string>
+    <string name="bk_card">Copiar y restaurar ajustes</string>
+    <string name="bk_hint">Un archivo con apariencia, opciones del instalador, perfiles, opciones de gaming, fragmentos del terminal, apps seguidas y ajustes de actualización. Útil para un teléfono nuevo o una reinstalación.</string>
+    <string name="bk_secrets">Incluir clave API y token de GitHub</string>
+    <string name="bk_restore">Restaurar</string>
+    <string name="bk_exported">Copia guardada ✓</string>
+    <string name="bk_imported">Ajustes restaurados, %1$d apps seguidas ✓</string>
 </resources>

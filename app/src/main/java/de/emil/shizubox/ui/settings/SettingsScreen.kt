@@ -302,6 +302,8 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         }
 
         // ------------------------------------------------------------ about
+        item { Header(t(R.string.bk_title)) }
+        item { BackupCard() }
         item { Header(t(R.string.set_about)) }
         item {
             GlassCard(Modifier.fillMaxWidth()) {

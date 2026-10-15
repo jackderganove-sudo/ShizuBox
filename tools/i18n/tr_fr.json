@@ -641,5 +641,12 @@
 "sel_added_profile": "Ajoutées à « %1$s » ✓",
 "sel_uninstall_hint": "Ces applis seront supprimées avec toutes leurs données : %1$s",
 "sel_failed": "Échec : %1$s",
-"sel_hint": "Astuce : appui long sur une appli pour en sélectionner plusieurs."
+"sel_hint": "Astuce : appui long sur une appli pour en sélectionner plusieurs.",
+"bk_title": "Sauvegarde",
+"bk_card": "Sauvegarder et restaurer les paramètres",
+"bk_hint": "Un fichier avec l’apparence, les options d’installation, les profils, les options de jeu, les extraits du terminal, les applis suivies et les réglages de mise à jour. Pratique pour un nouveau téléphone ou une réinstallation.",
+"bk_secrets": "Inclure la clé API et le jeton GitHub",
+"bk_restore": "Restaurer",
+"bk_exported": "Sauvegarde enregistrée ✓",
+"bk_imported": "Paramètres restaurés, %1$d applis suivies ✓"
 }

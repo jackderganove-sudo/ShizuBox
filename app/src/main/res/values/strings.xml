@@ -645,4 +645,11 @@
     <string name="sel_uninstall_hint">These apps will be removed with all their data: %1$s</string>
     <string name="sel_failed">Failed: %1$s</string>
     <string name="sel_hint">Tip: long-press an app to select several at once.</string>
+    <string name="bk_title">Backup</string>
+    <string name="bk_card">Back up &amp; restore settings</string>
+    <string name="bk_hint">One file with appearance, installer options, profiles, gaming options, terminal snippets, tracked apps and update settings. Handy for a new phone or a reinstall.</string>
+    <string name="bk_secrets">Include API key and GitHub token</string>
+    <string name="bk_restore">Restore</string>
+    <string name="bk_exported">Backup saved ✓</string>
+    <string name="bk_imported">Settings restored, %1$d tracked apps ✓</string>
 </resources>

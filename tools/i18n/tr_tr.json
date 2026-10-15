@@ -641,5 +641,12 @@
 "sel_added_profile": "“%1$s” profiline eklendi ✓",
 "sel_uninstall_hint": "Bu uygulamalar tüm verileriyle kaldırılacak: %1$s",
 "sel_failed": "Başarısız: %1$s",
-"sel_hint": "İpucu: Birden fazla seçmek için bir uygulamaya uzun bas."
+"sel_hint": "İpucu: Birden fazla seçmek için bir uygulamaya uzun bas.",
+"bk_title": "Yedekleme",
+"bk_card": "Ayarları yedekle ve geri yükle",
+"bk_hint": "Görünüm, yükleyici seçenekleri, profiller, oyun seçenekleri, terminal parçaları, takip edilen uygulamalar ve güncelleme ayarlarını içeren tek dosya. Yeni telefon veya yeniden kurulum için kullanışlı.",
+"bk_secrets": "API anahtarını ve GitHub tokenını dahil et",
+"bk_restore": "Geri yükle",
+"bk_exported": "Yedek kaydedildi ✓",
+"bk_imported": "Ayarlar geri yüklendi, %1$d takip edilen uygulama ✓"
 }

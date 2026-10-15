@@ -641,5 +641,12 @@
 "sel_added_profile": "Añadidas a “%1$s” ✓",
 "sel_uninstall_hint": "Estas apps se eliminarán con todos sus datos: %1$s",
 "sel_failed": "Fallaron: %1$s",
-"sel_hint": "Consejo: mantén pulsada una app para seleccionar varias."
+"sel_hint": "Consejo: mantén pulsada una app para seleccionar varias.",
+"bk_title": "Copia de seguridad",
+"bk_card": "Copiar y restaurar ajustes",
+"bk_hint": "Un archivo con apariencia, opciones del instalador, perfiles, opciones de gaming, fragmentos del terminal, apps seguidas y ajustes de actualización. Útil para un teléfono nuevo o una reinstalación.",
+"bk_secrets": "Incluir clave API y token de GitHub",
+"bk_restore": "Restaurar",
+"bk_exported": "Copia guardada ✓",
+"bk_imported": "Ajustes restaurados, %1$d apps seguidas ✓"
 }

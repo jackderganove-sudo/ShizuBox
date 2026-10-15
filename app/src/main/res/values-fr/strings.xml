@@ -643,4 +643,11 @@
     <string name="sel_uninstall_hint">Ces applis seront supprimées avec toutes leurs données : %1$s</string>
     <string name="sel_failed">Échec : %1$s</string>
     <string name="sel_hint">Astuce : appui long sur une appli pour en sélectionner plusieurs.</string>
+    <string name="bk_title">Sauvegarde</string>
+    <string name="bk_card">Sauvegarder et restaurer les paramètres</string>
+    <string name="bk_hint">Un fichier avec l’apparence, les options d’installation, les profils, les options de jeu, les extraits du terminal, les applis suivies et les réglages de mise à jour. Pratique pour un nouveau téléphone ou une réinstallation.</string>
+    <string name="bk_secrets">Inclure la clé API et le jeton GitHub</string>
+    <string name="bk_restore">Restaurer</string>
+    <string name="bk_exported">Sauvegarde enregistrée ✓</string>
+    <string name="bk_imported">Paramètres restaurés, %1$d applis suivies ✓</string>
 </resources>

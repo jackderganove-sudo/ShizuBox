@@ -643,5 +643,12 @@
     <string name="sel_uninstall_hint">Diese Apps werden mit allen Daten entfernt: %1$s</string>
     <string name="sel_failed">Fehlgeschlagen: %1$s</string>
     <string name="sel_hint">Tipp: Lange auf eine App drücken, um mehrere auszuwählen.</string>
+    <string name="bk_title">Sicherung</string>
+    <string name="bk_card">Einstellungen sichern &amp; wiederherstellen</string>
+    <string name="bk_hint">Eine Datei mit Design, Installer-Optionen, Profilen, Gaming-Optionen, Terminal-Bausteinen, verfolgten Apps und Update-Einstellungen. Praktisch für ein neues Handy oder eine Neuinstallation.</string>
+    <string name="bk_secrets">API-Schlüssel und GitHub-Token einschließen</string>
+    <string name="bk_restore">Wiederherstellen</string>
+    <string name="bk_exported">Sicherung gespeichert ✓</string>
+    <string name="bk_imported">Einstellungen wiederhergestellt, %1$d verfolgte Apps ✓</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

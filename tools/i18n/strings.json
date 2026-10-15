@@ -3105,5 +3105,40 @@
   "en": "Tip: long-press an app to select several at once.",
   "de": "Tipp: Lange auf eine App drücken, um mehrere auszuwählen.",
   "plural": false
+ },
+ "bk_title": {
+  "en": "Backup",
+  "de": "Sicherung",
+  "plural": false
+ },
+ "bk_card": {
+  "en": "Back up & restore settings",
+  "de": "Einstellungen sichern & wiederherstellen",
+  "plural": false
+ },
+ "bk_hint": {
+  "en": "One file with appearance, installer options, profiles, gaming options, terminal snippets, tracked apps and update settings. Handy for a new phone or a reinstall.",
+  "de": "Eine Datei mit Design, Installer-Optionen, Profilen, Gaming-Optionen, Terminal-Bausteinen, verfolgten Apps und Update-Einstellungen. Praktisch für ein neues Handy oder eine Neuinstallation.",
+  "plural": false
+ },
+ "bk_secrets": {
+  "en": "Include API key and GitHub token",
+  "de": "API-Schlüssel und GitHub-Token einschließen",
+  "plural": false
+ },
+ "bk_restore": {
+  "en": "Restore",
+  "de": "Wiederherstellen",
+  "plural": false
+ },
+ "bk_exported": {
+  "en": "Backup saved ✓",
+  "de": "Sicherung gespeichert ✓",
+  "plural": false
+ },
+ "bk_imported": {
+  "en": "Settings restored, %1$d tracked apps ✓",
+  "de": "Einstellungen wiederhergestellt, %1$d verfolgte Apps ✓",
+  "plural": false
  }
 }
