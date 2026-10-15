@@ -165,7 +165,7 @@ object Ytdl {
     fun version(): String? = runCatching {
         YoutubeDL.getInstance().versionName(appContext)
             ?: YoutubeDL.getInstance().execute(YoutubeDLRequest(emptyList<String>()).addOption("--version")).out.trim().ifEmpty { null }
-    }.getOrNull()
+    }.getOrNull()?.removePrefix("yt-dlp")?.trim()
 
     /**
      * Converts a local video to audio with the bundled FFmpeg. It runs from the native library

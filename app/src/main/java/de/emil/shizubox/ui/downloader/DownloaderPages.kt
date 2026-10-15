@@ -243,17 +243,16 @@ fun MorePage(onBack: () -> Unit) {
         }
     }
 
+    // Results as a toast, so the page does not shift under the finger.
+    LaunchedEffect(message) {
+        message?.let { Toast.makeText(context, it, Toast.LENGTH_LONG).show(); message = null }
+    }
     LazyColumn(
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 110.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item { PageHeader(t(R.string.dl_nav_more), onBack) }
-        message?.let { m ->
-            item {
-                Text(m, style = MaterialTheme.typography.bodyMedium, color = if (m.startsWith("⚠")) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
-            }
-        }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.dl_folder), style = MaterialTheme.typography.titleMedium)
