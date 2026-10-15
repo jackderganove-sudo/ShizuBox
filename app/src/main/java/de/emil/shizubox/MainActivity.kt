@@ -188,6 +188,7 @@ class MainActivity : ComponentActivity() {
                     Section.Apps -> AppsScreen(shizukuReady = ready, onBack = back)
                     Section.Customization -> CustomizationScreen(shizukuReady = ready, onBack = back)
                     Section.Downloader -> de.emil.shizubox.ui.downloader.DownloaderScreen(onBack = back)
+                    Section.Automations -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, onBack = back)
                     Section.System -> AnimatedContent(
                         targetState = installUri ?: systemPage,
                         transitionSpec = { openClose(opening = targetState != null) },

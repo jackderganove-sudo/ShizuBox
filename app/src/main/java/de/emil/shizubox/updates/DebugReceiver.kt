@@ -54,6 +54,7 @@ class DebugReceiver : BroadcastReceiver() {
                             modifier = androidx.compose.ui.Modifier.fillMaxWidth().height(96.dp),
                         )
                     }
+                    "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
                     "screentime" -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, noop)
                     "nhistory" -> de.emil.shizubox.ui.system.NotificationHistoryScreen(ready, noop, intent.getStringExtra("pkg"), intent.getStringExtra("conv"))
                     "apps" -> de.emil.shizubox.ui.apps.AppsScreen(ready, noop)
@@ -175,6 +176,33 @@ class DebugReceiver : BroadcastReceiver() {
                                 "off" -> { h.update { it.copy(enabled = false) }; h.deleteAll(); "revoked=${h.setAccess(context, false)} " }
                                 else -> "access=${h.hasAccess(context)} " + h.entries(pkg = "com.android.shell").joinToString("\n") { "${it.conv} | ${it.sender} | ${it.text} | ${it.state} | msg=${it.message} img=${it.image != null}" }
                             }
+                        }
+                        "auto" -> {
+                            // --es mode add|fg:<pkg>|disable|clear ; test rules are named "TEST …"
+                            val R = de.emil.shizubox.automation.Rules
+                            val E = de.emil.shizubox.automation.AutomationEngine
+                            val calc = "com.google.android.calculator"
+                            val m = intent.getStringExtra("mode").orEmpty()
+                            when {
+                                m == "add" -> {
+                                    val now = java.util.Calendar.getInstance().apply { add(java.util.Calendar.MINUTE, 1) }
+                                    R.save(de.emil.shizubox.automation.Rule(name = "TEST battery", trigger = de.emil.shizubox.automation.Trigger(de.emil.shizubox.automation.TriggerKind.Battery, percent = 101),
+                                        actions = listOf(de.emil.shizubox.automation.Action(de.emil.shizubox.automation.ActionKind.NetBlock, on = true, pkg = calc))))
+                                    R.save(de.emil.shizubox.automation.Rule(name = "TEST app", trigger = de.emil.shizubox.automation.Trigger(de.emil.shizubox.automation.TriggerKind.AppOpen, pkg = "com.example.fake"),
+                                        actions = listOf(de.emil.shizubox.automation.Action(de.emil.shizubox.automation.ActionKind.Shell, text = "log -t ShizuBoxAuto app-rule-fired"))))
+                                    R.save(de.emil.shizubox.automation.Rule(name = "TEST time", revert = false,
+                                        trigger = de.emil.shizubox.automation.Trigger(de.emil.shizubox.automation.TriggerKind.Time, minute = now.get(java.util.Calendar.HOUR_OF_DAY) * 60 + now.get(java.util.Calendar.MINUTE)),
+                                        actions = listOf(de.emil.shizubox.automation.Action(de.emil.shizubox.automation.ActionKind.Shell, text = "log -t ShizuBoxAuto time-rule-fired"))))
+                                }
+                                m.startsWith("fg:") -> E.update { it.copy(foreground = m.removePrefix("fg:")) }
+                                m == "disable" -> R.rules.value.filter { it.name.startsWith("TEST") }.forEach { R.setEnabled(it.id, false) }
+                                m == "clear" -> R.rules.value.filter { it.name.startsWith("TEST") }.forEach { R.delete(it.id) }
+                            }
+                            kotlinx.coroutines.delay(2500)
+                            val s = E.state.value
+                            "rules=${R.rules.value.map { "${it.name}:${it.enabled}" }} active=${E.active.value.mapNotNull { id -> R.rules.value.firstOrNull { it.id == id }?.name }} " +
+                                "state=fg:${s.foreground} hp:${s.headphones} bt:${s.bluetooth.size} chg:${s.charging} bat:${s.battery} wifi:${s.ssid?.let { if (it.isEmpty()) "unnamed" else "named" }} " +
+                                "calc=${ShizukuManager.exec("cmd connectivity get-package-networking-enabled $calc").out.trim()}"
                         }
                         "netblock" -> {
                             // --es pkg <p> --es mode block|allow|restore

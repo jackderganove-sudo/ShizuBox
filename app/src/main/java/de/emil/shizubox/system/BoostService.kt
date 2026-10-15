@@ -90,5 +90,7 @@ class StartupReceiver : android.content.BroadcastReceiver() {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED && intent.action != Intent.ACTION_MY_PACKAGE_REPLACED) return
         // specialUse services may be started from BOOT_COMPLETED and MY_PACKAGE_REPLACED.
         if (VolumeBoost.settings.value.enabled) runCatching { BoostService.sync(context) }
+        de.emil.shizubox.automation.AutomationEngine.sync(context)
+        de.emil.shizubox.automation.AutomationEngine.scheduleNextTime()
     }
 }

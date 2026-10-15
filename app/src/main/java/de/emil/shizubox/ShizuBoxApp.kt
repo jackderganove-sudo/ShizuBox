@@ -34,5 +34,8 @@ class ShizuBoxApp : Application() {
         ShizukuManager.init(this)
         SchoolMode.init(this)
         de.emil.shizubox.school.SchoolSchedule.init(this)
+        // Needs Shizuku and school mode state (automations pause during school mode).
+        de.emil.shizubox.automation.Rules.init(this)
+        de.emil.shizubox.automation.AutomationEngine.init(this)
     }
 }

@@ -816,3 +816,60 @@ nb_block	Bloquer Internet
 nb_allow	Autoriser Internet
 nb_done_block	Internet bloqué pour %1$d applis ✓
 nb_done_allow	Internet autorisé pour %1$d applis ✓
+sec_auto	Automatisations
+sec_auto_sub	Si ceci arrive, fais cela
+au_sub	Des règles qui s'exécutent seules – économes en batterie
+au_paused_school	En pause tant que le mode école est actif.
+au_empty	Aucune règle pour l'instant
+au_empty_hint	Crée-en une ou pars d'un modèle ci-dessous.
+au_when	Si : %1$s
+au_then	Alors : %1$s
+au_revert_short	annulé ensuite
+au_active_now	Active maintenant
+au_new	Nouvelle règle
+au_edit	Modifier la règle
+au_templates	Modèles
+au_name	Nom (facultatif)
+au_if	Si
+au_do	Alors
+au_no_actions	Ajoute au moins une action.
+au_add_action	Ajouter une action
+au_revert	Annuler ensuite
+au_revert_sub	Quand le déclencheur prend fin, tout redevient comme avant
+au_try	Essayer
+au_delete	Supprimer la règle
+au_t_app_open	Appli ouverte
+au_t_app_close	Appli fermée
+au_t_time	Heure
+au_t_headphones	Écouteurs
+au_t_bluetooth	Appareil Bluetooth
+au_t_charger	Chargeur
+au_t_battery	Batterie faible
+au_t_wifi	Wi-Fi
+au_tt_app_open	%1$s ouverte
+au_tt_app_close	%1$s fermée
+au_tt_start	Lancer %1$s
+au_below	Batterie sous %1$d %%
+au_connected	connecté
+au_disconnected	déconnecté
+au_ssid	Nom du réseau
+au_bt_name	Nom de l'appareil
+au_any	N'importe lequel
+au_pick_app	Choisir une appli
+au_activity	Activity (paquet/classe)
+au_from_favorites	Depuis les favoris de l'Activity Launcher
+au_command	Commande shell
+au_a_volume	Volume multimédia
+au_a_grayscale	Niveaux de gris
+au_a_dnd	Ne pas déranger
+au_a_netblock	Blocage Internet
+au_a_start_app	Lancer une appli
+au_a_start_activity	Lancer une activity
+au_a_shell	Commande shell
+au_tpl_brawl	Brawl Stars → Mode jeu
+au_tpl_headphones	Écouteurs → Boost désactivé
+au_tpl_charging	En charge → Rester allumé
+au_tpl_battery	Batterie sous 15 % → Économiser
+au_tpl_night	22:30 → Mode nuit
+au_tpl_morning	07:00 → Bonjour
+au_running	Automatisations : %1$d règle active|||Automatisations : %1$d règles actives

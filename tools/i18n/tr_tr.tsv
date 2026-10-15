@@ -816,3 +816,60 @@ nb_block	İnterneti engelle
 nb_allow	İnternete izin ver
 nb_done_block	%1$d uygulama için internet engellendi ✓
 nb_done_allow	%1$d uygulama için internete izin verildi ✓
+sec_auto	Otomasyonlar
+sec_auto_sub	Bu olursa, şunu yap
+au_sub	Kendiliğinden çalışan kurallar – pil dostu
+au_paused_school	Okul modu açıkken duraklatıldı.
+au_empty	Henüz kural yok
+au_empty_hint	Bir tane oluştur veya aşağıdaki şablonla başla.
+au_when	Eğer: %1$s
+au_then	O zaman: %1$s
+au_revert_short	sonra geri alınır
+au_active_now	Şu an etkin
+au_new	Yeni kural
+au_edit	Kuralı düzenle
+au_templates	Şablonlar
+au_name	Ad (isteğe bağlı)
+au_if	Eğer
+au_do	O zaman
+au_no_actions	En az bir eylem ekle.
+au_add_action	Eylem ekle
+au_revert	Sonra geri al
+au_revert_sub	Tetikleyici bittiğinde her şey eski haline döner
+au_try	Şimdi dene
+au_delete	Kuralı sil
+au_t_app_open	Uygulama açıldı
+au_t_app_close	Uygulama kapatıldı
+au_t_time	Saat
+au_t_headphones	Kulaklık
+au_t_bluetooth	Bluetooth cihazı
+au_t_charger	Şarj aleti
+au_t_battery	Pil düşük
+au_t_wifi	Wi-Fi
+au_tt_app_open	%1$s açıldı
+au_tt_app_close	%1$s kapatıldı
+au_tt_start	%1$s başlat
+au_below	Pil %%%1$d altında
+au_connected	bağlandı
+au_disconnected	bağlantı kesildi
+au_ssid	Ağ adı
+au_bt_name	Cihaz adı
+au_any	Herhangi biri
+au_pick_app	Uygulama seç
+au_activity	Activity (paket/sınıf)
+au_from_favorites	Activity Launcher favorilerinden
+au_command	Kabuk komutu
+au_a_volume	Medya ses seviyesi
+au_a_grayscale	Gri tonlama
+au_a_dnd	Rahatsız etmeyin
+au_a_netblock	İnternet engeli
+au_a_start_app	Uygulama başlat
+au_a_start_activity	Activity başlat
+au_a_shell	Kabuk komutu
+au_tpl_brawl	Brawl Stars → Oyun modu
+au_tpl_headphones	Kulaklık → Yükseltme kapalı
+au_tpl_charging	Şarj → Uyanık kal
+au_tpl_battery	Pil %15 altında → Enerji tasarrufu
+au_tpl_night	22:30 → Gece modu
+au_tpl_morning	07:00 → Günaydın
+au_running	Otomasyonlar: %1$d kural açık|||Otomasyonlar: %1$d kural açık

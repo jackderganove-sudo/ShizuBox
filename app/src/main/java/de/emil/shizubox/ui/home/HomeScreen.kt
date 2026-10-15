@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
+import androidx.compose.material.icons.rounded.AutoMode
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.PowerSettingsNew
@@ -76,6 +77,7 @@ import de.emil.shizubox.ui.glass.GlassCard
 enum class Section(private val titleRes: Int, private val subtitleRes: Int, val icon: ImageVector) {
     School(R.string.sec_school, R.string.sec_school_sub, Icons.Rounded.School),
     Customization(R.string.sec_custom, R.string.sec_custom_sub, Icons.Rounded.Palette),
+    Automations(R.string.sec_auto, R.string.sec_auto_sub, Icons.Rounded.AutoMode),
     Apps(R.string.sec_apps, R.string.sec_apps_sub, Icons.Rounded.Apps),
     Updates(R.string.sec_updates, R.string.sec_updates_sub, Icons.Rounded.SystemUpdate),
     System(R.string.sec_system, R.string.sec_system_sub, Icons.Rounded.Terminal),

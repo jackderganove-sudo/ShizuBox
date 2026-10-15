@@ -156,6 +156,20 @@
             </intent-filter>
         </service>
 
+        <!-- Automations: sensors (battery, audio devices, Wi-Fi, foreground app) while rules are on. -->
+        <service
+            android:name=".automation.AutomationService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Watches user-defined automation triggers (charger, headphones, Wi-Fi, opened app) to run the user's rules" />
+        </service>
+
+        <receiver
+            android:name=".automation.AutomationAlarmReceiver"
+            android:exported="false" />
+
         <!-- Volume boost: keeps the loudness effect on the output mix alive. -->
         <service
             android:name=".system.BoostService"

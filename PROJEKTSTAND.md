@@ -75,6 +75,16 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Benachrichtigungs-Verlauf (`notifications/NotifHistory`, `HistoryListener`, eigene SQLite-DB, nicht im Backup): Zugriff per `cmd notification allow_listener` (Android 17 ✓, sonst Einstellungs-Dialog), chronologisch / nach App / „Entfernt“, Suche, App-Filter, Unterhaltungen über mehrere Benachrichtigungen zusammengeführt, „Gelöscht“ (Nachricht verschwand aus aktualisiertem Chat) und „Zurückgezogen“ (App hat entfernt, ohne dass die App geöffnet wurde – via UsageStats), Bilder (BigPicture; MessagingStyle-Bilder nur falls lesbar), Apps ausschließen, Auto-Löschen nach 7/30/90 Tagen, alles löschen, Fingerabdruck-Sperre | ✅ mit Shell-Test-Benachrichtigungen + simuliertem Chat getestet; mit echtem WhatsApp noch vom Nutzer zu prüfen |
 | Gehörschutz: Schalldosis (CSD) zurücksetzen/wiederherstellen (`cmd audio set-sound-dose-value`); abschalten geht per Shell nicht | ✅ |
 
+### Automationen (`automation/`, `ui/automation/`)
+| Funktion | Status |
+|---|---|
+| Regeln Wenn → Dann, an/aus, Liste + Editor, Vorlagen (Brawl Stars → Gaming, Kopfhörer → Boost aus, Laden → wach bleiben, Akku < 15 % → 60 Hz + Animationen aus, 22:30 Nachtruhe, 07:00 Guten Morgen), im Backup | ✅ |
+| Auslöser: App geöffnet/geschlossen (UsageEvents, Abfrage nur bei Bildschirm an + App-Regel), Uhrzeit + Wochentage (exakter Wecker), Kopfhörer/Bluetooth-Gerät (AudioDeviceCallback, Gerätename ohne BT-Berechtigung), Ladekabel + Akku unter X % (ACTION_BATTERY_CHANGED), WLAN (NetworkCallback + `cmd wifi status` für den Namen) | ✅ Akku-, App- (simuliert) und Zeit-Regel auf dem Pixel getestet |
+| Aktionen: Gaming, Medienlautstärke, Boost, Bildwiederholrate, Animationen, Graustufen (`accessibility_display_daltonizer*`), Bitte nicht stören (`cmd notification set_dnd`), wach bleiben, Internet-Sperre, App/Activity starten (per `am start`), Shell | ✅ Internet-Sperre + Shell getestet; Graustufen/DND-Befehle laufen, Wirkung vom Nutzer zu prüfen |
+| „Danach zurücksetzen“: vorheriger Zustand wird beim Start gemerkt und beim Ende rückwärts wiederhergestellt (auch nach Neustart gespeichert) | ✅ getestet |
+| Schulmodus: keine Aktion kann ihn starten/beenden; solange er aktiv ist, pausieren alle Regeln | ✅ |
+| Foreground-Service nur, wenn eine Nicht-Zeit-Regel aktiv ist; startet nach Neustart/Update wieder | ✅ |
+
 ### Downloader (`downloader/`, `ui/downloader/`) – ohne Shizuku
 | Funktion | Status |
 |---|---|

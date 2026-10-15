@@ -4184,5 +4184,296 @@
   "en": "Internet allowed for %1$d apps ✓",
   "de": "Internet für %1$d Apps erlaubt ✓",
   "plural": false
+ },
+ "sec_auto": {
+  "en": "Automations",
+  "de": "Automationen",
+  "plural": false
+ },
+ "sec_auto_sub": {
+  "en": "If this happens, do that",
+  "de": "Wenn das passiert, mach das",
+  "plural": false
+ },
+ "au_sub": {
+  "en": "Rules that run on their own – battery-friendly",
+  "de": "Regeln, die von selbst laufen – akkuschonend",
+  "plural": false
+ },
+ "au_paused_school": {
+  "en": "Paused while school mode is on.",
+  "de": "Pausiert, solange der Schulmodus läuft.",
+  "plural": false
+ },
+ "au_empty": {
+  "en": "No rules yet",
+  "de": "Noch keine Regeln",
+  "plural": false
+ },
+ "au_empty_hint": {
+  "en": "Create one or start with a template below.",
+  "de": "Leg eine an oder starte mit einer Vorlage unten.",
+  "plural": false
+ },
+ "au_when": {
+  "en": "If: %1$s",
+  "de": "Wenn: %1$s",
+  "plural": false
+ },
+ "au_then": {
+  "en": "Then: %1$s",
+  "de": "Dann: %1$s",
+  "plural": false
+ },
+ "au_revert_short": {
+  "en": "undone afterwards",
+  "de": "danach zurück",
+  "plural": false
+ },
+ "au_active_now": {
+  "en": "Active now",
+  "de": "Gerade aktiv",
+  "plural": false
+ },
+ "au_new": {
+  "en": "New rule",
+  "de": "Neue Regel",
+  "plural": false
+ },
+ "au_edit": {
+  "en": "Edit rule",
+  "de": "Regel bearbeiten",
+  "plural": false
+ },
+ "au_templates": {
+  "en": "Templates",
+  "de": "Vorlagen",
+  "plural": false
+ },
+ "au_name": {
+  "en": "Name (optional)",
+  "de": "Name (optional)",
+  "plural": false
+ },
+ "au_if": {
+  "en": "If",
+  "de": "Wenn",
+  "plural": false
+ },
+ "au_do": {
+  "en": "Then",
+  "de": "Dann",
+  "plural": false
+ },
+ "au_no_actions": {
+  "en": "Add at least one action.",
+  "de": "Füge mindestens eine Aktion hinzu.",
+  "plural": false
+ },
+ "au_add_action": {
+  "en": "Add action",
+  "de": "Aktion hinzufügen",
+  "plural": false
+ },
+ "au_revert": {
+  "en": "Undo afterwards",
+  "de": "Danach zurücksetzen",
+  "plural": false
+ },
+ "au_revert_sub": {
+  "en": "When the trigger ends, everything goes back to how it was",
+  "de": "Wenn der Auslöser endet, wird alles wie vorher",
+  "plural": false
+ },
+ "au_try": {
+  "en": "Try now",
+  "de": "Jetzt testen",
+  "plural": false
+ },
+ "au_delete": {
+  "en": "Delete rule",
+  "de": "Regel löschen",
+  "plural": false
+ },
+ "au_t_app_open": {
+  "en": "App opened",
+  "de": "App geöffnet",
+  "plural": false
+ },
+ "au_t_app_close": {
+  "en": "App closed",
+  "de": "App geschlossen",
+  "plural": false
+ },
+ "au_t_time": {
+  "en": "Time",
+  "de": "Uhrzeit",
+  "plural": false
+ },
+ "au_t_headphones": {
+  "en": "Headphones",
+  "de": "Kopfhörer",
+  "plural": false
+ },
+ "au_t_bluetooth": {
+  "en": "Bluetooth device",
+  "de": "Bluetooth-Gerät",
+  "plural": false
+ },
+ "au_t_charger": {
+  "en": "Charger",
+  "de": "Ladekabel",
+  "plural": false
+ },
+ "au_t_battery": {
+  "en": "Battery low",
+  "de": "Akku niedrig",
+  "plural": false
+ },
+ "au_t_wifi": {
+  "en": "Wi-Fi",
+  "de": "WLAN",
+  "plural": false
+ },
+ "au_tt_app_open": {
+  "en": "%1$s opened",
+  "de": "%1$s geöffnet",
+  "plural": false
+ },
+ "au_tt_app_close": {
+  "en": "%1$s closed",
+  "de": "%1$s geschlossen",
+  "plural": false
+ },
+ "au_tt_start": {
+  "en": "Start %1$s",
+  "de": "%1$s starten",
+  "plural": false
+ },
+ "au_below": {
+  "en": "Battery below %1$d %%",
+  "de": "Akku unter %1$d %%",
+  "plural": false
+ },
+ "au_connected": {
+  "en": "connected",
+  "de": "verbunden",
+  "plural": false
+ },
+ "au_disconnected": {
+  "en": "disconnected",
+  "de": "getrennt",
+  "plural": false
+ },
+ "au_ssid": {
+  "en": "Network name",
+  "de": "Netzwerkname",
+  "plural": false
+ },
+ "au_bt_name": {
+  "en": "Device name",
+  "de": "Gerätename",
+  "plural": false
+ },
+ "au_any": {
+  "en": "Any",
+  "de": "Beliebig",
+  "plural": false
+ },
+ "au_pick_app": {
+  "en": "Choose app",
+  "de": "App wählen",
+  "plural": false
+ },
+ "au_activity": {
+  "en": "Activity (package/class)",
+  "de": "Activity (Paket/Klasse)",
+  "plural": false
+ },
+ "au_from_favorites": {
+  "en": "From the Activity Launcher favourites",
+  "de": "Aus den Activity-Launcher-Favoriten",
+  "plural": false
+ },
+ "au_command": {
+  "en": "Shell command",
+  "de": "Shell-Befehl",
+  "plural": false
+ },
+ "au_a_volume": {
+  "en": "Media volume",
+  "de": "Medienlautstärke",
+  "plural": false
+ },
+ "au_a_grayscale": {
+  "en": "Grayscale",
+  "de": "Graustufen",
+  "plural": false
+ },
+ "au_a_dnd": {
+  "en": "Do not disturb",
+  "de": "Bitte nicht stören",
+  "plural": false
+ },
+ "au_a_netblock": {
+  "en": "Internet block",
+  "de": "Internet-Sperre",
+  "plural": false
+ },
+ "au_a_start_app": {
+  "en": "Start app",
+  "de": "App starten",
+  "plural": false
+ },
+ "au_a_start_activity": {
+  "en": "Start activity",
+  "de": "Activity starten",
+  "plural": false
+ },
+ "au_a_shell": {
+  "en": "Shell command",
+  "de": "Shell-Befehl",
+  "plural": false
+ },
+ "au_tpl_brawl": {
+  "en": "Brawl Stars → Gaming mode",
+  "de": "Brawl Stars → Gaming-Modus",
+  "plural": false
+ },
+ "au_tpl_headphones": {
+  "en": "Headphones → Boost off",
+  "de": "Kopfhörer → Boost aus",
+  "plural": false
+ },
+ "au_tpl_charging": {
+  "en": "Charging → Stay awake",
+  "de": "Laden → Wach bleiben",
+  "plural": false
+ },
+ "au_tpl_battery": {
+  "en": "Battery below 15 % → Save energy",
+  "de": "Akku unter 15 % → Energie sparen",
+  "plural": false
+ },
+ "au_tpl_night": {
+  "en": "22:30 → Night mode",
+  "de": "22:30 → Nachtruhe",
+  "plural": false
+ },
+ "au_tpl_morning": {
+  "en": "07:00 → Good morning",
+  "de": "07:00 → Guten Morgen",
+  "plural": false
+ },
+ "au_running": {
+  "en": {
+   "one": "Automations: %1$d rule on",
+   "other": "Automations: %1$d rules on"
+  },
+  "de": {
+   "one": "Automationen: %1$d Regel aktiv",
+   "other": "Automationen: %1$d Regeln aktiv"
+  },
+  "plural": true
  }
 }

@@ -12,6 +12,10 @@
   Zugriff erteilt sich ShizuBox per Shizuku selbst; Ansichten „Alle“, „Nach App“ (Unterhaltungen zusammengeführt) und „Entfernt“,
   Suche und App-Filter, gelöschte/zurückgezogene Nachrichten markiert, Bilder gespeichert, Apps ausschließen,
   automatisches Löschen nach X Tagen, alles löschen, optionale Fingerabdruck-Sperre
+- Automationen (neuer Startseiten-Bereich): Regeln „Wenn → Dann“ mit Editor und Vorlagen; Auslöser App geöffnet/geschlossen,
+  Uhrzeit/Wochentage, Kopfhörer, Bluetooth-Gerät, Ladekabel, Akku unter X %, WLAN; Aktionen Gaming, Lautstärke, Boost,
+  Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, wach bleiben, Internet-Sperre, App/Activity starten, Shell;
+  „Danach zurücksetzen“, akkuschonend (Callbacks, Wecker), pausiert während des Schulmodus
 - Internet-Sperre pro App ohne VPN (Apps): Schalter in den App-Details, Filter „Kein Internet“, Mehrfachauswahl
   „Internet sperren/erlauben“; Sperren werden nach einem Neustart automatisch wiederhergestellt, sobald Shizuku läuft
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab

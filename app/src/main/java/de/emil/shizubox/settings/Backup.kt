@@ -37,6 +37,7 @@ object Backup {
         // Only the settings: the history itself never leaves the device.
         "notif_history" to setOf("enabled"),
         "net_block" to emptySet(),
+        "automations" to emptySet(),
     )
 
     /** Only exported when the user asks for it. */
@@ -103,6 +104,7 @@ object Backup {
         de.emil.shizubox.system.VolumeBoost.load()
         de.emil.shizubox.notifications.NotifHistory.load()
         de.emil.shizubox.apps.NetBlock.load()
+        de.emil.shizubox.automation.Rules.load()
         runCatching { de.emil.shizubox.apps.NetBlock.restore(force = true) }
         Updates.init(context)
         UpdateWorker.schedule(context)
