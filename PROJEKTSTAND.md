@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.5.1** (versionCode 4) |
+| Version | **0.6.0** (versionCode 5, noch nicht veröffentlicht) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -73,13 +73,15 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 ### Downloader (`downloader/`, `ui/downloader/`) – ohne Shizuku
 | Funktion | Status |
 |---|---|
-| URL-Download mit Format-Dialog (Video bis 2160p/MP4/MKV/WebM, Audio MP3/M4A/Opus, Thumbnail/Metadaten einbetten) | ✅ getestet (MP4) |
+| URL-Download mit Format-Dialog (Video bis 2160p/MP4/MKV/WebM, Audio MP3/M4A/Opus, Thumbnail/Metadaten einbetten) | ✅ getestet (MP4, MP3 mit Cover) |
 | Warteschlange (Läuft/Wartend/Fehlgeschlagen, Pause/Fortsetzen/Abbrechen/Erneut, parallele Downloads) im Foreground-Service mit Benachrichtigung | ✅ |
 | Teilen-Menü „Mit ShizuBox herunterladen“ (`DownloadShareActivity`) | ✅ getestet |
 | Downloads-Liste (Suche, Sortierung, Filter Audio/Video, Abspielen/Teilen/Löschen/Ordner) | ✅ |
-| Suche und Trends über NewPipe Extractor, Kanäle abonnieren (lokal), Abo-Feed (RSS) | ✅ Trends getestet |
+| Suche und Trends über NewPipe Extractor, Kanäle abonnieren (lokal), Abo-Feed (RSS) | ✅ getestet |
 | „Alle herunterladen“ für Feed, Suche, Playlists, Kanäle | ✅ |
-| Mehr: Ordner (MediaStore oder SAF), Standard-Format, Cookies, temporäre Dateien, Video→Audio (FFmpeg), yt-dlp-Update, Abos | 🟡 Umwandeln/Cookies/Update noch nicht auf dem Gerät getestet |
+| Mehr: Standard-Format, temporäre Dateien, Video→Audio (FFmpeg), yt-dlp-Update (2025.11.12 → 2026.08.19), Abos | ✅ getestet |
+| Mehr: eigener Ordner (SAF), Cookies-Import | 🟡 gebaut, noch nicht auf dem Gerät getestet |
+| Warteschlange: Pause/Fortsetzen bei langen Downloads | 🟡 gebaut, noch nicht auf dem Gerät getestet |
 
 ### Kacheln & Widget (`tiles/`)
 | Funktion | Status |

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unveröffentlicht – Sitzung 2026-10-15 (Nachmittag)
+## 0.6.0 (unveröffentlicht) – Sitzung 2026-10-15 (Nachmittag)
 - Doku: PROJEKTSTAND.md, CHANGELOG.md, CLAUDE.md
 - Animationen (Material 3 Expressive, Material3 1.5.0-beta01):
   - zentrale Federn in `ui/motion/Motion.kt`, `MotionScheme.expressive()` im Theme
@@ -22,6 +22,7 @@
 - Downloader (neuer Startseiten-Bereich, ohne Shizuku): yt-dlp + FFmpeg + NewPipe Extractor, Download-Dialog,
   Warteschlange im Foreground-Service, Teilen-Menü, Downloads-Liste, Suche, Trends, lokale Abos mit Feed,
   „Alle herunterladen“, Ordnerwahl, Cookies, Video→Audio, yt-dlp-Update; APK jetzt nur arm64-v8a (~61 MB)
+- Fix: R8 entfernte Teile von commons-compress → yt-dlp konnte Python nicht entpacken (Keep-Regeln ergänzt)
 
 ## 0.5.1 – 2026-10-15
 - Bildschirmzeit pro App (heute / 7 Tage), Nutzungszugriff per Shizuku
