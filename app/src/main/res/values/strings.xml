@@ -679,4 +679,14 @@
     <string name="upd_skip">Skip this version</string>
     <string name="upd_unskip">Offer it again</string>
     <string name="upd_skipped">Version %1$s skipped – the next one will be offered again.</string>
+    <string name="sch_title">Schedule</string>
+    <string name="sch_sub">Starts the school mode automatically on the chosen days. Shizuku must be running at that time.</string>
+    <string name="sch_start">Start time</string>
+    <string name="sch_next">Next start: %1$s</string>
+    <string name="sch_no_days">No day selected</string>
+    <string name="sch_end_auto">Ends automatically after %1$s (setting above).</string>
+    <string name="sch_end_manual">Ends with 3× power – set an automatic end above if you like.</string>
+    <string name="sch_skip_next">Skip next start</string>
+    <string name="sch_channel">School mode schedule</string>
+    <string name="sch_failed">School mode could not start</string>
 </resources>

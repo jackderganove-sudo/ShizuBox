@@ -1,0 +1,12 @@
+from i18n import *
+S5('sch_title','Schedule','Zeitplan','Zamanlama','Horario','Planification')
+S5('sch_sub','Starts the school mode automatically on the chosen days. Shizuku must be running at that time.','Startet den Schulmodus automatisch an den gewählten Tagen. Shizuku muss zu der Zeit laufen.','Okul modunu seçilen günlerde otomatik başlatır. O saatte Shizuku çalışıyor olmalı.','Inicia el modo escuela automáticamente los días elegidos. Shizuku debe estar en marcha a esa hora.','Démarre automatiquement le mode école les jours choisis. Shizuku doit tourner à ce moment-là.')
+S5('sch_start','Start time','Startzeit','Başlangıç saati','Hora de inicio','Heure de début')
+S5('sch_next','Next start: %1$s','Nächster Start: %1$s','Sonraki başlangıç: %1$s','Próximo inicio: %1$s','Prochain démarrage : %1$s')
+S5('sch_no_days','No day selected','Kein Tag ausgewählt','Gün seçilmedi','Ningún día seleccionado','Aucun jour sélectionné')
+S5('sch_end_auto','Ends automatically after %1$s (setting above).','Endet automatisch nach %1$s (Einstellung oben).','%1$s sonra otomatik biter (yukarıdaki ayar).','Termina automáticamente tras %1$s (ajuste de arriba).','Se termine automatiquement après %1$s (réglage ci-dessus).')
+S5('sch_end_manual','Ends with 3× power – set an automatic end above if you like.','Endet mit 3× Power – oben kannst du ein automatisches Ende einstellen.','3× güç tuşuyla biter – istersen yukarıda otomatik bitiş ayarla.','Termina con 3× encendido; arriba puedes fijar un fin automático.','Se termine avec 3× marche – tu peux définir une fin automatique ci-dessus.')
+S5('sch_skip_next','Skip next start','Nächsten Start aussetzen','Sonraki başlangıcı atla','Omitir el próximo inicio','Sauter le prochain démarrage')
+S5('sch_channel','School mode schedule','Schulmodus-Zeitplan','Okul modu zamanlaması','Horario del modo escuela','Planification du mode école')
+S5('sch_failed','School mode could not start','Schulmodus konnte nicht starten','Okul modu başlatılamadı','No se pudo iniciar el modo escuela','Le mode école n’a pas pu démarrer')
+save()

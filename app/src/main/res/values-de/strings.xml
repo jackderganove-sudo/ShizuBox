@@ -677,5 +677,15 @@
     <string name="upd_skip">Diese Version überspringen</string>
     <string name="upd_unskip">Doch anbieten</string>
     <string name="upd_skipped">Version %1$s übersprungen – die nächste wird wieder angeboten.</string>
+    <string name="sch_title">Zeitplan</string>
+    <string name="sch_sub">Startet den Schulmodus automatisch an den gewählten Tagen. Shizuku muss zu der Zeit laufen.</string>
+    <string name="sch_start">Startzeit</string>
+    <string name="sch_next">Nächster Start: %1$s</string>
+    <string name="sch_no_days">Kein Tag ausgewählt</string>
+    <string name="sch_end_auto">Endet automatisch nach %1$s (Einstellung oben).</string>
+    <string name="sch_end_manual">Endet mit 3× Power – oben kannst du ein automatisches Ende einstellen.</string>
+    <string name="sch_skip_next">Nächsten Start aussetzen</string>
+    <string name="sch_channel">Schulmodus-Zeitplan</string>
+    <string name="sch_failed">Schulmodus konnte nicht starten</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

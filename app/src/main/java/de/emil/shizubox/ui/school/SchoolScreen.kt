@@ -111,6 +111,7 @@ fun SchoolScreen(
                 }
             }
         }
+        item { ScheduleCard(state.autoEndMinutes) }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.school_after_reboot), style = MaterialTheme.typography.titleMedium)

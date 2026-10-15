@@ -675,5 +675,15 @@
 "upd_sort_source": "Source",
 "upd_skip": "Ignorer cette version",
 "upd_unskip": "Proposer à nouveau",
-"upd_skipped": "Version %1$s ignorée – la suivante sera de nouveau proposée."
+"upd_skipped": "Version %1$s ignorée – la suivante sera de nouveau proposée.",
+"sch_title": "Planification",
+"sch_sub": "Démarre automatiquement le mode école les jours choisis. Shizuku doit tourner à ce moment-là.",
+"sch_start": "Heure de début",
+"sch_next": "Prochain démarrage : %1$s",
+"sch_no_days": "Aucun jour sélectionné",
+"sch_end_auto": "Se termine automatiquement après %1$s (réglage ci-dessus).",
+"sch_end_manual": "Se termine avec 3× marche – tu peux définir une fin automatique ci-dessus.",
+"sch_skip_next": "Sauter le prochain démarrage",
+"sch_channel": "Planification du mode école",
+"sch_failed": "Le mode école n’a pas pu démarrer"
 }

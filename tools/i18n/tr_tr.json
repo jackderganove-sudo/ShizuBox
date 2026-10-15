@@ -675,5 +675,15 @@
 "upd_sort_source": "Kaynak",
 "upd_skip": "Bu sürümü atla",
 "upd_unskip": "Yine de öner",
-"upd_skipped": "%1$s sürümü atlandı – sonraki yine önerilecek."
+"upd_skipped": "%1$s sürümü atlandı – sonraki yine önerilecek.",
+"sch_title": "Zamanlama",
+"sch_sub": "Okul modunu seçilen günlerde otomatik başlatır. O saatte Shizuku çalışıyor olmalı.",
+"sch_start": "Başlangıç saati",
+"sch_next": "Sonraki başlangıç: %1$s",
+"sch_no_days": "Gün seçilmedi",
+"sch_end_auto": "%1$s sonra otomatik biter (yukarıdaki ayar).",
+"sch_end_manual": "3× güç tuşuyla biter – istersen yukarıda otomatik bitiş ayarla.",
+"sch_skip_next": "Sonraki başlangıcı atla",
+"sch_channel": "Okul modu zamanlaması",
+"sch_failed": "Okul modu başlatılamadı"
 }

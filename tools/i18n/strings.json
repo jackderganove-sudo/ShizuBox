@@ -3275,5 +3275,55 @@
   "en": "Version %1$s skipped – the next one will be offered again.",
   "de": "Version %1$s übersprungen – die nächste wird wieder angeboten.",
   "plural": false
+ },
+ "sch_title": {
+  "en": "Schedule",
+  "de": "Zeitplan",
+  "plural": false
+ },
+ "sch_sub": {
+  "en": "Starts the school mode automatically on the chosen days. Shizuku must be running at that time.",
+  "de": "Startet den Schulmodus automatisch an den gewählten Tagen. Shizuku muss zu der Zeit laufen.",
+  "plural": false
+ },
+ "sch_start": {
+  "en": "Start time",
+  "de": "Startzeit",
+  "plural": false
+ },
+ "sch_next": {
+  "en": "Next start: %1$s",
+  "de": "Nächster Start: %1$s",
+  "plural": false
+ },
+ "sch_no_days": {
+  "en": "No day selected",
+  "de": "Kein Tag ausgewählt",
+  "plural": false
+ },
+ "sch_end_auto": {
+  "en": "Ends automatically after %1$s (setting above).",
+  "de": "Endet automatisch nach %1$s (Einstellung oben).",
+  "plural": false
+ },
+ "sch_end_manual": {
+  "en": "Ends with 3× power – set an automatic end above if you like.",
+  "de": "Endet mit 3× Power – oben kannst du ein automatisches Ende einstellen.",
+  "plural": false
+ },
+ "sch_skip_next": {
+  "en": "Skip next start",
+  "de": "Nächsten Start aussetzen",
+  "plural": false
+ },
+ "sch_channel": {
+  "en": "School mode schedule",
+  "de": "Schulmodus-Zeitplan",
+  "plural": false
+ },
+ "sch_failed": {
+  "en": "School mode could not start",
+  "de": "Schulmodus konnte nicht starten",
+  "plural": false
  }
 }

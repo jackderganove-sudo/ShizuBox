@@ -677,4 +677,14 @@
     <string name="upd_skip">Bu sürümü atla</string>
     <string name="upd_unskip">Yine de öner</string>
     <string name="upd_skipped">%1$s sürümü atlandı – sonraki yine önerilecek.</string>
+    <string name="sch_title">Zamanlama</string>
+    <string name="sch_sub">Okul modunu seçilen günlerde otomatik başlatır. O saatte Shizuku çalışıyor olmalı.</string>
+    <string name="sch_start">Başlangıç saati</string>
+    <string name="sch_next">Sonraki başlangıç: %1$s</string>
+    <string name="sch_no_days">Gün seçilmedi</string>
+    <string name="sch_end_auto">%1$s sonra otomatik biter (yukarıdaki ayar).</string>
+    <string name="sch_end_manual">3× güç tuşuyla biter – istersen yukarıda otomatik bitiş ayarla.</string>
+    <string name="sch_skip_next">Sonraki başlangıcı atla</string>
+    <string name="sch_channel">Okul modu zamanlaması</string>
+    <string name="sch_failed">Okul modu başlatılamadı</string>
 </resources>

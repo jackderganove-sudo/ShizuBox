@@ -677,4 +677,14 @@
     <string name="upd_skip">Omitir esta versión</string>
     <string name="upd_unskip">Volver a ofrecer</string>
     <string name="upd_skipped">Versión %1$s omitida: la siguiente se volverá a ofrecer.</string>
+    <string name="sch_title">Horario</string>
+    <string name="sch_sub">Inicia el modo escuela automáticamente los días elegidos. Shizuku debe estar en marcha a esa hora.</string>
+    <string name="sch_start">Hora de inicio</string>
+    <string name="sch_next">Próximo inicio: %1$s</string>
+    <string name="sch_no_days">Ningún día seleccionado</string>
+    <string name="sch_end_auto">Termina automáticamente tras %1$s (ajuste de arriba).</string>
+    <string name="sch_end_manual">Termina con 3× encendido; arriba puedes fijar un fin automático.</string>
+    <string name="sch_skip_next">Omitir el próximo inicio</string>
+    <string name="sch_channel">Horario del modo escuela</string>
+    <string name="sch_failed">No se pudo iniciar el modo escuela</string>
 </resources>

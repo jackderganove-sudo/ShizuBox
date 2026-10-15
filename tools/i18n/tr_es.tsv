@@ -639,3 +639,13 @@ upd_sort_source	Fuente
 upd_skip	Omitir esta versión
 upd_unskip	Volver a ofrecer
 upd_skipped	Versión %1$s omitida: la siguiente se volverá a ofrecer.
+sch_title	Horario
+sch_sub	Inicia el modo escuela automáticamente los días elegidos. Shizuku debe estar en marcha a esa hora.
+sch_start	Hora de inicio
+sch_next	Próximo inicio: %1$s
+sch_no_days	Ningún día seleccionado
+sch_end_auto	Termina automáticamente tras %1$s (ajuste de arriba).
+sch_end_manual	Termina con 3× encendido; arriba puedes fijar un fin automático.
+sch_skip_next	Omitir el próximo inicio
+sch_channel	Horario del modo escuela
+sch_failed	No se pudo iniciar el modo escuela

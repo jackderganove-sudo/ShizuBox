@@ -11,6 +11,7 @@ class BootReceiver : BroadcastReceiver() {
         val pending = goAsync()
         SchoolMode.scope.launch {
             try {
+                SchoolSchedule.reschedule()
                 val s = SchoolMode.store.current()
                 SchoolLog.log("BootReceiver", "${intent.action}: active=${s.active} wait=${s.waitForShizukuAfterReboot}")
                 if (s.active) {

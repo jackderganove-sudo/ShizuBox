@@ -73,6 +73,13 @@ class DebugReceiver : BroadcastReceiver() {
                             val b = de.emil.shizubox.settings.Backup.export(context, includeSecrets = false)
                             "roundtrip equal=${strip(a) == strip(b)} result=$r size=${a.length} keys=${org.json.JSONObject(a).getJSONObject("prefs").keys().asSequence().toList()} vtKeyKept=${de.emil.shizubox.installer.VirusTotal.apiKey.isNotBlank()}"
                         }
+                        "schedule" -> {
+                            val sch = de.emil.shizubox.school.SchoolSchedule
+                            fun f(t: Long?) = t?.let { java.util.Date(it).toString() } ?: "none"
+                            val base = de.emil.shizubox.school.Schedule(enabled = true, days = 0b0011111, minuteOfDay = 7 * 60 + 50)
+                            "real=${sch.state.value} weekdays7:50=${f(sch.nextStart(base))} sundayOnly=${f(sch.nextStart(base.copy(days = 0b1000000)))} " +
+                                "skipFirst=${f(sch.nextStart(base.copy(skipUntil = (sch.nextStart(base) ?: 0) + 1)))} disabled=${f(sch.nextStart(base.copy(enabled = false)))}"
+                        }
                         "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
                         "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()
                         "device" -> "${de.emil.shizubox.system.DeviceInfo.battery(context)} ${de.emil.shizubox.system.DeviceInfo.memory(context)} ${de.emil.shizubox.system.DeviceInfo.storage()} soc=${de.emil.shizubox.system.DeviceInfo.soc()}"

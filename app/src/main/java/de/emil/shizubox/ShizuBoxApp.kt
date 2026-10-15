@@ -26,5 +26,6 @@ class ShizuBoxApp : Application() {
         UpdateWorker.schedule(this)
         ShizukuManager.init(this)
         SchoolMode.init(this)
+        de.emil.shizubox.school.SchoolSchedule.init(this)
     }
 }
