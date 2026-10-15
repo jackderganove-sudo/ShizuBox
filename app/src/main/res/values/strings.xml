@@ -634,4 +634,15 @@
         <item quantity="other">%d apps</item>
     </plurals>
     <string name="pg_revoke">Revoke</string>
+    <plurals name="sel_n">
+        <item quantity="one">%d selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
+    <string name="sel_done">Done ✓</string>
+    <string name="sel_uninstall_n">Uninstall (%1$d)</string>
+    <string name="sel_to_profile">Add to profile</string>
+    <string name="sel_added_profile">Added to “%1$s” ✓</string>
+    <string name="sel_uninstall_hint">These apps will be removed with all their data: %1$s</string>
+    <string name="sel_failed">Failed: %1$s</string>
+    <string name="sel_hint">Tip: long-press an app to select several at once.</string>
 </resources>

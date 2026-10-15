@@ -27,6 +27,10 @@ object Profiles {
 
     fun delete(id: String) = save(_profiles.value.filterNot { it.id == id })
 
+    fun addAll(id: String, pkgs: Collection<String>) = save(
+        _profiles.value.map { if (it.id == id) it.copy(packages = it.packages + pkgs) else it },
+    )
+
     fun toggle(id: String, pkg: String) = save(
         _profiles.value.map {
             if (it.id != id) it else it.copy(packages = if (pkg in it.packages) it.packages - pkg else it.packages + pkg)

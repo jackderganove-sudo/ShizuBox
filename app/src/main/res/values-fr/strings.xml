@@ -632,4 +632,15 @@
         <item quantity="other">%d applis</item>
     </plurals>
     <string name="pg_revoke">Retirer</string>
+    <plurals name="sel_n">
+        <item quantity="one">%d sélectionnée</item>
+        <item quantity="other">%d sélectionnées</item>
+    </plurals>
+    <string name="sel_done">Terminé ✓</string>
+    <string name="sel_uninstall_n">Désinstaller (%1$d)</string>
+    <string name="sel_to_profile">Ajouter au profil</string>
+    <string name="sel_added_profile">Ajoutées à « %1$s » ✓</string>
+    <string name="sel_uninstall_hint">Ces applis seront supprimées avec toutes leurs données : %1$s</string>
+    <string name="sel_failed">Échec : %1$s</string>
+    <string name="sel_hint">Astuce : appui long sur une appli pour en sélectionner plusieurs.</string>
 </resources>

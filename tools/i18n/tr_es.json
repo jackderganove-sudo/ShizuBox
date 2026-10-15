@@ -630,5 +630,16 @@
 "one": "%d app",
 "other": "%d apps"
 },
-"pg_revoke": "Revocar"
+"pg_revoke": "Revocar",
+"sel_n": {
+"one": "%d seleccionada",
+"other": "%d seleccionadas"
+},
+"sel_done": "Hecho ✓",
+"sel_uninstall_n": "Desinstalar (%1$d)",
+"sel_to_profile": "Añadir a perfil",
+"sel_added_profile": "Añadidas a “%1$s” ✓",
+"sel_uninstall_hint": "Estas apps se eliminarán con todos sus datos: %1$s",
+"sel_failed": "Fallaron: %1$s",
+"sel_hint": "Consejo: mantén pulsada una app para seleccionar varias."
 }

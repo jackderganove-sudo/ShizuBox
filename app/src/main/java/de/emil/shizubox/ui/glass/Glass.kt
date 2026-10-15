@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
+
 package de.emil.shizubox.ui.glass
 
 import androidx.compose.animation.core.LinearEasing
@@ -10,6 +12,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -132,6 +135,7 @@ fun GlassCard(
     blurRadius: Dp = 28.dp,
     contentPadding: Dp = 20.dp,
     onClick: (() -> Unit)? = null,
+    onLongClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val settings by AppSettings.state.collectAsStateWithLifecycle()
@@ -161,7 +165,13 @@ fun GlassCard(
                 else Modifier.background(tint.copy(alpha = (tintAlpha + 0.25f).coerceAtMost(0.95f)))
             )
             .border(1.dp, edge, shape)
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+            .then(
+                when {
+                    onLongClick != null -> Modifier.combinedClickable(onClick = onClick ?: {}, onLongClick = onLongClick)
+                    onClick != null -> Modifier.clickable(onClick = onClick)
+                    else -> Modifier
+                },
+            )
             .padding(contentPadding),
         content = content,
     )

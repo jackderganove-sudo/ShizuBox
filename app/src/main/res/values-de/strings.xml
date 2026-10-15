@@ -632,5 +632,16 @@
         <item quantity="other">%d Apps</item>
     </plurals>
     <string name="pg_revoke">Entziehen</string>
+    <plurals name="sel_n">
+        <item quantity="one">%d ausgewählt</item>
+        <item quantity="other">%d ausgewählt</item>
+    </plurals>
+    <string name="sel_done">Erledigt ✓</string>
+    <string name="sel_uninstall_n">Deinstallieren (%1$d)</string>
+    <string name="sel_to_profile">Zu Profil hinzufügen</string>
+    <string name="sel_added_profile">Zu „%1$s“ hinzugefügt ✓</string>
+    <string name="sel_uninstall_hint">Diese Apps werden mit allen Daten entfernt: %1$s</string>
+    <string name="sel_failed">Fehlgeschlagen: %1$s</string>
+    <string name="sel_hint">Tipp: Lange auf eine App drücken, um mehrere auszuwählen.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

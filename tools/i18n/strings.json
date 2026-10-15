@@ -3059,5 +3059,51 @@
   "en": "Revoke",
   "de": "Entziehen",
   "plural": false
+ },
+ "sel_n": {
+  "en": {
+   "one": "%d selected",
+   "other": "%d selected"
+  },
+  "de": {
+   "one": "%d ausgewählt",
+   "other": "%d ausgewählt"
+  },
+  "plural": true
+ },
+ "sel_done": {
+  "en": "Done ✓",
+  "de": "Erledigt ✓",
+  "plural": false
+ },
+ "sel_uninstall_n": {
+  "en": "Uninstall (%1$d)",
+  "de": "Deinstallieren (%1$d)",
+  "plural": false
+ },
+ "sel_to_profile": {
+  "en": "Add to profile",
+  "de": "Zu Profil hinzufügen",
+  "plural": false
+ },
+ "sel_added_profile": {
+  "en": "Added to “%1$s” ✓",
+  "de": "Zu „%1$s“ hinzugefügt ✓",
+  "plural": false
+ },
+ "sel_uninstall_hint": {
+  "en": "These apps will be removed with all their data: %1$s",
+  "de": "Diese Apps werden mit allen Daten entfernt: %1$s",
+  "plural": false
+ },
+ "sel_failed": {
+  "en": "Failed: %1$s",
+  "de": "Fehlgeschlagen: %1$s",
+  "plural": false
+ },
+ "sel_hint": {
+  "en": "Tip: long-press an app to select several at once.",
+  "de": "Tipp: Lange auf eine App drücken, um mehrere auszuwählen.",
+  "plural": false
  }
 }

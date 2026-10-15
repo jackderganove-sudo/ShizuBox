@@ -79,7 +79,7 @@ private enum class AppSort(private val labelRes: Int) {
 
 private val dateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM)
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     var tab by rememberSaveable { mutableStateOf(0) }
@@ -94,6 +94,8 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         return
     }
 
+    var selection by remember { mutableStateOf(setOf<String>()) }
+    BackHandler(enabled = selection.isNotEmpty()) { selection = emptySet() }
     var permState by remember { mutableStateOf(PermTabState()) }
     var permReload by remember { mutableStateOf(0) }
     val scope = androidx.compose.runtime.rememberCoroutineScope()
@@ -212,9 +214,39 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         }
         if (apps == null) {
             item { Text(t(R.string.loading_apps), modifier = Modifier.padding(8.dp)) }
+        } else if (selection.isEmpty() && shizukuReady) {
+            item {
+                Text(
+                    t(R.string.sel_hint),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+            }
+        }
+        if (selection.isNotEmpty()) {
+            stickyHeader(key = "selection") {
+                SelectionBar(
+                    selection = selection,
+                    apps = apps.orEmpty(),
+                    visible = visible,
+                    shizukuReady = shizukuReady,
+                    onSelection = { selection = it },
+                    onDone = { reloadKey++ },
+                )
+            }
         }
         items(visible, key = { it.pkg }) { app ->
-            AppRow(app) { selected = app.pkg }
+            val isSelected = app.pkg in selection
+            AppRow(
+                app,
+                isSelected,
+                onClick = {
+                    if (selection.isEmpty()) selected = app.pkg
+                    else selection = if (isSelected) selection - app.pkg else selection + app.pkg
+                },
+                onLongClick = { selection = if (isSelected) selection - app.pkg else selection + app.pkg },
+            )
         }
     }
 }
@@ -230,9 +262,15 @@ fun AppIcon(pkg: String, sizeDp: Int = 40) {
 }
 
 @Composable
-private fun AppRow(app: AppEntry, onClick: () -> Unit) {
+private fun AppRow(app: AppEntry, isSelected: Boolean, onClick: () -> Unit, onLongClick: () -> Unit) {
     val context = androidx.compose.ui.platform.LocalContext.current
-    GlassCard(Modifier.fillMaxWidth(), contentPadding = 12.dp, onClick = onClick) {
+    GlassCard(
+        Modifier.fillMaxWidth(),
+        contentPadding = 12.dp,
+        tint = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
+        onClick = onClick,
+        onLongClick = onLongClick,
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AppIcon(app.pkg, 44)
             Spacer(Modifier.width(12.dp))

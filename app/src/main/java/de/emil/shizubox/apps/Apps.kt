@@ -240,6 +240,11 @@ object Apps {
 
     suspend fun forceStop(pkg: String) = exec("am force-stop $pkg")
 
+    suspend fun forceStop(pkgs: Collection<String>) = exec(pkgs.joinToString("; ") { "am force-stop $it" })
+
+    /** User apps only; returns the packages that could not be removed. */
+    suspend fun uninstall(pkgs: Collection<String>): List<String> = pkgs.filterNot { uninstall(it).let { r -> r.ok && "Success" in r.out } }
+
     /** Only for user apps; system apps can only be frozen on this Android version. */
     suspend fun uninstall(pkg: String) = exec("pm uninstall --user 0 $pkg")
 

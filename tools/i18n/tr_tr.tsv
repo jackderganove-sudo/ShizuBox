@@ -597,3 +597,11 @@ pg_include_system	Sistem uygulamalarını dahil et
 pg_none	Uygulama yok
 pg_n_apps	%d uygulama|||%d uygulama
 pg_revoke	Geri al
+sel_n	%d seçili|||%d seçili
+sel_done	Tamamlandı ✓
+sel_uninstall_n	Kaldır (%1$d)
+sel_to_profile	Profile ekle
+sel_added_profile	“%1$s” profiline eklendi ✓
+sel_uninstall_hint	Bu uygulamalar tüm verileriyle kaldırılacak: %1$s
+sel_failed	Başarısız: %1$s
+sel_hint	İpucu: Birden fazla seçmek için bir uygulamaya uzun bas.
