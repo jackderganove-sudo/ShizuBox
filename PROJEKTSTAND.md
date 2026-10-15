@@ -1,0 +1,135 @@
+# ShizuBox – Projektstand
+
+All-in-One-Toolbox für Android, die über **Shizuku** (ADB-Rechte, kein Root) Systemeinstellungen steuert.
+Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
+
+| | |
+|---|---|
+| Paketname | `de.emil.shizubox` |
+| Version | **0.5.1** (versionCode 4) |
+| Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
+| minSdk / targetSdk | 31 / 37 |
+| Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
+
+Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
+
+## Funktionen
+
+### Schulmodus (`school/`) – nicht verändern!
+| Funktion | Status |
+|---|---|
+| Aktivieren per Knopf, Startseiten-Karte und Schnelleinstellungs-Kachel | ✅ |
+| Snapshot aller geänderten Einstellungen, exakte Wiederherstellung | ✅ |
+| Flugmodus, WLAN/BT/Daten aus, DND, kein Ton/Vibration, AOD/Sperrbildschirm-Benachrichtigungen/Kamera-Doppeldruck/Gemini/Fingerabdruck aus | ✅ |
+| Apps pausieren (`pm suspend`) außer Telefon/Notruf, Einstellungen, Shizuku, Launcher | ✅ |
+| Schwarzer Bildschirm (`BlackActivity` + Foreground-Service), auch über dem Sperrbildschirm | ✅ |
+| Ausstieg 3× Power (Polling), Auto-Ende nach fester Zeit | ✅ |
+| Neustart: Zustand im geräte­geschützten Speicher, „Sofort schwarz“ oder „Erst mit Shizuku“, Anleitung ohne Shizuku | ✅ |
+| Zeitplan (Wochentage + Uhrzeit, einmal aussetzen) | ✅ |
+| Notausstieg per adb (`AdbExitReceiver`) | ✅ |
+
+### Customization (`customization/`)
+| Funktion | Status |
+|---|---|
+| Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße, Fettschrift | ✅ |
+| DPI und Render-Auflösung mit 15-s-Rückfrage (Einhandmodus wird währenddessen aus) | ✅ |
+| Statusleisten-Gruppen ausblenden (System-Icons, Uhr, Benachrichtigungen) | ✅ |
+| Immersive-Modus pro App | ⬜ unmöglich seit Android 11 (Hinweis in der App) |
+
+### Apps (`apps/`, `ui/apps/`)
+| Funktion | Status |
+|---|---|
+| App-Liste mit Größe, Datum, Split, Filter, Sortierung | ✅ |
+| Mehrfachauswahl (lange drücken): einfrieren, auftauen, beenden, deinstallieren, zu Profil | ✅ |
+| Einfrieren/Auftauen, Profile, Deinstallieren (System-Apps nur einfrieren) | ✅ |
+| Laufzeit- und Entwickler-Berechtigungen, AppOps, Akku-Modus, Standby-Gruppe | ✅ |
+| App-Sprache pro App, Aktivitäten starten / Verknüpfung, technische Details mit Signatur | ✅ |
+| Berechtigungsübersicht nach Kategorie mit „Entziehen“ | ✅ |
+| APK teilen/extrahieren/neu installieren, VirusTotal | ✅ |
+
+### Updates (`updates/`, `ui/updates/`) – nach Obtainium/ObtainX
+| Funktion | Status |
+|---|---|
+| Quellen: GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, APKPure | ✅ |
+| APKMirror (nur Versionen, Download über In-App-Browser) | 🟡 keine automatischen Downloads möglich |
+| Suche, Massenimport, URL-Liste, GitHub-Sterne, ObtainX-Import/Export | ✅ |
+| Hintergrundprüfung, „Alle aktualisieren“ als Vordergrund-Arbeit mit Fortschritt | ✅ |
+| Sicherheit: VirusTotal-Sperre, Signatur-Sperre | ✅ |
+| Version überspringen, Sortierung, Anheften | ✅ |
+
+### System (`system/`, `ui/system/`)
+| Funktion | Status |
+|---|---|
+| Geräteinfo (Akku, RAM, Speicher, CPU pro Kern, System, Display) | ✅ |
+| Prozesse (RAM pro App aus `dumpsys meminfo`, beenden, Hintergrund aufräumen) | ✅ |
+| Bildschirmzeit (UsageStats, Zugriff per Shizuku selbst erteilt) | ✅ |
+| Terminal mit Verlauf und Bausteinen | ✅ |
+| Schnelle Schalter (wach bleiben, Energiesparen, Berührungen, Zeiger, dunkles Design, Timeout) | ✅ |
+| Gaming-Modus mit exakter Wiederherstellung | ✅ |
+| Universal Installer (APK/APKS/XAPK/APKM, Split-Auswahl, Signatur, VirusTotal, Öffnen-mit) | ✅ |
+| Schnell-Installer, Logcat-Viewer | ✅ |
+
+### Kacheln & Widget (`tiles/`)
+| Funktion | Status |
+|---|---|
+| Kacheln: Schulmodus, Gaming, Animationen, Bildwiederholrate, Wach bleiben | ✅ |
+| Schnellaktionen auf der Startseite (gleiche Logik `QuickActions`) | ✅ |
+| Homescreen-Widget (RemoteViews, Material-You-Farben) | ✅ |
+
+### Einstellungen (`settings/`, `ui/settings/`)
+| Funktion | Status |
+|---|---|
+| Sprache (per-App-Locale), Design, AMOLED, Akzentfarben/Paletten (MaterialKolor), Glas, Hintergrundanimation | ✅ |
+| Startseite: Startbereich, Bereiche ein-/ausblenden, Schulmodus-Karte, Schnellaktionen | ✅ |
+| Installationsart, Standard-Optionen, VirusTotal-Schlüssel, Signatur-Sperre | ✅ |
+| Sichern & Wiederherstellen (JSON, Secrets optional) | ✅ |
+| ShizuBox selbst aktualisieren (verfolgt sich in Updates) | ✅ |
+
+## Projektstruktur
+
+```
+app/src/main/java/de/emil/shizubox/
+  ShizuBoxApp.kt        Init aller Singletons (Reihenfolge wichtig: Str zuerst)
+  MainActivity.kt       Navigation (Section-Enum + Unterseiten-States), Fenster-Blur
+  Str.kt                t()/tp() – Strings über den App-Kontext (Sprachwechsel live)
+  shizuku/              ShizukuManager (Status, Bindung, exec/writeFile), ShellService (UserService)
+  school/               Schulmodus: Mode, Commands, Store (DataStore), Service, BlackActivity,
+                        ExitGuide, Schedule, Receivers, Kachel, Log
+  customization/        Animationen, Refresh, Schrift, DPI/Auflösung, Statusleiste
+  apps/                 Apps (Liste, Details, Aktionen), Profiles, PermissionOverview, ApkExport
+  installer/            Universal Installer (Ackpine), ApkParser, SignatureCheck, VirusTotal
+  updates/              Sources, Updates (Zustand/Download/Install), UpdateWorker, Search,
+                        BulkImport, TrackedApp, DebugReceiver (adb-Diagnose)
+  system/               Gaming, Tweaks, DeviceInfo, Processes, ScreenTime, Logcat, ApkInstaller
+  tiles/                QuickActions, TileServices, Widget
+  settings/             AppSettings, Language, Backup
+  debug/                ScreenRenderer (Offscreen-Screenshots per adb)
+  ui/                   Compose-Screens je Bereich, ui/glass (GlassCard, GlassBackground), ui/theme
+tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Generator
+```
+
+## Technik
+- **Kotlin + Jetpack Compose + Material 3**, AGP 9.4.1 (eingebautes Kotlin 2.4.21), Compose-BOM 2026.09.00
+- Libraries: Shizuku API 13.1.5, Haze 2.0.1 (Glas), Ackpine 0.25.4 (Installer), WorkManager 2.12.0, MaterialKolor 5.0.1, DataStore
+- **Shizuku-Befehle**: `ShizukuManager.exec(cmd)` → AIDL `IShellService` (UserService im Shell-Prozess) führt `sh -c` aus,
+  Rückgabe `ShellResult(code, out, err)`. `writeFile(fd, path)` kopiert Dateien als Shell-Nutzer.
+  Jeder Befehl wurde vorher auf dem Pixel getestet.
+- **Speicher**: alles im geräte­geschützten Speicher (Direct Boot), SharedPreferences bzw. DataStore (Schulmodus)
+- **Build**: JDK unter `~/Android/jdk`, `JAVA_HOME=$HOME/Android/jdk ./gradlew assembleRelease`; R8 auch im Debug.
+  Signierung über `~/Android/keys/shizubox-release.properties` (außerhalb des Repos).
+- **i18n**: siehe `tools/i18n/README.md`; Enums speichern `@StringRes` und lösen über `t()` auf.
+- **Tests ohne Entsperren**: `DebugReceiver` (DUMP-geschützt): `--es test …` für Backend-Prüfungen, `--es shot …` rendert
+  Bildschirme auf einem privaten virtuellen Display nach `/data/local/tmp/shot_<name>.png`.
+
+## Bekannte Probleme & Einschränkungen
+- Android 17: `pm uninstall --user 0` für System-Apps verweigert → nur einfrieren
+- `icon_blacklist` (einzelne Statusleisten-Icons) wirkt nicht mehr, nur Gruppen
+- `cmd display set-user-preferred-display-mode` und SurfaceFlinger-Overlays sind für die Shell gesperrt
+- `wm size` kann die SystemUI der Beta crashen, wenn der Einhandmodus an ist (wird abgefangen)
+- Pixel meldet Akku-Zustand 11 (herstellerspezifisch) → Zeile wird ausgeblendet
+- Kachel-Tipps bei gesperrtem Gerät hält SystemUI bis zum Entsperren zurück
+- APKPure-CDN wird von manchen DNS-Filtern (NextDNS) blockiert
+- APKMirror erlaubt keine automatischen Downloads
+
+## Offene Ideen
+- Schulmodus-Statistik, Debloat-Vorschläge mit Rückgängig, weitere Kacheln, Update-Benachrichtigung mit „Installieren“
