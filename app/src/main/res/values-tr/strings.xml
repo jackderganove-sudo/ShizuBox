@@ -978,4 +978,19 @@
     <string name="db_familylink">Family Link ebeveyn denetimi. Denetlenen bir telefonda asla dondurma.</string>
     <string name="db_playprotect">Play Protect hizmeti (uygulamaları kötü amaçlı yazılıma karşı tarar). Tutmak daha iyi.</string>
     <string name="db_tag">NFC etiketlerini okur (telefonla ödeme için gerekmez). Etiket taramıyorsan güvenli.</string>
+    <string name="cc_title">Önbelleği temizle</string>
+    <string name="cc_short">Önbellek</string>
+    <string name="cc_sub">Uygulama başına önbellek, yer aç</string>
+    <string name="cc_total">Tüm uygulamaların önbelleği</string>
+    <string name="cc_freed">boşaltıldı</string>
+    <string name="cc_cleaning">Temizleniyor …</string>
+    <string name="cc_clean_all">Tümünü temizle</string>
+    <string name="cc_clean_all_q">Tüm uygulamaların önbelleği temizlensin mi?</string>
+    <string name="cc_clean_all_body">Yaklaşık %1$s geçici dosya silinir. Uygulamalar gerektiğinde yeniden oluşturur – ilk açılış biraz yavaş olabilir.</string>
+    <string name="cc_heavy_warn">⚠ Buna indirilmiş yapay zekâ modelleri de dahil (%1$s) – yeniden indirilecekler.</string>
+    <string name="cc_heavy_one">Yapay zekâ modelleri içerir – temizlenince yeniden indirilir</string>
+    <string name="cc_hint">Android 17 tek tek uygulamaları yalnızca ayarlardan temizletir – “Aç” seni oraya götürür (Depolama → Önbelleği temizle).</string>
+    <string name="cc_clear">Temizle</string>
+    <string name="cc_open">Aç</string>
+    <string name="cc_tap">Dokun</string>
 </resources>

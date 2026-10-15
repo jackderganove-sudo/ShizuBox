@@ -978,5 +978,20 @@
     <string name="db_familylink">Family-Link-Elternkontrolle. Auf einem beaufsichtigten Handy nie einfrieren.</string>
     <string name="db_playprotect">Play-Protect-Dienst (prüft Apps auf Schadsoftware). Lieber behalten.</string>
     <string name="db_tag">Liest NFC-Tags (nicht nötig fürs Bezahlen mit dem Handy). Sicher, wenn du keine Tags scannst.</string>
+    <string name="cc_title">Cache aufräumen</string>
+    <string name="cc_short">Cache</string>
+    <string name="cc_sub">Cache pro App, Platz freigeben</string>
+    <string name="cc_total">Cache aller Apps</string>
+    <string name="cc_freed">freigegeben</string>
+    <string name="cc_cleaning">Räume auf …</string>
+    <string name="cc_clean_all">Alles aufräumen</string>
+    <string name="cc_clean_all_q">Cache aller Apps leeren?</string>
+    <string name="cc_clean_all_body">Etwa %1$s temporäre Dateien werden gelöscht. Apps legen sie bei Bedarf neu an – der erste Start kann etwas langsamer sein.</string>
+    <string name="cc_heavy_warn">⚠ Dazu gehören heruntergeladene KI-Modelle (%1$s) – sie werden danach neu geladen.</string>
+    <string name="cc_heavy_one">Enthält KI-Modelle – werden nach dem Leeren neu geladen</string>
+    <string name="cc_hint">Einzelne Apps lässt Android 17 nur in den Einstellungen leeren – „Öffnen“ bringt dich hin (Speicher → Cache leeren).</string>
+    <string name="cc_clear">Leeren</string>
+    <string name="cc_open">Öffnen</string>
+    <string name="cc_tap">Tippen</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

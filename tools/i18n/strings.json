@@ -4726,5 +4726,80 @@
   "en": "Reads NFC tags (not needed for paying by phone). Safe if you don't scan tags.",
   "de": "Liest NFC-Tags (nicht nötig fürs Bezahlen mit dem Handy). Sicher, wenn du keine Tags scannst.",
   "plural": false
+ },
+ "cc_title": {
+  "en": "Clear cache",
+  "de": "Cache aufräumen",
+  "plural": false
+ },
+ "cc_short": {
+  "en": "Cache",
+  "de": "Cache",
+  "plural": false
+ },
+ "cc_sub": {
+  "en": "Cache per app, free up space",
+  "de": "Cache pro App, Platz freigeben",
+  "plural": false
+ },
+ "cc_total": {
+  "en": "Cache of all apps",
+  "de": "Cache aller Apps",
+  "plural": false
+ },
+ "cc_freed": {
+  "en": "freed",
+  "de": "freigegeben",
+  "plural": false
+ },
+ "cc_cleaning": {
+  "en": "Cleaning up …",
+  "de": "Räume auf …",
+  "plural": false
+ },
+ "cc_clean_all": {
+  "en": "Clean up everything",
+  "de": "Alles aufräumen",
+  "plural": false
+ },
+ "cc_clean_all_q": {
+  "en": "Clear the cache of all apps?",
+  "de": "Cache aller Apps leeren?",
+  "plural": false
+ },
+ "cc_clean_all_body": {
+  "en": "About %1$s of temporary files are deleted. Apps rebuild them when needed – the first start may be a bit slower.",
+  "de": "Etwa %1$s temporäre Dateien werden gelöscht. Apps legen sie bei Bedarf neu an – der erste Start kann etwas langsamer sein.",
+  "plural": false
+ },
+ "cc_heavy_warn": {
+  "en": "⚠ This includes downloaded AI models (%1$s) – they will be downloaded again.",
+  "de": "⚠ Dazu gehören heruntergeladene KI-Modelle (%1$s) – sie werden danach neu geladen.",
+  "plural": false
+ },
+ "cc_heavy_one": {
+  "en": "Contains AI models – re-downloaded after clearing",
+  "de": "Enthält KI-Modelle – werden nach dem Leeren neu geladen",
+  "plural": false
+ },
+ "cc_hint": {
+  "en": "Android 17 only lets the settings clear single apps – “Open” takes you there (Storage → Clear cache).",
+  "de": "Einzelne Apps lässt Android 17 nur in den Einstellungen leeren – „Öffnen“ bringt dich hin (Speicher → Cache leeren).",
+  "plural": false
+ },
+ "cc_clear": {
+  "en": "Clear",
+  "de": "Leeren",
+  "plural": false
+ },
+ "cc_open": {
+  "en": "Open",
+  "de": "Öffnen",
+  "plural": false
+ },
+ "cc_tap": {
+  "en": "Tap",
+  "de": "Tippen",
+  "plural": false
  }
 }

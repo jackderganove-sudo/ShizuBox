@@ -118,3 +118,9 @@ class BoostTile : TileService() {
         }
     }
 }
+
+/** Clears all app caches; the subtitle shows how much was freed last time. */
+class CacheTile : ShellTile() {
+    override suspend fun read() = QuickActions.read(QuickAction.Cache)
+    override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Cache, current)
+}

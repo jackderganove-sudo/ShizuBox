@@ -170,6 +170,17 @@
             android:name=".automation.AutomationAlarmReceiver"
             android:exported="false" />
 
+        <service
+            android:name=".tiles.CacheTile"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_cache"
+            android:label="@string/cc_title"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <!-- Volume boost: keeps the loudness effect on the output mix alive. -->
         <service
             android:name=".system.BoostService"

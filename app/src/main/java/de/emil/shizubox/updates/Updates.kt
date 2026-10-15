@@ -317,6 +317,16 @@ object Updates {
         if (Source.forUrl(app.url)?.trackOnly == true) return t(R.string.h_apkm)
         if (!de.emil.shizubox.shizuku.ShizukuManager.isReady) return t(R.string.shizuku_not_conn)
         val (current, uri) = download(app, onProgress)
+        // The silent installer has fully read the file when it returns: no need to keep it
+        // (before, update APKs piled up in the cache for a day – easily close to a gigabyte).
+        try {
+            return installDownloaded(current, uri)
+        } finally {
+            uri.lastPathSegment?.let { File(File(appContext.cacheDir, "updates"), it) }?.takeIf { it.isFile }?.delete()
+        }
+    }
+
+    private suspend fun installDownloaded(current: TrackedApp, uri: Uri): String? {
         val info = ApkParser.parse(appContext, uri)
         if (info.signatureMismatch == true) return t(R.string.h_sig)
         val vt = de.emil.shizubox.installer.VirusTotal

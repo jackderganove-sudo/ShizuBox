@@ -21,6 +21,9 @@
   (einzeln oder alles), wichtige Systemteile gesperrt
 - Internet-Sperre pro App ohne VPN (Apps): Schalter in den App-Details, Filter „Kein Internet“, Mehrfachauswahl
   „Internet sperren/erlauben“; Sperren werden nach einem Neustart automatisch wiederhergestellt, sobald Shizuku läuft
+- Cache aufräumen (System): Cache pro App nach Größe, „Alles aufräumen“ über Shizuku, freigegebener Platz mit rollenden Ziffern,
+  Schnellaktion und Kachel; Einzel-Apps öffnen ihre Speicher-Einstellungen (Android 17 erlaubt es per Shell nicht)
+- Fix: Update-APKs blieben nach der stillen Installation im Cache liegen (bei mir fast 900 MB) – werden jetzt sofort gelöscht
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 
 ## 0.6.0 – Sitzung 2026-10-15 (Nachmittag) – vom Nutzer auf dem Pixel bestätigt

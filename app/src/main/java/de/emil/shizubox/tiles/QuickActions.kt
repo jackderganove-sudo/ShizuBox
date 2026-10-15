@@ -16,6 +16,7 @@ enum class QuickAction(private val labelRes: Int, private val shortRes: Int) {
     Refresh(R.string.cust_refresh, R.string.qa_refresh),
     StayAwake(R.string.tile_stay_awake, R.string.qa_awake),
     Boost(R.string.vb_title, R.string.vb_tile),
+    Cache(R.string.cc_title, R.string.cc_short),
     ;
     val label get() = t(labelRes)
     /** For the narrow buttons on the home screen. */
@@ -36,6 +37,7 @@ object QuickActions {
         }
         QuickAction.Refresh -> Customization.refreshMode().let { TileInfo(it != RefreshMode.Adaptive, it.label) }
         QuickAction.StayAwake -> onOff(Tweaks.caffeine())
+        QuickAction.Cache -> TileInfo(false, prefs.getLong("cache_freed", -1).let { if (it < 0) t(R.string.cc_tap) else android.text.format.Formatter.formatShortFileSize(Str.context, it) })
         QuickAction.Boost -> VolumeBoost.settings.value.let { TileInfo(it.enabled, if (it.enabled) "+${VolumeBoost.currentPercent(it)} %" else t(R.string.off)) }
     }
 
@@ -53,6 +55,7 @@ object QuickActions {
                 Customization.setRefresh(entries[(entries.indexOf(Customization.refreshMode()) + 1) % entries.size])
             }
             QuickAction.StayAwake -> Tweaks.setCaffeine(!current.active)
+            QuickAction.Cache -> prefs.edit().putLong("cache_freed", de.emil.shizubox.system.CacheCleaner.clearAll(Str.context)).apply()
             QuickAction.Boost -> {
                 VolumeBoost.update { it.copy(enabled = !current.active) }
                 BoostService.sync(Str.context)

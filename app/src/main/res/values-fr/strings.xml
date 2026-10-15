@@ -978,4 +978,19 @@
     <string name="db_familylink">Contrôle parental Family Link. Ne jamais geler sur un téléphone supervisé.</string>
     <string name="db_playprotect">Service Play Protect (analyse les applis contre les logiciels malveillants). Mieux vaut le garder.</string>
     <string name="db_tag">Lit les tags NFC (inutile pour le paiement mobile). Sans risque si tu ne scannes pas de tags.</string>
+    <string name="cc_title">Vider le cache</string>
+    <string name="cc_short">Cache</string>
+    <string name="cc_sub">Cache par appli, libérer de l\'espace</string>
+    <string name="cc_total">Cache de toutes les applis</string>
+    <string name="cc_freed">libérés</string>
+    <string name="cc_cleaning">Nettoyage …</string>
+    <string name="cc_clean_all">Tout nettoyer</string>
+    <string name="cc_clean_all_q">Vider le cache de toutes les applis ?</string>
+    <string name="cc_clean_all_body">Environ %1$s de fichiers temporaires seront supprimés. Les applis les recréent au besoin – le premier lancement peut être un peu plus lent.</string>
+    <string name="cc_heavy_warn">⚠ Cela inclut des modèles d\'IA téléchargés (%1$s) – ils seront retéléchargés.</string>
+    <string name="cc_heavy_one">Contient des modèles d\'IA – retéléchargés après vidage</string>
+    <string name="cc_hint">Android 17 ne permet de vider une appli que dans les paramètres – « Ouvrir » t\'y amène (Stockage → Vider le cache).</string>
+    <string name="cc_clear">Vider</string>
+    <string name="cc_open">Ouvrir</string>
+    <string name="cc_tap">Toucher</string>
 </resources>

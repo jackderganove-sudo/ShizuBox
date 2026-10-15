@@ -55,6 +55,7 @@ class DebugReceiver : BroadcastReceiver() {
                         )
                     }
                     "debloat" -> de.emil.shizubox.ui.apps.DebloatScreen(ready, noop)
+                    "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
                     "screentime" -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, noop)
                     "nhistory" -> de.emil.shizubox.ui.system.NotificationHistoryScreen(ready, noop, intent.getStringExtra("pkg"), intent.getStringExtra("conv"))
@@ -204,6 +205,28 @@ class DebugReceiver : BroadcastReceiver() {
                             "rules=${R.rules.value.map { "${it.name}:${it.enabled}" }} active=${E.active.value.mapNotNull { id -> R.rules.value.firstOrNull { it.id == id }?.name }} " +
                                 "state=fg:${s.foreground} hp:${s.headphones} bt:${s.bluetooth.size} chg:${s.charging} bat:${s.battery} wifi:${s.ssid?.let { if (it.isEmpty()) "unnamed" else "named" }} " +
                                 "calc=${ShizukuManager.exec("cmd connectivity get-package-networking-enabled $calc").out.trim()}"
+                        }
+                        "cache" -> {
+                            // --es mode list|<shell cmd to time> --es pkg <p>
+                            val c = de.emil.shizubox.system.CacheCleaner
+                            if (intent.getStringExtra("mode") == "clearown") return@launch run {
+                                Log.i(TAG, "test cache clearown: freed=${c.clearOwn(context) / 1024}K own=${c.cacheOf(context, context.packageName) / 1024}K")
+                            }
+                            if (intent.getStringExtra("mode") == "own") return@launch run {
+                                fun size(f: java.io.File): Long = if (f.isDirectory) f.listFiles().orEmpty().sumOf(::size) else f.length()
+                                Log.i(TAG, "test cache own: " + context.cacheDir.listFiles().orEmpty().joinToString { "${it.name}=${size(it) / 1024}K" } +
+                                    " ext=" + context.externalCacheDir?.listFiles().orEmpty().joinToString { "${it.name}=${size(it) / 1024}K" })
+                            }
+                            val p = intent.getStringExtra("pkg") ?: "com.google.android.calculator"
+                            val cmd = intent.getStringExtra("cmd")
+                            val before = c.cacheOf(context, p)
+                            val free0 = android.os.StatFs("/data").availableBytes
+                            val t0 = System.currentTimeMillis()
+                            val r = cmd?.let { ShizukuManager.exec(it, intent.getLongExtra("to", 15_000)) }
+                            kotlinx.coroutines.delay(1500)
+                            "cmd=$cmd code=${r?.code} took=${System.currentTimeMillis() - t0}ms out=${r?.out?.take(100)} err=${r?.err?.take(100)} " +
+                                "cache($p) $before -> ${c.cacheOf(context, p)} freed=${(android.os.StatFs("/data").availableBytes - free0) / 1024}KB " +
+                                if (intent.getStringExtra("mode") == "list") c.list(context).take(8).joinToString { "${it.pkg}=${it.bytes / 1024}K" } else ""
                         }
                         "debloat" -> {
                             // --es mode freeze|undo (on com.android.egg only)

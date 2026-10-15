@@ -976,5 +976,20 @@
 "db_feedback": "Envía informes de errores a Google. Seguro: desaparece el botón «Enviar comentarios» en los avisos de error.",
 "db_familylink": "Control parental Family Link. Nunca la congeles en un móvil supervisado.",
 "db_playprotect": "Servicio Play Protect (analiza apps en busca de malware). Mejor mantenerlo.",
-"db_tag": "Lee etiquetas NFC (no hace falta para pagar con el móvil). Seguro si no escaneas etiquetas."
+"db_tag": "Lee etiquetas NFC (no hace falta para pagar con el móvil). Seguro si no escaneas etiquetas.",
+"cc_title": "Limpiar caché",
+"cc_short": "Caché",
+"cc_sub": "Caché por app, liberar espacio",
+"cc_total": "Caché de todas las apps",
+"cc_freed": "liberados",
+"cc_cleaning": "Limpiando …",
+"cc_clean_all": "Limpiar todo",
+"cc_clean_all_q": "¿Vaciar la caché de todas las apps?",
+"cc_clean_all_body": "Se borran unos %1$s de archivos temporales. Las apps los vuelven a crear cuando hace falta; el primer inicio puede ser algo más lento.",
+"cc_heavy_warn": "⚠ Incluye modelos de IA descargados (%1$s): se volverán a descargar.",
+"cc_heavy_one": "Contiene modelos de IA: se vuelven a descargar",
+"cc_hint": "Android 17 solo deja vaciar apps sueltas en ajustes: «Abrir» te lleva allí (Almacenamiento → Borrar caché).",
+"cc_clear": "Vaciar",
+"cc_open": "Abrir",
+"cc_tap": "Tocar"
 }

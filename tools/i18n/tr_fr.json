@@ -976,5 +976,20 @@
 "db_feedback": "Envoie les rapports de plantage à Google. Sans risque – le bouton « Envoyer des commentaires » disparaît.",
 "db_familylink": "Contrôle parental Family Link. Ne jamais geler sur un téléphone supervisé.",
 "db_playprotect": "Service Play Protect (analyse les applis contre les logiciels malveillants). Mieux vaut le garder.",
-"db_tag": "Lit les tags NFC (inutile pour le paiement mobile). Sans risque si tu ne scannes pas de tags."
+"db_tag": "Lit les tags NFC (inutile pour le paiement mobile). Sans risque si tu ne scannes pas de tags.",
+"cc_title": "Vider le cache",
+"cc_short": "Cache",
+"cc_sub": "Cache par appli, libérer de l'espace",
+"cc_total": "Cache de toutes les applis",
+"cc_freed": "libérés",
+"cc_cleaning": "Nettoyage …",
+"cc_clean_all": "Tout nettoyer",
+"cc_clean_all_q": "Vider le cache de toutes les applis ?",
+"cc_clean_all_body": "Environ %1$s de fichiers temporaires seront supprimés. Les applis les recréent au besoin – le premier lancement peut être un peu plus lent.",
+"cc_heavy_warn": "⚠ Cela inclut des modèles d'IA téléchargés (%1$s) – ils seront retéléchargés.",
+"cc_heavy_one": "Contient des modèles d'IA – retéléchargés après vidage",
+"cc_hint": "Android 17 ne permet de vider une appli que dans les paramètres – « Ouvrir » t'y amène (Stockage → Vider le cache).",
+"cc_clear": "Vider",
+"cc_open": "Ouvrir",
+"cc_tap": "Toucher"
 }

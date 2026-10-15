@@ -976,5 +976,20 @@
 "db_feedback": "Çökme raporlarını Google'a gönderir. Güvenli – çökme penceresindeki “Geri bildirim gönder” düğmesi kaybolur.",
 "db_familylink": "Family Link ebeveyn denetimi. Denetlenen bir telefonda asla dondurma.",
 "db_playprotect": "Play Protect hizmeti (uygulamaları kötü amaçlı yazılıma karşı tarar). Tutmak daha iyi.",
-"db_tag": "NFC etiketlerini okur (telefonla ödeme için gerekmez). Etiket taramıyorsan güvenli."
+"db_tag": "NFC etiketlerini okur (telefonla ödeme için gerekmez). Etiket taramıyorsan güvenli.",
+"cc_title": "Önbelleği temizle",
+"cc_short": "Önbellek",
+"cc_sub": "Uygulama başına önbellek, yer aç",
+"cc_total": "Tüm uygulamaların önbelleği",
+"cc_freed": "boşaltıldı",
+"cc_cleaning": "Temizleniyor …",
+"cc_clean_all": "Tümünü temizle",
+"cc_clean_all_q": "Tüm uygulamaların önbelleği temizlensin mi?",
+"cc_clean_all_body": "Yaklaşık %1$s geçici dosya silinir. Uygulamalar gerektiğinde yeniden oluşturur – ilk açılış biraz yavaş olabilir.",
+"cc_heavy_warn": "⚠ Buna indirilmiş yapay zekâ modelleri de dahil (%1$s) – yeniden indirilecekler.",
+"cc_heavy_one": "Yapay zekâ modelleri içerir – temizlenince yeniden indirilir",
+"cc_hint": "Android 17 tek tek uygulamaları yalnızca ayarlardan temizletir – “Aç” seni oraya götürür (Depolama → Önbelleği temizle).",
+"cc_clear": "Temizle",
+"cc_open": "Aç",
+"cc_tap": "Dokun"
 }

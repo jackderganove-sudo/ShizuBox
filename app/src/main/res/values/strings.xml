@@ -980,4 +980,19 @@
     <string name="db_familylink">Family Link parental controls. Never freeze on a supervised phone.</string>
     <string name="db_playprotect">Play Protect service (checks apps for malware). Better keep it.</string>
     <string name="db_tag">Reads NFC tags (not needed for paying by phone). Safe if you don\'t scan tags.</string>
+    <string name="cc_title">Clear cache</string>
+    <string name="cc_short">Cache</string>
+    <string name="cc_sub">Cache per app, free up space</string>
+    <string name="cc_total">Cache of all apps</string>
+    <string name="cc_freed">freed</string>
+    <string name="cc_cleaning">Cleaning up …</string>
+    <string name="cc_clean_all">Clean up everything</string>
+    <string name="cc_clean_all_q">Clear the cache of all apps?</string>
+    <string name="cc_clean_all_body">About %1$s of temporary files are deleted. Apps rebuild them when needed – the first start may be a bit slower.</string>
+    <string name="cc_heavy_warn">⚠ This includes downloaded AI models (%1$s) – they will be downloaded again.</string>
+    <string name="cc_heavy_one">Contains AI models – re-downloaded after clearing</string>
+    <string name="cc_hint">Android 17 only lets the settings clear single apps – “Open” takes you there (Storage → Clear cache).</string>
+    <string name="cc_clear">Clear</string>
+    <string name="cc_open">Open</string>
+    <string name="cc_tap">Tap</string>
 </resources>

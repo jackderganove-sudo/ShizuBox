@@ -978,4 +978,19 @@
     <string name="db_familylink">Control parental Family Link. Nunca la congeles en un móvil supervisado.</string>
     <string name="db_playprotect">Servicio Play Protect (analiza apps en busca de malware). Mejor mantenerlo.</string>
     <string name="db_tag">Lee etiquetas NFC (no hace falta para pagar con el móvil). Seguro si no escaneas etiquetas.</string>
+    <string name="cc_title">Limpiar caché</string>
+    <string name="cc_short">Caché</string>
+    <string name="cc_sub">Caché por app, liberar espacio</string>
+    <string name="cc_total">Caché de todas las apps</string>
+    <string name="cc_freed">liberados</string>
+    <string name="cc_cleaning">Limpiando …</string>
+    <string name="cc_clean_all">Limpiar todo</string>
+    <string name="cc_clean_all_q">¿Vaciar la caché de todas las apps?</string>
+    <string name="cc_clean_all_body">Se borran unos %1$s de archivos temporales. Las apps los vuelven a crear cuando hace falta; el primer inicio puede ser algo más lento.</string>
+    <string name="cc_heavy_warn">⚠ Incluye modelos de IA descargados (%1$s): se volverán a descargar.</string>
+    <string name="cc_heavy_one">Contiene modelos de IA: se vuelven a descargar</string>
+    <string name="cc_hint">Android 17 solo deja vaciar apps sueltas en ajustes: «Abrir» te lleva allí (Almacenamiento → Borrar caché).</string>
+    <string name="cc_clear">Vaciar</string>
+    <string name="cc_open">Abrir</string>
+    <string name="cc_tap">Tocar</string>
 </resources>
