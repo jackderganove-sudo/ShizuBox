@@ -76,7 +76,11 @@ fun DownloadSheetContent(target: SheetTarget, onQueued: () -> Unit) {
     LaunchedEffect(target) {
         when (target) {
             is SheetTarget.Url -> runCatching { Ytdl.info(target.url) }
-                .onSuccess { info = it }
+                .onSuccess { i ->
+                    // If the default quality does not exist for this video, preselect "Best".
+                    if (i.heights.isNotEmpty() && format.height > 0 && i.heights.none { it >= format.height * 0.9 }) format = format.copy(height = 0)
+                    info = i
+                }
                 .onFailure { e ->
                     // Errors without a message (e.g. initializer errors) must still end the spinner.
                     error = e.message?.lines()?.lastOrNull { it.contains("ERROR") }?.substringAfter("ERROR:")?.trim()
