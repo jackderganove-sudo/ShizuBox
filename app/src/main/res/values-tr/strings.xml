@@ -819,4 +819,42 @@
     <string name="vb_dose_sub">Android, haftalık ses dozu %%100\'e ulaştığında uyarır (şu an %%%1$d). Kapatılamaz ama doz sıfırlanabilir.</string>
     <string name="vb_dose_reset">Dozu sıfırla</string>
     <string name="vb_dose_restore">Geri yükle</string>
+    <string name="nh_title">Bildirim geçmişi</string>
+    <string name="nh_title_short">Bildirimler</string>
+    <string name="nh_sub">Geçmiş, silinen mesajlar dahil</string>
+    <string name="nh_setup">ShizuBox, gelen her bildirimi daha sonra okuyabilmen için kaydeder – sonradan silinen mesajlar dahil. Bunun için bildirimlere erişim gerekir.</string>
+    <string name="nh_private">Yalnızca bu cihazda saklanır · yedeğe dahil değil</string>
+    <string name="nh_enable">Geçmişi aç</string>
+    <string name="nh_open_settings">Ayarlardan erişim ver</string>
+    <string name="nh_no_access">⚠ Bildirimlere erişim yok</string>
+    <string name="nh_mode_all">Tümü</string>
+    <string name="nh_mode_apps">Uygulamaya göre</string>
+    <string name="nh_mode_removed">Kaldırılan</string>
+    <string name="nh_deleted">Silindi</string>
+    <string name="nh_withdrawn">Geri çekildi</string>
+    <string name="nh_legend">“Silindi”: Mesaj, daha yenileri kalırken sohbetten kayboldu. “Geri çekildi”: Uygulama, sen açmadan bildirimi kaldırdı (silindi veya başka bir cihazda okundu).</string>
+    <string name="nh_empty">Henüz kayıt yok</string>
+    <string name="nh_empty_hint">Yeni bildirimler burada görünür.</string>
+    <string name="nh_empty_removed">Silinen veya geri çekilen mesaj yok</string>
+    <string name="nh_record">Bildirimleri kaydet</string>
+    <string name="nh_keep">Otomatik silme süresi</string>
+    <string name="nh_forever">Asla</string>
+    <plurals name="nh_days">
+        <item quantity="one">%1$d gün</item>
+        <item quantity="other">%1$d gün</item>
+    </plurals>
+    <string name="nh_lock">Parmak iziyle kilitle</string>
+    <string name="nh_locked">Geçmiş kilitli</string>
+    <string name="nh_unlock">Kilidi aç</string>
+    <string name="nh_excluded">Hariç tutulan uygulamalar</string>
+    <string name="nh_excluded_none">Yok – “Uygulamaya göre” altındaki menüden bir uygulamayı hariç tut</string>
+    <string name="nh_exclude">Bu uygulamayı kaydetme</string>
+    <string name="nh_delete_app">Bu uygulamanın geçmişini sil</string>
+    <string name="nh_delete_all">Tümünü sil</string>
+    <string name="nh_delete_all_q">Tüm geçmiş silinsin mi?</string>
+    <plurals name="nh_entries">
+        <item quantity="one">%1$d kayıt</item>
+        <item quantity="other">%1$d kayıt</item>
+    </plurals>
+    <string name="nh_removed_n">%1$d kaldırıldı</string>
 </resources>

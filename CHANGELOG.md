@@ -8,6 +8,10 @@
 - Lautstärke-Boost (System): bis +100 % über das Maximum (`LoudnessEnhancer` auf dem globalen Output-Mix), Foreground-Service,
   einstellbare Obergrenze, getrennte Stufen für Lautsprecher/Kopfhörer (automatisch), Warnung bei viel Boost mit Kopfhörern,
   Gehörschutz-Schalldosis zurücksetzen und wiederherstellen, Kachel „Boost“ und Schnellaktion auf der Startseite, im Backup
+- Benachrichtigungs-Verlauf (System → Benachrichtigungen): speichert alle Benachrichtigungen lokal (eigene Datenbank, nicht im Backup),
+  Zugriff erteilt sich ShizuBox per Shizuku selbst; Ansichten „Alle“, „Nach App“ (Unterhaltungen zusammengeführt) und „Entfernt“,
+  Suche und App-Filter, gelöschte/zurückgezogene Nachrichten markiert, Bilder gespeichert, Apps ausschließen,
+  automatisches Löschen nach X Tagen, alles löschen, optionale Fingerabdruck-Sperre
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 
 ## 0.6.0 – Sitzung 2026-10-15 (Nachmittag) – vom Nutzer auf dem Pixel bestätigt

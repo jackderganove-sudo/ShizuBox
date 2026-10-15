@@ -201,6 +201,7 @@ class MainActivity : ComponentActivity() {
                             SystemPage.PROCESSES -> ProcessesScreen(ready, onBack = close)
                             SystemPage.TERMINAL -> TerminalScreen(ready, onBack = close)
                             SystemPage.SCREEN_TIME -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, onBack = close)
+                            SystemPage.NOTIF_HISTORY -> de.emil.shizubox.ui.system.NotificationHistoryScreen(ready, onBack = close)
                             else -> SystemScreen(
                                 shizukuReady = ready,
                                 onOpenPage = onSystemPage,

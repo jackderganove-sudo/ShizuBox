@@ -819,4 +819,42 @@
     <string name="vb_dose_sub">Android avisa cuando la dosis de sonido semanal llega al 100 %% (ahora %1$d %%). No se puede desactivar, pero sí restablecer la dosis.</string>
     <string name="vb_dose_reset">Restablecer dosis</string>
     <string name="vb_dose_restore">Restaurar</string>
+    <string name="nh_title">Historial de notificaciones</string>
+    <string name="nh_title_short">Notificaciones</string>
+    <string name="nh_sub">Historial, también mensajes borrados</string>
+    <string name="nh_setup">ShizuBox guarda cada notificación entrante para que puedas leerla después, incluso mensajes que luego se borraron. Para ello necesita acceso a las notificaciones.</string>
+    <string name="nh_private">Solo se guarda en este dispositivo · no forma parte de la copia de seguridad</string>
+    <string name="nh_enable">Activar historial</string>
+    <string name="nh_open_settings">Conceder acceso en ajustes</string>
+    <string name="nh_no_access">⚠ Sin acceso a las notificaciones</string>
+    <string name="nh_mode_all">Todas</string>
+    <string name="nh_mode_apps">Por app</string>
+    <string name="nh_mode_removed">Eliminadas</string>
+    <string name="nh_deleted">Borrado</string>
+    <string name="nh_withdrawn">Retirada</string>
+    <string name="nh_legend">«Borrado»: el mensaje desapareció del chat mientras los más nuevos seguían. «Retirada»: la app quitó la notificación sin que la abrieras (borrada o leída en otro dispositivo).</string>
+    <string name="nh_empty">Aún no hay nada registrado</string>
+    <string name="nh_empty_hint">Las nuevas notificaciones aparecen aquí.</string>
+    <string name="nh_empty_removed">No hay mensajes borrados ni retirados</string>
+    <string name="nh_record">Registrar notificaciones</string>
+    <string name="nh_keep">Borrar automáticamente después de</string>
+    <string name="nh_forever">Nunca</string>
+    <plurals name="nh_days">
+        <item quantity="one">%1$d día</item>
+        <item quantity="other">%1$d días</item>
+    </plurals>
+    <string name="nh_lock">Bloquear con huella</string>
+    <string name="nh_locked">Historial bloqueado</string>
+    <string name="nh_unlock">Desbloquear</string>
+    <string name="nh_excluded">Apps excluidas</string>
+    <string name="nh_excluded_none">Ninguna: excluye una app desde su menú en «Por app»</string>
+    <string name="nh_exclude">No registrar esta app</string>
+    <string name="nh_delete_app">Borrar historial de esta app</string>
+    <string name="nh_delete_all">Borrar todo</string>
+    <string name="nh_delete_all_q">¿Borrar todo el historial?</string>
+    <plurals name="nh_entries">
+        <item quantity="one">%1$d entrada</item>
+        <item quantity="other">%1$d entradas</item>
+    </plurals>
+    <string name="nh_removed_n">%1$d eliminadas</string>
 </resources>

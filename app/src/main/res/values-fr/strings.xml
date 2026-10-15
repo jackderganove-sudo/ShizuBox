@@ -819,4 +819,42 @@
     <string name="vb_dose_sub">Android avertit quand la dose sonore hebdomadaire atteint 100 %% (actuellement %1$d %%). Impossible de le désactiver, mais la dose peut être remise à zéro.</string>
     <string name="vb_dose_reset">Remettre à zéro</string>
     <string name="vb_dose_restore">Restaurer</string>
+    <string name="nh_title">Historique des notifications</string>
+    <string name="nh_title_short">Notifications</string>
+    <string name="nh_sub">Historique, même les messages supprimés</string>
+    <string name="nh_setup">ShizuBox enregistre chaque notification reçue pour que tu puisses la relire plus tard – même les messages supprimés ensuite. Il faut pour cela l\'accès aux notifications.</string>
+    <string name="nh_private">Stocké uniquement sur cet appareil · hors sauvegarde</string>
+    <string name="nh_enable">Activer l\'historique</string>
+    <string name="nh_open_settings">Autoriser l\'accès dans les paramètres</string>
+    <string name="nh_no_access">⚠ Pas d\'accès aux notifications</string>
+    <string name="nh_mode_all">Toutes</string>
+    <string name="nh_mode_apps">Par appli</string>
+    <string name="nh_mode_removed">Retirées</string>
+    <string name="nh_deleted">Supprimé</string>
+    <string name="nh_withdrawn">Retirée</string>
+    <string name="nh_legend">« Supprimé » : le message a disparu de la discussion alors que les plus récents sont restés. « Retirée » : l\'appli a retiré la notification sans que tu l\'ouvres (supprimée ou lue sur un autre appareil).</string>
+    <string name="nh_empty">Rien d\'enregistré pour l\'instant</string>
+    <string name="nh_empty_hint">Les nouvelles notifications s\'affichent ici.</string>
+    <string name="nh_empty_removed">Aucun message supprimé ou retiré</string>
+    <string name="nh_record">Enregistrer les notifications</string>
+    <string name="nh_keep">Supprimer automatiquement après</string>
+    <string name="nh_forever">Jamais</string>
+    <plurals name="nh_days">
+        <item quantity="one">%1$d jour</item>
+        <item quantity="other">%1$d jours</item>
+    </plurals>
+    <string name="nh_lock">Verrouiller par empreinte</string>
+    <string name="nh_locked">Historique verrouillé</string>
+    <string name="nh_unlock">Déverrouiller</string>
+    <string name="nh_excluded">Applis exclues</string>
+    <string name="nh_excluded_none">Aucune – exclure une appli via son menu dans « Par appli »</string>
+    <string name="nh_exclude">Ne pas enregistrer cette appli</string>
+    <string name="nh_delete_app">Supprimer l\'historique de cette appli</string>
+    <string name="nh_delete_all">Tout supprimer</string>
+    <string name="nh_delete_all_q">Supprimer tout l\'historique ?</string>
+    <plurals name="nh_entries">
+        <item quantity="one">%1$d entrée</item>
+        <item quantity="other">%1$d entrées</item>
+    </plurals>
+    <string name="nh_removed_n">%1$d retirées</string>
 </resources>

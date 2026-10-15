@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Notes
+import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.HourglassBottom
 import androidx.compose.material.icons.rounded.PhoneAndroid
@@ -107,7 +108,7 @@ fun SystemScreen(
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ToolTile(Icons.Rounded.HourglassBottom, t(R.string.st_title), t(R.string.st_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.SCREEN_TIME) }
-                androidx.compose.foundation.layout.Spacer(Modifier.weight(1f))
+                ToolTile(Icons.Rounded.History, t(R.string.nh_title_short), t(R.string.nh_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.NOTIF_HISTORY) }
             }
         }
         item { GamingCard(shizukuReady) }

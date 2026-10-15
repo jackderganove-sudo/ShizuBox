@@ -55,6 +55,7 @@ class DebugReceiver : BroadcastReceiver() {
                         )
                     }
                     "screentime" -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, noop)
+                    "nhistory" -> de.emil.shizubox.ui.system.NotificationHistoryScreen(ready, noop, intent.getStringExtra("pkg"), intent.getStringExtra("conv"))
                     "apps" -> de.emil.shizubox.ui.apps.AppsScreen(ready, noop)
                     "app" -> de.emil.shizubox.ui.apps.AppDetailScreen(pkg, ready, noop)
                     "updates" -> de.emil.shizubox.ui.updates.UpdatesScreen(ready, noop)
@@ -142,6 +143,38 @@ class DebugReceiver : BroadcastReceiver() {
                             val cm = context.getSystemService(android.net.ConnectivityManager::class.java)
                             val caps = cm.getNetworkCapabilities(cm.activeNetwork)
                             append("vpn=${caps?.hasTransport(android.net.NetworkCapabilities.TRANSPORT_VPN)} privateDns=${cm.getLinkProperties(cm.activeNetwork)?.privateDnsServerName}")
+                        }
+                        "nh" -> {
+                            // --es mode on|off|show ; "show" only lists test entries posted by the shell.
+                            val h = de.emil.shizubox.notifications.NotifHistory
+                            when (intent.getStringExtra("mode")) {
+                                "on" -> { h.update { it.copy(enabled = true) }; "access=${h.setAccess(context, true)}" }
+                                "sim" -> {
+                                    // Deterministic chat as the shell package: 3 messages, then the middle one
+                                    // disappears (deleted), then the app cancels the notification (withdrawn).
+                                    val t0 = System.currentTimeMillis() - 60_000
+                                    fun sbn(vararg m: Pair<String, Long>): android.service.notification.StatusBarNotification {
+                                        val me = androidx.core.app.Person.Builder().setName("Ich").build()
+                                        val style = androidx.core.app.NotificationCompat.MessagingStyle(me).setConversationTitle("Simchat (3 Nachrichten)").setGroupConversation(true)
+                                        m.forEach { (txt, t) -> style.addMessage(txt, t, androidx.core.app.Person.Builder().setName(if (txt.startsWith("B")) "Bea" else "Alex").build()) }
+                                        val n = androidx.core.app.NotificationCompat.Builder(context, "x").setSmallIcon(android.R.drawable.ic_dialog_info).setStyle(style).build()
+                                        @Suppress("DEPRECATION")
+                                        return android.service.notification.StatusBarNotification("com.android.shell", "com.android.shell", 4242, "sim", 2000, 0, 0, n, android.os.Process.myUserHandle(), System.currentTimeMillis())
+                                    }
+                                    h.posted(sbn("A: Hallo" to t0, "A: Wie gehts?" to t0 + 1000, "B: Gut" to t0 + 2000))
+                                    kotlinx.coroutines.delay(500)
+                                    h.posted(sbn("A: Hallo" to t0, "B: Gut" to t0 + 2000, "A: Neu" to t0 + 3000))
+                                    kotlinx.coroutines.delay(500)
+                                    h.removed(sbn("A: Hallo" to t0), android.service.notification.NotificationListenerService.REASON_APP_CANCEL)
+                                    kotlinx.coroutines.delay(500)
+                                    h.entries(pkg = "com.android.shell").joinToString("\n") { "${it.conv} | ${it.sender} | ${it.text} | ${it.state}" }
+                                }
+                                "clean" -> de.emil.shizubox.notifications.HistoryListener.instance?.let { l ->
+                                    l.activeNotifications.filter { it.packageName == "com.android.shell" }.onEach { l.cancelNotification(it.key) }.size.toString()
+                                } ?: "no listener"
+                                "off" -> { h.update { it.copy(enabled = false) }; h.deleteAll(); "revoked=${h.setAccess(context, false)} " }
+                                else -> "access=${h.hasAccess(context)} " + h.entries(pkg = "com.android.shell").joinToString("\n") { "${it.conv} | ${it.sender} | ${it.text} | ${it.state} | msg=${it.message} img=${it.image != null}" }
+                            }
                         }
                         "boostfx" -> buildString {
                             // Can we attach effects to the global output mix (session 0) on this Android version?

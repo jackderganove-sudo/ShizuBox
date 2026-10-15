@@ -71,6 +71,7 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Universal Installer (APK/APKS/XAPK/APKM, Split-Auswahl, Signatur, VirusTotal, Öffnen-mit) | ✅ |
 | Schnell-Installer, Logcat-Viewer | ✅ |
 | Lautstärke-Boost (`VolumeBoost`, `BoostService`): `LoudnessEnhancer` auf Session 0 (Android 17: Steuerung ✓, liegt im Output-Mix), bis +100 % (= +10 dB), Obergrenze, getrennte Stufen Lautsprecher/Kopfhörer mit Auto-Umschaltung, Kopfhörer-Warnung, Kachel + Schnellaktion, startet nach Neustart/Update wieder | ✅ Ein/Aus/Service getestet; Lautstärke per Ohr noch vom Nutzer zu prüfen |
+| Benachrichtigungs-Verlauf (`notifications/NotifHistory`, `HistoryListener`, eigene SQLite-DB, nicht im Backup): Zugriff per `cmd notification allow_listener` (Android 17 ✓, sonst Einstellungs-Dialog), chronologisch / nach App / „Entfernt“, Suche, App-Filter, Unterhaltungen über mehrere Benachrichtigungen zusammengeführt, „Gelöscht“ (Nachricht verschwand aus aktualisiertem Chat) und „Zurückgezogen“ (App hat entfernt, ohne dass die App geöffnet wurde – via UsageStats), Bilder (BigPicture; MessagingStyle-Bilder nur falls lesbar), Apps ausschließen, Auto-Löschen nach 7/30/90 Tagen, alles löschen, Fingerabdruck-Sperre | ✅ mit Shell-Test-Benachrichtigungen + simuliertem Chat getestet; mit echtem WhatsApp noch vom Nutzer zu prüfen |
 | Gehörschutz: Schalldosis (CSD) zurücksetzen/wiederherstellen (`cmd audio set-sound-dose-value`); abschalten geht per Shell nicht | ✅ |
 
 ### Downloader (`downloader/`, `ui/downloader/`) – ohne Shizuku

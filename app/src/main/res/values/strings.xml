@@ -821,4 +821,42 @@
     <string name="vb_dose_sub">Android warns when the weekly sound dose reaches 100 %% (now %1$d %%). It can\'t be switched off, but the dose can be reset.</string>
     <string name="vb_dose_reset">Reset dose</string>
     <string name="vb_dose_restore">Restore</string>
+    <string name="nh_title">Notification history</string>
+    <string name="nh_title_short">Notifications</string>
+    <string name="nh_sub">History, also of deleted messages</string>
+    <string name="nh_setup">ShizuBox saves every incoming notification so you can read it later – including messages that were deleted afterwards. This needs access to notifications.</string>
+    <string name="nh_private">Stored only on this device · not part of the backup</string>
+    <string name="nh_enable">Turn on history</string>
+    <string name="nh_open_settings">Grant access in settings</string>
+    <string name="nh_no_access">⚠ No access to notifications</string>
+    <string name="nh_mode_all">All</string>
+    <string name="nh_mode_apps">By app</string>
+    <string name="nh_mode_removed">Removed</string>
+    <string name="nh_deleted">Deleted</string>
+    <string name="nh_withdrawn">Withdrawn</string>
+    <string name="nh_legend">“Deleted”: the message vanished from the chat while newer ones stayed. “Withdrawn”: the app removed the notification without you opening it (deleted, or read on another device).</string>
+    <string name="nh_empty">Nothing recorded yet</string>
+    <string name="nh_empty_hint">New notifications show up here.</string>
+    <string name="nh_empty_removed">No deleted or withdrawn messages</string>
+    <string name="nh_record">Record notifications</string>
+    <string name="nh_keep">Delete automatically after</string>
+    <string name="nh_forever">Never</string>
+    <plurals name="nh_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+    <string name="nh_lock">Lock with fingerprint</string>
+    <string name="nh_locked">History is locked</string>
+    <string name="nh_unlock">Unlock</string>
+    <string name="nh_excluded">Excluded apps</string>
+    <string name="nh_excluded_none">None – exclude an app via its menu under “By app”</string>
+    <string name="nh_exclude">Don\'t record this app</string>
+    <string name="nh_delete_app">Delete history of this app</string>
+    <string name="nh_delete_all">Delete everything</string>
+    <string name="nh_delete_all_q">Delete the whole history?</string>
+    <plurals name="nh_entries">
+        <item quantity="one">%1$d entry</item>
+        <item quantity="other">%1$d entries</item>
+    </plurals>
+    <string name="nh_removed_n">%1$d removed</string>
 </resources>

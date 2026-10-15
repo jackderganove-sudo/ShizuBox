@@ -34,6 +34,8 @@ object Backup {
         "activity_launcher" to emptySet(),
         "downloader" to emptySet(),
         "boost" to setOf("enabled", "dose_before_reset"),
+        // Only the settings: the history itself never leaves the device.
+        "notif_history" to setOf("enabled"),
     )
 
     /** Only exported when the user asks for it. */
@@ -98,6 +100,7 @@ object Backup {
         de.emil.shizubox.apps.ActivityLauncher.reload()
         de.emil.shizubox.downloader.DownloaderSettings.load()
         de.emil.shizubox.system.VolumeBoost.load()
+        de.emil.shizubox.notifications.NotifHistory.load()
         Updates.init(context)
         UpdateWorker.schedule(context)
         root.optJSONObject("school")?.let { s ->

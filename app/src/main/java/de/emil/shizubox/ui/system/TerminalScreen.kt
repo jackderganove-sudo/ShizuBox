@@ -77,6 +77,7 @@ object SystemPage {
     const val PROCESSES = "processes"
     const val TERMINAL = "terminal"
     const val SCREEN_TIME = "screentime"
+    const val NOTIF_HISTORY = "notifhistory"
 }
 
 private data class TermEntry(val cmd: String, val code: Int?, val output: String)

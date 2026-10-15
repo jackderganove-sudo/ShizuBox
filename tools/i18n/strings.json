@@ -3967,5 +3967,177 @@
   "en": "Restore",
   "de": "Wiederherstellen",
   "plural": false
+ },
+ "nh_title": {
+  "en": "Notification history",
+  "de": "Benachrichtigungs-Verlauf",
+  "plural": false
+ },
+ "nh_title_short": {
+  "en": "Notifications",
+  "de": "Benachrichtigungen",
+  "plural": false
+ },
+ "nh_sub": {
+  "en": "History, also of deleted messages",
+  "de": "Verlauf, auch gelöschte Nachrichten",
+  "plural": false
+ },
+ "nh_setup": {
+  "en": "ShizuBox saves every incoming notification so you can read it later – including messages that were deleted afterwards. This needs access to notifications.",
+  "de": "ShizuBox speichert jede eingehende Benachrichtigung, damit du sie später nachlesen kannst – auch Nachrichten, die danach gelöscht wurden. Dafür braucht es Zugriff auf Benachrichtigungen.",
+  "plural": false
+ },
+ "nh_private": {
+  "en": "Stored only on this device · not part of the backup",
+  "de": "Nur auf diesem Gerät gespeichert · nicht im Backup",
+  "plural": false
+ },
+ "nh_enable": {
+  "en": "Turn on history",
+  "de": "Verlauf aktivieren",
+  "plural": false
+ },
+ "nh_open_settings": {
+  "en": "Grant access in settings",
+  "de": "Zugriff in den Einstellungen erteilen",
+  "plural": false
+ },
+ "nh_no_access": {
+  "en": "⚠ No access to notifications",
+  "de": "⚠ Kein Zugriff auf Benachrichtigungen",
+  "plural": false
+ },
+ "nh_mode_all": {
+  "en": "All",
+  "de": "Alle",
+  "plural": false
+ },
+ "nh_mode_apps": {
+  "en": "By app",
+  "de": "Nach App",
+  "plural": false
+ },
+ "nh_mode_removed": {
+  "en": "Removed",
+  "de": "Entfernt",
+  "plural": false
+ },
+ "nh_deleted": {
+  "en": "Deleted",
+  "de": "Gelöscht",
+  "plural": false
+ },
+ "nh_withdrawn": {
+  "en": "Withdrawn",
+  "de": "Zurückgezogen",
+  "plural": false
+ },
+ "nh_legend": {
+  "en": "“Deleted”: the message vanished from the chat while newer ones stayed. “Withdrawn”: the app removed the notification without you opening it (deleted, or read on another device).",
+  "de": "„Gelöscht“: Die Nachricht verschwand aus dem Chat, während neuere blieben. „Zurückgezogen“: Die App hat die Benachrichtigung entfernt, ohne dass du sie geöffnet hast (gelöscht oder auf einem anderen Gerät gelesen).",
+  "plural": false
+ },
+ "nh_empty": {
+  "en": "Nothing recorded yet",
+  "de": "Noch nichts aufgezeichnet",
+  "plural": false
+ },
+ "nh_empty_hint": {
+  "en": "New notifications show up here.",
+  "de": "Neue Benachrichtigungen erscheinen hier.",
+  "plural": false
+ },
+ "nh_empty_removed": {
+  "en": "No deleted or withdrawn messages",
+  "de": "Keine gelöschten oder zurückgezogenen Nachrichten",
+  "plural": false
+ },
+ "nh_record": {
+  "en": "Record notifications",
+  "de": "Benachrichtigungen aufzeichnen",
+  "plural": false
+ },
+ "nh_keep": {
+  "en": "Delete automatically after",
+  "de": "Automatisch löschen nach",
+  "plural": false
+ },
+ "nh_forever": {
+  "en": "Never",
+  "de": "Nie",
+  "plural": false
+ },
+ "nh_days": {
+  "en": {
+   "one": "%1$d day",
+   "other": "%1$d days"
+  },
+  "de": {
+   "one": "%1$d Tag",
+   "other": "%1$d Tagen"
+  },
+  "plural": true
+ },
+ "nh_lock": {
+  "en": "Lock with fingerprint",
+  "de": "Mit Fingerabdruck sperren",
+  "plural": false
+ },
+ "nh_locked": {
+  "en": "History is locked",
+  "de": "Verlauf gesperrt",
+  "plural": false
+ },
+ "nh_unlock": {
+  "en": "Unlock",
+  "de": "Entsperren",
+  "plural": false
+ },
+ "nh_excluded": {
+  "en": "Excluded apps",
+  "de": "Ausgeschlossene Apps",
+  "plural": false
+ },
+ "nh_excluded_none": {
+  "en": "None – exclude an app via its menu under “By app”",
+  "de": "Keine – App über ihr Menü unter „Nach App“ ausschließen",
+  "plural": false
+ },
+ "nh_exclude": {
+  "en": "Don't record this app",
+  "de": "Diese App nicht aufzeichnen",
+  "plural": false
+ },
+ "nh_delete_app": {
+  "en": "Delete history of this app",
+  "de": "Verlauf dieser App löschen",
+  "plural": false
+ },
+ "nh_delete_all": {
+  "en": "Delete everything",
+  "de": "Alles löschen",
+  "plural": false
+ },
+ "nh_delete_all_q": {
+  "en": "Delete the whole history?",
+  "de": "Den gesamten Verlauf löschen?",
+  "plural": false
+ },
+ "nh_entries": {
+  "en": {
+   "one": "%1$d entry",
+   "other": "%1$d entries"
+  },
+  "de": {
+   "one": "%1$d Eintrag",
+   "other": "%1$d Einträge"
+  },
+  "plural": true
+ },
+ "nh_removed_n": {
+  "en": "%1$d removed",
+  "de": "%1$d entfernt",
+  "plural": false
  }
 }

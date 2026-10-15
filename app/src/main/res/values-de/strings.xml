@@ -819,5 +819,43 @@
     <string name="vb_dose_sub">Android warnt, wenn die Wochen-Schalldosis 100 %% erreicht (jetzt %1$d %%). Abschalten geht nicht, aber die Dosis lässt sich zurücksetzen.</string>
     <string name="vb_dose_reset">Dosis zurücksetzen</string>
     <string name="vb_dose_restore">Wiederherstellen</string>
+    <string name="nh_title">Benachrichtigungs-Verlauf</string>
+    <string name="nh_title_short">Benachrichtigungen</string>
+    <string name="nh_sub">Verlauf, auch gelöschte Nachrichten</string>
+    <string name="nh_setup">ShizuBox speichert jede eingehende Benachrichtigung, damit du sie später nachlesen kannst – auch Nachrichten, die danach gelöscht wurden. Dafür braucht es Zugriff auf Benachrichtigungen.</string>
+    <string name="nh_private">Nur auf diesem Gerät gespeichert · nicht im Backup</string>
+    <string name="nh_enable">Verlauf aktivieren</string>
+    <string name="nh_open_settings">Zugriff in den Einstellungen erteilen</string>
+    <string name="nh_no_access">⚠ Kein Zugriff auf Benachrichtigungen</string>
+    <string name="nh_mode_all">Alle</string>
+    <string name="nh_mode_apps">Nach App</string>
+    <string name="nh_mode_removed">Entfernt</string>
+    <string name="nh_deleted">Gelöscht</string>
+    <string name="nh_withdrawn">Zurückgezogen</string>
+    <string name="nh_legend">„Gelöscht“: Die Nachricht verschwand aus dem Chat, während neuere blieben. „Zurückgezogen“: Die App hat die Benachrichtigung entfernt, ohne dass du sie geöffnet hast (gelöscht oder auf einem anderen Gerät gelesen).</string>
+    <string name="nh_empty">Noch nichts aufgezeichnet</string>
+    <string name="nh_empty_hint">Neue Benachrichtigungen erscheinen hier.</string>
+    <string name="nh_empty_removed">Keine gelöschten oder zurückgezogenen Nachrichten</string>
+    <string name="nh_record">Benachrichtigungen aufzeichnen</string>
+    <string name="nh_keep">Automatisch löschen nach</string>
+    <string name="nh_forever">Nie</string>
+    <plurals name="nh_days">
+        <item quantity="one">%1$d Tag</item>
+        <item quantity="other">%1$d Tagen</item>
+    </plurals>
+    <string name="nh_lock">Mit Fingerabdruck sperren</string>
+    <string name="nh_locked">Verlauf gesperrt</string>
+    <string name="nh_unlock">Entsperren</string>
+    <string name="nh_excluded">Ausgeschlossene Apps</string>
+    <string name="nh_excluded_none">Keine – App über ihr Menü unter „Nach App“ ausschließen</string>
+    <string name="nh_exclude">Diese App nicht aufzeichnen</string>
+    <string name="nh_delete_app">Verlauf dieser App löschen</string>
+    <string name="nh_delete_all">Alles löschen</string>
+    <string name="nh_delete_all_q">Den gesamten Verlauf löschen?</string>
+    <plurals name="nh_entries">
+        <item quantity="one">%1$d Eintrag</item>
+        <item quantity="other">%1$d Einträge</item>
+    </plurals>
+    <string name="nh_removed_n">%1$d entfernt</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>
