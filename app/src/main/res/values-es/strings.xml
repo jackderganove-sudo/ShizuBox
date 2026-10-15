@@ -658,4 +658,17 @@
     <string name="home_shown_hint">Las secciones ocultas siguen accesibles como página de inicio y desde las notificaciones.</string>
     <string name="home_school_card">Tarjeta grande del modo escuela</string>
     <string name="home_quick_actions">Acciones rápidas en el inicio</string>
+    <string name="qa_gaming">Gaming</string>
+    <string name="qa_refresh">Frecuencia</string>
+    <string name="qa_awake">Activo</string>
+    <string name="og_native">Nativo</string>
+    <string name="og_persistent">Persistente</string>
+    <string name="og_foreground">Primer plano</string>
+    <string name="og_visible">Visible</string>
+    <string name="og_perceptible">Perceptible</string>
+    <string name="og_service">Servicio</string>
+    <string name="og_home">Launcher</string>
+    <string name="og_previous">App anterior</string>
+    <string name="og_cached">En caché</string>
+    <string name="logcat_tile_sub">Registro del sistema con filtros</string>
 </resources>

@@ -65,3 +65,18 @@ object Processes {
     /** Kills all cached background processes (nothing visible). */
     suspend fun killBackground() = ShizukuManager.exec("am kill-all")
 }
+
+/** Readable name for the OOM groups of `dumpsys meminfo`; unknown ones stay as they are. */
+fun groupLabel(group: String): String = when (group) {
+    "Native" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_native)
+    "System" -> de.emil.shizubox.t(de.emil.shizubox.R.string.system)
+    "Persistent", "Persistent Service" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_persistent)
+    "Foreground" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_foreground)
+    "Visible" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_visible)
+    "Perceptible", "Perceptible Low" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_perceptible)
+    "A Services", "B Services" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_service)
+    "Home" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_home)
+    "Previous" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_previous)
+    "Cached" -> de.emil.shizubox.t(de.emil.shizubox.R.string.og_cached)
+    else -> group
+}

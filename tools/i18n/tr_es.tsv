@@ -620,3 +620,16 @@ home_shown	Secciones en el inicio
 home_shown_hint	Las secciones ocultas siguen accesibles como página de inicio y desde las notificaciones.
 home_school_card	Tarjeta grande del modo escuela
 home_quick_actions	Acciones rápidas en el inicio
+qa_gaming	Gaming
+qa_refresh	Frecuencia
+qa_awake	Activo
+og_native	Nativo
+og_persistent	Persistente
+og_foreground	Primer plano
+og_visible	Visible
+og_perceptible	Perceptible
+og_service	Servicio
+og_home	Launcher
+og_previous	App anterior
+og_cached	En caché
+logcat_tile_sub	Registro del sistema con filtros

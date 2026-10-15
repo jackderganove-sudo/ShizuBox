@@ -658,4 +658,17 @@
     <string name="home_shown_hint">Gizlenen bölümlere başlangıç sayfası ve bildirimler üzerinden yine ulaşılabilir.</string>
     <string name="home_school_card">Büyük okul modu kartı</string>
     <string name="home_quick_actions">Ana ekranda hızlı işlemler</string>
+    <string name="qa_gaming">Oyun</string>
+    <string name="qa_refresh">Yenileme</string>
+    <string name="qa_awake">Uyanık</string>
+    <string name="og_native">Yerel</string>
+    <string name="og_persistent">Kalıcı</string>
+    <string name="og_foreground">Ön plan</string>
+    <string name="og_visible">Görünür</string>
+    <string name="og_perceptible">Algılanabilir</string>
+    <string name="og_service">Hizmet</string>
+    <string name="og_home">Başlatıcı</string>
+    <string name="og_previous">Önceki uygulama</string>
+    <string name="og_cached">Önbellekte</string>
+    <string name="logcat_tile_sub">Filtreli sistem günlüğü</string>
 </resources>

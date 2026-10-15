@@ -3180,5 +3180,70 @@
   "en": "Quick actions on the home screen",
   "de": "Schnellaktionen auf der Startseite",
   "plural": false
+ },
+ "qa_gaming": {
+  "en": "Gaming",
+  "de": "Gaming",
+  "plural": false
+ },
+ "qa_refresh": {
+  "en": "Refresh",
+  "de": "Bildrate",
+  "plural": false
+ },
+ "qa_awake": {
+  "en": "Awake",
+  "de": "Wach",
+  "plural": false
+ },
+ "og_native": {
+  "en": "Native",
+  "de": "Nativ",
+  "plural": false
+ },
+ "og_persistent": {
+  "en": "Persistent",
+  "de": "Dauerhaft",
+  "plural": false
+ },
+ "og_foreground": {
+  "en": "Foreground",
+  "de": "Vordergrund",
+  "plural": false
+ },
+ "og_visible": {
+  "en": "Visible",
+  "de": "Sichtbar",
+  "plural": false
+ },
+ "og_perceptible": {
+  "en": "Perceptible",
+  "de": "Wahrnehmbar",
+  "plural": false
+ },
+ "og_service": {
+  "en": "Service",
+  "de": "Dienst",
+  "plural": false
+ },
+ "og_home": {
+  "en": "Launcher",
+  "de": "Launcher",
+  "plural": false
+ },
+ "og_previous": {
+  "en": "Previous app",
+  "de": "Vorherige App",
+  "plural": false
+ },
+ "og_cached": {
+  "en": "Cached",
+  "de": "Im Cache",
+  "plural": false
+ },
+ "logcat_tile_sub": {
+  "en": "System log with filters",
+  "de": "Systemprotokoll mit Filtern",
+  "plural": false
  }
 }

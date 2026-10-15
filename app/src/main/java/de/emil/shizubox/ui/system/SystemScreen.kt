@@ -97,7 +97,7 @@ fun SystemScreen(
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ToolTile(Icons.Rounded.Terminal, t(R.string.term_title), t(R.string.term_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.TERMINAL) }
-                ToolTile(Icons.AutoMirrored.Rounded.Notes, "Logcat", t(R.string.logcat_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.LOGCAT) }
+                ToolTile(Icons.AutoMirrored.Rounded.Notes, "Logcat", t(R.string.logcat_tile_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.LOGCAT) }
             }
         }
         item { GamingCard(shizukuReady) }

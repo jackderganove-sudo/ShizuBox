@@ -620,3 +620,16 @@ home_shown	Sections sur l’accueil
 home_shown_hint	Les sections masquées restent accessibles comme page de démarrage et via les notifications.
 home_school_card	Grande carte du mode école
 home_quick_actions	Actions rapides sur l’accueil
+qa_gaming	Jeu
+qa_refresh	Fréquence
+qa_awake	Éveillé
+og_native	Natif
+og_persistent	Persistant
+og_foreground	Premier plan
+og_visible	Visible
+og_perceptible	Perceptible
+og_service	Service
+og_home	Lanceur
+og_previous	Appli précédente
+og_cached	En cache
+logcat_tile_sub	Journal système avec filtres

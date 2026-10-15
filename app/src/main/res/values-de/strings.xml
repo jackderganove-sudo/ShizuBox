@@ -658,5 +658,18 @@
     <string name="home_shown_hint">Ausgeblendete Bereiche bleiben als Startbereich und über Benachrichtigungen erreichbar.</string>
     <string name="home_school_card">Große Schulmodus-Karte</string>
     <string name="home_quick_actions">Schnellaktionen auf der Startseite</string>
+    <string name="qa_gaming">Gaming</string>
+    <string name="qa_refresh">Bildrate</string>
+    <string name="qa_awake">Wach</string>
+    <string name="og_native">Nativ</string>
+    <string name="og_persistent">Dauerhaft</string>
+    <string name="og_foreground">Vordergrund</string>
+    <string name="og_visible">Sichtbar</string>
+    <string name="og_perceptible">Wahrnehmbar</string>
+    <string name="og_service">Dienst</string>
+    <string name="og_home">Launcher</string>
+    <string name="og_previous">Vorherige App</string>
+    <string name="og_cached">Im Cache</string>
+    <string name="logcat_tile_sub">Systemprotokoll mit Filtern</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

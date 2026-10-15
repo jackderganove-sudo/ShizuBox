@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import de.emil.shizubox.shizuku.ShizukuManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,37 @@ class DebugReceiver : BroadcastReceiver() {
             val app = de.emil.shizubox.Str.context
             Log.i(TAG, "locale=${app.resources.configuration.locales} settings=${de.emil.shizubox.t(de.emil.shizubox.R.string.settings)} " +
                 "plural=${de.emil.shizubox.tp(de.emil.shizubox.R.plurals.w_pending, 3, 3)}")
+            return
+        }
+        intent.getStringExtra("shot")?.let { name ->
+            // Offscreen screenshot: --es shot home|settings|system|device|processes|terminal|apps|app|updates|custom|school [--ei h 2400] [--es pkg x]
+            val pending = goAsync()
+            val ready = ShizukuManager.isReady
+            val pkg = intent.getStringExtra("pkg") ?: context.packageName
+            de.emil.shizubox.debug.ScreenRenderer.render(
+                context, name, intent.getIntExtra("h", 2400), intent.getLongExtra("delay", 3500L), onDone = { pending.finish() },
+            ) {
+                val noop = {}
+                when (name) {
+                    "home" -> de.emil.shizubox.ui.home.HomeScreen(
+                        shizukuStatus = ShizukuManager.status.value, serverMode = ShizukuManager.serverMode,
+                        school = de.emil.shizubox.school.SchoolMode.state.value, busy = false, updateCount = Updates.updateCount(),
+                        onShizukuAction = noop, onActivateSchool = noop, onOpenSection = {}, onOpenSettings = noop,
+                    )
+                    "settings" -> de.emil.shizubox.ui.settings.SettingsScreen(noop, noop, noop)
+                    "system" -> de.emil.shizubox.ui.system.SystemScreen(shizukuReady = ready, onOpenPage = {}, onOpenUniversalInstaller = {}, onBack = noop)
+                    "device" -> de.emil.shizubox.ui.system.DeviceInfoScreen(noop)
+                    "processes" -> de.emil.shizubox.ui.system.ProcessesScreen(ready, noop)
+                    "terminal" -> de.emil.shizubox.ui.system.TerminalScreen(ready, noop)
+                    "apps" -> de.emil.shizubox.ui.apps.AppsScreen(ready, noop)
+                    "app" -> de.emil.shizubox.ui.apps.AppDetailScreen(pkg, ready, noop)
+                    "updates" -> de.emil.shizubox.ui.updates.UpdatesScreen(ready, noop)
+                    "custom" -> de.emil.shizubox.ui.customization.CustomizationScreen(ready, noop)
+                    else -> de.emil.shizubox.ui.school.SchoolScreen(
+                        de.emil.shizubox.school.SchoolMode.state.value, ready, false, noop, {}, {}, noop,
+                    )
+                }
+            }
             return
         }
         intent.getStringExtra("test")?.let { what ->

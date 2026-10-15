@@ -660,4 +660,17 @@
     <string name="home_shown_hint">Hidden sections stay reachable as start page and from notifications.</string>
     <string name="home_school_card">Large school mode card</string>
     <string name="home_quick_actions">Quick actions on the home screen</string>
+    <string name="qa_gaming">Gaming</string>
+    <string name="qa_refresh">Refresh</string>
+    <string name="qa_awake">Awake</string>
+    <string name="og_native">Native</string>
+    <string name="og_persistent">Persistent</string>
+    <string name="og_foreground">Foreground</string>
+    <string name="og_visible">Visible</string>
+    <string name="og_perceptible">Perceptible</string>
+    <string name="og_service">Service</string>
+    <string name="og_home">Launcher</string>
+    <string name="og_previous">Previous app</string>
+    <string name="og_cached">Cached</string>
+    <string name="logcat_tile_sub">System log with filters</string>
 </resources>

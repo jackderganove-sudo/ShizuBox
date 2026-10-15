@@ -161,7 +161,7 @@ fun ProcessesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                         Text(
                             listOfNotNull(
                                 size(r.pssKb),
-                                r.group,
+                                de.emil.shizubox.system.groupLabel(r.group),
                                 if (r.count > 1) t(R.string.pr_n_procs, r.count) else null,
                                 if (r.userId != 0) t(R.string.pr_user, r.userId) else null,
                             ).joinToString(" · "),

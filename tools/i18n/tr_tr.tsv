@@ -620,3 +620,16 @@ home_shown	Ana ekrandaki bölümler
 home_shown_hint	Gizlenen bölümlere başlangıç sayfası ve bildirimler üzerinden yine ulaşılabilir.
 home_school_card	Büyük okul modu kartı
 home_quick_actions	Ana ekranda hızlı işlemler
+qa_gaming	Oyun
+qa_refresh	Yenileme
+qa_awake	Uyanık
+og_native	Yerel
+og_persistent	Kalıcı
+og_foreground	Ön plan
+og_visible	Görünür
+og_perceptible	Algılanabilir
+og_service	Hizmet
+og_home	Başlatıcı
+og_previous	Önceki uygulama
+og_cached	Önbellekte
+logcat_tile_sub	Filtreli sistem günlüğü

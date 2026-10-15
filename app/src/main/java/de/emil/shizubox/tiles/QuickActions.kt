@@ -8,13 +8,15 @@ import de.emil.shizubox.system.Gaming
 import de.emil.shizubox.system.Tweaks
 import de.emil.shizubox.t
 
-enum class QuickAction(private val labelRes: Int) {
-    Gaming(R.string.gaming),
-    Animations(R.string.tile_animations),
-    Refresh(R.string.cust_refresh),
-    StayAwake(R.string.tile_stay_awake),
+enum class QuickAction(private val labelRes: Int, private val shortRes: Int) {
+    Gaming(R.string.gaming, R.string.qa_gaming),
+    Animations(R.string.tile_animations, R.string.tile_animations),
+    Refresh(R.string.cust_refresh, R.string.qa_refresh),
+    StayAwake(R.string.tile_stay_awake, R.string.qa_awake),
     ;
     val label get() = t(labelRes)
+    /** For the narrow buttons on the home screen. */
+    val shortLabel get() = t(shortRes)
 }
 
 /** One-tap switches shared by the quick settings tiles and the home screen. */

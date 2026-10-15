@@ -1,0 +1,12 @@
+from i18n import *
+S5('og_native','Native','Nativ','Yerel','Nativo','Natif')
+S5('og_persistent','Persistent','Dauerhaft','Kalıcı','Persistente','Persistant')
+S5('og_foreground','Foreground','Vordergrund','Ön plan','Primer plano','Premier plan')
+S5('og_visible','Visible','Sichtbar','Görünür','Visible','Visible')
+S5('og_perceptible','Perceptible','Wahrnehmbar','Algılanabilir','Perceptible','Perceptible')
+S5('og_service','Service','Dienst','Hizmet','Servicio','Service')
+S5('og_home','Launcher','Launcher','Başlatıcı','Launcher','Lanceur')
+S5('og_previous','Previous app','Vorherige App','Önceki uygulama','App anterior','Appli précédente')
+S5('og_cached','Cached','Im Cache','Önbellekte','En caché','En cache')
+S5('logcat_tile_sub','System log with filters','Systemprotokoll mit Filtern','Filtreli sistem günlüğü','Registro del sistema con filtros','Journal système avec filtres')
+save()

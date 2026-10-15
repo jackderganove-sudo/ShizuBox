@@ -658,4 +658,17 @@
     <string name="home_shown_hint">Les sections masquées restent accessibles comme page de démarrage et via les notifications.</string>
     <string name="home_school_card">Grande carte du mode école</string>
     <string name="home_quick_actions">Actions rapides sur l’accueil</string>
+    <string name="qa_gaming">Jeu</string>
+    <string name="qa_refresh">Fréquence</string>
+    <string name="qa_awake">Éveillé</string>
+    <string name="og_native">Natif</string>
+    <string name="og_persistent">Persistant</string>
+    <string name="og_foreground">Premier plan</string>
+    <string name="og_visible">Visible</string>
+    <string name="og_perceptible">Perceptible</string>
+    <string name="og_service">Service</string>
+    <string name="og_home">Lanceur</string>
+    <string name="og_previous">Appli précédente</string>
+    <string name="og_cached">En cache</string>
+    <string name="logcat_tile_sub">Journal système avec filtres</string>
 </resources>

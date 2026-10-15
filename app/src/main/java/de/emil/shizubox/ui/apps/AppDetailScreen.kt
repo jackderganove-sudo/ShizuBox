@@ -65,6 +65,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
     var message by remember { mutableStateOf<String?>(null) }
     var confirmUninstall by remember { mutableStateOf(false) }
     var showAllOps by remember { mutableStateOf(false) }
+    var showAllPerms by remember { mutableStateOf(false) }
     var reload by remember { mutableStateOf(0) }
     val profiles by Profiles.profiles.collectAsStateWithLifecycle()
     val extractLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
@@ -254,11 +255,19 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text(t(R.string.permissions), style = MaterialTheme.typography.titleMedium)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(t(R.string.permissions), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                    if (d.permissions.size > 8) {
+                        TextButton(onClick = { showAllPerms = !showAllPerms }) {
+                            Text(if (showAllPerms) t(R.string.less) else t(R.string.all_n, d.permissions.size))
+                        }
+                    }
+                }
                 if (d.permissions.isEmpty()) {
                     Text(t(R.string.no_perms), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
-                d.permissions.forEach { p ->
+                val perms = if (showAllPerms) d.permissions else d.permissions.take(8)
+                perms.forEach { p ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(p.label, style = MaterialTheme.typography.bodyLarge)
