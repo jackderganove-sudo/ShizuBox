@@ -1,5 +1,8 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.updates
 
+import de.emil.shizubox.ui.motion.animatedProgress
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import de.emil.shizubox.tp
@@ -30,6 +33,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Checkbox
@@ -126,8 +130,8 @@ private fun SelectApps(onBack: () -> Unit) {
                 )
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
                     Text(t(R.string.selected_n, chosen.size, visible.size), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
-                    TextButton(onClick = { chosen = chosen + visible.map { it.pkg } }) { Text(t(R.string.select_all)) }
-                    TextButton(onClick = { chosen = emptySet() }) { Text(t(R.string.select_none)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { chosen = chosen + visible.map { it.pkg } }) { Text(t(R.string.select_all)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { chosen = emptySet() }) { Text(t(R.string.select_none)) }
                 }
             }
             items(visible, key = { it.pkg }) { app ->
@@ -189,12 +193,12 @@ private fun SearchProgress() {
                     }
                 }
                 if (!p.finished && p.total > 0) {
-                    LinearProgressIndicator(progress = { p.done.toFloat() / p.total }, modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
+                    LinearProgressIndicator(progress = animatedProgress(p.done.toFloat() / p.total), modifier = Modifier.fillMaxWidth().padding(top = 10.dp))
                 }
             }
         }
         item {
-            OutlinedButton(onClick = { BulkImport.cancel() }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { Text(t(R.string.cancel_search)) }
+            OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { BulkImport.cancel() }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { Text(t(R.string.cancel_search)) }
         }
     }
 }

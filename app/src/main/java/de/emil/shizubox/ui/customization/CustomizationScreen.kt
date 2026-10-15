@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.customization
 
 import de.emil.shizubox.R
@@ -18,6 +20,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
@@ -198,8 +201,8 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             onDismissRequest = {},
             title = { Text(t(R.string.keep_q)) },
             text = { Text(t(R.string.cust_revert_in, p.description, secondsLeft)) },
-            confirmButton = { TextButton(onClick = { Customization.confirm() }) { Text(t(R.string.keep)) } },
-            dismissButton = { TextButton(onClick = { Customization.revertNow() }) { Text(t(R.string.revert)) } },
+            confirmButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { Customization.confirm() }) { Text(t(R.string.keep)) } },
+            dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { Customization.revertNow() }) { Text(t(R.string.revert)) } },
         )
     }
 }
@@ -240,7 +243,7 @@ private fun DensityCard(s: CustomState, enabled: Boolean, onApply: (Int) -> Unit
             },
         )
         if (s.density != base) {
-            TextButton(onClick = { onApply(base) }, enabled = enabled) { Text(t(R.string.cust_reset_default)) }
+            TextButton(shapes = ButtonDefaults.shapes(), onClick = { onApply(base) }, enabled = enabled) { Text(t(R.string.cust_reset_default)) }
         }
     }
 }

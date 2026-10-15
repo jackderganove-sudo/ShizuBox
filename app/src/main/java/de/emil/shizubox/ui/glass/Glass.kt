@@ -2,6 +2,14 @@
 
 package de.emil.shizubox.ui.glass
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import de.emil.shizubox.ui.motion.Motion
+import de.emil.shizubox.ui.motion.pressScale
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -139,6 +147,9 @@ fun GlassCard(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val settings by AppSettings.state.collectAsStateWithLifecycle()
+    val tint by animateColorAsState(tint, Motion.quick(), label = "tint")
+    val interaction = remember { MutableInteractionSource() }
+    val haptics = LocalHapticFeedback.current
     // Glass off: no blur pass at all, a slightly more opaque tint instead (cheaper).
     val hazeState = LocalHazeState.current.takeIf { settings.glass }
     val dark = LocalDarkTheme.current
@@ -157,8 +168,10 @@ fun GlassCard(
             Color.White.copy(alpha = if (dark) 0.04f else 0.15f),
         ),
     )
+    val clickable = onClick != null || onLongClick != null
     Column(
         modifier
+            .then(if (clickable) Modifier.pressScale(interaction) else Modifier)
             .clip(shape)
             .then(
                 if (hazeState != null) Modifier.hazeBlur(HazeInput.Sources(hazeState), style)
@@ -167,11 +180,21 @@ fun GlassCard(
             .border(1.dp, edge, shape)
             .then(
                 when {
-                    onLongClick != null -> Modifier.combinedClickable(onClick = onClick ?: {}, onLongClick = onLongClick)
-                    onClick != null -> Modifier.clickable(onClick = onClick)
+                    onLongClick != null -> Modifier.combinedClickable(
+                        interactionSource = interaction,
+                        indication = LocalIndication.current,
+                        onClick = { haptics.performHapticFeedback(HapticFeedbackType.ContextClick); onClick?.invoke() },
+                        onLongClick = { haptics.performHapticFeedback(HapticFeedbackType.LongPress); onLongClick() },
+                    )
+                    onClick != null -> Modifier.clickable(interactionSource = interaction, indication = LocalIndication.current) {
+                        haptics.performHapticFeedback(HapticFeedbackType.ContextClick)
+                        onClick()
+                    }
                     else -> Modifier
                 },
             )
+            // Expanding/collapsing content glides instead of jumping.
+            .animateContentSize(Motion.size)
             .padding(contentPadding),
         content = content,
     )

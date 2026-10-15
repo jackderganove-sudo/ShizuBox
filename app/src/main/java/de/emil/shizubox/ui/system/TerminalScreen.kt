@@ -1,5 +1,9 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.system
 
+import androidx.compose.material.icons.rounded.Terminal
+import de.emil.shizubox.ui.motion.EmptyState
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -32,6 +36,7 @@ import androidx.compose.material.icons.rounded.BookmarkAdd
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.DeleteSweep
 import androidx.compose.material.icons.rounded.History
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CircularProgressIndicator
@@ -168,14 +173,7 @@ fun TerminalScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (entries.isEmpty()) {
-                item {
-                    Text(
-                        t(R.string.term_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(8.dp),
-                    )
-                }
+                item { EmptyState(Icons.Rounded.Terminal, t(R.string.term_title), t(R.string.term_hint)) }
             }
             items(entries) { e ->
                 GlassCard(Modifier.fillMaxWidth()) {
@@ -255,9 +253,9 @@ fun TerminalScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { showHistory = false }) { Text(t(R.string.close)) } },
+            confirmButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { showHistory = false }) { Text(t(R.string.close)) } },
             dismissButton = {
-                TextButton(onClick = { history.clear(); TerminalStore.saveHistory(context, history); showHistory = false }) { Text(t(R.string.term_clear)) }
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = { history.clear(); TerminalStore.saveHistory(context, history); showHistory = false }) { Text(t(R.string.term_clear)) }
             },
         )
     }
@@ -267,13 +265,13 @@ fun TerminalScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             title = { Text(t(R.string.term_delete_snippet)) },
             text = { Text(s, fontFamily = FontFamily.Monospace) },
             confirmButton = {
-                TextButton(onClick = {
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                     snippets.remove(s)
                     TerminalStore.saveSnippets(context, snippets)
                     deleteSnippet = null
                 }) { Text(t(R.string.delete)) }
             },
-            dismissButton = { TextButton(onClick = { deleteSnippet = null }) { Text(t(R.string.cancel)) } },
+            dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { deleteSnippet = null }) { Text(t(R.string.cancel)) } },
         )
     }
 }

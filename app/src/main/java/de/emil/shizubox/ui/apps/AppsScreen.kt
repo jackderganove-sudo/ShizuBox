@@ -1,5 +1,14 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.apps
 
+import de.emil.shizubox.ui.motion.popIn
+import de.emil.shizubox.ui.motion.openClose
+import androidx.compose.animation.AnimatedContent
+import de.emil.shizubox.ui.motion.rememberListStart
+import de.emil.shizubox.ui.motion.enterStagger
+import de.emil.shizubox.ui.motion.Motion
+import androidx.compose.foundation.lazy.itemsIndexed
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import de.emil.shizubox.tp
@@ -30,6 +39,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
@@ -82,19 +92,43 @@ private val dateFormat = java.text.DateFormat.getDateInstance(java.text.DateForm
 @OptIn(ExperimentalLayoutApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
-    var tab by rememberSaveable { mutableStateOf(0) }
-    var selected by rememberSaveable { mutableStateOf<String?>(null) }
-    var apps by remember { mutableStateOf<List<AppEntry>?>(null) }
-    var reloadKey by remember { mutableStateOf(0) }
-    LaunchedEffect(reloadKey) { apps = Apps.list() }
+    val tabState = rememberSaveable { mutableStateOf(0) }
+    val selectedState = rememberSaveable { mutableStateOf<String?>(null) }
+    val appsState = remember { mutableStateOf<List<AppEntry>?>(null) }
+    val reloadState = remember { mutableStateOf(0) }
+    LaunchedEffect(reloadState.value) { appsState.value = Apps.list() }
 
-    selected?.let { pkg ->
-        BackHandler { selected = null; reloadKey++ }
-        AppDetailScreen(pkg, shizukuReady, onBack = { selected = null; reloadKey++ })
-        return
+    // App details open with a spring and close back into the list.
+    AnimatedContent(
+        targetState = selectedState.value,
+        transitionSpec = { openClose(opening = targetState != null) },
+        label = "appDetail",
+    ) { pkg ->
+        if (pkg != null) {
+            BackHandler { selectedState.value = null; reloadState.value++ }
+            AppDetailScreen(pkg, shizukuReady, onBack = { selectedState.value = null; reloadState.value++ })
+        } else {
+            AppsList(shizukuReady, onBack, tabState, selectedState, appsState.value, reloadState)
+        }
     }
+}
+
+@OptIn(ExperimentalLayoutApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
+@Composable
+private fun AppsList(
+    shizukuReady: Boolean,
+    onBack: () -> Unit,
+    tabState: androidx.compose.runtime.MutableState<Int>,
+    selectedState: androidx.compose.runtime.MutableState<String?>,
+    apps: List<AppEntry>?,
+    reloadState: androidx.compose.runtime.MutableState<Int>,
+) {
+    var tab by tabState
+    var selected by selectedState
+    var reloadKey by reloadState
 
     var selection by remember { mutableStateOf(setOf<String>()) }
+    val appsListStart = rememberListStart(apps != null)
     BackHandler(enabled = selection.isNotEmpty()) { selection = emptySet() }
     var permState by remember { mutableStateOf(PermTabState()) }
     var permReload by remember { mutableStateOf(0) }
@@ -200,7 +234,7 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 )
                 var sortMenu by remember { mutableStateOf(false) }
                 Box {
-                    TextButton(onClick = { sortMenu = true }) { Text("${sort.label} ↓") }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { sortMenu = true }) { Text("${sort.label} ↓") }
                     androidx.compose.material3.DropdownMenu(expanded = sortMenu, onDismissRequest = { sortMenu = false }) {
                         AppSort.entries.forEach { s ->
                             androidx.compose.material3.DropdownMenuItem(
@@ -227,6 +261,7 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         if (selection.isNotEmpty()) {
             stickyHeader(key = "selection") {
                 SelectionBar(
+                    modifier = Modifier.animateItem(placementSpec = Motion.offset).popIn(),
                     selection = selection,
                     apps = apps.orEmpty(),
                     visible = visible,
@@ -236,7 +271,8 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 )
             }
         }
-        items(visible, key = { it.pkg }) { app ->
+        itemsIndexed(visible, key = { _, app -> app.pkg }) { index, app ->
+            Box(Modifier.animateItem(fadeInSpec = null, placementSpec = Motion.offset, fadeOutSpec = Motion.quick()).enterStagger(index, appsListStart)) {
             val isSelected = app.pkg in selection
             AppRow(
                 app,
@@ -247,6 +283,7 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 },
                 onLongClick = { selection = if (isSelected) selection - app.pkg else selection + app.pkg },
             )
+            }
         }
     }
 }
@@ -351,7 +388,7 @@ private fun ProfilesHeader() {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(8.dp))
-        FilledTonalButton(onClick = { creating = true }) { Text(t(R.string.new_profile)) }
+        FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { creating = true }) { Text(t(R.string.new_profile)) }
     }
     if (creating) {
         AlertDialog(
@@ -359,12 +396,12 @@ private fun ProfilesHeader() {
             title = { Text(t(R.string.new_profile)) },
             text = { OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true, placeholder = { Text(t(R.string.profile_example)) }) },
             confirmButton = {
-                TextButton(
+                TextButton(shapes = ButtonDefaults.shapes(), 
                     onClick = { Profiles.create(name); name = ""; creating = false },
                     enabled = name.isNotBlank(),
                 ) { Text(t(R.string.create)) }
             },
-            dismissButton = { TextButton(onClick = { creating = false }) { Text(t(R.string.cancel)) } },
+            dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { creating = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }
@@ -391,10 +428,10 @@ private fun ProfilesList(apps: List<AppEntry>, shizukuReady: Boolean, onChanged:
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                    TextButton(onClick = { deleting = p.id }) { Text(t(R.string.delete)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { deleting = p.id }) { Text(t(R.string.delete)) }
                 }
                 Spacer(Modifier.height(8.dp))
-                FilledTonalButton(
+                FilledTonalButton(shapes = ButtonDefaults.shapes(), 
                     enabled = shizukuReady && members.isNotEmpty(),
                     onClick = {
                         scope.launch {
@@ -412,8 +449,8 @@ private fun ProfilesList(apps: List<AppEntry>, shizukuReady: Boolean, onChanged:
             onDismissRequest = { deleting = null },
             title = { Text(t(R.string.delete_profile_q)) },
             text = { Text(t(R.string.delete_profile_hint)) },
-            confirmButton = { TextButton(onClick = { Profiles.delete(id); deleting = null }) { Text(t(R.string.delete)) } },
-            dismissButton = { TextButton(onClick = { deleting = null }) { Text(t(R.string.cancel)) } },
+            confirmButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { Profiles.delete(id); deleting = null }) { Text(t(R.string.delete)) } },
+            dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { deleting = null }) { Text(t(R.string.cancel)) } },
         )
     }
 }

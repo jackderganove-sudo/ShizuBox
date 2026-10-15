@@ -1,5 +1,17 @@
 package de.emil.shizubox.ui.home
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.graphicsLayer
+import de.emil.shizubox.ui.motion.Motion
+import de.emil.shizubox.ui.motion.popScale
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +21,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -73,27 +84,42 @@ fun QuickActionsCard() {
                         }
                         .padding(vertical = 8.dp),
                 ) {
+                    // Active: filled, rounded square; inactive: muted circle – morphs with a spring.
+                    val bg by animateColorAsState(
+                        if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant, Motion.quick(), label = "qaBg",
+                    )
+                    val fg by animateColorAsState(
+                        if (active) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, Motion.quick(), label = "qaFg",
+                    )
+                    val corner by animateDpAsState(if (active) 16.dp else 24.dp, Motion.bouncy(), label = "qaCorner")
+                    val pop = popScale(info?.active)
                     Box(
                         Modifier
                             .size(48.dp)
-                            .clip(CircleShape)
-                            .background(if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant),
+                            .graphicsLayer { scaleX = pop; scaleY = pop }
+                            .clip(RoundedCornerShape(corner))
+                            .background(bg),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Icon(
-                            painterResource(a.icon()),
-                            null,
-                            tint = if (active) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
+                        Icon(painterResource(a.icon()), null, tint = fg)
                     }
                     Text(a.shortLabel, style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 6.dp))
-                    Text(
-                        info?.subtitle ?: "…",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
+                    AnimatedContent(
+                        targetState = info?.subtitle ?: "…",
+                        transitionSpec = {
+                            (slideInVertically(Motion.offset) { it } + fadeIn(Motion.quick())) togetherWith
+                                (slideOutVertically(Motion.offset) { -it } + fadeOut(Motion.quick()))
+                        },
+                        label = "qaValue",
+                    ) { value ->
+                        Text(
+                            value,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
                 }
             }
         }

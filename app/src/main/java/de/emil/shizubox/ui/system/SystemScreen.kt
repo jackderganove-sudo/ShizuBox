@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.system
 
 import de.emil.shizubox.R
@@ -29,6 +31,7 @@ import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -222,7 +225,7 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
         )
         if (universal) {
             Spacer(Modifier.height(8.dp))
-            Button(
+            Button(shapes = ButtonDefaults.shapes(), 
                 onClick = { universalPicker.launch(arrayOf("*/*")) },
                 modifier = Modifier.fillMaxWidth(),
             ) { Text(t(R.string.pick_file)) }
@@ -243,7 +246,7 @@ private fun InstallerCard(shizukuReady: Boolean, onOpenUniversalInstaller: (Uri)
             Switch(checked = grantAll, onCheckedChange = { grantAll = it })
         }
         Spacer(Modifier.height(8.dp))
-        Button(
+        Button(shapes = ButtonDefaults.shapes(), 
             onClick = { picker.launch(arrayOf("*/*")) },
             enabled = shizukuReady && progress == null,
             modifier = Modifier.fillMaxWidth(),

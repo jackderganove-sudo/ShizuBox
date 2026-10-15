@@ -1,5 +1,11 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.ui.motion.rememberListStart
+import de.emil.shizubox.ui.motion.enterStagger
+import de.emil.shizubox.ui.motion.Motion
+import androidx.compose.foundation.lazy.itemsIndexed
 import android.text.format.Formatter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +28,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
@@ -91,6 +98,7 @@ fun ProcessesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         (apps + native).sortedByDescending { it.pssKb }
     }
     val maxKb = rows.maxOfOrNull { it.pssKb } ?: 1L
+    val prListStart = rememberListStart(snap != null)
     fun size(kb: Long) = Formatter.formatShortFileSize(context, kb * 1024)
 
     LazyColumn(
@@ -119,7 +127,7 @@ fun ProcessesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                     LinearProgressIndicator(progress = { s.usedKb.toFloat() / s.totalKb }, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
                     Text(t(R.string.pr_free, size(s.freeKb)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
-                        FilledTonalButton(onClick = {
+                        FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = {
                             scope.launch {
                                 runCatching { Processes.killBackground() }
                                 message = t(R.string.pr_killed)
@@ -146,7 +154,8 @@ fun ProcessesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 }
             }
         }
-        items(rows, key = { it.key }) { r ->
+        itemsIndexed(rows, key = { _, r -> r.key }) { index, r ->
+            Box(Modifier.animateItem(fadeInSpec = null, placementSpec = Motion.offset, fadeOutSpec = Motion.quick()).enterStagger(index, prListStart)) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     val icon = remember(r.pkg) {
@@ -182,6 +191,7 @@ fun ProcessesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                         }) { Icon(Icons.Rounded.Close, t(R.string.force_stop)) }
                     }
                 }
+            }
             }
         }
     }

@@ -1,5 +1,10 @@
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.ui.motion.RollingText
+import de.emil.shizubox.ui.motion.rememberListStart
+import de.emil.shizubox.ui.motion.enterStagger
+import de.emil.shizubox.ui.motion.Motion
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -67,6 +72,7 @@ fun ScreenTimeScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     val labels = remember { mutableMapOf<String, String>() }
     fun label(pkg: String) = labels.getOrPut(pkg) { runCatching { pm.getApplicationInfo(pkg, 0).loadLabel(pm).toString() }.getOrDefault(pkg) }
     val list = usage.orEmpty()
+    val stListStart = rememberListStart(usage != null)
     val total = list.sumOf { it.foregroundMs }
     val max = list.maxOfOrNull { it.foregroundMs } ?: 1L
 
@@ -87,7 +93,7 @@ fun ScreenTimeScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
-                Text(formatUsage(total), style = MaterialTheme.typography.displaySmall)
+                RollingText(formatUsage(total), MaterialTheme.typography.displaySmall)
                 Text(
                     if (days == 1) t(R.string.st_today_total) else t(R.string.st_avg, formatUsage(total / days)),
                     style = MaterialTheme.typography.bodyMedium,
@@ -100,7 +106,8 @@ fun ScreenTimeScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             }
         }
         if (usage == null) item { Text(t(R.string.loading), modifier = Modifier.padding(8.dp)) }
-        items(list, key = { it.pkg }) { u ->
+        itemsIndexed(list, key = { _, u -> u.pkg }) { index, u ->
+            Box(Modifier.animateItem(fadeInSpec = null, placementSpec = Motion.offset, fadeOutSpec = Motion.quick()).enterStagger(index, stListStart)) {
             GlassCard(Modifier.fillMaxWidth(), contentPadding = 12.dp) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     val icon = remember(u.pkg) { Apps.icon(u.pkg)?.asImageBitmap() }
@@ -119,6 +126,7 @@ fun ScreenTimeScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                         LinearProgressIndicator(progress = { u.foregroundMs.toFloat() / max }, modifier = Modifier.fillMaxWidth().padding(top = 4.dp))
                     }
                 }
+            }
             }
         }
     }

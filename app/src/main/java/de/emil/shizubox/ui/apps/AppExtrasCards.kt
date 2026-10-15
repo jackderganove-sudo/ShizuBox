@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.apps
 
 import android.content.ClipData
@@ -19,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddToHomeScreen
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -88,7 +91,7 @@ fun AppLanguageCard(tech: AppTech, shizukuReady: Boolean, onSet: (String) -> Uni
             }
         }
         if (options.size > 12) {
-            TextButton(onClick = { all = !all }) { Text(if (all) t(R.string.less) else t(R.string.all_n, options.size)) }
+            TextButton(shapes = ButtonDefaults.shapes(), onClick = { all = !all }) { Text(if (all) t(R.string.less) else t(R.string.all_n, options.size)) }
         }
     }
 }

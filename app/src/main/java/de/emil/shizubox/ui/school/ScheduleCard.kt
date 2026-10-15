@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.school
 
 import android.app.TimePickerDialog
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -44,7 +47,7 @@ fun ScheduleCard(autoEndMinutes: Int) {
         Text(t(R.string.sch_sub), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
             Text(t(R.string.sch_start), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-            OutlinedButton(onClick = {
+            OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = {
                 TimePickerDialog(context, { _, h, m -> SchoolSchedule.update { it.copy(minuteOfDay = h * 60 + m, skipUntil = 0) } },
                     s.minuteOfDay / 60, s.minuteOfDay % 60, DateFormat.is24HourFormat(context)).show()
             }) { Text(time, style = MaterialTheme.typography.titleMedium) }
@@ -75,7 +78,7 @@ fun ScheduleCard(autoEndMinutes: Int) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             if (next != null) {
-                TextButton(onClick = { SchoolSchedule.skipNext() }) { Text(t(R.string.sch_skip_next)) }
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = { SchoolSchedule.skipNext() }) { Text(t(R.string.sch_skip_next)) }
             }
         }
     }

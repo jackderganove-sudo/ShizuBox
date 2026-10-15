@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.school
 
 import de.emil.shizubox.R
@@ -20,6 +22,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.PowerSettingsNew
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -141,7 +144,7 @@ fun SchoolScreen(
             }
         }
         item {
-            Button(
+            Button(shapes = ButtonDefaults.shapes(), 
                 onClick = onActivate,
                 enabled = shizukuReady && !busy && !state.pendingRestore,
                 modifier = Modifier

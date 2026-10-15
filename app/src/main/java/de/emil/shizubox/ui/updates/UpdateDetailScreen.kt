@@ -1,5 +1,8 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.updates
 
+import de.emil.shizubox.ui.motion.animatedProgress
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import android.content.Intent
@@ -20,6 +23,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -106,7 +110,7 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                 }
                 app.error?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
                 progress?.let {
-                    LinearProgressIndicator(progress = { it }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
+                    LinearProgressIndicator(progress = animatedProgress(it), modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
                 }
                 Spacer(Modifier.height(8.dp))
                 val trackOnly = Source.forUrl(app.url)?.trackOnly == true
@@ -120,8 +124,8 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                 }
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (trackOnly) {
-                        Button(onClick = { onOpenBrowser(app.releaseUrl ?: app.url) }) { Text(t(R.string.load_apkmirror)) }
-                    } else Button(
+                        Button(shapes = ButtonDefaults.shapes(), onClick = { onOpenBrowser(app.releaseUrl ?: app.url) }) { Text(t(R.string.load_apkmirror)) }
+                    } else Button(shapes = ButtonDefaults.shapes(), 
                         enabled = progress == null && app.chosenApk != null,
                         onClick = {
                             progress = 0f
@@ -133,21 +137,21 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                             }
                         },
                     ) { Text(if (state == UpdateState.NotInstalled) t(R.string.install) else if (state == UpdateState.Update) t(R.string.update) else t(R.string.reinstall)) }
-                    OutlinedButton(enabled = !checking, onClick = {
+                    OutlinedButton(shapes = ButtonDefaults.shapes(), enabled = !checking, onClick = {
                         checking = true
                         scope.launch { Updates.check(app); checking = false }
                     }) { Text(if (checking) t(R.string.checking) else t(R.string.check)) }
-                    OutlinedButton(onClick = {
+                    OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(app.releaseUrl ?: app.url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                     }) { Text(t(R.string.open_source)) }
                     if (state == UpdateState.Update || state == UpdateState.Unknown) {
-                        OutlinedButton(onClick = { Updates.markInstalled(app) }) { Text(t(R.string.mark_current)) }
+                        OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { Updates.markInstalled(app) }) { Text(t(R.string.mark_current)) }
                     }
                     if (state == UpdateState.Update) {
-                        OutlinedButton(onClick = { Updates.update(app.copy(skippedVersion = app.latestVersion)) }) { Text(t(R.string.upd_skip)) }
+                        OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { Updates.update(app.copy(skippedVersion = app.latestVersion)) }) { Text(t(R.string.upd_skip)) }
                     }
                     if (Updates.isSkipped(app)) {
-                        OutlinedButton(onClick = { Updates.update(app.copy(skippedVersion = null)) }) { Text(t(R.string.upd_unskip)) }
+                        OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { Updates.update(app.copy(skippedVersion = null)) }) { Text(t(R.string.upd_unskip)) }
                     }
                 }
             }
@@ -202,8 +206,8 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    OutlinedButton(onClick = { scope.launch { Updates.check(app.copy(apkFilterRegex = filter, id = pkg)) } }) { Text(t(R.string.apply)) }
-                    TextButton(onClick = { confirmRemove = true }) { Text(t(R.string.remove)) }
+                    OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { scope.launch { Updates.check(app.copy(apkFilterRegex = filter, id = pkg)) } }) { Text(t(R.string.apply)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { confirmRemove = true }) { Text(t(R.string.remove)) }
                 }
             }
         }
@@ -215,8 +219,8 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
             onDismissRequest = { confirmRemove = false },
             title = { Text(t(R.string.untrack_q)) },
             text = { Text(t(R.string.untrack_hint)) },
-            confirmButton = { TextButton(onClick = { Updates.remove(app); onBack() }) { Text(t(R.string.remove)) } },
-            dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(t(R.string.cancel)) } },
+            confirmButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { Updates.remove(app); onBack() }) { Text(t(R.string.remove)) } },
+            dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { confirmRemove = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }

@@ -1,5 +1,6 @@
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.ui.motion.RollingText
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Build
@@ -119,7 +120,7 @@ fun DeviceInfoScreen(onBack: () -> Unit) {
             item {
                 GlassCard(Modifier.fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.Bottom) {
-                        Text("${b.level} %", style = MaterialTheme.typography.displaySmall)
+                        RollingText("${b.level} %", MaterialTheme.typography.displaySmall)
                         Text(
                             listOfNotNull(b.status, b.plugged).joinToString(" · "),
                             style = MaterialTheme.typography.bodyLarge,
@@ -159,7 +160,7 @@ fun DeviceInfoScreen(onBack: () -> Unit) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
                     cpu.forEach { c ->
                         Column(Modifier.width(72.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(c.curKhz?.let { "${it / 1000}" } ?: "–", style = MaterialTheme.typography.titleMedium)
+                            RollingText(c.curKhz?.let { "${it / 1000}" } ?: "–", MaterialTheme.typography.titleMedium)
                             Text(
                                 "MHz · #${c.index}" + (c.maxKhz?.let { "\n≤ %.2f GHz".format(it / 1_000_000f) } ?: ""),
                                 style = MaterialTheme.typography.labelSmall,

@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.apps
 
 import de.emil.shizubox.R
@@ -23,6 +25,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
@@ -135,18 +138,18 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                 Spacer(Modifier.height(12.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (!e.installed) {
-                        FilledTonalButton(enabled = shizukuReady, onClick = { act { Apps.reinstall(pkg) } }) { Text(t(R.string.restore)) }
+                        FilledTonalButton(shapes = ButtonDefaults.shapes(), enabled = shizukuReady, onClick = { act { Apps.reinstall(pkg) } }) { Text(t(R.string.restore)) }
                     } else {
-                        FilledTonalButton(
+                        FilledTonalButton(shapes = ButtonDefaults.shapes(), 
                             enabled = shizukuReady && pkg != context.packageName,
                             onClick = { act { if (e.frozen) Apps.unfreeze(listOf(pkg)) else Apps.freeze(listOf(pkg)) } },
                         ) { Text(if (e.frozen) t(R.string.unfreeze) else t(R.string.freeze)) }
-                        OutlinedButton(enabled = shizukuReady, onClick = { act { Apps.forceStop(pkg) } }) { Text(t(R.string.force_stop)) }
+                        OutlinedButton(shapes = ButtonDefaults.shapes(), enabled = shizukuReady, onClick = { act { Apps.forceStop(pkg) } }) { Text(t(R.string.force_stop)) }
                         if (!e.isSystem && pkg != context.packageName) {
-                            OutlinedButton(enabled = shizukuReady, onClick = { confirmUninstall = true }) { Text(t(R.string.uninstall)) }
+                            OutlinedButton(shapes = ButtonDefaults.shapes(), enabled = shizukuReady, onClick = { confirmUninstall = true }) { Text(t(R.string.uninstall)) }
                         }
                     }
-                    OutlinedButton(onClick = {
+                    OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = {
                         context.startActivity(
                             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", pkg, null))
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
@@ -157,21 +160,21 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                     Spacer(Modifier.height(8.dp))
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Apps.launchIntent(pkg)?.let { launch ->
-                            OutlinedButton(onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }) { Text(t(R.string.open)) }
+                            OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }) { Text(t(R.string.open)) }
                         }
                         if (!e.isSystem) {
-                            OutlinedButton(onClick = {
+                            OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = {
                                 // Fall back to any store if the installing app can't show it.
                                 runCatching { context.startActivity(ApkExport.storeIntent(e)) }
                                     .onFailure { runCatching { context.startActivity(ApkExport.storeIntent(e).setPackage(null)) } }
                             }) { Text(ApkExport.storeLabel(e)) }
                         }
-                        OutlinedButton(onClick = { scope.launch { runCatching { ApkExport.share(context, e) }.onFailure { message = it.message } } }) {
+                        OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { scope.launch { runCatching { ApkExport.share(context, e) }.onFailure { message = it.message } } }) {
                             Text(t(R.string.share_apk))
                         }
-                        OutlinedButton(onClick = { extractLauncher.launch(ApkExport.fileName(e)) }) { Text(t(R.string.extract)) }
+                        OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { extractLauncher.launch(ApkExport.fileName(e)) }) { Text(t(R.string.extract)) }
                         if (!e.isSystem) {
-                            OutlinedButton(enabled = shizukuReady, onClick = { act { Apps.reinstallFromApks(pkg) } }) { Text(t(R.string.reinstall)) }
+                            OutlinedButton(shapes = ButtonDefaults.shapes(), enabled = shizukuReady, onClick = { act { Apps.reinstallFromApks(pkg) } }) { Text(t(R.string.reinstall)) }
                         }
                     }
                 }
@@ -258,7 +261,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(t(R.string.permissions), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                     if (d.permissions.size > 8) {
-                        TextButton(onClick = { showAllPerms = !showAllPerms }) {
+                        TextButton(shapes = ButtonDefaults.shapes(), onClick = { showAllPerms = !showAllPerms }) {
                             Text(if (showAllPerms) t(R.string.less) else t(R.string.all_n, d.permissions.size))
                         }
                     }
@@ -290,7 +293,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("AppOps", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-                    TextButton(onClick = { showAllOps = !showAllOps }) { Text(if (showAllOps) t(R.string.less) else t(R.string.all_n, d.appOps.size)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { showAllOps = !showAllOps }) { Text(if (showAllOps) t(R.string.less) else t(R.string.all_n, d.appOps.size)) }
                 }
                 Text(
                     t(R.string.appops_hint),
@@ -327,7 +330,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
             title = { Text(t(R.string.uninstall_q)) },
             text = { Text(t(R.string.uninstall_hint, details?.entry?.label)) },
             confirmButton = {
-                TextButton(onClick = {
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                     confirmUninstall = false
                     scope.launch {
                         val r = Apps.uninstall(pkg)
@@ -335,7 +338,7 @@ fun AppDetailScreen(pkg: String, shizukuReady: Boolean, onBack: () -> Unit) {
                     }
                 }) { Text(t(R.string.uninstall)) }
             },
-            dismissButton = { TextButton(onClick = { confirmUninstall = false }) { Text(t(R.string.cancel)) } },
+            dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { confirmUninstall = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }

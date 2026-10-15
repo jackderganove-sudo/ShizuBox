@@ -1,5 +1,13 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.apps
 
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -10,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.SelectAll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.DropdownMenu
@@ -48,6 +57,7 @@ fun SelectionBar(
     shizukuReady: Boolean,
     onSelection: (Set<String>) -> Unit,
     onDone: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
     val profiles by Profiles.profiles.collectAsStateWithLifecycle()
@@ -68,14 +78,16 @@ fun SelectionBar(
         }
     }
 
-    GlassCard(Modifier.fillMaxWidth(), tint = MaterialTheme.colorScheme.secondaryContainer, contentPadding = 12.dp) {
+    GlassCard(modifier.fillMaxWidth(), tint = MaterialTheme.colorScheme.secondaryContainer, contentPadding = 12.dp) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { onSelection(emptySet()) }) { Icon(Icons.Rounded.Close, t(R.string.select_none)) }
-            Text(
-                tp(R.plurals.sel_n, selection.size, selection.size),
-                style = MaterialTheme.typography.titleMedium,
+            // The count rolls like the digits of the Clock app.
+            AnimatedContent(
+                targetState = selection.size,
+                transitionSpec = { (slideInVertically { it } + fadeIn()) togetherWith (slideOutVertically { -it } + fadeOut()) },
+                label = "selCount",
                 modifier = Modifier.weight(1f),
-            )
+            ) { n -> Text(tp(R.plurals.sel_n, n, n), style = MaterialTheme.typography.titleMedium) }
             IconButton(onClick = { onSelection(selection + visible.map { it.pkg }) }) { Icon(Icons.Rounded.SelectAll, t(R.string.select_all)) }
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -118,7 +130,7 @@ fun SelectionBar(
             title = { Text(t(R.string.uninstall_q)) },
             text = { Text(t(R.string.sel_uninstall_hint, removable.joinToString { it.label })) },
             confirmButton = {
-                TextButton(onClick = {
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                     confirmUninstall = false
                     run {
                         val failed = Apps.uninstall(removable.map { it.pkg })
@@ -126,7 +138,7 @@ fun SelectionBar(
                     }
                 }) { Text(t(R.string.uninstall)) }
             },
-            dismissButton = { TextButton(onClick = { confirmUninstall = false }) { Text(t(R.string.cancel)) } },
+            dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { confirmUninstall = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }

@@ -1,5 +1,29 @@
 package de.emil.shizubox.ui.updates
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.platform.LocalHapticFeedback
+import de.emil.shizubox.ui.motion.Motion
+import de.emil.shizubox.ui.motion.popScale
+import kotlinx.coroutines.launch
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
@@ -154,6 +178,23 @@ fun MenuEntry(icon: ImageVector, title: String, subtitle: String? = null, onClic
 /** Floating pill navigation: the active entry shows its label (like ObtainX). */
 @Composable
 fun PillNav(items: List<Pair<ImageVector, String>>, selected: Int, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
+    val bounds = remember { mutableStateMapOf<Int, Pair<Float, Float>>() }
+    val left = remember { Animatable(0f) }
+    val right = remember { Animatable(0f) }
+    val pillColor = MaterialTheme.colorScheme.primary
+    val haptics = LocalHapticFeedback.current
+    // Like the Clock app: the leading edge runs ahead, the trailing one follows → the pill stretches.
+    LaunchedEffect(selected, bounds[selected]) {
+        val (l, r) = bounds[selected] ?: return@LaunchedEffect
+        if (left.value == 0f && right.value == 0f) {
+            left.snapTo(l); right.snapTo(r); return@LaunchedEffect
+        }
+        val movingRight = l > left.value
+        val fast = spring<Float>(dampingRatio = 0.7f, stiffness = Spring.StiffnessMedium)
+        val slow = spring<Float>(dampingRatio = 0.75f, stiffness = Spring.StiffnessLow)
+        launch { left.animateTo(l, if (movingRight) slow else fast) }
+        launch { right.animateTo(r, if (movingRight) fast else slow) }
+    }
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(50),
@@ -161,22 +202,40 @@ fun PillNav(items: List<Pair<ImageVector, String>>, selected: Int, onSelect: (In
         tonalElevation = 6.dp,
         shadowElevation = 8.dp,
     ) {
-        Row(Modifier.padding(6.dp).animateContentSize(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(
+            Modifier
+                .padding(6.dp)
+                .animateContentSize(Motion.size)
+                .drawBehind {
+                    if (right.value > left.value) {
+                        drawRoundRect(pillColor, Offset(left.value, 0f), Size(right.value - left.value, size.height), CornerRadius(size.height / 2))
+                    }
+                },
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
             items.forEachIndexed { i, (icon, label) ->
                 val active = i == selected
+                val content by animateColorAsState(
+                    if (active) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface, Motion.quick(), label = "navColor",
+                )
+                val pop = popScale(active.takeIf { it })
                 Row(
                     Modifier
+                        .onGloballyPositioned { c -> bounds[i] = c.positionInParent().x to c.positionInParent().x + c.size.width }
                         .clip(RoundedCornerShape(50))
-                        .background(if (active) MaterialTheme.colorScheme.primary else Color.Transparent)
-                        .clickable { onSelect(i) }
+                        .clickable { if (!active) haptics.performHapticFeedback(HapticFeedbackType.SegmentTick); onSelect(i) }
                         .padding(horizontal = if (active) 18.dp else 14.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(icon, label, tint = if (active) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface)
-                    AnimatedVisibility(active) {
+                    Icon(icon, label, tint = content, modifier = Modifier.graphicsLayer { scaleX = pop; scaleY = pop })
+                    AnimatedVisibility(
+                        active,
+                        enter = fadeIn(Motion.quick()) + expandHorizontally(Motion.size),
+                        exit = fadeOut(Motion.quick()) + shrinkHorizontally(Motion.size),
+                    ) {
                         Text(
                             label,
-                            color = MaterialTheme.colorScheme.onPrimary,
+                            color = content,
                             style = MaterialTheme.typography.labelLarge,
                             modifier = Modifier.padding(start = 8.dp),
                         )

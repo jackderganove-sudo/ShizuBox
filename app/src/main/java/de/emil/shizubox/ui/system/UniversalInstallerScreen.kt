@@ -1,5 +1,9 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.ui.motion.popIn
+import de.emil.shizubox.ui.motion.animatedProgress
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import android.content.Intent
@@ -27,6 +31,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -198,7 +203,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                                 GlassCard(Modifier.fillMaxWidth()) {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         Text("${info.permissions.size} Berechtigungen", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-                                        TextButton(onClick = { showPermissions = !showPermissions }) { Text(if (showPermissions) "Ausblenden" else "Anzeigen") }
+                                        TextButton(shapes = ButtonDefaults.shapes(), onClick = { showPermissions = !showPermissions }) { Text(if (showPermissions) "Ausblenden" else "Anzeigen") }
                                     }
                                     if (showPermissions) {
                                         info.permissions.sorted().forEach {
@@ -212,7 +217,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                             val selected = splits.filter { it.selected }
                             val hasBase = selected.any { it.type == SplitType.Base }
                             val blocked = appSettings.blockSignatureMismatch && info.signatureMismatch == true
-                            Button(
+                            Button(shapes = ButtonDefaults.shapes(), 
                                 onClick = {
                                     stage = Stage.Installing(info)
                                     progress = 0f
@@ -244,7 +249,7 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                         GlassCard(Modifier.fillMaxWidth()) {
                             Text(t(R.string.installing), style = MaterialTheme.typography.titleMedium)
                             Spacer(Modifier.height(12.dp))
-                            LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
+                            LinearProgressIndicator(progress = animatedProgress(progress), modifier = Modifier.fillMaxWidth())
                         }
                     }
                     is Stage.Done -> item {
@@ -252,23 +257,23 @@ fun UniversalInstallerScreen(uri: Uri, shizukuReady: Boolean, onClose: () -> Uni
                             when (val r = s.result) {
                                 InstallResult.Success -> {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Icon(Icons.Rounded.CheckCircle, null, tint = MaterialTheme.colorScheme.primary)
+                                        Icon(Icons.Rounded.CheckCircle, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.popIn())
                                         Spacer(Modifier.width(12.dp))
                                         Text(t(R.string.app_installed, info.appName), style = MaterialTheme.typography.titleMedium)
                                     }
                                     Spacer(Modifier.height(12.dp))
                                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                         context.packageManager.getLaunchIntentForPackage(info.packageName)?.let { launch ->
-                                            Button(onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); onClose() }) { Text(t(R.string.open)) }
+                                            Button(shapes = ButtonDefaults.shapes(), onClick = { context.startActivity(launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); onClose() }) { Text(t(R.string.open)) }
                                         }
-                                        FilledTonalButton(onClick = onClose) { Text(t(R.string.done)) }
+                                        FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = onClose) { Text(t(R.string.done)) }
                                     }
                                 }
                                 is InstallResult.Failure -> {
                                     Text(r.title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error)
                                     Text(r.hint, style = MaterialTheme.typography.bodyMedium)
                                     Spacer(Modifier.height(12.dp))
-                                    FilledTonalButton(onClick = { stage = Stage.Preview(info) }) { Text(t(R.string.back)) }
+                                    FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { stage = Stage.Preview(info) }) { Text(t(R.string.back)) }
                                 }
                             }
                         }

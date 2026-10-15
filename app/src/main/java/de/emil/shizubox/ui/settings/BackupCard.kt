@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.settings
 
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -6,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -70,11 +73,11 @@ fun BackupCard() {
             Switch(checked = secrets, onCheckedChange = { secrets = it })
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-            FilledTonalButton(onClick = {
+            FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = {
                 val date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).format(Date())
                 exportLauncher.launch("shizubox-backup-$date.json")
             }) { Text(t(R.string.export)) }
-            OutlinedButton(onClick = { importLauncher.launch(arrayOf("application/json", "text/plain", "*/*")) }) { Text(t(R.string.bk_restore)) }
+            OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { importLauncher.launch(arrayOf("application/json", "text/plain", "*/*")) }) { Text(t(R.string.bk_restore)) }
         }
         message?.let {
             Text(

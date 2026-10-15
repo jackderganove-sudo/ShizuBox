@@ -76,6 +76,14 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Schnellaktionen auf der Startseite (gleiche Logik `QuickActions`) | ✅ |
 | Homescreen-Widget (RemoteViews, Material-You-Farben) | ✅ |
 
+### Animationen (`ui/motion/`)
+| Funktion | Status |
+|---|---|
+| Zentrale Federn (`Motion`), Expressive MotionScheme, ButtonShapes-Morphing | ✅ |
+| Shared-Element-Übergang Startseite → Bereich, Unterseiten federnd | ✅ |
+| Navigations-Pille (gleiten + strecken), Seitenwechsel seitlich | ✅ |
+| Listen gestaffelt + animateItem, rollende Ziffern, Fortschritt, leere Zustände | ✅ |
+
 ### Einstellungen (`settings/`, `ui/settings/`)
 | Funktion | Status |
 |---|---|
@@ -104,12 +112,14 @@ app/src/main/java/de/emil/shizubox/
   tiles/                QuickActions, TileServices, Widget
   settings/             AppSettings, Language, Backup
   debug/                ScreenRenderer (Offscreen-Screenshots per adb)
+  ui/motion/            Motion (Federn, pressScale, RollingText, Stagger), Shared (Container-Übergang), EmptyState
   ui/                   Compose-Screens je Bereich, ui/glass (GlassCard, GlassBackground), ui/theme
 tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Generator
 ```
 
 ## Technik
 - **Kotlin + Jetpack Compose + Material 3**, AGP 9.4.1 (eingebautes Kotlin 2.4.21), Compose-BOM 2026.09.00
+- Material3 **1.5.0-beta01** (Expressive-APIs: MotionScheme, ButtonShapes, MaterialShapes)
 - Libraries: Shizuku API 13.1.5, Haze 2.0.1 (Glas), Ackpine 0.25.4 (Installer), WorkManager 2.12.0, MaterialKolor 5.0.1, DataStore
 - **Shizuku-Befehle**: `ShizukuManager.exec(cmd)` → AIDL `IShellService` (UserService im Shell-Prozess) führt `sh -c` aus,
   Rückgabe `ShellResult(code, out, err)`. `writeFile(fd, path)` kopiert Dateien als Shell-Nutzer.

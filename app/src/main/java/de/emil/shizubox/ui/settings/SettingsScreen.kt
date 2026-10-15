@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.settings
 
 import de.emil.shizubox.R
@@ -29,6 +31,7 @@ import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -212,7 +215,7 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     }
                 }
                 if (s.installMethod != InstallMethod.Shizuku && !context.packageManager.canRequestPackageInstalls()) {
-                    TextButton(onClick = {
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                         context.startActivity(
                             Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${context.packageName}")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         )
@@ -249,8 +252,8 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     },
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    FilledTonalButton(onClick = { VirusTotal.apiKey = vtKey; message = t(R.string.key_saved) }) { Text(t(R.string.save)) }
-                    TextButton(onClick = { open("https://www.virustotal.com/gui/my-apikey") }) { Text(t(R.string.get_key)) }
+                    FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { VirusTotal.apiKey = vtKey; message = t(R.string.key_saved) }) { Text(t(R.string.save)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { open("https://www.virustotal.com/gui/my-apikey") }) { Text(t(R.string.get_key)) }
                 }
                 SwitchRow(t(R.string.set_vt_auto), s.vtAutoScan) { v -> AppSettings.update { it.copy(vtAutoScan = v) } }
                 SwitchRow(t(R.string.set_block_sig), s.blockSignatureMismatch) { v -> AppSettings.update { it.copy(blockSignatureMismatch = v) } }
@@ -298,7 +301,7 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     modifier = Modifier.padding(top = 8.dp),
                 )
                 ShizukuManager.shizukuLaunchIntent()?.let { launch ->
-                    TextButton(onClick = { context.startActivity(launch) }) { Text(t(R.string.open_shizuku)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { context.startActivity(launch) }) { Text(t(R.string.open_shizuku)) }
                 }
             }
         }
@@ -312,9 +315,9 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                 Text("ShizuBox ${BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.titleLarge)
                 Text(t(R.string.set_license), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    FilledTonalButton(onClick = { open(REPO_URL) }) { Text("GitHub") }
-                    FilledTonalButton(onClick = { open("$REPO_URL/releases") }) { Text(t(R.string.releases)) }
-                    FilledTonalButton(onClick = {
+                    FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { open(REPO_URL) }) { Text("GitHub") }
+                    FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { open("$REPO_URL/releases") }) { Text(t(R.string.releases)) }
+                    FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = {
                         scope.launch {
                             message = runCatching { Updates.add(REPO_URL) }.fold(
                                 { t(R.string.set_self_tracked) },

@@ -1,5 +1,19 @@
 # Changelog
 
+## Unveröffentlicht – Sitzung 2026-10-15 (Nachmittag)
+- Doku: PROJEKTSTAND.md, CHANGELOG.md, CLAUDE.md
+- Animationen (Material 3 Expressive, Material3 1.5.0-beta01):
+  - zentrale Federn in `ui/motion/Motion.kt`, `MotionScheme.expressive()` im Theme
+  - Startseiten-Karten wachsen beim Öffnen zum Bildschirm (Shared Element), Unterseiten öffnen federnd
+  - Navigations-Pille in Updates gleitet und streckt sich, Icons hüpfen, Seiten gleiten seitlich
+  - alle Buttons ändern beim Drücken ihre Form (ButtonShapes), Karten federn ein, haptisches Feedback
+  - Listen erscheinen gestaffelt und gleiten bei Änderungen (App-Liste, Updates, Prozesse, Bildschirmzeit)
+  - Schnellaktionen: Farbe, Form (Kreis ↔ abgerundetes Quadrat) und Wert animiert
+  - Schulmodus-Karte morpht beim Aktivieren (nur UI), Shizuku-Punkt pulsiert
+  - rollende Ziffern (Akku, CPU-Takt, Bildschirmzeit, Update-Zähler, Auswahl-Zähler)
+  - weiche Fortschrittsbalken, Häkchen-Pop bei erfolgreicher Installation, animierte leere Zustände
+  - „Animationen entfernen“ wird respektiert
+
 ## 0.5.1 – 2026-10-15
 - Bildschirmzeit pro App (heute / 7 Tage), Nutzungszugriff per Shizuku
 - Homescreen-Widget mit Schnellaktionen

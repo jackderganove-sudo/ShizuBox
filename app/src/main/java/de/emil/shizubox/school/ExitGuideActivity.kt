@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.school
 
 import de.emil.shizubox.R
@@ -20,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -110,7 +113,7 @@ private fun ExitGuide(done: Boolean, shizuku: ShizukuStatus, onOpenShizuku: () -
                     Text(t(R.string.restoring), style = MaterialTheme.typography.titleMedium)
                 } else {
                     Text(t(R.string.waiting_shizuku), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-                    Button(onClick = onOpenShizuku) { Text(t(R.string.open_shizuku)) }
+                    Button(shapes = ButtonDefaults.shapes(), onClick = onOpenShizuku) { Text(t(R.string.open_shizuku)) }
                 }
             }
         }

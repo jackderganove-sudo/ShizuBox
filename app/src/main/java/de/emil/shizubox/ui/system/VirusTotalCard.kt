@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.system
 
 import de.emil.shizubox.R
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.GppMaybe
 import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
@@ -75,7 +78,7 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
         Spacer(Modifier.height(6.dp))
         val r = result
         if (keyVersion < 0 && r == null) {
-            FilledTonalButton(onClick = { keyVersion = 0 }) { Text(t(R.string.vt_scan)) }
+            FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { keyVersion = 0 }) { Text(t(R.string.vt_scan)) }
             return@GlassCard
         }
         when (r?.status) {
@@ -91,31 +94,31 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                     t(R.string.vt_need_key),
                     style = MaterialTheme.typography.bodyMedium,
                 )
-                FilledTonalButton(onClick = { askKey = true }, modifier = Modifier.padding(top = 8.dp)) { Text(t(R.string.vt_enter_key)) }
+                FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { askKey = true }, modifier = Modifier.padding(top = 8.dp)) { Text(t(R.string.vt_enter_key)) }
             }
             VtStatus.INVALID_API_KEY -> {
                 Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, t(R.string.vt_bad_key))
-                TextButton(onClick = { askKey = true }) { Text(t(R.string.vt_change_key)) }
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = { askKey = true }) { Text(t(R.string.vt_change_key)) }
             }
             VtStatus.RATE_LIMITED -> {
                 Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.tertiary, t(R.string.vt_limit))
-                TextButton(onClick = { keyVersion++ }) { Text(t(R.string.retry)) }
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = { keyVersion++ }) { Text(t(R.string.retry)) }
             }
             VtStatus.NOT_ANALYZED -> {
                 Text(
                     t(R.string.vt_not_analyzed),
                     style = MaterialTheme.typography.bodyMedium,
                 )
-                TextButton(onClick = { keyVersion++ }) { Text(t(R.string.recheck)) }
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = { keyVersion++ }) { Text(t(R.string.recheck)) }
             }
             VtStatus.TOO_LARGE -> Text(t(R.string.vt_too_large), style = MaterialTheme.typography.bodyMedium)
             VtStatus.ERROR -> {
                 Verdict(Icons.Rounded.Warning, MaterialTheme.colorScheme.error, r.errorMessage.ifBlank { t(R.string.error) })
-                TextButton(onClick = { keyVersion++ }) { Text(t(R.string.retry)) }
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = { keyVersion++ }) { Text(t(R.string.retry)) }
             }
             VtStatus.NOT_FOUND -> {
                 Text(t(R.string.vt_unknown_file), style = MaterialTheme.typography.bodyMedium)
-                FilledTonalButton(
+                FilledTonalButton(shapes = ButtonDefaults.shapes(), 
                     modifier = Modifier.padding(top = 8.dp),
                     onClick = {
                         scope.launch {
@@ -140,9 +143,9 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                 val hits = r.engineResults.filter { it.category == "malicious" || it.category == "suspicious" }
                 Row {
                     if (hits.isNotEmpty()) {
-                        TextButton(onClick = { showEngines = !showEngines }) { Text(if (showEngines) t(R.string.vt_hide_hits) else t(R.string.vt_show_hits)) }
+                        TextButton(shapes = ButtonDefaults.shapes(), onClick = { showEngines = !showEngines }) { Text(if (showEngines) t(R.string.vt_hide_hits) else t(R.string.vt_show_hits)) }
                     }
-                    TextButton(onClick = {
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                         context.startActivity(
                             Intent(Intent.ACTION_VIEW, Uri.parse("https://www.virustotal.com/gui/file/${r.sha256}"))
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
@@ -169,7 +172,7 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                         t(R.string.vt_key_help),
                         style = MaterialTheme.typography.bodySmall,
                     )
-                    TextButton(onClick = {
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                         context.startActivity(
                             Intent(Intent.ACTION_VIEW, Uri.parse("https://www.virustotal.com/gui/my-apikey"))
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
@@ -179,13 +182,13 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                 }
             },
             confirmButton = {
-                TextButton(onClick = {
+                TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                     VirusTotal.apiKey = value
                     askKey = false
                     keyVersion++
                 }) { Text(t(R.string.save)) }
             },
-            dismissButton = { TextButton(onClick = { askKey = false }) { Text(t(R.string.cancel)) } },
+            dismissButton = { TextButton(shapes = ButtonDefaults.shapes(), onClick = { askKey = false }) { Text(t(R.string.cancel)) } },
         )
     }
 }

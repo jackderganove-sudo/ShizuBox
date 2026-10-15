@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.home
 
 import de.emil.shizubox.R
@@ -30,6 +32,7 @@ import androidx.compose.material.icons.rounded.School
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.Terminal
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +40,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
+import de.emil.shizubox.ui.motion.Motion
+import de.emil.shizubox.ui.motion.pulse
+import de.emil.shizubox.ui.motion.reduceMotion
+import de.emil.shizubox.ui.motion.sharedSection
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.graphics.Color
@@ -149,12 +173,20 @@ private fun ShizukuCard(status: ShizukuStatus, serverMode: String?, onAction: ()
     }
     GlassCard(Modifier.fillMaxWidth(), contentPadding = 16.dp) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(
-                Modifier
-                    .padding(start = 4.dp, end = 16.dp)
-                    .size(12.dp)
-                    .background(dot, CircleShape),
-            )
+            // Connected: a soft halo breathes around the dot.
+            val dotColor by animateColorAsState(dot, Motion.quick(), label = "dot")
+            val halo = pulse(min = 0f, periodMs = 2200, enabled = status == ShizukuStatus.Ready)
+            Box(Modifier.padding(start = 4.dp, end = 16.dp).size(12.dp), contentAlignment = Alignment.Center) {
+                if (status == ShizukuStatus.Ready && halo < 1f) {
+                    Box(
+                        Modifier
+                            .size(12.dp)
+                            .graphicsLayer { val sc = 1f + (1f - halo) * 1.3f; scaleX = sc; scaleY = sc; alpha = halo * 0.6f }
+                            .background(dotColor, CircleShape),
+                    )
+                }
+                Box(Modifier.size(12.dp).background(dotColor, CircleShape))
+            }
             Column(Modifier.weight(1f)) {
                 Text(title, style = MaterialTheme.typography.titleMedium)
                 Text(
@@ -165,7 +197,7 @@ private fun ShizukuCard(status: ShizukuStatus, serverMode: String?, onAction: ()
             }
             if (action != null) {
                 Spacer(Modifier.width(8.dp))
-                FilledTonalButton(onClick = onAction) { Text(action) }
+                FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = onAction) { Text(action) }
             }
         }
     }
@@ -180,15 +212,40 @@ private fun SchoolCard(
     onClick: () -> Unit,
 ) {
     val colors = MaterialTheme.colorScheme
+    // While activating: the card morphs rounder, the icon pulses and a color wave flows over it.
+    val corner by animateDpAsState(if (busy) 56.dp else 32.dp, Motion.bouncy(), label = "schoolCorner")
+    val iconPulse = pulse(min = 0.82f, periodMs = 900, enabled = busy)
+    val wave = if (busy && !reduceMotion()) {
+        rememberInfiniteTransition(label = "wave").animateFloat(
+            -0.5f, 1.5f, infiniteRepeatable(tween(1300, easing = LinearEasing)), label = "wave",
+        ).value
+    } else null
     GlassCard(
-        Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(32.dp),
+        Modifier
+            .fillMaxWidth()
+            .sharedSection("section-${Section.School.name}")
+            .drawWithContent {
+                drawContent()
+                if (wave != null) {
+                    val x = size.width * wave
+                    drawRect(
+                        Brush.linearGradient(
+                            listOf(Color.Transparent, colors.primary.copy(alpha = 0.28f), Color.Transparent),
+                            start = Offset(x - size.width * 0.35f, 0f),
+                            end = Offset(x + size.width * 0.35f, size.height),
+                        ),
+                    )
+                }
+            },
+        shape = RoundedCornerShape(corner),
         tint = colors.primaryContainer,
         onClick = onClick,
         contentPadding = 24.dp,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconBubble(Section.School.icon, colors.primary, colors.onPrimary, 56)
+            Box(Modifier.graphicsLayer { scaleX = iconPulse; scaleY = iconPulse }) {
+                IconBubble(Section.School.icon, colors.primary, colors.onPrimary, 56)
+            }
             Spacer(Modifier.width(16.dp))
             Column(Modifier.weight(1f)) {
                 Text(Section.School.title, style = MaterialTheme.typography.headlineSmall, color = colors.onPrimaryContainer)
@@ -210,7 +267,7 @@ private fun SchoolCard(
             color = colors.onPrimaryContainer.copy(alpha = 0.8f),
         )
         Spacer(Modifier.height(20.dp))
-        FilledTonalButton(
+        FilledTonalButton(shapes = ButtonDefaults.shapes(), 
             onClick = onActivate,
             enabled = canActivate,
             modifier = Modifier
@@ -219,7 +276,11 @@ private fun SchoolCard(
         ) {
             Icon(Icons.Rounded.PowerSettingsNew, contentDescription = null)
             Spacer(Modifier.width(8.dp))
-            Text(if (busy) t(R.string.activating) else t(R.string.activate), style = MaterialTheme.typography.titleMedium)
+            AnimatedContent(
+                targetState = busy,
+                transitionSpec = { (slideInVertically(Motion.offset) { it } + fadeIn()) togetherWith (slideOutVertically(Motion.offset) { -it } + fadeOut()) },
+                label = "activateText",
+            ) { b -> Text(if (b) t(R.string.activating) else t(R.string.activate), style = MaterialTheme.typography.titleMedium) }
         }
     }
 }
@@ -227,7 +288,7 @@ private fun SchoolCard(
 @Composable
 private fun SectionTile(section: Section, modifier: Modifier, subtitle: String? = null, onClick: () -> Unit) {
     val colors = MaterialTheme.colorScheme
-    GlassCard(modifier.height(148.dp), onClick = onClick) {
+    GlassCard(modifier.sharedSection("section-${section.name}").height(148.dp), onClick = onClick) {
         IconBubble(section.icon, colors.secondaryContainer, colors.onSecondaryContainer, 44)
         Spacer(Modifier.weight(1f))
         Text(section.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)

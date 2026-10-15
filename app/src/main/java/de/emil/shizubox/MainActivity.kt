@@ -1,6 +1,19 @@
 package de.emil.shizubox
 
 import android.content.Intent
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
+import de.emil.shizubox.ui.motion.LocalNavScope
+import de.emil.shizubox.ui.motion.LocalSharedScope
+import de.emil.shizubox.ui.motion.Motion
+import de.emil.shizubox.ui.motion.openClose
+import de.emil.shizubox.ui.motion.sharedSection
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -44,9 +57,9 @@ import de.emil.shizubox.shizuku.ShizukuStatus
 import de.emil.shizubox.ui.glass.GlassBackground
 import de.emil.shizubox.ui.home.HomeScreen
 import de.emil.shizubox.ui.home.Section
-import de.emil.shizubox.ui.home.SectionScreen
 import de.emil.shizubox.ui.theme.ShizuBoxTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 class MainActivity : ComponentActivity() {
 
     private val windowBlur = mutableStateOf(false)
@@ -100,77 +113,97 @@ class MainActivity : ComponentActivity() {
                 BackHandler(enabled = installUri != null) { installUri = null }
 
                 GlassBackground(windowBlurActive = windowBlur.value) {
-                    if (settingsOpen) {
-                        SettingsScreen(
-                            onBack = { settingsOpen = false },
-                            onOpenUpdates = { settingsOpen = false; section = Section.Updates },
-                            onOpenSchool = { settingsOpen = false; section = Section.School },
-                        )
-                        return@GlassBackground
-                    }
-                    AnimatedContent(
-                        targetState = section,
-                        transitionSpec = { (fadeIn() + scaleIn(initialScale = 0.96f)) togetherWith fadeOut() },
-                        label = "screen",
-                    ) { current ->
-                        if (current == null) {
-                            HomeScreen(
-                                shizukuStatus = status,
-                                serverMode = ShizukuManager.serverMode,
-                                school = school,
-                                busy = busy,
-                                updateCount = updateCount,
-                                onShizukuAction = { onShizukuAction(status) },
-                                onActivateSchool = activate,
-                                onOpenSettings = { settingsOpen = true },
-                                onOpenSection = { section = it },
-                            )
-                        } else if (current == Section.School) {
-                            SchoolScreen(
-                                state = school,
-                                shizukuReady = status == ShizukuStatus.Ready,
-                                busy = busy,
-                                onActivate = activate,
-                                onAutoEndChange = { lifecycleScope.launch { SchoolMode.setAutoEndMinutes(it) } },
-                                onWaitForShizukuChange = { lifecycleScope.launch { SchoolMode.setWaitForShizukuAfterReboot(it) } },
-                                onBack = { section = null },
-                            )
-                        } else if (current == Section.Updates) {
-                            UpdatesScreen(status == ShizukuStatus.Ready, onBack = { section = null })
-                        } else if (current == Section.System) {
-                            val uri = installUri
-                            if (uri != null) {
-                                UniversalInstallerScreen(uri, status == ShizukuStatus.Ready, onClose = { installUri = null })
-                            } else if (systemPage != null) {
-                                val ready = status == ShizukuStatus.Ready
-                                val close = { systemPage = null }
-                                when (systemPage) {
-                                    SystemPage.LOGCAT -> LogcatScreen(ready, onBack = close)
-                                    SystemPage.DEVICE -> DeviceInfoScreen(onBack = close)
-                                    SystemPage.PROCESSES -> ProcessesScreen(ready, onBack = close)
-                                    SystemPage.TERMINAL -> TerminalScreen(ready, onBack = close)
-                                    SystemPage.SCREEN_TIME -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, onBack = close)
+                    SharedTransitionLayout {
+                        CompositionLocalProvider(LocalSharedScope provides this) {
+                            AnimatedContent(
+                                targetState = if (settingsOpen) SETTINGS else section,
+                                transitionSpec = {
+                                    if (targetState == SETTINGS || initialState == SETTINGS) openClose(opening = targetState == SETTINGS)
+                                    // Sections grow out of their home card (shared bounds), so the rest only fades.
+                                    else fadeIn(Motion.quick()) togetherWith fadeOut(tween(150))
+                                },
+                                label = "screen",
+                            ) { current ->
+                                CompositionLocalProvider(LocalNavScope provides this) {
+                                    Screen(current, status, school, busy, updateCount, activate, systemPage, installUri,
+                                        onSection = { section = it }, onSettings = { settingsOpen = it },
+                                        onSystemPage = { systemPage = it }, onInstallUri = { installUri = it })
                                 }
-                            } else {
-                                SystemScreen(
-                                    shizukuReady = status == ShizukuStatus.Ready,
-                                    onOpenPage = { systemPage = it },
-                                    onOpenUniversalInstaller = { installUri = it },
-                                    onBack = { section = null },
-                                )
                             }
-                        } else if (current == Section.Apps) {
-                            AppsScreen(
-                                shizukuReady = status == ShizukuStatus.Ready,
-                                onBack = { section = null },
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun Screen(
+        current: Any?,
+        status: ShizukuStatus,
+        school: de.emil.shizubox.school.SchoolState,
+        busy: Boolean,
+        updateCount: Int,
+        activate: () -> Unit,
+        systemPage: String?,
+        installUri: Uri?,
+        onSection: (Section?) -> Unit,
+        onSettings: (Boolean) -> Unit,
+        onSystemPage: (String?) -> Unit,
+        onInstallUri: (Uri?) -> Unit,
+    ) {
+        val ready = status == ShizukuStatus.Ready
+        val back = { onSection(null) }
+        when (current) {
+            SETTINGS -> SettingsScreen(
+                onBack = { onSettings(false) },
+                onOpenUpdates = { onSettings(false); onSection(Section.Updates) },
+                onOpenSchool = { onSettings(false); onSection(Section.School) },
+            )
+            null -> HomeScreen(
+                shizukuStatus = status,
+                serverMode = ShizukuManager.serverMode,
+                school = school,
+                busy = busy,
+                updateCount = updateCount,
+                onShizukuAction = { onShizukuAction(status) },
+                onActivateSchool = activate,
+                onOpenSettings = { onSettings(true) },
+                onOpenSection = onSection,
+            )
+            is Section -> Box(Modifier.fillMaxSize().sharedSection("section-${current.name}")) {
+                when (current) {
+                    Section.School -> SchoolScreen(
+                        state = school,
+                        shizukuReady = ready,
+                        busy = busy,
+                        onActivate = activate,
+                        onAutoEndChange = { lifecycleScope.launch { SchoolMode.setAutoEndMinutes(it) } },
+                        onWaitForShizukuChange = { lifecycleScope.launch { SchoolMode.setWaitForShizukuAfterReboot(it) } },
+                        onBack = back,
+                    )
+                    Section.Updates -> UpdatesScreen(ready, onBack = back)
+                    Section.Apps -> AppsScreen(shizukuReady = ready, onBack = back)
+                    Section.Customization -> CustomizationScreen(shizukuReady = ready, onBack = back)
+                    Section.System -> AnimatedContent(
+                        targetState = installUri ?: systemPage,
+                        transitionSpec = { openClose(opening = targetState != null) },
+                        label = "systemPage",
+                    ) { sub ->
+                        val close = { onSystemPage(null) }
+                        when (sub) {
+                            is Uri -> UniversalInstallerScreen(sub, ready, onClose = { onInstallUri(null) })
+                            SystemPage.LOGCAT -> LogcatScreen(ready, onBack = close)
+                            SystemPage.DEVICE -> DeviceInfoScreen(onBack = close)
+                            SystemPage.PROCESSES -> ProcessesScreen(ready, onBack = close)
+                            SystemPage.TERMINAL -> TerminalScreen(ready, onBack = close)
+                            SystemPage.SCREEN_TIME -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, onBack = close)
+                            else -> SystemScreen(
+                                shizukuReady = ready,
+                                onOpenPage = onSystemPage,
+                                onOpenUniversalInstaller = onInstallUri,
+                                onBack = back,
                             )
-                        } else if (current == Section.Customization) {
-                            CustomizationScreen(
-                                shizukuReady = status == ShizukuStatus.Ready,
-                                onBack = { section = null },
-                            )
-                        } else {
-                            SectionScreen(current, onBack = { section = null })
                         }
                     }
                 }
@@ -220,6 +253,7 @@ class MainActivity : ComponentActivity() {
     companion object {
         private const val WINDOW_BLUR_RADIUS = 90
         const val EXTRA_SECTION = "section"
+        private const val SETTINGS = "settings"
         private var checkedThisProcess = false
     }
 }

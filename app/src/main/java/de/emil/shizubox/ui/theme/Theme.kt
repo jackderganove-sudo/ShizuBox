@@ -1,7 +1,10 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -66,6 +69,7 @@ fun ShizuBoxTheme(content: @Composable () -> Unit) {
         } else base
     }
     CompositionLocalProvider(LocalDarkTheme provides dark) {
-        MaterialTheme(colorScheme = colors, typography = AppTypography, content = content)
+        // Expressive motion: springs with a little overshoot for all Material components.
+        MaterialTheme(colorScheme = colors, typography = AppTypography, motionScheme = MotionScheme.expressive(), content = content)
     }
 }

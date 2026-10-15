@@ -1,5 +1,21 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.updates
 
+import androidx.compose.material.icons.rounded.SystemUpdate
+import de.emil.shizubox.ui.motion.EmptyState
+import de.emil.shizubox.ui.motion.RollingText
+import de.emil.shizubox.ui.motion.slideFade
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
+import de.emil.shizubox.ui.motion.rememberListStart
+import de.emil.shizubox.ui.motion.enterStagger
+import de.emil.shizubox.ui.motion.Motion
+import androidx.compose.foundation.lazy.itemsIndexed
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import de.emil.shizubox.tp
@@ -50,6 +66,7 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.SystemUpdateAlt
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
@@ -146,11 +163,17 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     val updatingAll by Updates.updatingAll.collectAsStateWithLifecycle()
 
     Box(Modifier.fillMaxSize()) {
-        when (page) {
-            0 -> AppsPage(resumeTick, onBack, onOpen = { route = Route.Detail(it.key) }, onBrowser = { route = Route.Browser(it) })
-            1 -> AddPage(onRoute = { route = it }, onAdded = { page = 0 })
-            2 -> ImportExportPage()
-            else -> SettingsPage()
+        AnimatedContent(
+            targetState = page,
+            transitionSpec = { slideFade(forward = targetState > initialState) },
+            label = "updPage",
+        ) { p ->
+            when (p) {
+                0 -> AppsPage(resumeTick, onBack, onOpen = { route = Route.Detail(it.key) }, onBrowser = { route = Route.Browser(it) })
+                1 -> AddPage(onRoute = { route = it }, onAdded = { page = 0 })
+                2 -> ImportExportPage()
+                else -> SettingsPage()
+            }
         }
         // Bottom bar like ObtainX: "update all" button (with count) left of the navigation pill.
         Row(
@@ -158,10 +181,14 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            if (page == 0 && (updateCount > 0 || updatingAll?.first != null)) {
+            AnimatedVisibility(
+                page == 0 && (updateCount > 0 || updatingAll?.first != null),
+                enter = scaleIn(Motion.bouncy()) + fadeIn(),
+                exit = scaleOut(Motion.quick()) + fadeOut(),
+            ) {
                 val running = updatingAll?.first != null
                 androidx.compose.material3.BadgedBox(
-                    badge = { if (!running) androidx.compose.material3.Badge { Text("$updateCount") } },
+                    badge = { if (!running) androidx.compose.material3.Badge { RollingText("$updateCount", MaterialTheme.typography.labelSmall) } },
                 ) {
                     val context = LocalContext.current
                     val scope = rememberCoroutineScope()
@@ -216,7 +243,7 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                             modifier = Modifier.padding(top = 4.dp),
                         )
                     }
-                    TextButton(onClick = { Updates.clearUpdateAllResult() }) { Text(t(R.string.ok)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = { Updates.clearUpdateAllResult() }) { Text(t(R.string.ok)) }
                 }
             }
         }
@@ -259,6 +286,7 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
     val updatingAll by Updates.updatingAll.collectAsStateWithLifecycle()
     val busyKey = busy ?: updatingAll?.first
     var query by rememberSaveable { mutableStateOf("") }
+    val updListStart = rememberListStart()
     var searching by rememberSaveable { mutableStateOf(false) }
 
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
@@ -317,28 +345,23 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
             }
         }
         if (apps.isEmpty()) {
-            item {
-                ObCard(Modifier.fillMaxWidth()) {
-                    Text(t(R.string.upd_empty), style = MaterialTheme.typography.titleMedium)
-                    Text(
-                        t(R.string.upd_empty_hint),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
+            item { EmptyState(Icons.Rounded.SystemUpdate, t(R.string.upd_empty), t(R.string.upd_empty_hint)) }
         }
         val shownUpdates = updates.filter(::matches)
         if (shownUpdates.isNotEmpty()) {
             item { GroupHeader(t(R.string.sec_updates), shownUpdates.size, showUpdates) { showUpdates = !showUpdates } }
             if (showUpdates) {
-                items(shownUpdates, key = { "u" + it.key }) { app ->
+                itemsIndexed(shownUpdates, key = { _, app -> "u" + app.key }) { index, app ->
+                    Box(Modifier.animateItem(fadeInSpec = null, placementSpec = Motion.offset, fadeOutSpec = Motion.quick()).enterStagger(index, updListStart)) {
                     AppRow(app, states[app.key], busyKey == app.key, onOpen = { onOpen(app) }, onInstall = { install(app) })
+                    }
                 }
             }
         }
-        items(others.filter(::matches), key = { it.key }) { app ->
+        itemsIndexed(others.filter(::matches), key = { _, app -> app.key }) { index, app ->
+            Box(Modifier.animateItem(fadeInSpec = null, placementSpec = Motion.offset, fadeOutSpec = Motion.quick()).enterStagger(index, updListStart)) {
             AppRow(app, states[app.key], busyKey == app.key, onOpen = { onOpen(app) }, onInstall = { install(app) })
+            }
         }
     }
 }
@@ -412,7 +435,7 @@ private fun AddPage(onRoute: (Route) -> Unit, onAdded: () -> Unit) {
             if (showUrl) {
                 ObCard(Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
                     OutlinedTextField(value = url, onValueChange = { url = it }, singleLine = true, placeholder = { Text("https://…") }, modifier = Modifier.fillMaxWidth())
-                    Button(
+                    Button(shapes = ButtonDefaults.shapes(), 
                         onClick = {
                             busy = true
                             scope.launch {
@@ -478,10 +501,10 @@ private fun ImportExportPage() {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 12.dp)) {
-                    OutlinedButton(enabled = !busy, onClick = { importFile.launch(arrayOf("application/json", "*/*")) }, modifier = Modifier.weight(1f)) {
+                    OutlinedButton(shapes = ButtonDefaults.shapes(), enabled = !busy, onClick = { importFile.launch(arrayOf("application/json", "*/*")) }, modifier = Modifier.weight(1f)) {
                         Text(if (busy) t(R.string.importing) else t(R.string.do_import))
                     }
-                    OutlinedButton(onClick = { exportFile.launch("shizubox-apps.json") }, modifier = Modifier.weight(1f)) { Text(t(R.string.export)) }
+                    OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = { exportFile.launch("shizubox-apps.json") }, modifier = Modifier.weight(1f)) { Text(t(R.string.export)) }
                 }
                 message?.let { Text(it, color = if (it.startsWith("⚠")) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp)) }
             }
@@ -506,7 +529,7 @@ private fun SettingsPage() {
         item { PageTitle(t(R.string.settings)) }
         item { SectionLabel(t(R.string.us_updates)) }
         item {
-            Button(onClick = { Updates.checkAllInBackground() }, modifier = Modifier.fillMaxWidth()) { Text(t(R.string.us_check_now)) }
+            Button(shapes = ButtonDefaults.shapes(), onClick = { Updates.checkAllInBackground() }, modifier = Modifier.fillMaxWidth()) { Text(t(R.string.us_check_now)) }
         }
         item {
             ObCard(Modifier.fillMaxWidth()) {
@@ -547,8 +570,8 @@ private fun SettingsPage() {
                     visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    FilledTonalButton(onClick = { Updates.setSettings(s.copy(githubToken = token)) }) { Text(t(R.string.save)) }
-                    TextButton(onClick = {
+                    FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { Updates.setSettings(s.copy(githubToken = token)) }) { Text(t(R.string.save)) }
+                    TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/settings/personal-access-tokens/new")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                     }) { Text(t(R.string.us_create_token)) }
                 }
@@ -613,7 +636,7 @@ private fun SearchScreen(onBack: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 OutlinedTextField(value = query, onValueChange = { query = it }, singleLine = true, placeholder = { Text(t(R.string.search)) }, shape = RoundedCornerShape(28.dp), modifier = Modifier.weight(1f))
                 Spacer(Modifier.width(8.dp))
-                FilledTonalButton(enabled = query.isNotBlank() && !loading, onClick = {
+                FilledTonalButton(shapes = ButtonDefaults.shapes(), enabled = query.isNotBlank() && !loading, onClick = {
                     loading = true
                     scope.launch { results = SourceSearch.search(query, sources); loading = false }
                 }) { Icon(Icons.Rounded.Search, t(R.string.search)) }
@@ -639,7 +662,7 @@ private fun SearchScreen(onBack: () -> Unit) {
                     if (r.url in added) {
                         Text("✓", color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(12.dp))
                     } else {
-                        TextButton(onClick = {
+                        TextButton(shapes = ButtonDefaults.shapes(), onClick = {
                             scope.launch {
                                 runCatching { Updates.add(r.url) }.onSuccess { added = added + r.url }.onFailure { message = "${r.name}: ${it.message}" }
                             }
@@ -665,7 +688,7 @@ private fun UrlListScreen(onBack: () -> Unit) {
             placeholder = { Text(t(R.string.one_link_per_line)) },
             modifier = Modifier.fillMaxWidth().height(260.dp),
         )
-        Button(enabled = text.isNotBlank() && !busy, modifier = Modifier.fillMaxWidth().padding(top = 12.dp), onClick = {
+        Button(shapes = ButtonDefaults.shapes(), enabled = text.isNotBlank() && !busy, modifier = Modifier.fillMaxWidth().padding(top = 12.dp), onClick = {
             busy = true
             scope.launch {
                 val urls = text.lines().map { it.trim() }.filter { it.isNotBlank() }
@@ -698,7 +721,7 @@ private fun StarsScreen(onBack: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 OutlinedTextField(value = user, onValueChange = { user = it.trim() }, singleLine = true, placeholder = { Text(t(R.string.gh_user)) }, modifier = Modifier.weight(1f))
                 Spacer(Modifier.width(8.dp))
-                FilledTonalButton(enabled = user.isNotBlank() && !busy, onClick = {
+                FilledTonalButton(shapes = ButtonDefaults.shapes(), enabled = user.isNotBlank() && !busy, onClick = {
                     busy = true
                     scope.launch {
                         repos = runCatching { SourceSearch.starred(user) }.getOrElse { result = it.message; emptyList() }
@@ -717,7 +740,7 @@ private fun StarsScreen(onBack: () -> Unit) {
         }
         if (!repos.isNullOrEmpty()) {
             item {
-                Button(enabled = chosen.isNotEmpty() && !busy, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), onClick = {
+                Button(shapes = ButtonDefaults.shapes(), enabled = chosen.isNotEmpty() && !busy, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), onClick = {
                     busy = true
                     scope.launch {
                         var ok = 0

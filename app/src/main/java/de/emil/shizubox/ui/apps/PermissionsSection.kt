@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package de.emil.shizubox.ui.apps
 
 import androidx.compose.foundation.Image
@@ -13,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -109,7 +112,7 @@ private fun HolderRow(g: PermGroup, h: PermHolder, shizukuReady: Boolean, onRevo
                 )
             }
         }
-        TextButton(onClick = { onRevoke(g, h) }, enabled = shizukuReady) { Text(t(R.string.pg_revoke)) }
+        TextButton(shapes = ButtonDefaults.shapes(), onClick = { onRevoke(g, h) }, enabled = shizukuReady) { Text(t(R.string.pg_revoke)) }
     }
 }
 
