@@ -13,6 +13,10 @@
   - rollende Ziffern (Akku, CPU-Takt, Bildschirmzeit, Update-Zähler, Auswahl-Zähler)
   - weiche Fortschrittsbalken, Häkchen-Pop bei erfolgreicher Installation, animierte leere Zustände
   - „Animationen entfernen“ wird respektiert
+  - Navigations-Pille und Seitenwechsel auf Wunsch deutlich schneller (~0,15 s)
+- Activity Launcher (Apps → Activity Launcher): alle Apps inkl. System, Suche auch nach Activity-Namen,
+  Filter System/startbar, Favoriten, Start mit Shizuku-Fallback (`am start -n`), Verknüpfungen, Namen kopieren,
+  Cache; App-Details nutzen dieselbe Logik
 
 ## 0.5.1 – 2026-10-15
 - Bildschirmzeit pro App (heute / 7 Tage), Nutzungszugriff per Shizuku

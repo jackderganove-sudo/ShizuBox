@@ -3386,5 +3386,90 @@
   "en": "Gaming mode, animations, refresh rate and stay awake with one tap",
   "de": "Gaming-Modus, Animationen, Bildwiederholrate und Wach bleiben mit einem Tipp",
   "plural": false
+ },
+ "al_title": {
+  "en": "Activity Launcher",
+  "de": "Activity Launcher",
+  "plural": false
+ },
+ "al_sub": {
+  "en": "Start hidden menus and activities of every app",
+  "de": "Versteckte Menüs und Aktivitäten aller Apps starten",
+  "plural": false
+ },
+ "al_search": {
+  "en": "App, package or activity",
+  "de": "App, Paket oder Activity",
+  "plural": false
+ },
+ "al_system": {
+  "en": "System apps",
+  "de": "System-Apps",
+  "plural": false
+ },
+ "al_exported_only": {
+  "en": "Startable only",
+  "de": "Nur startbare",
+  "plural": false
+ },
+ "al_favorites": {
+  "en": "Favorites",
+  "de": "Favoriten",
+  "plural": false
+ },
+ "al_count": {
+  "en": "%1$d / %2$d activities",
+  "de": "%1$d / %2$d Activities",
+  "plural": false
+ },
+ "al_not_startable": {
+  "en": "not startable",
+  "de": "nicht startbar",
+  "plural": false
+ },
+ "al_not_found": {
+  "en": "⚠ Activity not found",
+  "de": "⚠ Activity nicht gefunden",
+  "plural": false
+ },
+ "al_needs_shizuku": {
+  "en": "⚠ Needs a permission – connect Shizuku to start it",
+  "de": "⚠ Braucht eine Berechtigung – mit Shizuku lässt sie sich starten",
+  "plural": false
+ },
+ "al_not_exported": {
+  "en": "⚠ Not exported: only the app itself may start this activity",
+  "de": "⚠ Nicht exportiert: Nur die App selbst darf diese Activity starten",
+  "plural": false
+ },
+ "al_loading": {
+  "en": "Reading activities …",
+  "de": "Lese Activities …",
+  "plural": false
+ },
+ "al_copied_pkg": {
+  "en": "Package name copied ✓",
+  "de": "Paketname kopiert ✓",
+  "plural": false
+ },
+ "al_copied_act": {
+  "en": "Activity name copied ✓",
+  "de": "Activity-Name kopiert ✓",
+  "plural": false
+ },
+ "al_favorite": {
+  "en": "Favorite",
+  "de": "Favorit",
+  "plural": false
+ },
+ "al_hint": {
+  "en": "Long-press to copy the package or activity name. ★ pins an activity to the top.",
+  "de": "Lange drücken kopiert Paket- bzw. Activity-Namen. ★ heftet eine Activity oben an.",
+  "plural": false
+ },
+ "al_nothing": {
+  "en": "No activities found",
+  "de": "Keine Activities gefunden",
+  "plural": false
  }
 }

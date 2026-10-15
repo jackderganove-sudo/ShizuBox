@@ -78,11 +78,12 @@ fun Modifier.pressScale(interaction: MutableInteractionSource, pressedScale: Flo
     return this.graphicsLayer { scaleX = scale; scaleY = scale }
 }
 
-/** Page transition: content slides in the navigation direction and fades. */
+/** Page transition: content slides in the navigation direction and fades (kept short, tabs must feel instant). */
 fun <S> AnimatedContentTransitionScope<S>.slideFade(forward: Boolean): ContentTransform {
     val dir = if (forward) 1 else -1
-    return (slideInHorizontally(Motion.offset) { it / 6 * dir } + fadeIn(Motion.quick())) togetherWith
-        (slideOutHorizontally(Motion.offset) { -it / 8 * dir } + fadeOut(tween(120)))
+    val fast = spring(dampingRatio = 0.9f, stiffness = 1800f, visibilityThreshold = IntOffset(1, 1))
+    return (slideInHorizontally(fast) { it / 10 * dir } + fadeIn(tween(140))) togetherWith
+        (slideOutHorizontally(fast) { -it / 12 * dir } + fadeOut(tween(90)))
 }
 
 /** Opening a sub page: grows a little and fades in. */

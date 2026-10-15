@@ -142,9 +142,7 @@ object Apps {
             installerLabel = installer?.let { i -> runCatching { pm.getApplicationInfo(i, 0).loadLabel(pm).toString() }.getOrDefault(i) },
             locale = locale,
             supportedLocales = supported,
-            activities = activities.orEmpty().map {
-                ActivityEntry(it.name, it.exported && it.enabled, it.nonLocalizedLabel?.toString() ?: runCatching { if (it.labelRes != 0) it.loadLabel(pm).toString() else null }.getOrNull())
-            }.sortedWith(compareBy({ !it.exported }, { it.name })),
+            activities = activities.orEmpty().map { ActivityLauncher.entry(pm, it) }.sortedWith(compareBy({ !it.exported }, { it.name })),
         )
     }
 

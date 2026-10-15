@@ -109,39 +109,8 @@ fun ActivitiesCard(pkg: String, appLabel: String, activities: List<ActivityEntry
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         if (!open) return@GlassCard
-        activities.forEach { a ->
-            val short = a.name.removePrefix(pkg).ifEmpty { a.name }
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 6.dp)) {
-                Column(Modifier.weight(1f)) {
-                    a.label?.let { Text(it, style = MaterialTheme.typography.bodyMedium, maxLines = 1, overflow = TextOverflow.Ellipsis) }
-                    Text(
-                        short,
-                        style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
-                        color = if (a.exported) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.outline,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-                if (a.exported) {
-                    val intent = Intent(Intent.ACTION_MAIN).setComponent(ComponentName(pkg, a.name)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    IconButton(onClick = {
-                        runCatching { context.startActivity(intent) }
-                            .onFailure { Toast.makeText(context, it.message ?: t(R.string.error), Toast.LENGTH_SHORT).show() }
-                    }) { Icon(Icons.Rounded.PlayArrow, t(R.string.open)) }
-                    IconButton(onClick = {
-                        val sm = context.getSystemService(ShortcutManager::class.java)
-                        val icon = Apps.icon(pkg)?.let { Icon.createWithBitmap(it) } ?: Icon.createWithResource(context, R.mipmap.ic_launcher)
-                        val info = ShortcutInfo.Builder(context, "act:$pkg/${a.name}")
-                            .setShortLabel(a.label ?: appLabel)
-                            .setLongLabel("${a.label ?: appLabel} · ${short.substringAfterLast('.')}")
-                            .setIcon(icon)
-                            .setIntent(intent)
-                            .build()
-                        if (sm.isRequestPinShortcutSupported) sm.requestPinShortcut(info, null)
-                    }) { Icon(Icons.Rounded.AddToHomeScreen, t(R.string.act_shortcut)) }
-                }
-            }
-        }
+        // Same rows (start, favorite, shortcut, Shizuku fallback) as the Activity Launcher.
+        activities.forEach { a -> ActivityRow(pkg, appLabel, a) }
     }
 }
 

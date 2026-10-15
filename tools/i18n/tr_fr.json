@@ -699,5 +699,22 @@
 "one": "ouverte %d fois",
 "other": "ouverte %d fois"
 },
-"widget_desc": "Mode jeu, animations, fréquence et rester allumé en un appui"
+"widget_desc": "Mode jeu, animations, fréquence et rester allumé en un appui",
+"al_title": "Activity Launcher",
+"al_sub": "Lancer les menus cachés et activités de toutes les applis",
+"al_search": "Appli, paquet ou activité",
+"al_system": "Applis système",
+"al_exported_only": "Lançables seulement",
+"al_favorites": "Favoris",
+"al_count": "%1$d / %2$d activités",
+"al_not_startable": "non lançable",
+"al_not_found": "⚠ Activité introuvable",
+"al_needs_shizuku": "⚠ Nécessite une autorisation – lançable avec Shizuku",
+"al_not_exported": "⚠ Non exportée : seule l’appli elle-même peut lancer cette activité",
+"al_loading": "Lecture des activités …",
+"al_copied_pkg": "Nom de paquet copié ✓",
+"al_copied_act": "Nom de l’activité copié ✓",
+"al_favorite": "Favori",
+"al_hint": "Appui long pour copier le nom du paquet ou de l’activité. ★ l’épingle en haut.",
+"al_nothing": "Aucune activité trouvée"
 }

@@ -45,6 +45,7 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Laufzeit- und Entwickler-Berechtigungen, AppOps, Akku-Modus, Standby-Gruppe | ✅ |
 | App-Sprache pro App, Aktivitäten starten / Verknüpfung, technische Details mit Signatur | ✅ |
 | Berechtigungsübersicht nach Kategorie mit „Entziehen“ | ✅ |
+| Activity Launcher (`ActivityLauncher`): alle Apps, Suche nach Activity, Favoriten, Shizuku-Fallback, Cache | ✅ |
 | APK teilen/extrahieren/neu installieren, VirusTotal | ✅ |
 
 ### Updates (`updates/`, `ui/updates/`) – nach Obtainium/ObtainX
@@ -104,7 +105,7 @@ app/src/main/java/de/emil/shizubox/
   school/               Schulmodus: Mode, Commands, Store (DataStore), Service, BlackActivity,
                         ExitGuide, Schedule, Receivers, Kachel, Log
   customization/        Animationen, Refresh, Schrift, DPI/Auflösung, Statusleiste
-  apps/                 Apps (Liste, Details, Aktionen), Profiles, PermissionOverview, ApkExport
+  apps/                 Apps (Liste, Details, Aktionen), Profiles, PermissionOverview, ApkExport, ActivityLauncher
   installer/            Universal Installer (Ackpine), ApkParser, SignatureCheck, VirusTotal
   updates/              Sources, Updates (Zustand/Download/Install), UpdateWorker, Search,
                         BulkImport, TrackedApp, DebugReceiver (adb-Diagnose)
@@ -138,6 +139,7 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - `wm size` kann die SystemUI der Beta crashen, wenn der Einhandmodus an ist (wird abgefangen)
 - Pixel meldet Akku-Zustand 11 (herstellerspezifisch) → Zeile wird ausgeblendet
 - Kachel-Tipps bei gesperrtem Gerät hält SystemUI bis zum Entsperren zurück
+- Nicht exportierte Activities (z. B. Settings-Testmenü unter Android 17) kann nur die App selbst starten – auch nicht per Shizuku
 - APKPure-CDN wird von manchen DNS-Filtern (NextDNS) blockiert
 - APKMirror erlaubt keine automatischen Downloads
 

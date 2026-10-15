@@ -701,4 +701,21 @@
         <item quantity="other">ouverte %d fois</item>
     </plurals>
     <string name="widget_desc">Mode jeu, animations, fréquence et rester allumé en un appui</string>
+    <string name="al_title">Activity Launcher</string>
+    <string name="al_sub">Lancer les menus cachés et activités de toutes les applis</string>
+    <string name="al_search">Appli, paquet ou activité</string>
+    <string name="al_system">Applis système</string>
+    <string name="al_exported_only">Lançables seulement</string>
+    <string name="al_favorites">Favoris</string>
+    <string name="al_count">%1$d / %2$d activités</string>
+    <string name="al_not_startable">non lançable</string>
+    <string name="al_not_found">⚠ Activité introuvable</string>
+    <string name="al_needs_shizuku">⚠ Nécessite une autorisation – lançable avec Shizuku</string>
+    <string name="al_not_exported">⚠ Non exportée : seule l’appli elle-même peut lancer cette activité</string>
+    <string name="al_loading">Lecture des activités …</string>
+    <string name="al_copied_pkg">Nom de paquet copié ✓</string>
+    <string name="al_copied_act">Nom de l’activité copié ✓</string>
+    <string name="al_favorite">Favori</string>
+    <string name="al_hint">Appui long pour copier le nom du paquet ou de l’activité. ★ l’épingle en haut.</string>
+    <string name="al_nothing">Aucune activité trouvée</string>
 </resources>

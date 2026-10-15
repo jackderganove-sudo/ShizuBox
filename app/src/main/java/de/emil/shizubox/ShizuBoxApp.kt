@@ -21,6 +21,7 @@ class ShizuBoxApp : Application() {
         Apps.init(this)
         Profiles.init(this)
         Gaming.init(this)
+        de.emil.shizubox.apps.ActivityLauncher.init(this)
         VirusTotal.init(this)
         Updates.init(this)
         UpdateWorker.schedule(this)

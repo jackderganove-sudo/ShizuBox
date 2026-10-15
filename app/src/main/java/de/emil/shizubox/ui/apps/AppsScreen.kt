@@ -2,6 +2,8 @@
 
 package de.emil.shizubox.ui.apps
 
+import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material.icons.rounded.Widgets
 import de.emil.shizubox.ui.motion.popIn
 import de.emil.shizubox.ui.motion.openClose
 import androidx.compose.animation.AnimatedContent
@@ -77,6 +79,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/** Pseudo package that opens the Activity Launcher instead of app details. */
+private const val LAUNCHER = "#launcher"
+
 private enum class AppFilter(private val labelRes: Int) {
     User(R.string.f_user), System(R.string.system), Frozen(R.string.f_frozen);
     val label get() = t(labelRes)
@@ -104,7 +109,10 @@ fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         transitionSpec = { openClose(opening = targetState != null) },
         label = "appDetail",
     ) { pkg ->
-        if (pkg != null) {
+        if (pkg == LAUNCHER) {
+            BackHandler { selectedState.value = null }
+            ActivityLauncherScreen(onBack = { selectedState.value = null })
+        } else if (pkg != null) {
             BackHandler { selectedState.value = null; reloadState.value++ }
             AppDetailScreen(pkg, shizukuReady, onBack = { selectedState.value = null; reloadState.value++ })
         } else {
@@ -190,6 +198,21 @@ private fun AppsList(
         }
         if (!shizukuReady) {
             item { GlassCard(Modifier.fillMaxWidth()) { Text(t(R.string.shizuku_for_changes)) } }
+        }
+        if (tab == 0) {
+            item(key = "launcher") {
+                GlassCard(Modifier.fillMaxWidth(), contentPadding = 16.dp, onClick = { selected = LAUNCHER }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Rounded.Widgets, null, tint = MaterialTheme.colorScheme.primary)
+                        Spacer(Modifier.width(16.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(t(R.string.al_title), style = MaterialTheme.typography.titleMedium)
+                            Text(t(R.string.al_sub), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        Icon(Icons.Rounded.ChevronRight, null)
+                    }
+                }
+            }
         }
         if (tab == 1) {
             profilesSection(apps.orEmpty(), shizukuReady) { reloadKey++ }

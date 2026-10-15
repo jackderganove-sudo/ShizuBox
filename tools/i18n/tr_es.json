@@ -699,5 +699,22 @@
 "one": "abierta %d vez",
 "other": "abierta %d veces"
 },
-"widget_desc": "Modo gaming, animaciones, frecuencia y mantener activo con un toque"
+"widget_desc": "Modo gaming, animaciones, frecuencia y mantener activo con un toque",
+"al_title": "Activity Launcher",
+"al_sub": "Abre menús ocultos y actividades de todas las apps",
+"al_search": "App, paquete o actividad",
+"al_system": "Apps del sistema",
+"al_exported_only": "Solo iniciables",
+"al_favorites": "Favoritos",
+"al_count": "%1$d / %2$d actividades",
+"al_not_startable": "no iniciable",
+"al_not_found": "⚠ Actividad no encontrada",
+"al_needs_shizuku": "⚠ Necesita un permiso: con Shizuku se puede iniciar",
+"al_not_exported": "⚠ No exportada: solo la propia app puede iniciar esta actividad",
+"al_loading": "Leyendo actividades …",
+"al_copied_pkg": "Nombre de paquete copiado ✓",
+"al_copied_act": "Nombre de actividad copiado ✓",
+"al_favorite": "Favorito",
+"al_hint": "Mantén pulsado para copiar el nombre del paquete o actividad. ★ la fija arriba.",
+"al_nothing": "No se encontraron actividades"
 }

@@ -703,4 +703,21 @@
         <item quantity="other">opened %d times</item>
     </plurals>
     <string name="widget_desc">Gaming mode, animations, refresh rate and stay awake with one tap</string>
+    <string name="al_title">Activity Launcher</string>
+    <string name="al_sub">Start hidden menus and activities of every app</string>
+    <string name="al_search">App, package or activity</string>
+    <string name="al_system">System apps</string>
+    <string name="al_exported_only">Startable only</string>
+    <string name="al_favorites">Favorites</string>
+    <string name="al_count">%1$d / %2$d activities</string>
+    <string name="al_not_startable">not startable</string>
+    <string name="al_not_found">⚠ Activity not found</string>
+    <string name="al_needs_shizuku">⚠ Needs a permission – connect Shizuku to start it</string>
+    <string name="al_not_exported">⚠ Not exported: only the app itself may start this activity</string>
+    <string name="al_loading">Reading activities …</string>
+    <string name="al_copied_pkg">Package name copied ✓</string>
+    <string name="al_copied_act">Activity name copied ✓</string>
+    <string name="al_favorite">Favorite</string>
+    <string name="al_hint">Long-press to copy the package or activity name. ★ pins an activity to the top.</string>
+    <string name="al_nothing">No activities found</string>
 </resources>

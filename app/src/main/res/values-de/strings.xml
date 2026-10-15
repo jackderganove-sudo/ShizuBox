@@ -701,5 +701,22 @@
         <item quantity="other">%d-mal geöffnet</item>
     </plurals>
     <string name="widget_desc">Gaming-Modus, Animationen, Bildwiederholrate und Wach bleiben mit einem Tipp</string>
+    <string name="al_title">Activity Launcher</string>
+    <string name="al_sub">Versteckte Menüs und Aktivitäten aller Apps starten</string>
+    <string name="al_search">App, Paket oder Activity</string>
+    <string name="al_system">System-Apps</string>
+    <string name="al_exported_only">Nur startbare</string>
+    <string name="al_favorites">Favoriten</string>
+    <string name="al_count">%1$d / %2$d Activities</string>
+    <string name="al_not_startable">nicht startbar</string>
+    <string name="al_not_found">⚠ Activity nicht gefunden</string>
+    <string name="al_needs_shizuku">⚠ Braucht eine Berechtigung – mit Shizuku lässt sie sich starten</string>
+    <string name="al_not_exported">⚠ Nicht exportiert: Nur die App selbst darf diese Activity starten</string>
+    <string name="al_loading">Lese Activities …</string>
+    <string name="al_copied_pkg">Paketname kopiert ✓</string>
+    <string name="al_copied_act">Activity-Name kopiert ✓</string>
+    <string name="al_favorite">Favorit</string>
+    <string name="al_hint">Lange drücken kopiert Paket- bzw. Activity-Namen. ★ heftet eine Activity oben an.</string>
+    <string name="al_nothing">Keine Activities gefunden</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

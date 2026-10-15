@@ -176,6 +176,8 @@ fun MenuEntry(icon: ImageVector, title: String, subtitle: String? = null, onClic
 }
 
 /** Floating pill navigation: the active entry shows its label (like ObtainX). */
+private val navSize = spring(dampingRatio = 0.9f, stiffness = 2800f, visibilityThreshold = androidx.compose.ui.unit.IntSize(1, 1))
+
 @Composable
 fun PillNav(items: List<Pair<ImageVector, String>>, selected: Int, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
     val bounds = remember { mutableStateMapOf<Int, Pair<Float, Float>>() }
@@ -190,8 +192,9 @@ fun PillNav(items: List<Pair<ImageVector, String>>, selected: Int, onSelect: (In
             left.snapTo(l); right.snapTo(r); return@LaunchedEffect
         }
         val movingRight = l > left.value
-        val fast = spring<Float>(dampingRatio = 0.7f, stiffness = Spring.StiffnessMedium)
-        val slow = spring<Float>(dampingRatio = 0.75f, stiffness = Spring.StiffnessLow)
+        // Fast but still a visible stretch: the trailing edge follows only slightly later.
+        val fast = spring<Float>(dampingRatio = 0.75f, stiffness = 3200f)
+        val slow = spring<Float>(dampingRatio = 0.85f, stiffness = 2300f)
         launch { left.animateTo(l, if (movingRight) slow else fast) }
         launch { right.animateTo(r, if (movingRight) fast else slow) }
     }
@@ -205,7 +208,7 @@ fun PillNav(items: List<Pair<ImageVector, String>>, selected: Int, onSelect: (In
         Row(
             Modifier
                 .padding(6.dp)
-                .animateContentSize(Motion.size)
+                .animateContentSize(navSize)
                 .drawBehind {
                     if (right.value > left.value) {
                         drawRoundRect(pillColor, Offset(left.value, 0f), Size(right.value - left.value, size.height), CornerRadius(size.height / 2))
@@ -230,8 +233,8 @@ fun PillNav(items: List<Pair<ImageVector, String>>, selected: Int, onSelect: (In
                     Icon(icon, label, tint = content, modifier = Modifier.graphicsLayer { scaleX = pop; scaleY = pop })
                     AnimatedVisibility(
                         active,
-                        enter = fadeIn(Motion.quick()) + expandHorizontally(Motion.size),
-                        exit = fadeOut(Motion.quick()) + shrinkHorizontally(Motion.size),
+                        enter = fadeIn(Motion.quick()) + expandHorizontally(navSize),
+                        exit = fadeOut(Motion.quick()) + shrinkHorizontally(navSize),
                     ) {
                         Text(
                             label,

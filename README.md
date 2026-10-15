@@ -25,6 +25,7 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 - Einfrieren/Auftauen, Profile zum gemeinsamen Einfrieren, Deinstallieren
 - Laufzeit- und Entwickler-Berechtigungen (z. B. `WRITE_SECURE_SETTINGS`), AppOps, Akku-Einschränkung
 - **App-Sprache** pro App, **Aktivitäten** starten oder als Verknüpfung anlegen, technische Details (SDK, UID, Signatur)
+- **Activity Launcher**: alle Activities aller Apps (auch System-Apps) durchsuchen – auch nach Activity-Namen –, starten (bei Bedarf über Shizuku), Favoriten, Verknüpfungen, Namen kopieren; ideal für versteckte Einstellungsmenüs
 - **Berechtigungsübersicht**: welche Apps dürfen Kamera, Mikrofon, Standort, Kontakte, … – mit „Entziehen“
 - APK teilen, extrahieren (APK bzw. APKS), neu installieren, VirusTotal-Prüfung
 

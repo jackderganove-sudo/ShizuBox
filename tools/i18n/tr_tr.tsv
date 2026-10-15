@@ -660,3 +660,20 @@ st_under_min	< 1 dk
 dur_h_min	%1$d sa %2$d dk
 st_opened	%d kez açıldı|||%d kez açıldı
 widget_desc	Tek dokunuşla oyun modu, animasyonlar, yenileme hızı ve uyanık kal
+al_title	Activity Launcher
+al_sub	Tüm uygulamaların gizli menülerini ve etkinliklerini başlat
+al_search	Uygulama, paket veya etkinlik
+al_system	Sistem uygulamaları
+al_exported_only	Sadece başlatılabilir
+al_favorites	Favoriler
+al_count	%1$d / %2$d etkinlik
+al_not_startable	başlatılamaz
+al_not_found	⚠ Etkinlik bulunamadı
+al_needs_shizuku	⚠ İzin gerekiyor – Shizuku ile başlatılabilir
+al_not_exported	⚠ Dışa aktarılmamış: bu etkinliği yalnızca uygulamanın kendisi başlatabilir
+al_loading	Etkinlikler okunuyor …
+al_copied_pkg	Paket adı kopyalandı ✓
+al_copied_act	Etkinlik adı kopyalandı ✓
+al_favorite	Favori
+al_hint	Uzun basmak paket veya etkinlik adını kopyalar. ★ etkinliği en üste sabitler.
+al_nothing	Etkinlik bulunamadı
