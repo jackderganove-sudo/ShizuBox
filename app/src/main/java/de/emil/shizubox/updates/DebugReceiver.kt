@@ -92,6 +92,14 @@ class DebugReceiver : BroadcastReceiver() {
                             "real=${sch.state.value} weekdays7:50=${f(sch.nextStart(base))} sundayOnly=${f(sch.nextStart(base.copy(days = 0b1000000)))} " +
                                 "skipFirst=${f(sch.nextStart(base.copy(skipUntil = (sch.nextStart(base) ?: 0) + 1)))} disabled=${f(sch.nextStart(base.copy(enabled = false)))}"
                         }
+                        "ytdl" -> {
+                            val t0 = System.currentTimeMillis()
+                            Log.i(TAG, "ytdl: init …")
+                            de.emil.shizubox.downloader.Ytdl.ensureInit()
+                            Log.i(TAG, "ytdl: init done after ${System.currentTimeMillis() - t0} ms, version=${de.emil.shizubox.downloader.Ytdl.version()}")
+                            val info = de.emil.shizubox.downloader.Ytdl.info(intent.getStringExtra("url") ?: "https://www.youtube.com/watch?v=jNQXAC9IVRw")
+                            "info after ${System.currentTimeMillis() - t0} ms: ${info.title} heights=${info.heights} entries=${info.entries.size}"
+                        }
                         "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
                         "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()
                         "device" -> "${de.emil.shizubox.system.DeviceInfo.battery(context)} ${de.emil.shizubox.system.DeviceInfo.memory(context)} ${de.emil.shizubox.system.DeviceInfo.storage()} soc=${de.emil.shizubox.system.DeviceInfo.soc()}"

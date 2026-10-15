@@ -161,7 +161,11 @@ object Ytdl {
         if (status == YoutubeDL.UpdateStatus.DONE) version() else null
     }
 
-    fun version(): String? = runCatching { YoutubeDL.getInstance().versionName(appContext) ?: YoutubeDL.getInstance().version(appContext) }.getOrNull()
+    /** Version of the yt-dlp in use; the bundled one only reports it via `--version`. */
+    fun version(): String? = runCatching {
+        YoutubeDL.getInstance().versionName(appContext)
+            ?: YoutubeDL.getInstance().execute(YoutubeDLRequest(emptyList<String>()).addOption("--version")).out.trim().ifEmpty { null }
+    }.getOrNull()
 
     /**
      * Converts a local video to audio with the bundled FFmpeg. It runs from the native library

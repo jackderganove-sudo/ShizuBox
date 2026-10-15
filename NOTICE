@@ -15,4 +15,15 @@ app/src/main/java/de/emil/shizubox/updates/ follows the design of Obtainium
 (https://github.com/ImranR98/Obtainium) and ObtainX (https://github.com/bikram-agarwal/ObtainX),
 both GPL-3.0; the app list export is compatible with their JSON format.
 
-Libraries: Shizuku API (Apache-2.0), Ackpine (Apache-2.0), Haze (Apache-2.0), AndroidX incl. WorkManager (Apache-2.0).
+Libraries: Shizuku API (Apache-2.0), Ackpine (Apache-2.0), Haze (Apache-2.0), AndroidX incl. WorkManager (Apache-2.0),
+MaterialKolor (MIT).
+
+Video downloader (all GPL-3.0 compatible):
+- youtubedl-android (https://github.com/JunkFood02/youtubedl-android), GPL-3.0
+- yt-dlp (https://github.com/yt-dlp/yt-dlp), The Unlicense
+- FFmpeg (https://ffmpeg.org), built by youtubedl-android, GPL/LGPL
+- Python (bundled by youtubedl-android), PSF License
+- NewPipe Extractor (https://github.com/TeamNewPipe/NewPipeExtractor), GPL-3.0
+- Mozilla Rhino (MPL-2.0, GPL-compatible via its secondary-license clause), jsoup (MIT),
+  nanojson (Apache-2.0), protobuf-javalite (BSD-3-Clause), Jackson (Apache-2.0),
+  Apache Commons Compress/IO (Apache-2.0)

@@ -18,3 +18,13 @@
 -dontwarn jdk.dynalink.**
 -dontwarn org.jsoup.**
 -dontwarn com.google.re2j.**
+
+# youtubedl-android unpacks Python/FFmpeg with commons-compress, which registers its zip
+# extra-field classes reflectively in a static initializer.
+-keep class org.apache.commons.compress.** { *; }
+-keep class org.apache.commons.io.** { *; }
+-dontwarn org.apache.commons.compress.**
+-dontwarn org.apache.commons.io.**
+-dontwarn org.tukaani.xz.**
+-dontwarn org.brotli.dec.**
+-dontwarn com.github.luben.zstd.**

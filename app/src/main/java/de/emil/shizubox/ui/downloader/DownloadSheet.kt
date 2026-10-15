@@ -77,7 +77,11 @@ fun DownloadSheetContent(target: SheetTarget, onQueued: () -> Unit) {
         when (target) {
             is SheetTarget.Url -> runCatching { Ytdl.info(target.url) }
                 .onSuccess { info = it }
-                .onFailure { e -> error = e.message?.lines()?.lastOrNull { it.contains("ERROR") }?.substringAfter("ERROR:")?.trim() ?: e.message }
+                .onFailure { e ->
+                    // Errors without a message (e.g. initializer errors) must still end the spinner.
+                    error = e.message?.lines()?.lastOrNull { it.contains("ERROR") }?.substringAfter("ERROR:")?.trim()
+                        ?: e.message?.takeIf { it.isNotBlank() } ?: e.toString()
+                }
             is SheetTarget.Entries -> info = MediaInfo(target.title, null, target.entries.firstOrNull()?.thumbnail, 0, emptyList(), target.entries, "")
         }
     }
