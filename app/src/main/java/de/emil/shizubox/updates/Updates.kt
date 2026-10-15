@@ -106,10 +106,14 @@ object Updates {
         val latest = app.latestVersion ?: return UpdateState.Unknown
         if (app.installedVersion == latest) return UpdateState.UpToDate
         // Like Obtainium's standard version detection: compare the numeric cores.
-        Versions.compare(latest, real)?.let { return if (it > 0) UpdateState.Update else UpdateState.UpToDate }
-        // Versions not comparable (tag like "nightly"): fall back to what ShizuBox installed.
-        return if (app.installedVersion == null) UpdateState.Unknown else UpdateState.Update
+        val raw = Versions.compare(latest, real)?.let { if (it > 0) UpdateState.Update else UpdateState.UpToDate }
+            // Versions not comparable (tag like "nightly"): fall back to what ShizuBox installed.
+            ?: if (app.installedVersion == null) UpdateState.Unknown else UpdateState.Update
+        return if (raw == UpdateState.Update && app.skippedVersion != null && app.skippedVersion == latest) UpdateState.UpToDate else raw
     }
+
+    /** True if the newest release is available but was skipped by the user. */
+    fun isSkipped(app: TrackedApp) = app.skippedVersion != null && app.skippedVersion == app.latestVersion
 
     fun updateCount() = _apps.value.count { state(it) == UpdateState.Update }
 

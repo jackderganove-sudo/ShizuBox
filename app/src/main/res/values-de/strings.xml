@@ -671,5 +671,11 @@
     <string name="og_previous">Vorherige App</string>
     <string name="og_cached">Im Cache</string>
     <string name="logcat_tile_sub">Systemprotokoll mit Filtern</string>
+    <string name="upd_sort">Sortieren</string>
+    <string name="upd_sort_release">Neueste Veröffentlichung</string>
+    <string name="upd_sort_source">Quelle</string>
+    <string name="upd_skip">Diese Version überspringen</string>
+    <string name="upd_unskip">Doch anbieten</string>
+    <string name="upd_skipped">Version %1$s übersprungen – die nächste wird wieder angeboten.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

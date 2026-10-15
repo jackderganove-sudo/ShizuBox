@@ -101,6 +101,9 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                 )
                 Text(t(R.string.latest_v, app.latestVersion ?: "?") + if (app.releaseDate > 0) " (${java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM).format(Date(app.releaseDate))})" else "", style = MaterialTheme.typography.bodyMedium)
                 Text(t(R.string.installed_v, realVersion ?: "–"), style = MaterialTheme.typography.bodyMedium)
+                if (Updates.isSkipped(app)) {
+                    Text(t(R.string.upd_skipped, app.latestVersion), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.tertiary)
+                }
                 app.error?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
                 progress?.let {
                     LinearProgressIndicator(progress = { it }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
@@ -139,6 +142,12 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                     }) { Text(t(R.string.open_source)) }
                     if (state == UpdateState.Update || state == UpdateState.Unknown) {
                         OutlinedButton(onClick = { Updates.markInstalled(app) }) { Text(t(R.string.mark_current)) }
+                    }
+                    if (state == UpdateState.Update) {
+                        OutlinedButton(onClick = { Updates.update(app.copy(skippedVersion = app.latestVersion)) }) { Text(t(R.string.upd_skip)) }
+                    }
+                    if (Updates.isSkipped(app)) {
+                        OutlinedButton(onClick = { Updates.update(app.copy(skippedVersion = null)) }) { Text(t(R.string.upd_unskip)) }
                     }
                 }
             }

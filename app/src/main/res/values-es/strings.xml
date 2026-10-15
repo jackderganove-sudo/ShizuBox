@@ -671,4 +671,10 @@
     <string name="og_previous">App anterior</string>
     <string name="og_cached">En caché</string>
     <string name="logcat_tile_sub">Registro del sistema con filtros</string>
+    <string name="upd_sort">Ordenar</string>
+    <string name="upd_sort_release">Versión más reciente</string>
+    <string name="upd_sort_source">Fuente</string>
+    <string name="upd_skip">Omitir esta versión</string>
+    <string name="upd_unskip">Volver a ofrecer</string>
+    <string name="upd_skipped">Versión %1$s omitida: la siguiente se volverá a ofrecer.</string>
 </resources>

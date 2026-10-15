@@ -673,4 +673,10 @@
     <string name="og_previous">Previous app</string>
     <string name="og_cached">Cached</string>
     <string name="logcat_tile_sub">System log with filters</string>
+    <string name="upd_sort">Sort</string>
+    <string name="upd_sort_release">Newest release</string>
+    <string name="upd_sort_source">Source</string>
+    <string name="upd_skip">Skip this version</string>
+    <string name="upd_unskip">Offer it again</string>
+    <string name="upd_skipped">Version %1$s skipped – the next one will be offered again.</string>
 </resources>

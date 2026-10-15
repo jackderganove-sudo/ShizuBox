@@ -33,6 +33,8 @@ data class TrackedApp(
     /** Set when an install was started: (version, start time). Confirmed on the next refresh. */
     val pendingVersion: String? = null,
     val pendingSince: Long = 0,
+    /** Release the user chose to skip; it is not offered as an update. */
+    val skippedVersion: String? = null,
     /** Obtainium settings we don't use, kept so an export round-trips without losing them. */
     val extraSettings: JSONObject = JSONObject(),
 ) {
@@ -67,6 +69,7 @@ data class TrackedApp(
             .put("sbError", error ?: JSONObject.NULL)
             .put("sbPendingVersion", pendingVersion ?: JSONObject.NULL)
             .put("sbPendingSince", pendingSince)
+            .put("sbSkippedVersion", skippedVersion ?: JSONObject.NULL)
     }
 
     companion object {
@@ -109,6 +112,7 @@ data class TrackedApp(
                 pinned = o.optBoolean("pinned", false),
                 pendingVersion = str("sbPendingVersion"),
                 pendingSince = o.optLong("sbPendingSince", 0),
+                skippedVersion = str("sbSkippedVersion"),
                 extraSettings = settings,
             )
         }

@@ -671,4 +671,10 @@
     <string name="og_previous">Appli précédente</string>
     <string name="og_cached">En cache</string>
     <string name="logcat_tile_sub">Journal système avec filtres</string>
+    <string name="upd_sort">Trier</string>
+    <string name="upd_sort_release">Version la plus récente</string>
+    <string name="upd_sort_source">Source</string>
+    <string name="upd_skip">Ignorer cette version</string>
+    <string name="upd_unskip">Proposer à nouveau</string>
+    <string name="upd_skipped">Version %1$s ignorée – la suivante sera de nouveau proposée.</string>
 </resources>

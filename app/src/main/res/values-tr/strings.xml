@@ -671,4 +671,10 @@
     <string name="og_previous">Önceki uygulama</string>
     <string name="og_cached">Önbellekte</string>
     <string name="logcat_tile_sub">Filtreli sistem günlüğü</string>
+    <string name="upd_sort">Sırala</string>
+    <string name="upd_sort_release">En yeni sürüm</string>
+    <string name="upd_sort_source">Kaynak</string>
+    <string name="upd_skip">Bu sürümü atla</string>
+    <string name="upd_unskip">Yine de öner</string>
+    <string name="upd_skipped">%1$s sürümü atlandı – sonraki yine önerilecek.</string>
 </resources>

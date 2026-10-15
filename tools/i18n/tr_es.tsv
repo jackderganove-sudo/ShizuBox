@@ -633,3 +633,9 @@ og_home	Launcher
 og_previous	App anterior
 og_cached	En caché
 logcat_tile_sub	Registro del sistema con filtros
+upd_sort	Ordenar
+upd_sort_release	Versión más reciente
+upd_sort_source	Fuente
+upd_skip	Omitir esta versión
+upd_unskip	Volver a ofrecer
+upd_skipped	Versión %1$s omitida: la siguiente se volverá a ofrecer.

@@ -633,3 +633,9 @@ og_home	Lanceur
 og_previous	Appli précédente
 og_cached	En cache
 logcat_tile_sub	Journal système avec filtres
+upd_sort	Trier
+upd_sort_release	Version la plus récente
+upd_sort_source	Source
+upd_skip	Ignorer cette version
+upd_unskip	Proposer à nouveau
+upd_skipped	Version %1$s ignorée – la suivante sera de nouveau proposée.

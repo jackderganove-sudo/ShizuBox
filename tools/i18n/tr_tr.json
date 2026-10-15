@@ -669,5 +669,11 @@
 "og_home": "Başlatıcı",
 "og_previous": "Önceki uygulama",
 "og_cached": "Önbellekte",
-"logcat_tile_sub": "Filtreli sistem günlüğü"
+"logcat_tile_sub": "Filtreli sistem günlüğü",
+"upd_sort": "Sırala",
+"upd_sort_release": "En yeni sürüm",
+"upd_sort_source": "Kaynak",
+"upd_skip": "Bu sürümü atla",
+"upd_unskip": "Yine de öner",
+"upd_skipped": "%1$s sürümü atlandı – sonraki yine önerilecek."
 }

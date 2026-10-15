@@ -3245,5 +3245,35 @@
   "en": "System log with filters",
   "de": "Systemprotokoll mit Filtern",
   "plural": false
+ },
+ "upd_sort": {
+  "en": "Sort",
+  "de": "Sortieren",
+  "plural": false
+ },
+ "upd_sort_release": {
+  "en": "Newest release",
+  "de": "Neueste Veröffentlichung",
+  "plural": false
+ },
+ "upd_sort_source": {
+  "en": "Source",
+  "de": "Quelle",
+  "plural": false
+ },
+ "upd_skip": {
+  "en": "Skip this version",
+  "de": "Diese Version überspringen",
+  "plural": false
+ },
+ "upd_unskip": {
+  "en": "Offer it again",
+  "de": "Doch anbieten",
+  "plural": false
+ },
+ "upd_skipped": {
+  "en": "Version %1$s skipped – the next one will be offered again.",
+  "de": "Version %1$s übersprungen – die nächste wird wieder angeboten.",
+  "plural": false
  }
 }

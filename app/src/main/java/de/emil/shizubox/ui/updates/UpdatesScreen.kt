@@ -36,6 +36,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.automirrored.rounded.Sort
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.PlaylistAdd
 import androidx.compose.material.icons.rounded.Add
@@ -243,8 +245,15 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
     val apps by Updates.apps.collectAsStateWithLifecycle()
     val checking by Updates.checking.collectAsStateWithLifecycle()
     val states = remember(apps, resumeTick) { apps.associate { it.key to Updates.state(it) } }
-    val updates = apps.filter { states[it.key] == UpdateState.Update }.sortedBy { it.name.lowercase() }
-    val others = apps.filter { states[it.key] != UpdateState.Update }.sortedBy { it.name.lowercase() }
+    var sort by rememberSaveable { mutableStateOf(0) }
+    val order: Comparator<TrackedApp> = when (sort) {
+        1 -> compareByDescending<TrackedApp> { it.releaseDate }.thenBy { it.name.lowercase() }
+        2 -> compareBy<TrackedApp> { Source.forUrl(it.url)?.label.orEmpty() }.thenBy { it.name.lowercase() }
+        else -> compareBy { it.name.lowercase() }
+    }
+    val pinnedFirst = compareByDescending<TrackedApp> { it.pinned }.then(order)
+    val updates = apps.filter { states[it.key] == UpdateState.Update }.sortedWith(pinnedFirst)
+    val others = apps.filter { states[it.key] != UpdateState.Update }.sortedWith(pinnedFirst)
     var showUpdates by rememberSaveable { mutableStateOf(true) }
     var busy by remember { mutableStateOf<String?>(null) }
     val updatingAll by Updates.updatingAll.collectAsStateWithLifecycle()
@@ -283,6 +292,19 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
         item {
             PageTitle(t(R.string.nav_apps), onBack) {
                 IconButton(onClick = { searching = !searching; if (!searching) query = "" }) { Icon(Icons.Rounded.Search, t(R.string.search)) }
+                var sortMenu by remember { mutableStateOf(false) }
+                Box {
+                    IconButton(onClick = { sortMenu = true }) { Icon(Icons.AutoMirrored.Rounded.Sort, t(R.string.upd_sort)) }
+                    androidx.compose.material3.DropdownMenu(expanded = sortMenu, onDismissRequest = { sortMenu = false }) {
+                        listOf(t(R.string.s_name), t(R.string.upd_sort_release), t(R.string.upd_sort_source)).forEachIndexed { i, label ->
+                            androidx.compose.material3.DropdownMenuItem(
+                                text = { Text(label) },
+                                leadingIcon = { if (sort == i) Icon(Icons.Rounded.Check, null) },
+                                onClick = { sort = i; sortMenu = false },
+                            )
+                        }
+                    }
+                }
                 if (checking) CircularProgressIndicator(Modifier.size(40.dp).padding(8.dp))
                 else IconButton(onClick = { Updates.checkAllInBackground() }) { Icon(Icons.Rounded.Refresh, t(R.string.check)) }
             }
