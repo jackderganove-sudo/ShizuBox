@@ -794,4 +794,11 @@
     <string name="dl_more_hint">Appearance and backup are in the normal ShizuBox settings; downloader settings and subscriptions are part of the backup.</string>
     <string name="dl_no_link">No link found in the shared text</string>
     <string name="dl_queued">Added to the queue ✓</string>
+    <string name="un_channel">Available updates</string>
+    <string name="un_one_title">Update for %1$s</string>
+    <string name="un_install_all">Install all</string>
+    <string name="un_skip">Skip</string>
+    <string name="un_installing">Installing in the background …</string>
+    <string name="un_setting">Notify about updates</string>
+    <string name="un_setting_sub">With “Install” and “Skip” right in the notification</string>
 </resources>

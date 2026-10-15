@@ -184,6 +184,18 @@
             android:exported="true"
             android:permission="android.permission.DUMP" />
 
+        <!-- Buttons of the "updates available" notification. -->
+        <activity
+            android:name=".updates.UpdateInstallActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity="de.emil.shizubox.updateinstall"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <receiver
+            android:name=".updates.UpdateSkipReceiver"
+            android:exported="false" />
+
         <!-- Video downloader: queue runs in this service while the app is closed. -->
         <service
             android:name=".downloader.DownloadService"

@@ -32,27 +32,33 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
     override suspend fun getForegroundInfo() = progressInfo(applicationContext, t(R.string.w_preparing), 0, 0, true)
 
     override suspend fun doWork(): Result {
-        // "Update all" from the app: no new check needed, the list is current.
-        if (!inputData.getBoolean(KEY_UPDATE_ALL, false)) Updates.checkAll()
+        // "Update all" or "Install" from the notification: no new check needed, the list is current.
+        val explicit = inputData.getBoolean(KEY_UPDATE_ALL, false)
+        val only = inputData.getStringArray(KEY_ONLY)?.toSet()
+        if (!explicit) Updates.checkAll()
         val installed = mutableListOf<String>()
         val held = mutableListOf<String>()
         val s = Updates.settings.value
-        val updateAll = inputData.getBoolean(KEY_UPDATE_ALL, false)
-        if ((updateAll || s.autoInstall) && ShizukuManager.isReady &&
-            Updates.apps.value.any { Updates.state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true }
+        if ((explicit || s.autoInstall) && ShizukuManager.isReady &&
+            Updates.installableUpdates().any { only == null || it.key in only }
         ) {
             // Foreground: keeps the process alive while installing, and shows the progress.
             runCatching { setForeground(progressInfo(applicationContext, t(R.string.w_preparing), 0, 0, true)) }
-            val (ok, failed) = Updates.runUpdateAll { i, total, name, p ->
+            val (ok, failed) = Updates.runUpdateAll(only) { i, total, name, p ->
                 val info = progressInfo(applicationContext, "$name (${i + 1}/$total)", ((i + p) * 100).toInt(), total * 100, p == 0f)
                 runCatching { setForegroundAsync(info) }
             }
             installed += ok
             held += failed.map { (n, r) -> "$n: $r" }
-        } else if (updateAll && !ShizukuManager.isReady) {
+        } else if (explicit && !ShizukuManager.isReady) {
             held += t(R.string.shizuku_not_conn)
         }
-        notify(applicationContext, Updates.apps.value.filter { Updates.state(it) == UpdateState.Update }.map { it.name }, installed, held)
+        if (explicit || installed.isNotEmpty() || held.isNotEmpty()) {
+            notify(applicationContext, emptyList(), installed, held)
+        } else if (s.notify) {
+            // Plain check: offer the found updates with "Install" buttons.
+            UpdateNotifications.available(applicationContext)
+        }
         return Result.success()
     }
 
@@ -63,14 +69,18 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         private const val PROGRESS_CHANNEL = "app_update_progress"
         private const val PROGRESS_ID = 3
         private const val KEY_UPDATE_ALL = "update_all"
+        private const val KEY_ONLY = "only"
 
         /** "Update all" pressed in the app: run now as expedited foreground work. */
-        fun updateAllNow(context: Context) {
+        fun updateAllNow(context: Context, only: Collection<String>? = null) {
+            val data = if (only == null) androidx.work.workDataOf(KEY_UPDATE_ALL to true)
+            else androidx.work.workDataOf(KEY_UPDATE_ALL to true, KEY_ONLY to only.toTypedArray())
             val request = androidx.work.OneTimeWorkRequestBuilder<UpdateWorker>()
-                .setInputData(androidx.work.workDataOf(KEY_UPDATE_ALL to true))
+                .setInputData(data)
                 .setExpedited(androidx.work.OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build()
-            WorkManager.getInstance(context).enqueueUniqueWork(WORK_ALL, androidx.work.ExistingWorkPolicy.KEEP, request)
+            // Several "Install" taps queue up one after another instead of being dropped.
+            WorkManager.getInstance(context).enqueueUniqueWork(WORK_ALL, androidx.work.ExistingWorkPolicy.APPEND_OR_REPLACE, request)
         }
 
         fun progressInfo(context: Context, text: String, progress: Int, max: Int, indeterminate: Boolean): androidx.work.ForegroundInfo {
@@ -112,6 +122,7 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
                 nm.cancel(2)
                 return
             }
+            nm.cancel(UpdateNotifications.ID)
             val open = PendingIntent.getActivity(
                 context, 2,
                 Intent(context, MainActivity::class.java).putExtra(MainActivity.EXTRA_SECTION, "Updates"),

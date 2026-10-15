@@ -100,6 +100,10 @@ class DebugReceiver : BroadcastReceiver() {
                             val info = de.emil.shizubox.downloader.Ytdl.info(intent.getStringExtra("url") ?: "https://www.youtube.com/watch?v=jNQXAC9IVRw")
                             "info after ${System.currentTimeMillis() - t0} ms: ${info.title} heights=${info.heights} entries=${info.entries.size}"
                         }
+                        "updnotify" -> {
+                            UpdateNotifications.available(context)
+                            "installable=${Updates.installableUpdates().map { "${it.name} ${it.installedVersion}->${it.latestVersion}" }}"
+                        }
                         "tweaks" -> de.emil.shizubox.system.Tweaks.read().toString()
                         "cpu" -> de.emil.shizubox.system.DeviceInfo.cpu().toString()
                         "device" -> "${de.emil.shizubox.system.DeviceInfo.battery(context)} ${de.emil.shizubox.system.DeviceInfo.memory(context)} ${de.emil.shizubox.system.DeviceInfo.storage()} soc=${de.emil.shizubox.system.DeviceInfo.soc()}"

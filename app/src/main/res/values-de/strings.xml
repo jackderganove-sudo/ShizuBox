@@ -792,5 +792,12 @@
     <string name="dl_more_hint">Design und Sicherung findest du in den normalen ShizuBox-Einstellungen; Downloader-Einstellungen und Abos sind Teil der Sicherung.</string>
     <string name="dl_no_link">Kein Link im geteilten Text gefunden</string>
     <string name="dl_queued">Zur Warteschlange hinzugefügt ✓</string>
+    <string name="un_channel">Verfügbare Updates</string>
+    <string name="un_one_title">Update für %1$s</string>
+    <string name="un_install_all">Alle installieren</string>
+    <string name="un_skip">Überspringen</string>
+    <string name="un_installing">Installiere im Hintergrund …</string>
+    <string name="un_setting">Bei Updates benachrichtigen</string>
+    <string name="un_setting_sub">Mit „Installieren“ und „Überspringen“ direkt in der Benachrichtigung</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

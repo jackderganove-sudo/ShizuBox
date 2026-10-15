@@ -790,5 +790,12 @@
 "dl_ytdlp_updated": "yt-dlp %1$s sürümüne güncellendi ✓",
 "dl_more_hint": "Görünüm ve yedekleme normal ShizuBox ayarlarında; indirici ayarları ve abonelikler yedeğe dahildir.",
 "dl_no_link": "Paylaşılan metinde bağlantı bulunamadı",
-"dl_queued": "Sıraya eklendi ✓"
+"dl_queued": "Sıraya eklendi ✓",
+"un_channel": "Mevcut güncellemeler",
+"un_one_title": "%1$s için güncelleme",
+"un_install_all": "Tümünü yükle",
+"un_skip": "Atla",
+"un_installing": "Arka planda yükleniyor …",
+"un_setting": "Güncellemelerde bildir",
+"un_setting_sub": "Bildirimde doğrudan “Yükle” ve “Atla” ile"
 }

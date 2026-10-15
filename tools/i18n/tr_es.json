@@ -790,5 +790,12 @@
 "dl_ytdlp_updated": "yt-dlp actualizado a %1$s ✓",
 "dl_more_hint": "La apariencia y la copia están en los ajustes normales de ShizuBox; los ajustes del descargador y las suscripciones forman parte de la copia.",
 "dl_no_link": "No se encontró ningún enlace en el texto compartido",
-"dl_queued": "Añadido a la cola ✓"
+"dl_queued": "Añadido a la cola ✓",
+"un_channel": "Actualizaciones disponibles",
+"un_one_title": "Actualización de %1$s",
+"un_install_all": "Instalar todo",
+"un_skip": "Omitir",
+"un_installing": "Instalando en segundo plano …",
+"un_setting": "Avisar de actualizaciones",
+"un_setting_sub": "Con “Instalar” y “Omitir” en la propia notificación"
 }

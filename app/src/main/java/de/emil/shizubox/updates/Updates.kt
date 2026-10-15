@@ -39,6 +39,8 @@ data class UpdateSettings(
     val githubToken: String = "",
     /** Background installs only after a clean VirusTotal result (needs the API key). */
     val virusTotalGate: Boolean = true,
+    /** Notification with "Install" buttons when the background check finds updates. */
+    val notify: Boolean = true,
 )
 
 object Updates {
@@ -71,6 +73,7 @@ object Updates {
             prereleasesByDefault = prefs.getBoolean("prereleases", false),
             githubToken = prefs.getString("github_token", "").orEmpty(),
             virusTotalGate = prefs.getBoolean("vt_gate", true),
+            notify = prefs.getBoolean("notify", true),
         )
         Source.GitHub.token = _settings.value.githubToken
     }
@@ -87,6 +90,7 @@ object Updates {
             .putBoolean("prereleases", s.prereleasesByDefault)
             .putString("github_token", s.githubToken)
             .putBoolean("vt_gate", s.virusTotalGate)
+            .putBoolean("notify", s.notify)
             .apply()
         UpdateWorker.schedule(appContext)
     }
@@ -351,8 +355,13 @@ object Updates {
     }
 
     /** Called by the worker; installs every pending update one after another. */
-    suspend fun runUpdateAll(onStep: (index: Int, total: Int, name: String, progress: Float) -> Unit): Pair<List<String>, Map<String, String>> {
-        val todo = _apps.value.filter { state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true }
+    suspend fun runUpdateAll(
+        only: Set<String>? = null,
+        onStep: (index: Int, total: Int, name: String, progress: Float) -> Unit,
+    ): Pair<List<String>, Map<String, String>> {
+        val todo = _apps.value.filter {
+            state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true && (only == null || it.key in only)
+        }
         val installed = mutableListOf<String>()
         val failed = linkedMapOf<String, String>()
         try {
@@ -372,6 +381,14 @@ object Updates {
             _updatingAll.value = null to failed.toMap()
         }
         return installed to failed
+    }
+
+    /** Apps the notification offers: real updates that can be downloaded automatically. */
+    fun installableUpdates() = _apps.value.filter { state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true }
+
+    /** "Skip" in the notification: this version is not offered again. */
+    fun skip(keys: Collection<String>) {
+        _apps.value.filter { it.key in keys }.forEach { update(it.copy(skippedVersion = it.latestVersion)) }
     }
 
     fun clearUpdateAllResult() {

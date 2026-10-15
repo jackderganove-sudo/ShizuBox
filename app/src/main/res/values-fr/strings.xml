@@ -792,4 +792,11 @@
     <string name="dl_more_hint">L’apparence et la sauvegarde sont dans les réglages ShizuBox ; les réglages du téléchargeur et les abonnements font partie de la sauvegarde.</string>
     <string name="dl_no_link">Aucun lien trouvé dans le texte partagé</string>
     <string name="dl_queued">Ajouté à la file ✓</string>
+    <string name="un_channel">Mises à jour disponibles</string>
+    <string name="un_one_title">Mise à jour de %1$s</string>
+    <string name="un_install_all">Tout installer</string>
+    <string name="un_skip">Ignorer</string>
+    <string name="un_installing">Installation en arrière-plan …</string>
+    <string name="un_setting">Notifier les mises à jour</string>
+    <string name="un_setting_sub">Avec « Installer » et « Ignorer » directement dans la notification</string>
 </resources>

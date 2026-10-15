@@ -748,3 +748,10 @@ dl_ytdlp_updated	yt-dlp mis à jour en %1$s ✓
 dl_more_hint	L’apparence et la sauvegarde sont dans les réglages ShizuBox ; les réglages du téléchargeur et les abonnements font partie de la sauvegarde.
 dl_no_link	Aucun lien trouvé dans le texte partagé
 dl_queued	Ajouté à la file ✓
+un_channel	Mises à jour disponibles
+un_one_title	Mise à jour de %1$s
+un_install_all	Tout installer
+un_skip	Ignorer
+un_installing	Installation en arrière-plan …
+un_setting	Notifier les mises à jour
+un_setting_sub	Avec « Installer » et « Ignorer » directement dans la notification

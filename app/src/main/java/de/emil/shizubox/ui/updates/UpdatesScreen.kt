@@ -541,6 +541,7 @@ private fun SettingsPage() {
                 }
             }
         }
+        item { SettingRow(t(R.string.un_setting), t(R.string.un_setting_sub), s.notify) { Updates.setSettings(s.copy(notify = it)) } }
         item { SettingRow(t(R.string.us_bg_install), t(R.string.us_bg_install_sub), s.autoInstall) { Updates.setSettings(s.copy(autoInstall = it)) } }
         if (s.autoInstall) {
             item {

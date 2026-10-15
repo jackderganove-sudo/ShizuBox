@@ -3832,5 +3832,40 @@
   "en": "Added to the queue ✓",
   "de": "Zur Warteschlange hinzugefügt ✓",
   "plural": false
+ },
+ "un_channel": {
+  "en": "Available updates",
+  "de": "Verfügbare Updates",
+  "plural": false
+ },
+ "un_one_title": {
+  "en": "Update for %1$s",
+  "de": "Update für %1$s",
+  "plural": false
+ },
+ "un_install_all": {
+  "en": "Install all",
+  "de": "Alle installieren",
+  "plural": false
+ },
+ "un_skip": {
+  "en": "Skip",
+  "de": "Überspringen",
+  "plural": false
+ },
+ "un_installing": {
+  "en": "Installing in the background …",
+  "de": "Installiere im Hintergrund …",
+  "plural": false
+ },
+ "un_setting": {
+  "en": "Notify about updates",
+  "de": "Bei Updates benachrichtigen",
+  "plural": false
+ },
+ "un_setting_sub": {
+  "en": "With “Install” and “Skip” right in the notification",
+  "de": "Mit „Installieren“ und „Überspringen“ direkt in der Benachrichtigung",
+  "plural": false
  }
 }

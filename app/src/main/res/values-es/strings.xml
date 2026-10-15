@@ -792,4 +792,11 @@
     <string name="dl_more_hint">La apariencia y la copia están en los ajustes normales de ShizuBox; los ajustes del descargador y las suscripciones forman parte de la copia.</string>
     <string name="dl_no_link">No se encontró ningún enlace en el texto compartido</string>
     <string name="dl_queued">Añadido a la cola ✓</string>
+    <string name="un_channel">Actualizaciones disponibles</string>
+    <string name="un_one_title">Actualización de %1$s</string>
+    <string name="un_install_all">Instalar todo</string>
+    <string name="un_skip">Omitir</string>
+    <string name="un_installing">Instalando en segundo plano …</string>
+    <string name="un_setting">Avisar de actualizaciones</string>
+    <string name="un_setting_sub">Con “Instalar” y “Omitir” en la propia notificación</string>
 </resources>

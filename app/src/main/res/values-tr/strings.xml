@@ -792,4 +792,11 @@
     <string name="dl_more_hint">Görünüm ve yedekleme normal ShizuBox ayarlarında; indirici ayarları ve abonelikler yedeğe dahildir.</string>
     <string name="dl_no_link">Paylaşılan metinde bağlantı bulunamadı</string>
     <string name="dl_queued">Sıraya eklendi ✓</string>
+    <string name="un_channel">Mevcut güncellemeler</string>
+    <string name="un_one_title">%1$s için güncelleme</string>
+    <string name="un_install_all">Tümünü yükle</string>
+    <string name="un_skip">Atla</string>
+    <string name="un_installing">Arka planda yükleniyor …</string>
+    <string name="un_setting">Güncellemelerde bildir</string>
+    <string name="un_setting_sub">Bildirimde doğrudan “Yükle” ve “Atla” ile</string>
 </resources>
