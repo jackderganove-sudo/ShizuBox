@@ -80,6 +80,7 @@ object SystemPage {
     const val NOTIF_HISTORY = "notifhistory"
     const val CACHE = "cache"
     const val PRIVACY = "privacy"
+    const val BATTERY = "battery"
 }
 
 private data class TermEntry(val cmd: String, val code: Int?, val output: String)

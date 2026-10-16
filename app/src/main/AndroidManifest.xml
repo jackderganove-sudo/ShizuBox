@@ -170,6 +170,10 @@
             android:name=".automation.AutomationAlarmReceiver"
             android:exported="false" />
 
+        <receiver
+            android:name=".battery.NightReceiver"
+            android:exported="false" />
+
         <service
             android:name=".tiles.CacheTile"
             android:exported="true"

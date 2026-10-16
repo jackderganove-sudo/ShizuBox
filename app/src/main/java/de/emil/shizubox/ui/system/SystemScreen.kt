@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.rounded.CleaningServices
+import androidx.compose.material.icons.rounded.BatteryChargingFull
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.PrivacyTip
 import androidx.compose.material.icons.rounded.Memory
@@ -117,6 +118,12 @@ fun SystemScreen(
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ToolTile(Icons.Rounded.CleaningServices, t(R.string.cc_title), t(R.string.cc_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.CACHE) }
                 ToolTile(Icons.Rounded.PrivacyTip, t(R.string.pv_title_short), t(R.string.pv_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.PRIVACY) }
+            }
+        }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                ToolTile(Icons.Rounded.BatteryChargingFull, t(R.string.br_title_short), t(R.string.br_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.BATTERY) }
+                Spacer(Modifier.weight(1f))
             }
         }
         item { GamingCard(shizukuReady) }

@@ -5072,5 +5072,150 @@
   "en": "Body sensors",
   "de": "Körpersensoren",
   "plural": false
+ },
+ "br_title": {
+  "en": "Battery report",
+  "de": "Akku-Report",
+  "plural": false
+ },
+ "br_title_short": {
+  "en": "Battery",
+  "de": "Akku",
+  "plural": false
+ },
+ "br_sub": {
+  "en": "Which apps drain the battery",
+  "de": "Welche Apps den Akku leeren",
+  "plural": false
+ },
+ "br_since_charge": {
+  "en": "Since charge",
+  "de": "Seit Laden",
+  "plural": false
+ },
+ "br_24h": {
+  "en": "24 hours",
+  "de": "24 Std.",
+  "plural": false
+ },
+ "br_night": {
+  "en": "Overnight",
+  "de": "Über Nacht",
+  "plural": false
+ },
+ "br_used": {
+  "en": "%1$d %% used",
+  "de": "%1$d %% verbraucht",
+  "plural": false
+ },
+ "br_chart_hint": {
+  "en": "Battery level – tap the chart for details",
+  "de": "Ladestand – Diagramm antippen für Details",
+  "plural": false
+ },
+ "br_chart_wait": {
+  "en": "The level chart fills up over the next hours (a value every 15 minutes).",
+  "de": "Das Diagramm füllt sich in den nächsten Stunden (alle 15 Minuten ein Wert).",
+  "plural": false
+ },
+ "br_charging": {
+  "en": "charging",
+  "de": "lädt",
+  "plural": false
+ },
+ "br_now": {
+  "en": "now",
+  "de": "jetzt",
+  "plural": false
+ },
+ "br_empty": {
+  "en": "No data for this period yet",
+  "de": "Für diesen Zeitraum noch keine Daten",
+  "plural": false
+ },
+ "br_empty_hint": {
+  "en": "ShizuBox notes the usage every hour; 24 hours and overnight appear once there are enough snapshots.",
+  "de": "ShizuBox notiert den Verbrauch stündlich; „24 Std.“ und „Über Nacht“ erscheinen, sobald genug Messpunkte da sind.",
+  "plural": false
+ },
+ "br_self": {
+  "en": "ShizuBox itself",
+  "de": "ShizuBox selbst",
+  "plural": false
+ },
+ "br_split": {
+  "en": "Foreground %1$s · background %2$s · service %3$s mAh",
+  "de": "Vordergrund %1$s · Hintergrund %2$s · Dienst %3$s mAh",
+  "plural": false
+ },
+ "br_wakelock": {
+  "en": "Wake locks %1$s",
+  "de": "Wakelocks %1$s",
+  "plural": false
+ },
+ "br_mobile": {
+  "en": "Mobile data %1$s",
+  "de": "Mobile Daten %1$s",
+  "plural": false
+ },
+ "br_wakeups": {
+  "en": "%1$d wake-ups",
+  "de": "%1$d Weckrufe",
+  "plural": false
+ },
+ "br_restrict": {
+  "en": "Restrict battery",
+  "de": "Akku einschränken",
+  "plural": false
+ },
+ "br_night_hours": {
+  "en": "Night: %1$d:00 – %2$d:00",
+  "de": "Nacht: %1$d:00 – %2$d:00 Uhr",
+  "plural": false
+ },
+ "br_night_from": {
+  "en": "From",
+  "de": "Von",
+  "plural": false
+ },
+ "br_night_to": {
+  "en": "To",
+  "de": "Bis",
+  "plural": false
+ },
+ "br_morning": {
+  "en": "Morning summary",
+  "de": "Morgens Zusammenfassung",
+  "plural": false
+ },
+ "br_morning_sub": {
+  "en": "A notification at the end of the night: how much was used and by which app",
+  "de": "Benachrichtigung am Ende der Nacht: wie viel verbraucht wurde und durch welche App",
+  "plural": false
+ },
+ "br_night_title": {
+  "en": "Battery overnight",
+  "de": "Akku über Nacht",
+  "plural": false
+ },
+ "br_night_text": {
+  "en": "%1$d %% used overnight, mostly by %2$s",
+  "de": "Über Nacht %1$d %% verbraucht, meistens durch %2$s",
+  "plural": false
+ },
+ "br_night_text_plain": {
+  "en": "%1$d %% used overnight",
+  "de": "Über Nacht %1$d %% verbraucht",
+  "plural": false
+ },
+ "br_other_profile": {
+  "en": "Other profile (%1$d)",
+  "de": "Anderes Profil (%1$d)",
+  "plural": false
+ },
+ "br_apps_mah": {
+  "en": "apps %1$s mAh",
+  "de": "Apps %1$s mAh",
+  "plural": false
  }
 }

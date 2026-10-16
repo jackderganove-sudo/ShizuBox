@@ -67,6 +67,7 @@ class DebugReceiver : BroadcastReceiver() {
                     }
                     "debloat" -> de.emil.shizubox.ui.apps.DebloatScreen(ready, noop)
                     "privacy" -> de.emil.shizubox.ui.system.PrivacyScreen(ready, noop)
+                    "battery" -> de.emil.shizubox.ui.system.BatteryReportScreen(ready, noop)
                     "errorlog" -> de.emil.shizubox.ui.settings.ErrorLogScreen(noop)
                     "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
@@ -265,6 +266,16 @@ class DebugReceiver : BroadcastReceiver() {
                             val t1 = System.currentTimeMillis()
                             val labels = all.count { it.label.isNotBlank() }
                             "apps=${all.size} system=${all.count { it.isSystem }} list=${t1 - t0}ms cpu=${android.os.Process.getElapsedCpuTime() - cpu0}ms labels=$labels heapMB=${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}"
+                        }
+                        "battery" -> {
+                            val br = de.emil.shizubox.battery.BatteryReport
+                            br.sampleLevel()
+                            val t0 = System.currentTimeMillis()
+                            val ok = br.snapshot()
+                            val took = System.currentTimeMillis() - t0
+                            val since = br.drain(de.emil.shizubox.battery.DrainWindow.SinceCharge)
+                            "snapshot=$ok took=${took}ms apps=${since.size} top5=" + since.take(5).joinToString { "${br.label(it.uid)}=%.1f(fg %.1f bg %.1f fgs %.1f wl %ds mob %dKB wk %d)".format(it.mAh, it.fg, it.bg + it.cached, it.fgs, it.wakelockMs / 1000, it.mobileBytes / 1024, it.wakeups) } +
+                                " self=" + since.firstOrNull { it.uid == android.os.Process.myUid() }?.let { "%.1f".format(it.mAh) } + " levels=${br.levels(0).size} night=${br.nightWindow(System.currentTimeMillis()).let { java.util.Date(it.first).toString() + "–" + java.util.Date(it.last) }}"
                         }
                         "privacy" -> {
                             val pl = de.emil.shizubox.privacy.PrivacyLog
