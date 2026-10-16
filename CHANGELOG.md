@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.0 – Sitzung 2026-10-15 (Abend) / 2026-10-16
+## 0.7.0 – Sitzung 2026-10-15 (Abend) / 2026-10-16 – vom Nutzer auf dem Pixel bestätigt
 - ShizuBox verfolgt seine eigenen GitHub-Releases automatisch: neue Version → Benachrichtigung mit „Installieren“,
   Download und Installation in der App (eigenes, gleich signiertes Update wird nicht von der VirusTotal-Sperre aufgehalten)
 - Fix: VirusTotal-Scan blieb bei „In Warteschlange“ hängen – Upload und Analyse laufen jetzt im Hintergrund weiter,
