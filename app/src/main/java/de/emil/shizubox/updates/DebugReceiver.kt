@@ -206,6 +206,27 @@ class DebugReceiver : BroadcastReceiver() {
                                 "state=fg:${s.foreground} hp:${s.headphones} bt:${s.bluetooth.size} chg:${s.charging} bat:${s.battery} wifi:${s.ssid?.let { if (it.isEmpty()) "unnamed" else "named" }} " +
                                 "calc=${ShizukuManager.exec("cmd connectivity get-package-networking-enabled $calc").out.trim()}"
                         }
+                        "apkpurefull" -> {
+                            // Full download of an APKPure asset (fresh URL from the API), only counted, nothing saved or installed.
+                            val app = Updates.apps.value.first { it.id == (intent.getStringExtra("pkg") ?: "com.motion.cues.sickness") }
+                            val rel = Source.forUrl(app.url)!!.latest(app)
+                            val asset = rel.apks.first()
+                            val t0 = System.currentTimeMillis()
+                            var url = asset.url
+                            val hops = mutableListOf<String>()
+                            var c: java.net.HttpURLConnection
+                            while (true) {
+                                c = (java.net.URL(url).openConnection() as java.net.HttpURLConnection).apply {
+                                    instanceFollowRedirects = false; connectTimeout = 20_000; readTimeout = 60_000; setRequestProperty("User-Agent", "ShizuBox")
+                                }
+                                hops += "${java.net.URL(url).host}:${c.responseCode}"
+                                if (c.responseCode !in 300..399) break
+                                url = java.net.URL(java.net.URL(url), c.getHeaderField("Location")).toString()
+                            }
+                            var n = 0L
+                            val err = runCatching { c.inputStream.use { i -> val b = ByteArray(65536); while (true) { val r = i.read(b); if (r < 0) break; n += r } } }.exceptionOrNull()
+                            "app=${app.name} asset=${asset.name} hops=$hops len=${c.contentLengthLong} got=$n took=${System.currentTimeMillis() - t0}ms err=${err?.let { "${it.javaClass.simpleName}: ${it.message}" }}"
+                        }
                         "vtbg" -> {
                             // Same path as the card: start in the background, then only watch the shared state.
                             val vt = de.emil.shizubox.installer.VirusTotal

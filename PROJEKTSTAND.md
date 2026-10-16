@@ -174,7 +174,7 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - Pixel meldet Akku-Zustand 11 (herstellerspezifisch) → Zeile wird ausgeblendet
 - Kachel-Tipps bei gesperrtem Gerät hält SystemUI bis zum Entsperren zurück
 - Nicht exportierte Activities (z. B. Settings-Testmenü unter Android 17) kann nur die App selbst starten – auch nicht per Shizuku
-- APKPure-CDN wird von manchen DNS-Filtern (NextDNS) und VPNs (Google-VPN) blockiert: ShizuBox versucht es ein zweites Mal und zeigt dann einen Hinweis mit Ursache (VPN aktiv / privates DNS mit Namen / sonst Netz). Genaue Ursache beim Google-VPN noch zu messen (`--es test apkpure` bei eingeschaltetem VPN)
+- APKPure-CDN wird von manchen DNS-Filtern (NextDNS) und VPNs (Google-VPN) blockiert: ShizuBox versucht es ein zweites Mal und zeigt dann einen Hinweis mit Ursache (VPN aktiv / privates DNS mit Namen / sonst Netz). Gemessen 2026-10-16 mit eingeschaltetem Google-VPN: DNS, API (200) und kompletter Download (50-MB-XAPK) funktionieren – Fehler aktuell nicht reproduzierbar, Wiederholung + Hinweis bleiben als Absicherung. Tests: `--es test apkpure`, `--es test apkpurefull [--es pkg <id>]`
 - Stille XAPK-Installationen ließen das Handy 2026-10-16 zweimal hängen (Crunchyroll, Google Home) → `InstallGuard` (Journal, Pause der Version, keine Wiederholung nach Neustart, nur bei Bildschirm aus, Paketverwaltungs-Check, 6-min-Wächter), Fortschritt gedrosselt, harte Shell-Zeitlimits (`execLimited`, Code 124). Diagnose: `--es test updstate` (offene Installationen, liegengebliebene Dateien), `--es test ig`
 - `pm clear --cache-only` hängt auf Android 17 dauerhaft (auch `cmd package clear --user 0 …`) und löscht nichts
 - APKMirror erlaubt keine automatischen Downloads
