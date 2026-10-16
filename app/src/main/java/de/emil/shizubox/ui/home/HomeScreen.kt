@@ -179,13 +179,15 @@ private fun ShizukuCard(status: ShizukuStatus, serverMode: String?, onAction: ()
         Row(verticalAlignment = Alignment.CenterVertically) {
             // Connected: a soft halo breathes around the dot.
             val dotColor by animateColorAsState(dot, Motion.quick(), label = "dot")
-            val halo = pulse(min = 0f, periodMs = 2200, enabled = status == ShizukuStatus.Ready)
+            // Read only in the graphicsLayer lambda and 20 fps: it runs as long as the home screen
+            // is open, so it must not recompose the card every frame.
+            val halo = de.emil.shizubox.ui.motion.throttledPulse(min = 0f, periodMs = 2200, enabled = status == ShizukuStatus.Ready, fps = 20)
             Box(Modifier.padding(start = 4.dp, end = 16.dp).size(12.dp), contentAlignment = Alignment.Center) {
-                if (status == ShizukuStatus.Ready && halo < 1f) {
+                if (status == ShizukuStatus.Ready) {
                     Box(
                         Modifier
                             .size(12.dp)
-                            .graphicsLayer { val sc = 1f + (1f - halo) * 1.3f; scaleX = sc; scaleY = sc; alpha = halo * 0.6f }
+                            .graphicsLayer { val h = halo.value; val sc = 1f + (1f - h) * 1.3f; scaleX = sc; scaleY = sc; alpha = h * 0.6f }
                             .background(dotColor, CircleShape),
                     )
                 }

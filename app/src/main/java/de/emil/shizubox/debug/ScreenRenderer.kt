@@ -104,9 +104,10 @@ object ScreenRenderer {
                     bmp.copyPixelsFromBuffer(plane.buffer)
                     image.close()
                     val cropped = Bitmap.createBitmap(bmp, 0, 0, width, heightPx)
-                    val file = File(context.cacheDir, "shot_$name.png")
-                    file.outputStream().use { cropped.compress(Bitmap.CompressFormat.PNG, 100, it) }
+                    // PNG encoding and writing off the main thread (StrictMode found it there).
                     CoroutineScope(Dispatchers.IO).launch {
+                        val file = File(context.cacheDir, "shot_$name.png")
+                        file.outputStream().use { cropped.compress(Bitmap.CompressFormat.PNG, 100, it) }
                         val n = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY).use {
                             ShizukuManager.writeFile(it, "/data/local/tmp/shot_$name.png")
                         }

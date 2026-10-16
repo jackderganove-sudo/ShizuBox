@@ -31,6 +31,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -81,15 +83,24 @@ fun GlassBackground(
 
     // Seamless loop: every motion below uses whole multiples of the phase, so the end of one
     // cycle is exactly its start (a 1.3× frequency used to make the blobs jump every 40 s).
-    val phase = if (settings.animatedBackground) {
-        val transition = rememberInfiniteTransition(label = "blobs")
-        transition.animateFloat(
-            initialValue = 0f,
-            targetValue = (2 * Math.PI).toFloat(),
-            animationSpec = infiniteRepeatable(tween(60_000, easing = LinearEasing), RepeatMode.Restart),
-            label = "phase",
-        ).value
-    } else 0f
+    // Battery: the blobs move very slowly (one cycle per minute), so 8 frames per second look
+    // the same as 120 – and every frame re-blurs all glass cards. The phase is only read while
+    // drawing (no recomposition) and stops while ShizuBox is not visible. Before, a static
+    // screen kept one CPU core busy (measured 70–100 %).
+    val phase = remember { androidx.compose.runtime.mutableFloatStateOf(0f) }
+    if (settings.animatedBackground) {
+        val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+        LaunchedEffect(lifecycle) {
+            lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                val start = android.os.SystemClock.uptimeMillis() - (phase.floatValue / (2 * Math.PI) * 60_000).toLong()
+                while (true) {
+                    val t = (android.os.SystemClock.uptimeMillis() - start) % 60_000
+                    phase.floatValue = (t / 60_000.0 * 2 * Math.PI).toFloat()
+                    kotlinx.coroutines.delay(125)
+                }
+            }
+        }
+    }
 
     Box(Modifier.fillMaxSize()) {
         Canvas(
@@ -106,8 +117,9 @@ fun GlassBackground(
                 Triple(colors.secondary, Offset(0.3f, 0.85f), 0.6f),
             )
             if (settings.amoled && dark) return@Canvas
+            val p = phase.floatValue
             blobs.forEachIndexed { i, (color, pos, radius) ->
-                val drift = phase + i * 2.1f
+                val drift = p + i * 2.1f
                 val center = Offset(
                     w * (pos.x + 0.08f * cos(drift)),
                     h * (pos.y + 0.05f * sin(2 * drift)),

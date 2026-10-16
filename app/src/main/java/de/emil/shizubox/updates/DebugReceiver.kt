@@ -66,6 +66,7 @@ class DebugReceiver : BroadcastReceiver() {
                         )
                     }
                     "debloat" -> de.emil.shizubox.ui.apps.DebloatScreen(ready, noop)
+                    "errorlog" -> de.emil.shizubox.ui.settings.ErrorLogScreen(noop)
                     "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
                     "screentime" -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, noop)
@@ -216,6 +217,17 @@ class DebugReceiver : BroadcastReceiver() {
                             "rules=${R.rules.value.map { "${it.name}:${it.enabled}" }} active=${E.active.value.mapNotNull { id -> R.rules.value.firstOrNull { it.id == id }?.name }} " +
                                 "state=fg:${s.foreground} hp:${s.headphones} bt:${s.bluetooth.size} chg:${s.charging} bat:${s.battery} wifi:${s.ssid?.let { if (it.isEmpty()) "unnamed" else "named" }} " +
                                 "calc=${ShizukuManager.exec("cmd connectivity get-package-networking-enabled $calc").out.trim()}"
+                        }
+                        "animbg" -> {
+                            // --es mode on|off: animated background (to measure its CPU cost)
+                            val on = intent.getStringExtra("mode") != "off"
+                            de.emil.shizubox.settings.AppSettings.update { it.copy(animatedBackground = on) }
+                            "animatedBackground=$on"
+                        }
+                        "errlog" -> {
+                            // --es mode clear|show
+                            if (intent.getStringExtra("mode") == "clear") de.emil.shizubox.debug.ErrorLog.clear()
+                            de.emil.shizubox.debug.ErrorLog.entries.value.joinToString(" || ") { "${it.kind} ${it.title} (${it.details.length} chars)" }.ifBlank { "empty" }
                         }
                         "apkpurefull" -> {
                             // Full download of an APKPure asset (fresh URL from the API), only counted, nothing saved or installed.

@@ -26,6 +26,7 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -133,6 +134,33 @@ fun pulse(min: Float = 0.55f, periodMs: Int = 1400, enabled: Boolean = true): Fl
         label = "pulse",
     )
     return v
+}
+
+/**
+ * Like [pulse], but battery-friendly for something that runs all the time: the value is a State
+ * to be read only in a draw/graphicsLayer lambda (no recomposition), updated at [fps] instead of
+ * every display frame, and paused while the app is not visible.
+ */
+@Composable
+fun throttledPulse(min: Float = 0.55f, periodMs: Int = 1400, enabled: Boolean = true, fps: Int = 30): androidx.compose.runtime.State<Float> {
+    val state = remember { androidx.compose.runtime.mutableFloatStateOf(1f) }
+    val still = !enabled || reduceMotion()
+    val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+    LaunchedEffect(still, lifecycle) {
+        if (still) { state.floatValue = 1f; return@LaunchedEffect }
+        lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+            val start = android.os.SystemClock.uptimeMillis()
+            while (true) {
+                val t = ((android.os.SystemClock.uptimeMillis() - start) % periodMs) / periodMs.toFloat()
+                // 1 → min → 1 with a soft ease, like the infinite transition it replaces.
+                val tri = if (t < 0.5f) t * 2 else (1 - t) * 2
+                val eased = androidx.compose.animation.core.FastOutSlowInEasing.transform(tri)
+                state.floatValue = 1f - (1f - min) * eased
+                kotlinx.coroutines.delay(1000L / fps)
+            }
+        }
+    }
+    return state
 }
 
 /** Short "pop" when [trigger] changes: 1 → [peak] → 1 with a bouncy spring. */
