@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.rounded.CleaningServices
 import androidx.compose.material.icons.rounded.History
+import androidx.compose.material.icons.rounded.PrivacyTip
 import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.HourglassBottom
 import androidx.compose.material.icons.rounded.PhoneAndroid
@@ -115,7 +116,7 @@ fun SystemScreen(
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ToolTile(Icons.Rounded.CleaningServices, t(R.string.cc_title), t(R.string.cc_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.CACHE) }
-                Spacer(Modifier.weight(1f))
+                ToolTile(Icons.Rounded.PrivacyTip, t(R.string.pv_title_short), t(R.string.pv_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.PRIVACY) }
             }
         }
         item { GamingCard(shizukuReady) }

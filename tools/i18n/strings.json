@@ -4937,5 +4937,140 @@
   "en": "Hang",
   "de": "Hänger",
   "plural": false
+ },
+ "pv_title": {
+  "en": "Privacy log",
+  "de": "Privatsphäre-Protokoll",
+  "plural": false
+ },
+ "pv_title_short": {
+  "en": "Privacy",
+  "de": "Privatsphäre",
+  "plural": false
+ },
+ "pv_sub": {
+  "en": "Who used camera, mic, location",
+  "de": "Wer Kamera, Mikro, Standort nutzte",
+  "plural": false
+ },
+ "pv_intro": {
+  "en": "ShizuBox records which app used camera, microphone, location, contacts, clipboard and body sensors – longer than Android's own 24 hours / 7 days. It collects once an hour from Android's access history.",
+  "de": "ShizuBox merkt sich, welche App Kamera, Mikrofon, Standort, Kontakte, Zwischenablage und Körpersensoren genutzt hat – länger als Androids eigene 24 Stunden bzw. 7 Tage. Gesammelt wird einmal pro Stunde aus Androids Zugriffsverlauf.",
+  "plural": false
+ },
+ "pv_private": {
+  "en": "Stored only on this device · not part of the backup",
+  "de": "Nur auf diesem Gerät gespeichert · nicht im Backup",
+  "plural": false
+ },
+ "pv_enable": {
+  "en": "Turn on privacy log",
+  "de": "Privatsphäre-Protokoll einschalten",
+  "plural": false
+ },
+ "pv_record": {
+  "en": "Record accesses",
+  "de": "Zugriffe aufzeichnen",
+  "plural": false
+ },
+ "pv_notify": {
+  "en": "Notify about background use",
+  "de": "Bei Nutzung im Hintergrund benachrichtigen",
+  "plural": false
+ },
+ "pv_notify_sub": {
+  "en": "Camera or microphone while the app wasn't on screen or the screen was off (checked hourly)",
+  "de": "Kamera oder Mikrofon, während die App nicht sichtbar oder der Bildschirm aus war (stündlich geprüft)",
+  "plural": false
+ },
+ "pv_timeline": {
+  "en": "Timeline",
+  "de": "Zeitleiste",
+  "plural": false
+ },
+ "pv_only_bg": {
+  "en": "Only background / screen off",
+  "de": "Nur Hintergrund / Bildschirm aus",
+  "plural": false
+ },
+ "pv_empty": {
+  "en": "No accesses recorded yet",
+  "de": "Noch keine Zugriffe aufgezeichnet",
+  "plural": false
+ },
+ "pv_empty_hint": {
+  "en": "The first collection takes up to a minute.",
+  "de": "Die erste Sammlung dauert bis zu einer Minute.",
+  "plural": false
+ },
+ "pv_bg": {
+  "en": "Background",
+  "de": "Hintergrund",
+  "plural": false
+ },
+ "pv_service": {
+  "en": "Service",
+  "de": "Dienst",
+  "plural": false
+ },
+ "pv_screen_off": {
+  "en": "Screen off",
+  "de": "Bildschirm aus",
+  "plural": false
+ },
+ "pv_bg_n": {
+  "en": "%1$d× in the background or with the screen off",
+  "de": "%1$d× im Hintergrund oder bei ausgeschaltetem Bildschirm",
+  "plural": false
+ },
+ "pv_revoke": {
+  "en": "Take away %1$s",
+  "de": "%1$s entziehen",
+  "plural": false
+ },
+ "pv_revoked": {
+  "en": "Permission taken away ✓",
+  "de": "Berechtigung entzogen ✓",
+  "plural": false
+ },
+ "pv_notif_title": {
+  "en": "Used in the background",
+  "de": "Im Hintergrund genutzt",
+  "plural": false
+ },
+ "pv_camera": {
+  "en": "Camera",
+  "de": "Kamera",
+  "plural": false
+ },
+ "pv_mic": {
+  "en": "Microphone",
+  "de": "Mikrofon",
+  "plural": false
+ },
+ "pv_location": {
+  "en": "Location",
+  "de": "Standort",
+  "plural": false
+ },
+ "pv_location_coarse": {
+  "en": "Approx. location",
+  "de": "Ungefährer Standort",
+  "plural": false
+ },
+ "pv_contacts": {
+  "en": "Contacts",
+  "de": "Kontakte",
+  "plural": false
+ },
+ "pv_clipboard": {
+  "en": "Clipboard",
+  "de": "Zwischenablage",
+  "plural": false
+ },
+ "pv_sensors": {
+  "en": "Body sensors",
+  "de": "Körpersensoren",
+  "plural": false
  }
 }

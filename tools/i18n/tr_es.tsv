@@ -963,3 +963,30 @@ el_anr	No responde (ANR)
 el_native	Cierre nativo
 el_killed	Detenida por Android
 el_hang	Bloqueo
+pv_title	Registro de privacidad
+pv_title_short	Privacidad
+pv_sub	Quién usó cámara, micro, ubicación
+pv_intro	ShizuBox registra qué app usó cámara, micrófono, ubicación, contactos, portapapeles y sensores corporales, más tiempo que las 24 horas / 7 días de Android. Recoge una vez por hora del historial de accesos de Android.
+pv_private	Solo en este dispositivo · no forma parte de la copia
+pv_enable	Activar registro de privacidad
+pv_record	Registrar accesos
+pv_notify	Avisar de uso en segundo plano
+pv_notify_sub	Cámara o micrófono sin la app en pantalla o con la pantalla apagada (se revisa cada hora)
+pv_timeline	Cronología
+pv_only_bg	Solo segundo plano / pantalla apagada
+pv_empty	Aún no hay accesos registrados
+pv_empty_hint	La primera recogida tarda hasta un minuto.
+pv_bg	Segundo plano
+pv_service	Servicio
+pv_screen_off	Pantalla apagada
+pv_bg_n	%1$d× en segundo plano o con la pantalla apagada
+pv_revoke	Quitar %1$s
+pv_revoked	Permiso quitado ✓
+pv_notif_title	Usado en segundo plano
+pv_camera	Cámara
+pv_mic	Micrófono
+pv_location	Ubicación
+pv_location_coarse	Ubicación aproximada
+pv_contacts	Contactos
+pv_clipboard	Portapapeles
+pv_sensors	Sensores corporales

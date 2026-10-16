@@ -66,6 +66,7 @@ class DebugReceiver : BroadcastReceiver() {
                         )
                     }
                     "debloat" -> de.emil.shizubox.ui.apps.DebloatScreen(ready, noop)
+                    "privacy" -> de.emil.shizubox.ui.system.PrivacyScreen(ready, noop)
                     "errorlog" -> de.emil.shizubox.ui.settings.ErrorLogScreen(noop)
                     "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
@@ -87,7 +88,7 @@ class DebugReceiver : BroadcastReceiver() {
             val pending = goAsync()
             // Long tests release the broadcast right away: Android counts a background broadcast
             // that takes over 60 s as an ANR and kills the process (seen with "vt" and "dlstress").
-            val long = what in setOf("vt", "vtbg", "dlstress", "apkpurefull", "ytdl", "apkpure", "checkall")
+            val long = what in setOf("vt", "vtbg", "dlstress", "apkpurefull", "ytdl", "apkpure", "checkall", "privacy")
             if (long) pending.finish()
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -264,6 +265,15 @@ class DebugReceiver : BroadcastReceiver() {
                             val t1 = System.currentTimeMillis()
                             val labels = all.count { it.label.isNotBlank() }
                             "apps=${all.size} system=${all.count { it.isSystem }} list=${t1 - t0}ms cpu=${android.os.Process.getElapsedCpuTime() - cpu0}ms labels=$labels heapMB=${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}"
+                        }
+                        "privacy" -> {
+                            val pl = de.emil.shizubox.privacy.PrivacyLog
+                            if (intent.getStringExtra("mode") == "on") pl.update { it.copy(enabled = true) }
+                            if (intent.getStringExtra("mode") == "off") { pl.update { it.copy(enabled = false) }; pl.deleteAll() }
+                            val t0 = System.currentTimeMillis()
+                            val n = if (pl.settings.value.enabled) pl.collect() else 0
+                            val all = pl.entries(de.emil.shizubox.privacy.PrivOp.entries.toSet(), limit = 100000)
+                            "new=$n took=${System.currentTimeMillis() - t0}ms rows=${all.size} byOp=${all.groupingBy { it.op }.eachCount()} bg=${all.count { it.background }} screenOff=${all.count { it.screenOff }} fgsvc=${all.count { it.service }}"
                         }
                         "errlog" -> {
                             // --es mode clear|show

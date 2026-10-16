@@ -39,6 +39,8 @@ object Backup {
         "net_block" to emptySet(),
         "automations" to emptySet(),
         "debloat" to emptySet(),
+        // Only the settings; the access log itself stays on the device.
+        "privacy" to setOf("since_CAMERA", "since_RECORD_AUDIO", "since_FINE_LOCATION", "since_COARSE_LOCATION"),
     )
 
     /** Only exported when the user asks for it. */
@@ -107,6 +109,7 @@ object Backup {
         de.emil.shizubox.apps.NetBlock.load()
         de.emil.shizubox.automation.Rules.load()
         de.emil.shizubox.apps.Debloat.load()
+        de.emil.shizubox.privacy.PrivacyLog.load()
         runCatching { de.emil.shizubox.apps.NetBlock.restore(force = true) }
         Updates.init(context)
         UpdateWorker.schedule(context)

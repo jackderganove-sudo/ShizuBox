@@ -79,6 +79,7 @@ object SystemPage {
     const val SCREEN_TIME = "screentime"
     const val NOTIF_HISTORY = "notifhistory"
     const val CACHE = "cache"
+    const val PRIVACY = "privacy"
 }
 
 private data class TermEntry(val cmd: String, val code: Int?, val output: String)

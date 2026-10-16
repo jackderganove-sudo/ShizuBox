@@ -963,3 +963,30 @@ el_anr	Yanıt vermiyor (ANR)
 el_native	Yerel çökme
 el_killed	Android tarafından durduruldu
 el_hang	Takılma
+pv_title	Gizlilik günlüğü
+pv_title_short	Gizlilik
+pv_sub	Kamera, mikrofon, konumu kim kullandı
+pv_intro	ShizuBox, hangi uygulamanın kamera, mikrofon, konum, kişiler, pano ve vücut sensörlerini kullandığını kaydeder – Android'in 24 saat / 7 gününden daha uzun. Saatte bir Android'in erişim geçmişinden toplar.
+pv_private	Yalnızca bu cihazda saklanır · yedeğe dahil değil
+pv_enable	Gizlilik günlüğünü aç
+pv_record	Erişimleri kaydet
+pv_notify	Arka planda kullanımda bildir
+pv_notify_sub	Uygulama ekranda değilken veya ekran kapalıyken kamera ya da mikrofon (saatlik kontrol)
+pv_timeline	Zaman çizelgesi
+pv_only_bg	Yalnızca arka plan / ekran kapalı
+pv_empty	Henüz kayıtlı erişim yok
+pv_empty_hint	İlk toplama bir dakika kadar sürer.
+pv_bg	Arka plan
+pv_service	Hizmet
+pv_screen_off	Ekran kapalı
+pv_bg_n	%1$d× arka planda veya ekran kapalıyken
+pv_revoke	%1$s iznini kaldır
+pv_revoked	İzin kaldırıldı ✓
+pv_notif_title	Arka planda kullanıldı
+pv_camera	Kamera
+pv_mic	Mikrofon
+pv_location	Konum
+pv_location_coarse	Yaklaşık konum
+pv_contacts	Kişiler
+pv_clipboard	Pano
+pv_sensors	Vücut sensörleri

@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
                 }
                 val trackedApps by Updates.apps.collectAsStateWithLifecycle()
                 val updateCount = remember(trackedApps) { Updates.updateCount() }
-                var systemPage by rememberSaveable { mutableStateOf<String?>(null) }
+                var systemPage by rememberSaveable { mutableStateOf(intent.getStringExtra(de.emil.shizubox.privacy.PrivacyLog.EXTRA_PAGE)) }
                 var settingsOpen by rememberSaveable { mutableStateOf(false) }
                 var installUri by remember { mutableStateOf<android.net.Uri?>(null) }
                 var busy by remember { mutableStateOf(false) }
@@ -202,6 +202,7 @@ class MainActivity : ComponentActivity() {
                             SystemPage.PROCESSES -> ProcessesScreen(ready, onBack = close)
                             SystemPage.TERMINAL -> TerminalScreen(ready, onBack = close)
                             SystemPage.SCREEN_TIME -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, onBack = close)
+                            SystemPage.PRIVACY -> de.emil.shizubox.ui.system.PrivacyScreen(ready, onBack = close)
                             SystemPage.CACHE -> de.emil.shizubox.ui.system.CacheScreen(ready, onBack = close)
                             SystemPage.NOTIF_HISTORY -> de.emil.shizubox.ui.system.NotificationHistoryScreen(ready, onBack = close)
                             else -> SystemScreen(

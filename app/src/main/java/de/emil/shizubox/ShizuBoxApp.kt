@@ -32,6 +32,7 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.notifications.NotifHistory.init(this)
         de.emil.shizubox.apps.NetBlock.init(this)
         de.emil.shizubox.apps.Debloat.init(this)
+        de.emil.shizubox.privacy.PrivacyLog.init(this)
         de.emil.shizubox.util.Unlock.whenUnlocked(this) {
             kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
                 de.emil.shizubox.system.CacheCleaner.cleanStale(this@ShizuBoxApp)
@@ -45,11 +46,13 @@ class ShizuBoxApp : Application() {
         // (the app also starts then, for school mode) it crashes the whole app – since 0.4.0.
         if (getSystemService(android.os.UserManager::class.java).isUserUnlocked) {
             UpdateWorker.schedule(this)
+            de.emil.shizubox.privacy.PrivacyWorker.schedule(this)
         } else {
             registerReceiver(object : android.content.BroadcastReceiver() {
                 override fun onReceive(c: android.content.Context, i: android.content.Intent) {
                     runCatching { unregisterReceiver(this) }
                     UpdateWorker.schedule(this@ShizuBoxApp)
+                    de.emil.shizubox.privacy.PrivacyWorker.schedule(this@ShizuBoxApp)
                 }
             }, android.content.IntentFilter(android.content.Intent.ACTION_USER_UNLOCKED))
         }

@@ -963,3 +963,30 @@ el_anr	Ne répond pas (ANR)
 el_native	Plantage natif
 el_killed	Arrêtée par Android
 el_hang	Blocage
+pv_title	Journal de confidentialité
+pv_title_short	Confidentialité
+pv_sub	Qui a utilisé caméra, micro, position
+pv_intro	ShizuBox note quelle appli a utilisé caméra, micro, position, contacts, presse-papiers et capteurs corporels – plus longtemps que les 24 heures / 7 jours d'Android. Collecte une fois par heure depuis l'historique d'accès d'Android.
+pv_private	Uniquement sur cet appareil · hors sauvegarde
+pv_enable	Activer le journal
+pv_record	Enregistrer les accès
+pv_notify	Prévenir en cas d'usage en arrière-plan
+pv_notify_sub	Caméra ou micro quand l'appli n'était pas à l'écran ou l'écran éteint (vérifié chaque heure)
+pv_timeline	Chronologie
+pv_only_bg	Seulement arrière-plan / écran éteint
+pv_empty	Aucun accès enregistré
+pv_empty_hint	La première collecte prend jusqu'à une minute.
+pv_bg	Arrière-plan
+pv_service	Service
+pv_screen_off	Écran éteint
+pv_bg_n	%1$d× en arrière-plan ou écran éteint
+pv_revoke	Retirer %1$s
+pv_revoked	Autorisation retirée ✓
+pv_notif_title	Utilisé en arrière-plan
+pv_camera	Caméra
+pv_mic	Micro
+pv_location	Position
+pv_location_coarse	Position approx.
+pv_contacts	Contacts
+pv_clipboard	Presse-papiers
+pv_sensors	Capteurs corporels

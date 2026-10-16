@@ -46,6 +46,13 @@
 - Fix: Update-APKs blieben nach der stillen Installation im Cache liegen (bei mir fast 900 MB) – werden jetzt sofort gelöscht
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 
+## 0.8.0 (in Arbeit)
+- Privatsphäre-Protokoll (System): welche App wann Kamera, Mikrofon, Standort, Kontakte, Zwischenablage nutzte –
+  Zeitleiste und pro App, Hervorhebung „Hintergrund“, „Dienst“ und „Bildschirm aus“, Filter, aus jedem Eintrag
+  Berechtigung entziehen / App-Details / Internet sperren, optionale Benachrichtigung bei Kamera/Mikrofon im Hintergrund,
+  stündliche Sammlung, Aufbewahrung 7–365 Tage, nicht im Backup
+- Shell-Dienst kürzt sehr lange Ausgaben (> 512 KB) statt am Binder-Limit zu scheitern (sah aus wie „Shizuku getrennt“)
+
 ## 0.7.2 – Stabilitätsrunde (2026-10-16)
 - Akku: offene App brauchte durch den animierten Hintergrund 70–100 % eines CPU-Kerns, jetzt 7–11 %
 - Fehlerprotokoll unter Einstellungen (Abstürze, ANRs, Hänger; Kopieren/Teilen; 30 Tage; nicht im Backup)

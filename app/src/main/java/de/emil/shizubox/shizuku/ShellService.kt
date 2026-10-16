@@ -11,6 +11,10 @@ import kotlin.system.exitProcess
  * (uid 2000 "shell" when Shizuku was started via ADB). Everything here has ADB rights.
  */
 class ShellService : IShellService.Stub() {
+    private companion object {
+        /** Characters; UTF-16 in the parcel, so 256 K chars ≈ 512 KB – well below the 1 MB binder limit. */
+        const val MAX_OUT = 256 * 1024
+    }
 
     override fun destroy() {
         exitProcess(0)
@@ -46,8 +50,12 @@ class ShellService : IShellService.Stub() {
         }
         outReader.join(2000)
         errReader.join(2000)
-        if (!done) return "124\u0000$out\u0000${err}\n[ShizuBox] killed after ${limitMs / 1000} s"
-        return "${process.exitValue()}\u0000$out\u0000$err"
+        // A binder reply over ~1 MB fails as a whole (TransactionTooLargeException) and looks like
+        // a lost Shizuku connection to the caller – cut long output instead and say so.
+        val o = if (out.length > MAX_OUT) out.take(MAX_OUT) else out
+        val e = (if (err.length > 64_000) err.take(64_000) else err) + if (out.length > MAX_OUT) "\n[ShizuBox] output cut at ${MAX_OUT / 1024} KB" else ""
+        if (!done) return "124\u0000$o\u0000${e}\n[ShizuBox] killed after ${limitMs / 1000} s"
+        return "${process.exitValue()}\u0000$o\u0000$e"
     }
 
     private fun pidOf(p: Process): Int? = runCatching {

@@ -42,7 +42,7 @@ enum class ShizukuStatus {
 
 object ShizukuManager {
     /** Bump when IShellService changes. */
-    private const val SERVICE_REV = 1
+    private const val SERVICE_REV = 2
     /** Hard limit for a shell command when the caller gives none. */
     const val DEFAULT_LIMIT = 60_000L
 
