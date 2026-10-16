@@ -206,6 +206,41 @@ class DebugReceiver : BroadcastReceiver() {
                                 "state=fg:${s.foreground} hp:${s.headphones} bt:${s.bluetooth.size} chg:${s.charging} bat:${s.battery} wifi:${s.ssid?.let { if (it.isEmpty()) "unnamed" else "named" }} " +
                                 "calc=${ShizukuManager.exec("cmd connectivity get-package-networking-enabled $calc").out.trim()}"
                         }
+                        "ig" -> when (intent.getStringExtra("mode")) {
+                            // sim: journal an install of --es key <url> and kill the process mid-way
+                            "sim" -> {
+                                val app = Updates.apps.value.first { it.key == intent.getStringExtra("key") || it.id == intent.getStringExtra("pkg") }
+                                InstallGuard.guarded(app, "sim-work") { journal ->
+                                    journal("simulated.xapk", 1)
+                                    android.os.Process.killProcess(android.os.Process.myPid())
+                                }
+                                "not reached"
+                            }
+                            "limit" -> {
+                                val t0 = System.currentTimeMillis()
+                                val r = ShizukuManager.exec("sleep 120; echo never", timeoutMs = 3000, limitMs = 3000)
+                                val left = ShizukuManager.exec("ps -A -o ARGS | grep 'sleep 120' | grep -v grep | wc -l").out
+                                "code=${r.code} took=${System.currentTimeMillis() - t0}ms err=${r.err} sleepLeft=$left pm=${InstallGuard.packageManagerResponds()}"
+                            }
+                            else -> "interrupted=${InstallGuard.lastInterrupted} " + Updates.apps.value.filter { InstallGuard.blockedVersion(it.key) != null }
+                                .joinToString { "${it.name} blocked=${InstallGuard.blockedVersion(it.key)} isBlocked=${InstallGuard.isBlocked(it)}" } +
+                                " goodTime=${InstallGuard.goodTimeForBackgroundInstall(context)}"
+                        }
+                        "updstate" -> buildString {
+                            // Which update was in flight: pending markers, real install times, leftover files.
+                            val df = java.text.SimpleDateFormat("MM-dd HH:mm:ss", java.util.Locale.US)
+                            val pm = context.packageManager
+                            append("settings=${Updates.settings.value.copy(githubToken = "")}\n")
+                            Updates.apps.value.filter { it.pendingSince > 0 || it.url.contains("apkpure") }.sortedByDescending { it.pendingSince }.forEach { a ->
+                                val pi = runCatching { pm.getPackageInfo(a.id, 0) }.getOrNull()
+                                append("${a.name} id=${a.id} src=${Source.forUrl(a.url)?.label} installed=${a.installedVersion}/${pi?.versionName} ")
+                                append("lastUpdate=${pi?.lastUpdateTime?.let { df.format(java.util.Date(it)) }} latest=${a.latestVersion} pending=${a.pendingVersion}@${if (a.pendingSince > 0) df.format(java.util.Date(a.pendingSince)) else "-"} ")
+                                append("apk=${a.chosenApk?.name} err=${a.error?.take(80)}\n")
+                            }
+                            java.io.File(context.cacheDir, "updates").listFiles().orEmpty().forEach { f ->
+                                append("leftover ${f.name} ${f.length() / 1024}K ${df.format(java.util.Date(f.lastModified()))}\n")
+                            }
+                        }
                         "cache" -> {
                             // --es mode list|<shell cmd to time> --es pkg <p>
                             val c = de.emil.shizubox.system.CacheCleaner

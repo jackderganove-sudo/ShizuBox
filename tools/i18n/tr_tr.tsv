@@ -940,3 +940,8 @@ cc_tap	Dokun
 e_apkpure_vpn	⚠ APKPure'a ulaşılamıyor (%1$s). Bir VPN açık – APKPure VPN'leri sık engeller (ör. Google VPN). VPN'i kısa süre duraklatıp tekrar dene.
 e_apkpure_dns	⚠ APKPure'a ulaşılamıyor (%1$s). Özel DNS „%2$s“ ayarlı – NextDNS gibi filtreler APKPure'u sık engeller. Orada apkpure.com, pureapk.com ve winudf.com'a izin ver ya da kısa süre duraklat.
 e_apkpure_net	⚠ APKPure'a ulaşılamıyor (%1$s). Bağlantıyı kontrol edip daha sonra tekrar dene.
+ig_title	Güncelleme kurulumu yarıda kaldı
+ig_text	%1$s %2$s kurulumu tamamlanmadı (telefon takıldı veya yeniden başladı). Bu sürümün otomatik kurulumları duraklatıldı – uygun olduğunda Güncellemeler'den kendin kur.
+ig_held	Duraklatıldı: son deneme bitmedi – elle kur
+ig_pm_busy	Android paket yöneticisi yanıt vermiyor – daha sonra tekrar dene
+ig_session_hung	Kurulum takıldı ve iptal edildi

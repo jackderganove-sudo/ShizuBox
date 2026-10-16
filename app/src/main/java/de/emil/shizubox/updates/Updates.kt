@@ -315,16 +315,21 @@ object Updates {
      * Downloads and installs an update silently through Shizuku, with the same safety gates as the
      * background updater. Returns null on success, otherwise the reason it was not installed.
      */
-    suspend fun installSilently(app: TrackedApp, onProgress: (Float) -> Unit = {}): String? {
+    suspend fun installSilently(app: TrackedApp, workId: String = "", onProgress: (Float) -> Unit = {}): String? {
         if (Source.forUrl(app.url)?.trackOnly == true) return t(R.string.h_apkm)
         if (!de.emil.shizubox.shizuku.ShizukuManager.isReady) return t(R.string.shizuku_not_conn)
-        val (current, uri) = download(app, onProgress)
-        // The silent installer has fully read the file when it returns: no need to keep it
-        // (before, update APKs piled up in the cache for a day – easily close to a gigabyte).
-        try {
-            return installDownloaded(current, uri)
-        } finally {
-            uri.lastPathSegment?.let { File(File(appContext.cacheDir, "updates"), it) }?.takeIf { it.isFile }?.delete()
+        // Journaled: if the phone hangs during this, the next start knows which install it was.
+        return InstallGuard.guarded(app, workId) { journal ->
+            val (current, uri) = download(app, onProgress)
+            val file = uri.lastPathSegment?.let { File(File(appContext.cacheDir, "updates"), it) }
+            journal(file?.name.orEmpty(), (file?.length() ?: 0) / 1024)
+            // The silent installer has fully read the file when it returns: no need to keep it
+            // (before, update APKs piled up in the cache for a day – easily close to a gigabyte).
+            try {
+                installDownloaded(current, uri)
+            } finally {
+                file?.takeIf { it.isFile }?.delete()
+            }
         }
     }
 
@@ -369,6 +374,7 @@ object Updates {
     /** Called by the worker; installs every pending update one after another. */
     suspend fun runUpdateAll(
         only: Set<String>? = null,
+        workId: String = "",
         onStep: (index: Int, total: Int, name: String, progress: Float) -> Unit,
     ): Pair<List<String>, Map<String, String>> {
         val todo = _apps.value.filter {
@@ -377,11 +383,25 @@ object Updates {
         val installed = mutableListOf<String>()
         val failed = linkedMapOf<String, String>()
         try {
-            todo.forEachIndexed { i, app ->
+            for ((i, app) in todo.withIndex()) {
                 _updatingAll.value = app.key to failed.toMap()
                 onStep(i, todo.size, app.name, 0f)
+                if (InstallGuard.isBlocked(app)) {
+                    failed[app.name] = t(R.string.ig_held)
+                    continue
+                }
+                // The previous install (and its dexopt) may still keep the package manager busy:
+                // wait for it instead of piling up the next one; give up the run if it stays stuck.
+                if (i > 0) kotlinx.coroutines.delay(3000)
+                if (!InstallGuard.packageManagerResponds()) {
+                    kotlinx.coroutines.delay(15_000)
+                    if (!InstallGuard.packageManagerResponds()) {
+                        todo.drop(i).forEach { failed[it.name] = t(R.string.ig_pm_busy) }
+                        break
+                    }
+                }
                 val reason = try {
-                    installSilently(app) { p -> onStep(i, todo.size, app.name, p) }
+                    installSilently(app, workId) { p -> onStep(i, todo.size, app.name, p) }
                 } catch (e: kotlinx.coroutines.CancellationException) {
                     throw e
                 } catch (e: Exception) {

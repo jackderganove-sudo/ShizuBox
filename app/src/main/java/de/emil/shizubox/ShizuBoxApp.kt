@@ -31,7 +31,19 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.apps.Debloat.init(this)
         VirusTotal.init(this)
         Updates.init(this)
-        UpdateWorker.schedule(this)
+        de.emil.shizubox.updates.InstallGuard.init(this)
+        // WorkManager keeps its database in credential-protected storage: before the first unlock
+        // (the app also starts then, for school mode) it crashes the whole app – since 0.4.0.
+        if (getSystemService(android.os.UserManager::class.java).isUserUnlocked) {
+            UpdateWorker.schedule(this)
+        } else {
+            registerReceiver(object : android.content.BroadcastReceiver() {
+                override fun onReceive(c: android.content.Context, i: android.content.Intent) {
+                    runCatching { unregisterReceiver(this) }
+                    UpdateWorker.schedule(this@ShizuBoxApp)
+                }
+            }, android.content.IntentFilter(android.content.Intent.ACTION_USER_UNLOCKED))
+        }
         ShizukuManager.init(this)
         SchoolMode.init(this)
         de.emil.shizubox.school.SchoolSchedule.init(this)

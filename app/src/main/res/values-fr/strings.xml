@@ -996,4 +996,9 @@
     <string name="e_apkpure_vpn">⚠ APKPure injoignable (%1$s). Un VPN est actif – APKPure bloque souvent les VPN (p. ex. le VPN de Google). Mets le VPN en pause et réessaie.</string>
     <string name="e_apkpure_dns">⚠ APKPure injoignable (%1$s). Le DNS privé « %2$s » est défini – des filtres comme NextDNS bloquent souvent APKPure. Autorise apkpure.com, pureapk.com et winudf.com ou mets-le en pause.</string>
     <string name="e_apkpure_net">⚠ APKPure injoignable (%1$s). Vérifie la connexion et réessaie plus tard.</string>
+    <string name="ig_title">Installation de mise à jour interrompue</string>
+    <string name="ig_text">%1$s %2$s n\'a pas fini de s\'installer (le téléphone a planté ou redémarré). Les installations automatiques de cette version sont en pause – installe-la toi-même dans Mises à jour quand tu veux.</string>
+    <string name="ig_held">En pause : la dernière tentative n\'a pas abouti – installer manuellement</string>
+    <string name="ig_pm_busy">Le gestionnaire de paquets d\'Android ne répond pas – réessaie plus tard</string>
+    <string name="ig_session_hung">L\'installation a bloqué et a été annulée</string>
 </resources>

@@ -4816,5 +4816,30 @@
   "en": "⚠ APKPure can't be reached (%1$s). Check the connection and try again later.",
   "de": "⚠ APKPure nicht erreichbar (%1$s). Verbindung prüfen und später erneut versuchen.",
   "plural": false
+ },
+ "ig_title": {
+  "en": "Update installation interrupted",
+  "de": "Update-Installation unterbrochen",
+  "plural": false
+ },
+ "ig_text": {
+  "en": "%1$s %2$s didn't finish installing (the phone hung or restarted). Automatic installs of this version are paused – install it yourself in Updates when it suits you.",
+  "de": "%1$s %2$s wurde nicht fertig installiert (Handy hing oder startete neu). Automatische Installationen dieser Version sind pausiert – installiere sie selbst unter Updates, wenn es passt.",
+  "plural": false
+ },
+ "ig_held": {
+  "en": "Paused: the last attempt didn't finish – install manually",
+  "de": "Pausiert: letzter Versuch wurde nicht fertig – manuell installieren",
+  "plural": false
+ },
+ "ig_pm_busy": {
+  "en": "Android's package manager isn't responding – try again later",
+  "de": "Androids Paketverwaltung reagiert nicht – später erneut versuchen",
+  "plural": false
+ },
+ "ig_session_hung": {
+  "en": "Installation hung and was cancelled",
+  "de": "Installation hing und wurde abgebrochen",
+  "plural": false
  }
 }

@@ -12,4 +12,8 @@ interface IShellService {
     // Used by the APK installer, because the shell user cannot read app-private files.
     // Returns the number of bytes written, or -1 on error.
     long writeFile(in ParcelFileDescriptor fd, String path) = 2;
+
+    // Like exec, but kills the command and everything it started after `limitMs`.
+    // Result: "<exitCode>\0<stdout>\0<stderr>", exit code 124 on timeout.
+    String execLimited(String cmd, long limitMs) = 3;
 }

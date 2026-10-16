@@ -27,6 +27,52 @@ class ShellService : IShellService.Stub() {
         return "$code\u0000$out\u0000$err"
     }
 
+    /**
+     * A command that never returns (e.g. `pm clear --cache-only` on Android 17) used to block the
+     * binder thread – and with it a thread in ShizuBox – forever; every further call stacked up
+     * another blocked thread. Now the whole process tree is killed after [limitMs].
+     */
+    override fun execLimited(cmd: String, limitMs: Long): String {
+        val process = ProcessBuilder("sh", "-c", cmd).start()
+        process.outputStream.close()
+        var out = ""
+        var err = ""
+        val outReader = thread { out = runCatching { process.inputStream.bufferedReader().readText() }.getOrDefault("") }
+        val errReader = thread { err = runCatching { process.errorStream.bufferedReader().readText() }.getOrDefault("") }
+        val done = process.waitFor(limitMs, java.util.concurrent.TimeUnit.MILLISECONDS)
+        if (!done) {
+            pidOf(process)?.let(::killTree)
+            process.destroyForcibly()
+        }
+        outReader.join(2000)
+        errReader.join(2000)
+        if (!done) return "124\u0000$out\u0000${err}\n[ShizuBox] killed after ${limitMs / 1000} s"
+        return "${process.exitValue()}\u0000$out\u0000$err"
+    }
+
+    private fun pidOf(p: Process): Int? = runCatching {
+        p.javaClass.getDeclaredField("pid").apply { isAccessible = true }.getInt(p)
+    }.getOrNull()
+
+    /** Kills [root] and all its descendants (children first), found through /proc. */
+    private fun killTree(root: Int) {
+        val parents = File("/proc").listFiles().orEmpty().mapNotNull { d ->
+            val pid = d.name.toIntOrNull() ?: return@mapNotNull null
+            // /proc/<pid>/stat: "pid (comm) state ppid …" – comm may contain spaces, so split after ')'.
+            val ppid = runCatching { File(d, "stat").readText().substringAfterLast(')').trim().split(' ')[1].toInt() }.getOrNull()
+            ppid?.let { pid to it }
+        }
+        val tree = mutableListOf(root)
+        var i = 0
+        while (i < tree.size) {
+            val p = tree[i++]
+            parents.filter { it.second == p }.forEach { tree += it.first }
+        }
+        tree.asReversed().forEach { android.os.Process.killProcess(it) }
+        // killProcess only works for own-UID processes, which these all are (shell); also send SIGKILL by name.
+        tree.asReversed().forEach { runCatching { android.os.Process.sendSignal(it, 9) } }
+    }
+
     override fun writeFile(fd: ParcelFileDescriptor, path: String): Long = try {
         File(path).parentFile?.mkdirs()
         ParcelFileDescriptor.AutoCloseInputStream(fd).use { input ->

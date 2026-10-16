@@ -41,6 +41,11 @@ enum class ShizukuStatus {
 }
 
 object ShizukuManager {
+    /** Bump when IShellService changes. */
+    private const val SERVICE_REV = 1
+    /** Hard limit for a shell command when the caller gives none. */
+    const val DEFAULT_LIMIT = 60_000L
+
     private const val TAG = "ShizukuManager"
     private const val SHIZUKU_PACKAGE = "moe.shizuku.privileged.api"
     private const val SHIZUKU_PERMISSION_ACTION = "moe.shizuku.privileged.api.intent.action.REQUEST_PERMISSION"
@@ -64,7 +69,8 @@ object ShizukuManager {
             .daemon(false)
             .processNameSuffix("shell")
             .debuggable(BuildConfig.DEBUG)
-            .version(BuildConfig.VERSION_CODE)
+            // + service revision: a changed AIDL needs a fresh service process even within one app version.
+            .version(BuildConfig.VERSION_CODE * 100 + SERVICE_REV)
     }
 
     private val connection = object : ServiceConnection {
@@ -170,11 +176,15 @@ object ShizukuManager {
         }
     }
 
-    /** Runs [cmd] with ADB rights. Throws [ShizukuUnavailableException] if Shizuku is not connected. */
-    suspend fun exec(cmd: String, timeoutMs: Long = 3000): ShellResult = withContext(Dispatchers.IO) {
+    /**
+     * Runs [cmd] with ADB rights. Throws [ShizukuUnavailableException] if Shizuku is not connected.
+     * [timeoutMs] is how long to wait for Shizuku; [limitMs] is a hard limit for the command itself –
+     * after that it is killed with its children and the result has code 124.
+     */
+    suspend fun exec(cmd: String, timeoutMs: Long = 3000, limitMs: Long = maxOf(timeoutMs, DEFAULT_LIMIT)): ShellResult = withContext(Dispatchers.IO) {
         val svc = awaitService(timeoutMs) ?: throw ShizukuUnavailableException()
         val raw = try {
-            svc.exec(cmd)
+            svc.execLimited(cmd, limitMs)
         } catch (e: Exception) {
             Log.e(TAG, "exec failed: $cmd", e)
             throw ShizukuUnavailableException()

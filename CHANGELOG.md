@@ -1,6 +1,18 @@
 # Changelog
 
-## 0.7.0 – Sitzung 2026-10-15 (Abend)
+## 0.7.0 – Sitzung 2026-10-15 (Abend) / 2026-10-16
+- **Fix Handy-Hänger bei Updates (2026-10-16):** zwei erzwungene Neustarts während stiller XAPK-Installationen
+  (Crunchyroll 3.125.0, 123 MB; danach automatische Wiederholung mit Google Home, 78 MB). Schutz:
+  - Fortschritts-Benachrichtigung höchstens 2× pro Sekunde (vorher bei jedem 64-KB-Block, ~2000 Updates pro XAPK)
+  - Installations-Journal (`InstallGuard`): bleibt eine Installation hängen, erkennt ShizuBox das beim nächsten Start,
+    pausiert diese Version für automatische Installationen, ignoriert die WorkManager-Wiederholung nach dem Neustart
+    und meldet sich mit einer Benachrichtigung; erst ein neues „Installieren“ versucht es erneut
+  - automatische Installationen nur bei ausgeschaltetem Bildschirm und ohne Speichermangel
+  - vor jeder Installation Prüfung, ob die Paketverwaltung antwortet; 3 s Pause zwischen Installationen
+  - Wächter: hängende Installations-Session wird nach 6 min abgebrochen
+  - Shell-Befehle haben ein hartes Zeitlimit (Standard 60 s), danach wird der ganze Prozessbaum beendet
+    (vorher konnte ein hängender Befehl Threads unbegrenzt blockieren – 149 Threads im Moment des Hängers)
+- Fix: ShizuBox stürzte bei jedem Neustart vor dem ersten Entsperren ab (WorkManager im Direct-Boot), seit 0.4.0
 - Update-Benachrichtigungen: einzelnes Update mit App-Icon und alt → neu, mehrere gebündelt (aufklappbar);
   Knöpfe „Installieren“/„Alle installieren“ (still per Shizuku mit Fortschritt, sonst System-Dialog) und „Überspringen“;
   VirusTotal- und Signatur-Sperre gelten; Abschluss-Benachrichtigung öffnet den Updater; Schalter in den Update-Einstellungen

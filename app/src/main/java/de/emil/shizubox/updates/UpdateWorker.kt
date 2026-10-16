@@ -35,16 +35,32 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         // "Update all" or "Install" from the notification: no new check needed, the list is current.
         val explicit = inputData.getBoolean(KEY_UPDATE_ALL, false)
         val only = inputData.getStringArray(KEY_ONLY)?.toSet()
+        val workId = id.toString()
+        // WorkManager runs an interrupted request again right after the reboot – the same install
+        // that just froze the phone. InstallGuard has already told the user; don't start it again.
+        if (InstallGuard.isRerunOf(workId)) return Result.success()
+        // A new, explicit "Install" is the user's retry: lift the hold for what they chose.
+        if (explicit) Updates.apps.value.filter { only == null || it.key in only }.forEach { InstallGuard.clearBlock(it.key) }
         if (!explicit) Updates.checkAll()
         val installed = mutableListOf<String>()
         val held = mutableListOf<String>()
         val s = Updates.settings.value
-        if ((explicit || s.autoInstall) && ShizukuManager.isReady &&
+        // Automatic installs only when nobody uses the phone: a big install (dexopt) can make it stutter.
+        val autoNow = s.autoInstall && InstallGuard.goodTimeForBackgroundInstall(applicationContext)
+        if ((explicit || autoNow) && ShizukuManager.isReady &&
             Updates.installableUpdates().any { only == null || it.key in only }
         ) {
             // Foreground: keeps the process alive while installing, and shows the progress.
             runCatching { setForeground(progressInfo(applicationContext, t(R.string.w_preparing), 0, 0, true)) }
-            val (ok, failed) = Updates.runUpdateAll(only) { i, total, name, p ->
+            // At most two progress updates per second: every 64-KB block used to post one
+            // (≈ 2000 for a 120 MB XAPK), flooding system_server and System UI.
+            var lastPost = 0L
+            var lastStep = -1
+            val (ok, failed) = Updates.runUpdateAll(only, workId) { i, total, name, p ->
+                val now = android.os.SystemClock.uptimeMillis()
+                if (i == lastStep && now - lastPost < 500) return@runUpdateAll
+                lastPost = now
+                lastStep = i
                 val info = progressInfo(applicationContext, "$name (${i + 1}/$total)", ((i + p) * 100).toInt(), total * 100, p == 0f)
                 runCatching { setForegroundAsync(info) }
             }

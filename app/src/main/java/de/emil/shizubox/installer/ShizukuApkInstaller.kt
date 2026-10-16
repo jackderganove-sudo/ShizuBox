@@ -37,6 +37,8 @@ sealed interface InstallResult {
 
 /** Installs the selected splits as one package session: silently via Shizuku, or via the system dialog. */
 object ShizukuApkInstaller {
+    /** Longest an install session may take (big XAPK incl. dexopt takes about a minute). */
+    private const val INSTALL_LIMIT_MS = 6 * 60_000L
 
     /** Whether the next install runs silently through Shizuku (per the install-method setting). */
     fun useShizuku(): Boolean = when (de.emil.shizubox.settings.AppSettings.current.installMethod) {
@@ -74,9 +76,14 @@ object ShizukuApkInstaller {
             .onEach { if (it.max > 0) onProgress(it.progress.toFloat() / it.max) }
             .launchIn(this)
         try {
-            when (val state = session.await()) {
+            // Watchdog: a session that never finishes is cancelled instead of waiting forever.
+            when (val state = kotlinx.coroutines.withTimeoutOrNull(INSTALL_LIMIT_MS) { session.await() }) {
                 Session.State.Succeeded -> InstallResult.Success
                 is Session.State.Failed -> describe(state.failure)
+                null -> {
+                    runCatching { session.cancel() }
+                    InstallResult.Failure(t(R.string.ig_session_hung), t(R.string.retry))
+                }
             }
         } catch (e: CancellationException) {
             throw e
