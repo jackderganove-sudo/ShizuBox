@@ -110,12 +110,11 @@ fun ScreenTimeScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             Box(Modifier.animateItem(fadeInSpec = null, placementSpec = Motion.offset, fadeOutSpec = Motion.quick()).enterStagger(index, stListStart)) {
             GlassCard(Modifier.fillMaxWidth(), contentPadding = 12.dp) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    val icon = remember(u.pkg) { Apps.icon(u.pkg)?.asImageBitmap() }
-                    Box(Modifier.size(36.dp)) { if (icon != null) Image(icon, null, Modifier.size(36.dp)) }
+                    de.emil.shizubox.ui.apps.AppIcon(u.pkg, 36)
                     Spacer(Modifier.width(12.dp))
                     Column(Modifier.weight(1f)) {
                         Row {
-                            Text(label(u.pkg), style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+                            Text(de.emil.shizubox.apps.rememberAppLabel(u.pkg), style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
                             Text(formatUsage(u.foregroundMs), style = MaterialTheme.typography.bodyLarge)
                         }
                         Text(

@@ -945,3 +945,21 @@ ig_text	%1$s %2$s kurulumu tamamlanmadı (telefon takıldı veya yeniden başlad
 ig_held	Duraklatıldı: son deneme bitmedi – elle kur
 ig_pm_busy	Android paket yöneticisi yanıt vermiyor – daha sonra tekrar dene
 ig_session_hung	Kurulum takıldı ve iptal edildi
+e_no_space	⚠ Yeterli boş alan yok
+e_school_active	Okul modundayken olmaz
+nh_storage	%1$s kullanıyor
+el_title	Hata günlüğü
+el_sub	ShizuBox'un kendi çökmeleri ve takılmaları – yalnızca bu cihazda 30 gün saklanır, yedekte yok.
+el_none	Kayıtlı hata yok
+el_n	Son 30 günde %1$d kayıt|||Son 30 günde %1$d kayıt
+el_empty	Her şey sakin
+el_empty_hint	Çökmeler ve takılmalar burada görünür.
+el_copy	Kopyala
+el_share	Paylaş
+el_clear	Sil
+el_copied	Kopyalandı ✓
+el_crash	Çökme
+el_anr	Yanıt vermiyor (ANR)
+el_native	Yerel çökme
+el_killed	Android tarafından durduruldu
+el_hang	Takılma

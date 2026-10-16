@@ -97,8 +97,7 @@ private fun HolderRow(g: PermGroup, h: PermHolder, shizukuReady: Boolean, onRevo
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth().padding(top = 8.dp).clickable { onOpenApp(h.pkg) },
     ) {
-        val icon = remember(h.pkg) { Apps.icon(h.pkg)?.asImageBitmap() }
-        if (icon != null) Image(icon, null, Modifier.size(32.dp)) else Spacer(Modifier.size(32.dp))
+        AppIcon(h.pkg, 32)
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text(h.label, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)

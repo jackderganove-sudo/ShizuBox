@@ -39,6 +39,8 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         // WorkManager runs an interrupted request again right after the reboot – the same install
         // that just froze the phone. InstallGuard has already told the user; don't start it again.
         if (InstallGuard.isRerunOf(workId)) return Result.success()
+        // School mode: no checks, no notifications, no installs – try again at the next interval.
+        if (de.emil.shizubox.school.SchoolMode.state.value.active) return Result.success()
         // A new, explicit "Install" is the user's retry: lift the hold for what they chose.
         if (explicit) Updates.apps.value.filter { only == null || it.key in only }.forEach { InstallGuard.clearBlock(it.key) }
         if (!explicit) Updates.checkAll()

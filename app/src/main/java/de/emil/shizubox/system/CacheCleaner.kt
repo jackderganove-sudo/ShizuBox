@@ -61,6 +61,22 @@ object CacheCleaner {
         (free() - before).coerceAtLeast(0)
     }
 
+    /**
+     * Temporary files that should never outlive their job: parser copies, install splits,
+     * VirusTotal upload copies, shared APKs, debug screenshots. Run at start (after unlock).
+     */
+    fun cleanStale(context: Context) {
+        val hourAgo = System.currentTimeMillis() - 3600_000L
+        val prefixes = listOf("parse_", "split", "vt_upload_", "vt_probe_", "shot_")
+        context.cacheDir.listFiles().orEmpty().forEach { f ->
+            val stale = f.lastModified() < hourAgo
+            when {
+                f.isFile && stale && prefixes.any { f.name.startsWith(it) } -> f.delete()
+                f.isDirectory && stale && f.name in setOf("shared_apks", "apk_parse_fallback") -> f.deleteRecursively()
+            }
+        }
+    }
+
     /** Everything: own cache directly, all other apps through `pm trim-caches 999G`. Returns freed bytes. */
     suspend fun clearAll(context: Context): Long = withContext(Dispatchers.IO) {
         val before = free()

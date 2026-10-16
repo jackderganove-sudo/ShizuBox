@@ -292,6 +292,11 @@ object Updates {
         } else openFollowingRedirects(asset.url)
         if (conn.responseCode !in 200..299) throw SourceException(t(R.string.e_dl_http, conn.responseCode))
         val total = conn.contentLengthLong
+        // The file plus room for the install (the system copies it once more), at least 200 MB spare.
+        if (total > 0 && android.os.StatFs(dir.path).availableBytes < total * 2 + 200L * 1024 * 1024) {
+            conn.disconnect()
+            throw SourceException(t(R.string.e_no_space))
+        }
         conn.inputStream.use { input ->
             target.outputStream().use { out ->
                 val buf = ByteArray(64 * 1024)
@@ -340,6 +345,8 @@ object Updates {
      */
     suspend fun installSilently(app: TrackedApp, workId: String = "", onProgress: (Float) -> Unit = {}): String? {
         if (Source.forUrl(app.url)?.trackOnly == true) return t(R.string.h_apkm)
+        // Never during school mode: an install could revive a paused app – or replace ShizuBox itself.
+        if (de.emil.shizubox.school.SchoolMode.state.value.active) return t(R.string.e_school_active)
         if (!de.emil.shizubox.shizuku.ShizukuManager.isReady) return t(R.string.shizuku_not_conn)
         // Journaled: if the phone hangs during this, the next start knows which install it was.
         return InstallGuard.guarded(app, workId) { journal ->

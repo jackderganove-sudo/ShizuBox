@@ -4841,5 +4841,101 @@
   "en": "Installation hung and was cancelled",
   "de": "Installation hing und wurde abgebrochen",
   "plural": false
+ },
+ "e_no_space": {
+  "en": "⚠ Not enough free storage",
+  "de": "⚠ Zu wenig freier Speicher",
+  "plural": false
+ },
+ "e_school_active": {
+  "en": "Not during school mode",
+  "de": "Nicht während des Schulmodus",
+  "plural": false
+ },
+ "nh_storage": {
+  "en": "uses %1$s",
+  "de": "belegt %1$s",
+  "plural": false
+ },
+ "el_title": {
+  "en": "Error log",
+  "de": "Fehlerprotokoll",
+  "plural": false
+ },
+ "el_sub": {
+  "en": "ShizuBox's own crashes, freezes and hangs – stored only on this device for 30 days, not in the backup.",
+  "de": "Eigene Abstürze, Hänger und eingefrorene Installationen von ShizuBox – nur auf diesem Gerät, 30 Tage lang, nicht im Backup.",
+  "plural": false
+ },
+ "el_none": {
+  "en": "No errors recorded",
+  "de": "Keine Fehler aufgezeichnet",
+  "plural": false
+ },
+ "el_n": {
+  "en": {
+   "one": "%1$d entry in the last 30 days",
+   "other": "%1$d entries in the last 30 days"
+  },
+  "de": {
+   "one": "%1$d Eintrag in den letzten 30 Tagen",
+   "other": "%1$d Einträge in den letzten 30 Tagen"
+  },
+  "plural": true
+ },
+ "el_empty": {
+  "en": "All quiet",
+  "de": "Alles ruhig",
+  "plural": false
+ },
+ "el_empty_hint": {
+  "en": "Crashes and hangs would show up here.",
+  "de": "Abstürze und Hänger würden hier erscheinen.",
+  "plural": false
+ },
+ "el_copy": {
+  "en": "Copy",
+  "de": "Kopieren",
+  "plural": false
+ },
+ "el_share": {
+  "en": "Share",
+  "de": "Teilen",
+  "plural": false
+ },
+ "el_clear": {
+  "en": "Delete",
+  "de": "Löschen",
+  "plural": false
+ },
+ "el_copied": {
+  "en": "Copied ✓",
+  "de": "Kopiert ✓",
+  "plural": false
+ },
+ "el_crash": {
+  "en": "Crash",
+  "de": "Absturz",
+  "plural": false
+ },
+ "el_anr": {
+  "en": "Not responding (ANR)",
+  "de": "Reagiert nicht (ANR)",
+  "plural": false
+ },
+ "el_native": {
+  "en": "Native crash",
+  "de": "Nativer Absturz",
+  "plural": false
+ },
+ "el_killed": {
+  "en": "Stopped by Android",
+  "de": "Von Android beendet",
+  "plural": false
+ },
+ "el_hang": {
+  "en": "Hang",
+  "de": "Hänger",
+  "plural": false
  }
 }

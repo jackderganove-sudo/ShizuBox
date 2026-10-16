@@ -62,6 +62,10 @@ object InstallGuard {
             .putString("blocked_${i.key}", i.version)
             .commit()
         notifyInterrupted(i)
+        de.emil.shizubox.debug.ErrorLog.add(
+            de.emil.shizubox.debug.ErrorKind.Hang, "Install interrupted: ${i.name} ${i.version}",
+            "file=${i.file} size=${i.sizeKb} kB work=${i.workId}\nstarted ${java.util.Date(i.since)}\nThe install never finished (phone hung, restarted or ShizuBox was killed).",
+        )
     }
 
     private fun parse(s: String) = runCatching {

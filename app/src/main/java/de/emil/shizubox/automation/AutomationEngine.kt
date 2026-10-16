@@ -183,12 +183,35 @@ object AutomationEngine {
 
     /** One-shot rules (time, app closed). */
     private suspend fun fire(r: Rule) = lock.withLock {
-        if (paused()) return@withLock
+        if (paused() || !loopGuard(r)) return@withLock
         Log.i(TAG, "fire ${r.name}")
         r.actions.forEach { a -> runCatching { Actions.run(appContext, a) }.onFailure { Log.w(TAG, "action ${a.kind}", it) } }
     }
 
+    /** Start times per rule within the last minute, for the loop guard. */
+    private val recentStarts = mutableMapOf<String, ArrayDeque<Long>>()
+
+    /**
+     * A rule whose action flips its own trigger (e.g. "Wi-Fi connected → shell turns Wi-Fi off")
+     * would run forever. More than 6 starts in a minute: the rule is switched off and logged.
+     */
+    private fun loopGuard(r: Rule): Boolean {
+        val now = System.currentTimeMillis()
+        val q = recentStarts.getOrPut(r.id) { ArrayDeque() }
+        while (q.isNotEmpty() && now - q.first() > 60_000) q.removeFirst()
+        q.addLast(now)
+        if (q.size <= 6) return true
+        recentStarts.remove(r.id)
+        Rules.setEnabled(r.id, false)
+        de.emil.shizubox.debug.ErrorLog.add(
+            de.emil.shizubox.debug.ErrorKind.Hang, "Automation stopped: ${r.name.ifBlank { r.trigger.kind.name }}",
+            "The rule started more than 6 times within a minute – probably its action switches its own trigger. It was turned off.",
+        )
+        return false
+    }
+
     private suspend fun apply(r: Rule) {
+        if (!loopGuard(r)) return
         Log.i(TAG, "start ${r.name}")
         val undo = mutableListOf<Action>()
         for (a in r.actions) {

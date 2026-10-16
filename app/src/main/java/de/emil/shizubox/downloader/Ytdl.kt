@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.ensureActive
 import org.json.JSONObject
 import java.io.File
 
@@ -185,8 +186,23 @@ object Ytdl {
         pb.environment()["LD_LIBRARY_PATH"] = listOf(File(base, "python/usr/lib"), File(base, "ffmpeg/usr/lib"))
             .joinToString(":") { it.absolutePath }
         val p = pb.start()
-        val log = p.inputStream.bufferedReader().readText()
-        if (p.waitFor() != 0 || !output.exists()) error(log.lines().lastOrNull { it.isNotBlank() } ?: "ffmpeg failed")
+        // Read the log on its own thread so a cancelled conversion or the time limit can kill FFmpeg.
+        var log = ""
+        val reader = kotlin.concurrent.thread { log = runCatching { p.inputStream.bufferedReader().readText() }.getOrDefault("") }
+        try {
+            val deadline = System.currentTimeMillis() + 30 * 60_000L
+            while (p.isAlive) {
+                ensureActive()
+                if (System.currentTimeMillis() > deadline) error("ffmpeg: timeout")
+                kotlinx.coroutines.delay(250)
+            }
+            reader.join(2000)
+            if (p.exitValue() != 0 || !output.exists()) error(log.lines().lastOrNull { it.isNotBlank() } ?: "ffmpeg failed")
+        } catch (e: Throwable) {
+            p.destroyForcibly()
+            output.delete()
+            throw e
+        }
     }
 
     fun hasCookies() = cookiesFile().exists()

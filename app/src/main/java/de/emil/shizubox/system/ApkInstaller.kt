@@ -55,7 +55,7 @@ object ApkInstaller {
                 if (allowDowngrade) append(" -d")
                 if (grantAll) append(" -g")
             }
-            val r = ShizukuManager.exec("pm install $flags ${paths.joinToString(" ")}", timeoutMs = 10_000)
+            val r = ShizukuManager.exec("pm install $flags ${paths.joinToString(" ")}", timeoutMs = 10_000, limitMs = de.emil.shizubox.apps.Apps.INSTALL_LIMIT)
             val text = (r.out + "\n" + r.err).trim()
             Result(r.ok && "Success" in text, text.lines().lastOrNull { it.isNotBlank() } ?: "exit ${r.code}")
         } catch (e: Exception) {
@@ -75,12 +75,15 @@ object ApkInstaller {
                     if (!entry.isDirectory && entry.name.endsWith(".apk", true)) {
                         // Buffer the entry to a cache file, then hand its fd to the shell service.
                         val tmp = File.createTempFile("split", ".apk", context.cacheDir)
-                        tmp.outputStream().use { zip.copyTo(it) }
                         val target = "$TMP/b${out.size}.apk"
-                        ParcelFileDescriptor.open(tmp, ParcelFileDescriptor.MODE_READ_ONLY).use { pfd ->
-                            ShizukuManager.writeFile(pfd, target)
+                        try {
+                            tmp.outputStream().use { zip.copyTo(it) }
+                            ParcelFileDescriptor.open(tmp, ParcelFileDescriptor.MODE_READ_ONLY).use { pfd ->
+                                ShizukuManager.writeFile(pfd, target)
+                            }
+                        } finally {
+                            tmp.delete()
                         }
-                        tmp.delete()
                         out += target
                     }
                     entry = zip.nextEntry

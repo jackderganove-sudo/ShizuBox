@@ -1001,4 +1001,25 @@
     <string name="ig_held">En pausa: el último intento no terminó; instálala manualmente</string>
     <string name="ig_pm_busy">El gestor de paquetes de Android no responde; inténtalo más tarde</string>
     <string name="ig_session_hung">La instalación se colgó y se canceló</string>
+    <string name="e_no_space">⚠ No hay suficiente espacio libre</string>
+    <string name="e_school_active">No durante el modo escuela</string>
+    <string name="nh_storage">ocupa %1$s</string>
+    <string name="el_title">Registro de errores</string>
+    <string name="el_sub">Cierres, bloqueos y cuelgues propios de ShizuBox: solo en este dispositivo, 30 días, no en la copia.</string>
+    <string name="el_none">No hay errores registrados</string>
+    <plurals name="el_n">
+        <item quantity="one">%1$d entrada en los últimos 30 días</item>
+        <item quantity="other">%1$d entradas en los últimos 30 días</item>
+    </plurals>
+    <string name="el_empty">Todo tranquilo</string>
+    <string name="el_empty_hint">Aquí aparecerían cierres y bloqueos.</string>
+    <string name="el_copy">Copiar</string>
+    <string name="el_share">Compartir</string>
+    <string name="el_clear">Borrar</string>
+    <string name="el_copied">Copiado ✓</string>
+    <string name="el_crash">Cierre</string>
+    <string name="el_anr">No responde (ANR)</string>
+    <string name="el_native">Cierre nativo</string>
+    <string name="el_killed">Detenida por Android</string>
+    <string name="el_hang">Bloqueo</string>
 </resources>

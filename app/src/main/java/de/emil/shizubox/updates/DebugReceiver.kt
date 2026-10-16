@@ -27,6 +27,17 @@ class DebugReceiver : BroadcastReceiver() {
                 "plural=${de.emil.shizubox.tp(de.emil.shizubox.R.plurals.w_pending, 3, 3)}")
             return
         }
+        intent.getStringExtra("strict")?.let { v ->
+            // Developer switch for StrictMode, applies at the next app start: --es strict on|off
+            de.emil.shizubox.debug.ErrorLog.setStrict(v == "on")
+            Log.i(TAG, "strict=$v (restart the app)")
+            return
+        }
+        if (intent.getStringExtra("test") == "crash") {
+            // Deliberate crash on a background thread, to check the error log.
+            Thread { throw IllegalStateException("ShizuBox test crash (DebugReceiver)") }.start()
+            return
+        }
         intent.getStringExtra("shot")?.let { name ->
             // Offscreen screenshot: --es shot home|settings|system|device|processes|terminal|apps|app|updates|custom|school [--ei h 2400] [--es pkg x]
             val pending = goAsync()

@@ -1003,4 +1003,25 @@
     <string name="ig_held">Paused: the last attempt didn\'t finish – install manually</string>
     <string name="ig_pm_busy">Android\'s package manager isn\'t responding – try again later</string>
     <string name="ig_session_hung">Installation hung and was cancelled</string>
+    <string name="e_no_space">⚠ Not enough free storage</string>
+    <string name="e_school_active">Not during school mode</string>
+    <string name="nh_storage">uses %1$s</string>
+    <string name="el_title">Error log</string>
+    <string name="el_sub">ShizuBox\'s own crashes, freezes and hangs – stored only on this device for 30 days, not in the backup.</string>
+    <string name="el_none">No errors recorded</string>
+    <plurals name="el_n">
+        <item quantity="one">%1$d entry in the last 30 days</item>
+        <item quantity="other">%1$d entries in the last 30 days</item>
+    </plurals>
+    <string name="el_empty">All quiet</string>
+    <string name="el_empty_hint">Crashes and hangs would show up here.</string>
+    <string name="el_copy">Copy</string>
+    <string name="el_share">Share</string>
+    <string name="el_clear">Delete</string>
+    <string name="el_copied">Copied ✓</string>
+    <string name="el_crash">Crash</string>
+    <string name="el_anr">Not responding (ANR)</string>
+    <string name="el_native">Native crash</string>
+    <string name="el_killed">Stopped by Android</string>
+    <string name="el_hang">Hang</string>
 </resources>

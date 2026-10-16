@@ -93,6 +93,13 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
 
     fun open(url: String) = context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 
+    var errorLog by rememberSaveable { mutableStateOf(false) }
+    androidx.activity.compose.BackHandler(errorLog) { errorLog = false }
+    if (errorLog) {
+        ErrorLogScreen(onBack = { errorLog = false })
+        return
+    }
+
     LazyColumn(
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = PaddingValues(16.dp),
@@ -309,6 +316,10 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         // ------------------------------------------------------------ about
         item { Header(t(R.string.bk_title)) }
         item { BackupCard() }
+        item {
+            val errors by de.emil.shizubox.debug.ErrorLog.entries.collectAsStateWithLifecycle()
+            LinkCard(t(R.string.el_title), if (errors.isEmpty()) t(R.string.el_none) else de.emil.shizubox.tp(R.plurals.el_n, errors.size, errors.size)) { errorLog = true }
+        }
         item { Header(t(R.string.set_about)) }
         item {
             GlassCard(Modifier.fillMaxWidth()) {

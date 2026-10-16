@@ -28,6 +28,14 @@ import kotlinx.coroutines.launch
 class DownloadService : Service() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var watcher: Job? = null
+    private var lastNotify = 0L
+
+    /** dataSync services have a daily time budget (Android 15+): pause the queue instead of crashing. */
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        DownloadQueue.pauseAll()
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
+    }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -41,7 +49,12 @@ class DownloadService : Service() {
                         stopSelf()
                         return@collectLatest
                     }
-                    getSystemService(NotificationManager::class.java).notify(ID, progressNotification(this@DownloadService, tasks))
+                    // Several parallel downloads each report every 300 ms: at most 2 updates per second.
+                    val now = android.os.SystemClock.uptimeMillis()
+                    if (now - lastNotify >= 500) {
+                        lastNotify = now
+                        getSystemService(NotificationManager::class.java).notify(ID, progressNotification(this@DownloadService, tasks))
+                    }
                     if (tasks.any { it.state == TaskState.QUEUED }) DownloadQueue.pump()
                 }
             }

@@ -261,8 +261,34 @@ object NotifHistory {
 
     private fun pruneNow() {
         val days = _settings.value.keepDays
-        if (days <= 0) return
-        deleteWhere("time < ?", arrayOf((System.currentTimeMillis() - days * 86_400_000L).toString()))
+        if (days > 0) deleteWhere("time < ?", arrayOf((System.currentTimeMillis() - days * 86_400_000L).toString()))
+        // Hard caps also with "keep forever": at most MAX_ROWS entries and MAX_IMAGE_BYTES of pictures
+        // (oldest pictures go first; the text of those entries stays).
+        val rows = db.rawQuery("SELECT COUNT(*) FROM n", null).use { it.moveToFirst(); it.getLong(0) }
+        if (rows > MAX_ROWS) {
+            deleteWhere("id IN (SELECT id FROM n ORDER BY time ASC LIMIT ?)", arrayOf((rows - MAX_ROWS).toString()))
+        }
+        var bytes = imageDir().listFiles().orEmpty().sumOf { it.length() }
+        if (bytes > MAX_IMAGE_BYTES) {
+            db.rawQuery("SELECT id, image FROM n WHERE image IS NOT NULL ORDER BY time ASC", null).use { c ->
+                while (bytes > MAX_IMAGE_BYTES * 8 / 10 && c.moveToNext()) {
+                    val f = File(c.getString(1))
+                    bytes -= f.length()
+                    f.delete()
+                    db.execSQL("UPDATE n SET image = NULL WHERE id = ?", arrayOf<Any>(c.getLong(0)))
+                }
+            }
+            bump()
+        }
+    }
+
+    private const val MAX_ROWS = 50_000L
+    private const val MAX_IMAGE_BYTES = 300L * 1024 * 1024
+
+    /** Database + pictures on disk, for the settings. */
+    suspend fun storageBytes(): Long = withContext(io) {
+        appContext.getDatabasePath("notif_history.db").let { it.length() + File(it.path + "-wal").length() } +
+            imageDir().listFiles().orEmpty().sumOf { it.length() }
     }
 
     private fun deleteWhere(where: String?, args: Array<String>?) {

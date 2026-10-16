@@ -75,7 +75,7 @@ object NetBlock {
             // Nothing blocked any more: switch the chain off again, like before.
             if (next.isEmpty()) add("cmd connectivity set-chain3-enabled false")
         }
-        val r = ShizukuManager.exec(cmds.joinToString("; "), 10_000)
+        val r = ShizukuManager.exec(cmds.joinToString("; "), 10_000, limitMs = 20_000L + cmds.size * 500L)
         if (r.code != 0) error(r.err.ifBlank { r.out }.trim())
         save(next)
         targets
@@ -92,6 +92,6 @@ object NetBlock {
         if (!force && chain.contains("enabled") && !chain.contains("disabled") && first.contains("deny")) return@withLock
         val cmds = listOf("cmd connectivity set-chain3-enabled true") +
             set.map { "cmd connectivity set-package-networking-enabled false $it" }
-        ShizukuManager.exec(cmds.joinToString("; "), 15_000)
+        ShizukuManager.exec(cmds.joinToString("; "), 15_000, limitMs = 20_000L + cmds.size * 500L)
     }
 }

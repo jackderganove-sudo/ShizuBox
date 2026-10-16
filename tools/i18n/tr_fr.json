@@ -999,5 +999,26 @@
 "ig_text": "%1$s %2$s n'a pas fini de s'installer (le téléphone a planté ou redémarré). Les installations automatiques de cette version sont en pause – installe-la toi-même dans Mises à jour quand tu veux.",
 "ig_held": "En pause : la dernière tentative n'a pas abouti – installer manuellement",
 "ig_pm_busy": "Le gestionnaire de paquets d'Android ne répond pas – réessaie plus tard",
-"ig_session_hung": "L'installation a bloqué et a été annulée"
+"ig_session_hung": "L'installation a bloqué et a été annulée",
+"e_no_space": "⚠ Pas assez d'espace libre",
+"e_school_active": "Pas pendant le mode école",
+"nh_storage": "occupe %1$s",
+"el_title": "Journal d'erreurs",
+"el_sub": "Plantages, blocages et gels de ShizuBox – uniquement sur cet appareil, 30 jours, hors sauvegarde.",
+"el_none": "Aucune erreur enregistrée",
+"el_n": {
+"one": "%1$d entrée sur les 30 derniers jours",
+"other": "%1$d entrées sur les 30 derniers jours"
+},
+"el_empty": "Tout est calme",
+"el_empty_hint": "Les plantages et blocages apparaîtraient ici.",
+"el_copy": "Copier",
+"el_share": "Partager",
+"el_clear": "Supprimer",
+"el_copied": "Copié ✓",
+"el_crash": "Plantage",
+"el_anr": "Ne répond pas (ANR)",
+"el_native": "Plantage natif",
+"el_killed": "Arrêtée par Android",
+"el_hang": "Blocage"
 }

@@ -101,7 +101,12 @@ object VirusTotal {
         set(VtResult(VtStatus.UPLOADING))
         scope.launch {
             val f = runCatching { file() }.getOrNull()
-            set(if (f == null) VtResult(VtStatus.ERROR, errorMessage = t(R.string.file_unreadable)) else uploadAndScan(f, sha256) { set(it) })
+            try {
+                set(if (f == null) VtResult(VtStatus.ERROR, errorMessage = t(R.string.file_unreadable)) else uploadAndScan(f, sha256) { set(it) })
+            } finally {
+                // Copies made only for the upload (Universal Installer); never an installed app's APK.
+                if (f != null && f.name.startsWith("vt_upload_")) f.delete()
+            }
         }
     }
 

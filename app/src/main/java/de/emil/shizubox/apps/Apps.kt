@@ -158,7 +158,7 @@ object Apps {
     fun launchIntent(pkg: String) = pm.getLaunchIntentForPackage(pkg)
 
     /** Reinstalls the app from its own APK files (e.g. to repair it or reset the install source). */
-    suspend fun reinstallFromApks(pkg: String) = exec("pm install -r ${apkPaths(pkg).joinToString(" ")}")
+    suspend fun reinstallFromApks(pkg: String) = exec("pm install -r ${apkPaths(pkg).joinToString(" ")}", INSTALL_LIMIT)
 
     fun icon(pkg: String): Bitmap? {
         iconCache.get(pkg)?.let { return it }
@@ -230,15 +230,20 @@ object Apps {
         }.distinctBy { it.op }.sortedBy { it.op }
     }
 
+    // Bulk actions run as one shell call (no hundreds of parallel calls); the hard time limit grows
+    // with the number of packages so a long list is not cut off half-way.
     suspend fun freeze(pkgs: Collection<String>) =
-        exec(pkgs.joinToString("; ") { "pm disable-user --user 0 $it" })
+        exec(pkgs.joinToString("; ") { "pm disable-user --user 0 $it" }, bulkLimit(pkgs.size))
 
     suspend fun unfreeze(pkgs: Collection<String>) =
-        exec(pkgs.joinToString("; ") { "pm enable --user 0 $it" })
+        exec(pkgs.joinToString("; ") { "pm enable --user 0 $it" }, bulkLimit(pkgs.size))
 
     suspend fun forceStop(pkg: String) = exec("am force-stop $pkg")
 
-    suspend fun forceStop(pkgs: Collection<String>) = exec(pkgs.joinToString("; ") { "am force-stop $it" })
+    suspend fun forceStop(pkgs: Collection<String>) = exec(pkgs.joinToString("; ") { "am force-stop $it" }, bulkLimit(pkgs.size))
+
+    /** 30 s base + 1 s per package (measured: ~0.3 s per `pm disable-user`). */
+    private fun bulkLimit(n: Int) = 30_000L + n * 1_000L
 
     /** User apps only; returns the packages that could not be removed. */
     suspend fun uninstall(pkgs: Collection<String>): List<String> = pkgs.filterNot { uninstall(it).let { r -> r.ok && "Success" in r.out } }
@@ -263,7 +268,11 @@ object Apps {
         },
     )
 
-    private suspend fun exec(cmd: String): ShellResult = ShizukuManager.exec(cmd, timeoutMs = 5000)
+    private suspend fun exec(cmd: String, limitMs: Long = ShizukuManager.DEFAULT_LIMIT): ShellResult =
+        ShizukuManager.exec(cmd, timeoutMs = 5000, limitMs = limitMs)
+
+    /** A big app incl. dexopt took ~35 s on the Pixel; leave room. */
+    const val INSTALL_LIMIT = 5 * 60_000L
 }
 
 fun bucketLabel(bucket: Int?) = when (bucket) {

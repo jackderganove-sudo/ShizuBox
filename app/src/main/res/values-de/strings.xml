@@ -1001,5 +1001,26 @@
     <string name="ig_held">Pausiert: letzter Versuch wurde nicht fertig – manuell installieren</string>
     <string name="ig_pm_busy">Androids Paketverwaltung reagiert nicht – später erneut versuchen</string>
     <string name="ig_session_hung">Installation hing und wurde abgebrochen</string>
+    <string name="e_no_space">⚠ Zu wenig freier Speicher</string>
+    <string name="e_school_active">Nicht während des Schulmodus</string>
+    <string name="nh_storage">belegt %1$s</string>
+    <string name="el_title">Fehlerprotokoll</string>
+    <string name="el_sub">Eigene Abstürze, Hänger und eingefrorene Installationen von ShizuBox – nur auf diesem Gerät, 30 Tage lang, nicht im Backup.</string>
+    <string name="el_none">Keine Fehler aufgezeichnet</string>
+    <plurals name="el_n">
+        <item quantity="one">%1$d Eintrag in den letzten 30 Tagen</item>
+        <item quantity="other">%1$d Einträge in den letzten 30 Tagen</item>
+    </plurals>
+    <string name="el_empty">Alles ruhig</string>
+    <string name="el_empty_hint">Abstürze und Hänger würden hier erscheinen.</string>
+    <string name="el_copy">Kopieren</string>
+    <string name="el_share">Teilen</string>
+    <string name="el_clear">Löschen</string>
+    <string name="el_copied">Kopiert ✓</string>
+    <string name="el_crash">Absturz</string>
+    <string name="el_anr">Reagiert nicht (ANR)</string>
+    <string name="el_native">Nativer Absturz</string>
+    <string name="el_killed">Von Android beendet</string>
+    <string name="el_hang">Hänger</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

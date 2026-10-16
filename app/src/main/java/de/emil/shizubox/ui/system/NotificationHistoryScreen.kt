@@ -376,7 +376,12 @@ private fun SettingsCard(onDeleteAll: () -> Unit) {
                 )
             }
         }
-        Text(t(R.string.nh_private), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
+        val version by NotifHistory.version.collectAsStateWithLifecycle()
+        val bytes by produceState(0L, version) { value = NotifHistory.storageBytes() }
+        Text(
+            t(R.string.nh_private) + " · " + t(R.string.nh_storage, android.text.format.Formatter.formatShortFileSize(context, bytes)),
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp),
+        )
         OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = onDeleteAll, modifier = Modifier.padding(top = 8.dp)) {
             Icon(Icons.Rounded.DeleteSweep, null, Modifier.padding(end = 8.dp))
             Text(t(R.string.nh_delete_all))
@@ -555,12 +560,7 @@ private fun Thumb(path: String) {
 }
 
 @Composable
-private fun appLabel(pkg: String): String {
-    val context = LocalContext.current
-    return remember(pkg) {
-        runCatching { context.packageManager.getApplicationInfo(pkg, 0).loadLabel(context.packageManager).toString() }.getOrDefault(pkg)
-    }
-}
+private fun appLabel(pkg: String): String = de.emil.shizubox.apps.rememberAppLabel(pkg)
 
 @Composable
 private fun timeLabel(time: Long): String {

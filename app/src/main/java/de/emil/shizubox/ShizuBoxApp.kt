@@ -1,6 +1,7 @@
 package de.emil.shizubox
 
 import android.app.Application
+import kotlinx.coroutines.launch
 import de.emil.shizubox.apps.Apps
 import de.emil.shizubox.apps.Profiles
 import de.emil.shizubox.customization.Customization
@@ -15,6 +16,8 @@ import de.emil.shizubox.shizuku.ShizukuManager
 class ShizuBoxApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        // Before everything else, so even a crash during the rest of the start is recorded.
+        de.emil.shizubox.debug.ErrorLog.init(this)
         Str.init(this)
         AppSettings.init(this)
         Customization.init(this)
@@ -29,6 +32,12 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.notifications.NotifHistory.init(this)
         de.emil.shizubox.apps.NetBlock.init(this)
         de.emil.shizubox.apps.Debloat.init(this)
+        de.emil.shizubox.util.Unlock.whenUnlocked(this) {
+            kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+                de.emil.shizubox.system.CacheCleaner.cleanStale(this@ShizuBoxApp)
+                runCatching { de.emil.shizubox.debug.ErrorLog.importExitReasons(this@ShizuBoxApp) }
+            }
+        }
         VirusTotal.init(this)
         Updates.init(this)
         de.emil.shizubox.updates.InstallGuard.init(this)

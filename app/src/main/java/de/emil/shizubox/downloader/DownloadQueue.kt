@@ -33,18 +33,34 @@ object DownloadQueue {
     val tasks: StateFlow<List<DownloadTask>> = _tasks.asStateFlow()
 
     private val file get() = File(appContext.filesDir, "downloads.json")
+    private const val MIN_FREE = 500L * 1024 * 1024
+
+    /** False before the first unlock: then the list file can't be read and must not be overwritten. */
+    @Volatile private var loaded = false
 
     fun init(context: Context) {
         appContext = context.applicationContext
-        _tasks.value = runCatching {
-            val a = JSONArray(file.readText())
-            (0 until a.length()).map { DownloadTask.fromJson(a.getJSONObject(it)) }
-        }.getOrDefault(emptyList())
-        // A progress notification can survive a killed process (e.g. app update); drop it if idle.
-        if (!active) runCatching { appContext.getSystemService(android.app.NotificationManager::class.java).cancel(7) }
+        // Before the first unlock the list would read as empty and the next save would wipe it.
+        de.emil.shizubox.util.Unlock.whenUnlocked(appContext) {
+            _tasks.value = runCatching {
+                val a = JSONArray(file.readText())
+                (0 until a.length()).map { DownloadTask.fromJson(a.getJSONObject(it)) }
+            }.getOrDefault(emptyList()) + _tasks.value
+            loaded = true
+            // A progress notification can survive a killed process (e.g. app update); drop it if idle.
+            if (!active) runCatching { appContext.getSystemService(android.app.NotificationManager::class.java).cancel(7) }
+        }
     }
 
-    private fun save() = runCatching { file.writeText(JSONArray(_tasks.value.map { it.toJson() }).toString()) }
+    private fun save() {
+        if (!loaded) return
+        runCatching { file.writeText(JSONArray(_tasks.value.map { it.toJson() }).toString()) }
+    }
+
+    /** Pauses everything (e.g. the service's daily time budget ran out). */
+    fun pauseAll() {
+        _tasks.value.filter { it.state == TaskState.RUNNING || it.state == TaskState.QUEUED }.forEach { pause(it.id) }
+    }
 
     private fun change(id: String, block: (DownloadTask) -> DownloadTask) {
         _tasks.update { list -> list.map { if (it.id == id) block(it) else it } }
@@ -78,6 +94,12 @@ object DownloadQueue {
     }
 
     private fun start(task: DownloadTask) {
+        // Videos can be several GB: don't start with less than 500 MB free.
+        if (android.os.StatFs(appContext.cacheDir.path).availableBytes < MIN_FREE) {
+            change(task.id) { it.copy(state = TaskState.FAILED, error = t(R.string.e_no_space), status = null) }
+            save()
+            return
+        }
         change(task.id) { it.copy(state = TaskState.RUNNING, error = null, status = null) }
         jobs[task.id] = scope.launch {
             val dir = DlStorage.tempDir(appContext, task.id)

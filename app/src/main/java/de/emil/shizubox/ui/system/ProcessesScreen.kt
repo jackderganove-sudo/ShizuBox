@@ -74,17 +74,22 @@ fun ProcessesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     var appsOnly by rememberSaveable { mutableStateOf(true) }
     var message by remember { mutableStateOf<String?>(null) }
 
+    val labels = remember { java.util.concurrent.ConcurrentHashMap<String, String>() }
     LaunchedEffect(reload, shizukuReady) {
         if (!shizukuReady) return@LaunchedEffect
         loading = true
-        snap = runCatching { Processes.snapshot() }.getOrNull()
+        val s = runCatching { Processes.snapshot() }.getOrNull()
+        // App names come from the APKs (disk): look them up here, not while drawing the list.
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            s?.processes?.mapNotNull { it.pkg }?.distinct()?.forEach { p ->
+                if (!labels.containsKey(p)) runCatching { pm.getApplicationInfo(p, 0).loadLabel(pm).toString() }.getOrNull()?.let { labels[p] = it }
+            }
+        }
+        snap = s
         loading = false
     }
 
-    val labels = remember { mutableMapOf<String, String?>() }
-    fun appLabel(pkg: String?): String? = pkg?.let {
-        labels.getOrPut(it) { runCatching { pm.getApplicationInfo(it, 0).loadLabel(pm).toString() }.getOrNull() }
-    }
+    fun appLabel(pkg: String?): String? = pkg?.let { labels[it] }
 
     val rows = remember(snap, appsOnly) {
         val list = snap?.processes.orEmpty()

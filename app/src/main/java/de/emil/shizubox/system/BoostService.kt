@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 /** Keeps the loudness effect alive while the boost is on, also when ShizuBox is in the background. */
 class BoostService : Service() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private var notifyJob: kotlinx.coroutines.Job? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -39,7 +40,13 @@ class BoostService : Service() {
                     return@collect
                 }
                 VolumeBoost.apply()
-                getSystemService(NotificationManager::class.java).notify(ID, notification(this@BoostService))
+                // Dragging the slider changes the level every frame: the effect follows at once,
+                // the notification only once the value has settled (was: ~60 updates per second).
+                notifyJob?.cancel()
+                notifyJob = launch {
+                    kotlinx.coroutines.delay(400)
+                    getSystemService(NotificationManager::class.java).notify(ID, notification(this@BoostService))
+                }
             }
         }
         return START_STICKY

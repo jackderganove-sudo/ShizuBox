@@ -1001,4 +1001,25 @@
     <string name="ig_held">En pause : la dernière tentative n\'a pas abouti – installer manuellement</string>
     <string name="ig_pm_busy">Le gestionnaire de paquets d\'Android ne répond pas – réessaie plus tard</string>
     <string name="ig_session_hung">L\'installation a bloqué et a été annulée</string>
+    <string name="e_no_space">⚠ Pas assez d\'espace libre</string>
+    <string name="e_school_active">Pas pendant le mode école</string>
+    <string name="nh_storage">occupe %1$s</string>
+    <string name="el_title">Journal d\'erreurs</string>
+    <string name="el_sub">Plantages, blocages et gels de ShizuBox – uniquement sur cet appareil, 30 jours, hors sauvegarde.</string>
+    <string name="el_none">Aucune erreur enregistrée</string>
+    <plurals name="el_n">
+        <item quantity="one">%1$d entrée sur les 30 derniers jours</item>
+        <item quantity="other">%1$d entrées sur les 30 derniers jours</item>
+    </plurals>
+    <string name="el_empty">Tout est calme</string>
+    <string name="el_empty_hint">Les plantages et blocages apparaîtraient ici.</string>
+    <string name="el_copy">Copier</string>
+    <string name="el_share">Partager</string>
+    <string name="el_clear">Supprimer</string>
+    <string name="el_copied">Copié ✓</string>
+    <string name="el_crash">Plantage</string>
+    <string name="el_anr">Ne répond pas (ANR)</string>
+    <string name="el_native">Plantage natif</string>
+    <string name="el_killed">Arrêtée par Android</string>
+    <string name="el_hang">Blocage</string>
 </resources>

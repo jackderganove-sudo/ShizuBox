@@ -133,7 +133,9 @@ private fun GamingCard(shizukuReady: Boolean) {
     val active by Gaming.active.collectAsStateWithLifecycle()
     val o by Gaming.options.collectAsStateWithLifecycle()
     var busy by remember { mutableStateOf(false) }
-    val games = remember { Gaming.games() }
+    val games by androidx.compose.runtime.produceState(emptyList<de.emil.shizubox.system.Game>()) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { Gaming.games() }
+    }
     GlassCard(Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {

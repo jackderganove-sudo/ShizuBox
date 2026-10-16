@@ -945,3 +945,21 @@ ig_text	%1$s %2$s no terminó de instalarse (el móvil se colgó o se reinició)
 ig_held	En pausa: el último intento no terminó; instálala manualmente
 ig_pm_busy	El gestor de paquetes de Android no responde; inténtalo más tarde
 ig_session_hung	La instalación se colgó y se canceló
+e_no_space	⚠ No hay suficiente espacio libre
+e_school_active	No durante el modo escuela
+nh_storage	ocupa %1$s
+el_title	Registro de errores
+el_sub	Cierres, bloqueos y cuelgues propios de ShizuBox: solo en este dispositivo, 30 días, no en la copia.
+el_none	No hay errores registrados
+el_n	%1$d entrada en los últimos 30 días|||%1$d entradas en los últimos 30 días
+el_empty	Todo tranquilo
+el_empty_hint	Aquí aparecerían cierres y bloqueos.
+el_copy	Copiar
+el_share	Compartir
+el_clear	Borrar
+el_copied	Copiado ✓
+el_crash	Cierre
+el_anr	No responde (ANR)
+el_native	Cierre nativo
+el_killed	Detenida por Android
+el_hang	Bloqueo
