@@ -1019,3 +1019,19 @@ br_night_text	Gece boyunca %%%1$d kullanıldı, çoğunlukla %2$s
 br_night_text_plain	Gece boyunca %%%1$d kullanıldı
 br_other_profile	Diğer profil (%1$d)
 br_apps_mah	uygulamalar %1$s mAh
+ss_title	Okul modu istatistikleri
+ss_widget_desc	Okul modu bugün ve bu hafta
+ss_empty	Henüz oturum yok – ilk okul modundan sonra burada görünür.
+ss_today	Bugün
+ss_week	Bu hafta
+ss_month	Bu ay
+ss_total	Toplam
+ss_sessions	%1$d oturum|||%1$d oturum
+ss_avg	Ort. %1$s
+ss_longest	en uzun %1$s
+ss_end_power	3× güç: %1$d
+ss_end_timeout	Süre doldu: %1$d
+ss_end_emergency	Acil çıkış: %1$d
+ss_scheduled	Plana göre başladı: %1$d
+ss_screen_ons	Ekran açıldı: %1$d×
+ss_chart_hint	Son 14 gün – bir güne dokun

@@ -1080,4 +1080,23 @@
     <string name="br_night_text_plain">%1$d %% used overnight</string>
     <string name="br_other_profile">Other profile (%1$d)</string>
     <string name="br_apps_mah">apps %1$s mAh</string>
+    <string name="ss_title">School mode statistics</string>
+    <string name="ss_widget_desc">School mode today and this week</string>
+    <string name="ss_empty">No sessions yet – they appear here after the first school mode.</string>
+    <string name="ss_today">Today</string>
+    <string name="ss_week">This week</string>
+    <string name="ss_month">This month</string>
+    <string name="ss_total">Total</string>
+    <plurals name="ss_sessions">
+        <item quantity="one">%1$d session</item>
+        <item quantity="other">%1$d sessions</item>
+    </plurals>
+    <string name="ss_avg">Ø %1$s</string>
+    <string name="ss_longest">longest %1$s</string>
+    <string name="ss_end_power">3× power: %1$d</string>
+    <string name="ss_end_timeout">Time ran out: %1$d</string>
+    <string name="ss_end_emergency">Emergency exit: %1$d</string>
+    <string name="ss_scheduled">Started by schedule: %1$d</string>
+    <string name="ss_screen_ons">Screen switched on: %1$d×</string>
+    <string name="ss_chart_hint">Last 14 days – tap a day</string>
 </resources>

@@ -1076,5 +1076,24 @@
 "br_night_text": "%1$d %% utilisés cette nuit, surtout par %2$s",
 "br_night_text_plain": "%1$d %% utilisés cette nuit",
 "br_other_profile": "Autre profil (%1$d)",
-"br_apps_mah": "applis %1$s mAh"
+"br_apps_mah": "applis %1$s mAh",
+"ss_title": "Statistiques du mode école",
+"ss_widget_desc": "Mode école aujourd'hui et cette semaine",
+"ss_empty": "Pas encore de sessions – elles apparaîtront après le premier mode école.",
+"ss_today": "Aujourd'hui",
+"ss_week": "Cette semaine",
+"ss_month": "Ce mois-ci",
+"ss_total": "Total",
+"ss_sessions": {
+"one": "%1$d session",
+"other": "%1$d sessions"
+},
+"ss_avg": "Moy. %1$s",
+"ss_longest": "plus longue %1$s",
+"ss_end_power": "3× marche : %1$d",
+"ss_end_timeout": "Temps écoulé : %1$d",
+"ss_end_emergency": "Sortie de secours : %1$d",
+"ss_scheduled": "Lancées par horaire : %1$d",
+"ss_screen_ons": "Écran allumé : %1$d×",
+"ss_chart_hint": "14 derniers jours – touche un jour"
 }

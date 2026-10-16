@@ -65,5 +65,7 @@ class ShizuBoxApp : Application() {
         // Needs Shizuku and school mode state (automations pause during school mode).
         de.emil.shizubox.automation.Rules.init(this)
         de.emil.shizubox.automation.AutomationEngine.init(this)
+        // Watches school mode's state (read-only) – must come after SchoolMode.init.
+        de.emil.shizubox.schoolstats.SchoolStats.init(this)
     }
 }

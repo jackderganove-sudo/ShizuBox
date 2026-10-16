@@ -51,6 +51,11 @@
   Zeitleiste und pro App, Hervorhebung „Hintergrund“, „Dienst“ und „Bildschirm aus“, Filter, aus jedem Eintrag
   Berechtigung entziehen / App-Details / Internet sperren, optionale Benachrichtigung bei Kamera/Mikrofon im Hintergrund,
   stündliche Sammlung, Aufbewahrung 7–365 Tage, nicht im Backup
+- Akku-Report (System): Verbrauch pro App in mAh und % (Vordergrund/Hintergrund/Dienst), Wakelocks, mobile Daten,
+  Weckrufe; „Seit Laden“, „24 Std.“, „Über Nacht“ (Zeitraum einstellbar), Ladestand-Diagramm, Direkt-Aktionen
+  (einschränken, beenden, einfrieren, Internet sperren), optionale Morgen-Zusammenfassung; ShizuBox ehrlich mit aufgeführt
+- Schulmodus-Statistik (Schulmodus-Bereich + Homescreen-Widget): heute/Woche/Monat/insgesamt, 14-Tage-Balken,
+  Durchschnitt, längste Sitzung, Art des Beendens, Bildschirm-Einschaltungen – nur lesend aus dem Schulmodus-Protokoll
 - Shell-Dienst kürzt sehr lange Ausgaben (> 512 KB) statt am Binder-Limit zu scheitern (sah aus wie „Shizuku getrennt“)
 
 ## 0.7.2 – Stabilitätsrunde (2026-10-16)

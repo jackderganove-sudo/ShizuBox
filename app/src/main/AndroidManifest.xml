@@ -217,6 +217,18 @@
         </receiver>
 
         <receiver
+            android:name=".schoolstats.SchoolStatsWidget"
+            android:exported="true"
+            android:label="@string/ss_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_school_stats_info" />
+        </receiver>
+
+        <receiver
             android:name=".tiles.QuickWidgetToggleReceiver"
             android:exported="false" />
 

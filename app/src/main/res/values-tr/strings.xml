@@ -1078,4 +1078,23 @@
     <string name="br_night_text_plain">Gece boyunca %%%1$d kullanıldı</string>
     <string name="br_other_profile">Diğer profil (%1$d)</string>
     <string name="br_apps_mah">uygulamalar %1$s mAh</string>
+    <string name="ss_title">Okul modu istatistikleri</string>
+    <string name="ss_widget_desc">Okul modu bugün ve bu hafta</string>
+    <string name="ss_empty">Henüz oturum yok – ilk okul modundan sonra burada görünür.</string>
+    <string name="ss_today">Bugün</string>
+    <string name="ss_week">Bu hafta</string>
+    <string name="ss_month">Bu ay</string>
+    <string name="ss_total">Toplam</string>
+    <plurals name="ss_sessions">
+        <item quantity="one">%1$d oturum</item>
+        <item quantity="other">%1$d oturum</item>
+    </plurals>
+    <string name="ss_avg">Ort. %1$s</string>
+    <string name="ss_longest">en uzun %1$s</string>
+    <string name="ss_end_power">3× güç: %1$d</string>
+    <string name="ss_end_timeout">Süre doldu: %1$d</string>
+    <string name="ss_end_emergency">Acil çıkış: %1$d</string>
+    <string name="ss_scheduled">Plana göre başladı: %1$d</string>
+    <string name="ss_screen_ons">Ekran açıldı: %1$d×</string>
+    <string name="ss_chart_hint">Son 14 gün – bir güne dokun</string>
 </resources>

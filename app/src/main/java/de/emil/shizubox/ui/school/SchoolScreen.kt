@@ -115,6 +115,8 @@ fun SchoolScreen(
             }
         }
         item { ScheduleCard(state.autoEndMinutes) }
+        // Read-only statistics from school mode's own log (no change to school mode).
+        item { SchoolStatsCard() }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.school_after_reboot), style = MaterialTheme.typography.titleMedium)

@@ -1078,4 +1078,23 @@
     <string name="br_night_text_plain">%1$d %% utilisés cette nuit</string>
     <string name="br_other_profile">Autre profil (%1$d)</string>
     <string name="br_apps_mah">applis %1$s mAh</string>
+    <string name="ss_title">Statistiques du mode école</string>
+    <string name="ss_widget_desc">Mode école aujourd\'hui et cette semaine</string>
+    <string name="ss_empty">Pas encore de sessions – elles apparaîtront après le premier mode école.</string>
+    <string name="ss_today">Aujourd\'hui</string>
+    <string name="ss_week">Cette semaine</string>
+    <string name="ss_month">Ce mois-ci</string>
+    <string name="ss_total">Total</string>
+    <plurals name="ss_sessions">
+        <item quantity="one">%1$d session</item>
+        <item quantity="other">%1$d sessions</item>
+    </plurals>
+    <string name="ss_avg">Moy. %1$s</string>
+    <string name="ss_longest">plus longue %1$s</string>
+    <string name="ss_end_power">3× marche : %1$d</string>
+    <string name="ss_end_timeout">Temps écoulé : %1$d</string>
+    <string name="ss_end_emergency">Sortie de secours : %1$d</string>
+    <string name="ss_scheduled">Lancées par horaire : %1$d</string>
+    <string name="ss_screen_ons">Écran allumé : %1$d×</string>
+    <string name="ss_chart_hint">14 derniers jours – touche un jour</string>
 </resources>

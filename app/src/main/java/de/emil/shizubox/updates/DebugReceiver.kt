@@ -267,6 +267,14 @@ class DebugReceiver : BroadcastReceiver() {
                             val labels = all.count { it.label.isNotBlank() }
                             "apps=${all.size} system=${all.count { it.isSystem }} list=${t1 - t0}ms cpu=${android.os.Process.getElapsedCpuTime() - cpu0}ms labels=$labels heapMB=${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}"
                         }
+                        "schoolstats" -> {
+                            val ss = de.emil.shizubox.schoolstats.SchoolStats
+                            ss.collect()
+                            val all = ss.sessions()
+                            val log = java.io.File(context.createDeviceProtectedStorageContext().filesDir, "school.log")
+                            "logLines=${runCatching { log.readLines().size }.getOrDefault(-1)} sessions=${all.size} " + all.take(6).joinToString { "${java.util.Date(it.start)} ${ss.format(it.durationMs())} ${it.reason} sched=${it.scheduled} on=${it.screenOns}" } +
+                                " today=${ss.format(ss.total(all, ss.startOfDay()))} week=${ss.format(ss.total(all, ss.startOfWeek()))}"
+                        }
                         "battery" -> {
                             val br = de.emil.shizubox.battery.BatteryReport
                             br.sampleLevel()

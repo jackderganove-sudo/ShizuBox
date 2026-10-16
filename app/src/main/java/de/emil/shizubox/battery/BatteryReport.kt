@@ -362,6 +362,8 @@ object BatteryReport {
 class BatteryWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         runCatching { BatteryReport.sampleLevel() }
+        // Also takes school-mode sessions over before its small log rotates them away.
+        runCatching { de.emil.shizubox.schoolstats.SchoolStats.collect() }
         if (de.emil.shizubox.school.SchoolMode.state.value.active) return Result.success()
         if (System.currentTimeMillis() - BatteryReport.lastSnapshot() > 55 * 60_000L) runCatching { BatteryReport.snapshot() }
         return Result.success()

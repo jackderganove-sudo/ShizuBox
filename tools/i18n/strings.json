@@ -5217,5 +5217,91 @@
   "en": "apps %1$s mAh",
   "de": "Apps %1$s mAh",
   "plural": false
+ },
+ "ss_title": {
+  "en": "School mode statistics",
+  "de": "Schulmodus-Statistik",
+  "plural": false
+ },
+ "ss_widget_desc": {
+  "en": "School mode today and this week",
+  "de": "Schulmodus heute und diese Woche",
+  "plural": false
+ },
+ "ss_empty": {
+  "en": "No sessions yet – they appear here after the first school mode.",
+  "de": "Noch keine Sitzungen – sie erscheinen nach dem ersten Schulmodus hier.",
+  "plural": false
+ },
+ "ss_today": {
+  "en": "Today",
+  "de": "Heute",
+  "plural": false
+ },
+ "ss_week": {
+  "en": "This week",
+  "de": "Diese Woche",
+  "plural": false
+ },
+ "ss_month": {
+  "en": "This month",
+  "de": "Dieser Monat",
+  "plural": false
+ },
+ "ss_total": {
+  "en": "Total",
+  "de": "Insgesamt",
+  "plural": false
+ },
+ "ss_sessions": {
+  "en": {
+   "one": "%1$d session",
+   "other": "%1$d sessions"
+  },
+  "de": {
+   "one": "%1$d Sitzung",
+   "other": "%1$d Sitzungen"
+  },
+  "plural": true
+ },
+ "ss_avg": {
+  "en": "Ø %1$s",
+  "de": "Ø %1$s",
+  "plural": false
+ },
+ "ss_longest": {
+  "en": "longest %1$s",
+  "de": "längste %1$s",
+  "plural": false
+ },
+ "ss_end_power": {
+  "en": "3× power: %1$d",
+  "de": "3× Power: %1$d",
+  "plural": false
+ },
+ "ss_end_timeout": {
+  "en": "Time ran out: %1$d",
+  "de": "Zeitablauf: %1$d",
+  "plural": false
+ },
+ "ss_end_emergency": {
+  "en": "Emergency exit: %1$d",
+  "de": "Notausstieg: %1$d",
+  "plural": false
+ },
+ "ss_scheduled": {
+  "en": "Started by schedule: %1$d",
+  "de": "Per Zeitplan gestartet: %1$d",
+  "plural": false
+ },
+ "ss_screen_ons": {
+  "en": "Screen switched on: %1$d×",
+  "de": "Bildschirm eingeschaltet: %1$d×",
+  "plural": false
+ },
+ "ss_chart_hint": {
+  "en": "Last 14 days – tap a day",
+  "de": "Letzte 14 Tage – Tag antippen",
+  "plural": false
  }
 }

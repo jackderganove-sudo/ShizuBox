@@ -1078,5 +1078,24 @@
     <string name="br_night_text_plain">Über Nacht %1$d %% verbraucht</string>
     <string name="br_other_profile">Anderes Profil (%1$d)</string>
     <string name="br_apps_mah">Apps %1$s mAh</string>
+    <string name="ss_title">Schulmodus-Statistik</string>
+    <string name="ss_widget_desc">Schulmodus heute und diese Woche</string>
+    <string name="ss_empty">Noch keine Sitzungen – sie erscheinen nach dem ersten Schulmodus hier.</string>
+    <string name="ss_today">Heute</string>
+    <string name="ss_week">Diese Woche</string>
+    <string name="ss_month">Dieser Monat</string>
+    <string name="ss_total">Insgesamt</string>
+    <plurals name="ss_sessions">
+        <item quantity="one">%1$d Sitzung</item>
+        <item quantity="other">%1$d Sitzungen</item>
+    </plurals>
+    <string name="ss_avg">Ø %1$s</string>
+    <string name="ss_longest">längste %1$s</string>
+    <string name="ss_end_power">3× Power: %1$d</string>
+    <string name="ss_end_timeout">Zeitablauf: %1$d</string>
+    <string name="ss_end_emergency">Notausstieg: %1$d</string>
+    <string name="ss_scheduled">Per Zeitplan gestartet: %1$d</string>
+    <string name="ss_screen_ons">Bildschirm eingeschaltet: %1$d×</string>
+    <string name="ss_chart_hint">Letzte 14 Tage – Tag antippen</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>
