@@ -56,6 +56,10 @@
   (einschränken, beenden, einfrieren, Internet sperren), optionale Morgen-Zusammenfassung; ShizuBox ehrlich mit aufgeführt
 - Schulmodus-Statistik (Schulmodus-Bereich + Homescreen-Widget): heute/Woche/Monat/insgesamt, 14-Tage-Balken,
   Durchschnitt, längste Sitzung, Art des Beendens, Bildschirm-Einschaltungen – nur lesend aus dem Schulmodus-Protokoll
+- Zwischenablage-Verlauf (System + Kachel): speichert kopierte Texte und Links auch im Hintergrund (über Shizuku,
+  ohne Dauerabfrage), Suche, Anheften, erneut kopieren mit einem Tipp, Teilen, Löschen; sensible Inhalte und
+  Passwort-Manager werden nie gespeichert, Apps ausschließen, Auto-Löschen, Fingerabdruck-Sperre, nicht im Backup;
+  optional Androids „… hat eingefügt“-Hinweis ausblenden (systemweit, wiederherstellbar)
 - Shell-Dienst kürzt sehr lange Ausgaben (> 512 KB) statt am Binder-Limit zu scheitern (sah aus wie „Shizuku getrennt“)
 
 ## 0.7.2 – Stabilitätsrunde (2026-10-16)

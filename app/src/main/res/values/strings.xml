@@ -1099,4 +1099,21 @@
     <string name="ss_scheduled">Started by schedule: %1$d</string>
     <string name="ss_screen_ons">Screen switched on: %1$d×</string>
     <string name="ss_chart_hint">Last 14 days – tap a day</string>
+    <string name="cb_title">Clipboard history</string>
+    <string name="cb_title_short">Clipboard</string>
+    <string name="cb_sub">Copied texts and links</string>
+    <string name="cb_intro">ShizuBox keeps what you copy – texts and links – so you can paste it again later with one tap. It works in the background through Shizuku, without constant polling.</string>
+    <string name="cb_toast_note">Never stored: passwords and other content marked sensitive, anything copied from a password manager. Android shows a short “Shell pasted from your clipboard” note for each new clip – it can be hidden in the settings.</string>
+    <string name="cb_enable">Turn on clipboard history</string>
+    <string name="cb_not_listening">⚠ Not listening right now – Shizuku must be running.</string>
+    <string name="cb_record">Record clipboard</string>
+    <string name="cb_hide_toast">Hide Android\'s clipboard note</string>
+    <string name="cb_hide_toast_sub">Switches off “Show clipboard access” in Android\'s privacy settings – then no app shows the note. Turning it off here restores your previous setting.</string>
+    <string name="cb_never">Password managers are always excluded.</string>
+    <string name="cb_delete_all">Delete everything except pinned</string>
+    <string name="cb_empty">Nothing copied yet</string>
+    <string name="cb_empty_hint">Copy a text anywhere – it shows up here.</string>
+    <string name="cb_pin">Pin</string>
+    <string name="cb_unpin">Unpin</string>
+    <string name="cb_exclude_app">Don\'t record this app</string>
 </resources>

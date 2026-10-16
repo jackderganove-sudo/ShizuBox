@@ -185,6 +185,17 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".tiles.ClipboardTile"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_clipboard"
+            android:label="@string/cb_title_short"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <!-- Volume boost: keeps the loudness effect on the output mix alive. -->
         <service
             android:name=".system.BoostService"

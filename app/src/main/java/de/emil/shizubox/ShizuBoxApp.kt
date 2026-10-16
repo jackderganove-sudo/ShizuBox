@@ -34,6 +34,7 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.apps.Debloat.init(this)
         de.emil.shizubox.privacy.PrivacyLog.init(this)
         de.emil.shizubox.battery.BatteryReport.init(this)
+        de.emil.shizubox.clipboard.ClipHistory.init(this)
         de.emil.shizubox.util.Unlock.whenUnlocked(this) {
             kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
                 de.emil.shizubox.system.CacheCleaner.cleanStale(this@ShizuBoxApp)

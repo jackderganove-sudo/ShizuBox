@@ -81,6 +81,82 @@ class ShellService : IShellService.Stub() {
         tree.asReversed().forEach { runCatching { android.os.Process.sendSignal(it, 9) } }
     }
 
+    // ------------------------------------------------------------------ clipboard
+
+    private var clipListener: android.os.Binder? = null
+    private var clipCallback: de.emil.shizubox.IClipCallback? = null
+
+    /** IClipboard via reflection (hidden API; fine in this shell process). */
+    private fun clipboard(): Any {
+        val binder = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java).invoke(null, "clipboard") as android.os.IBinder
+        return Class.forName("android.content.IClipboard\$Stub").getMethod("asInterface", android.os.IBinder::class.java).invoke(null, binder)!!
+    }
+
+    /** Fills a hidden method's parameters: package "com.android.shell", no attribution tag, user 0, default device. */
+    private fun args(m: java.lang.reflect.Method, vararg leading: Any?): Array<Any?> {
+        var strings = 0
+        var ints = 0
+        return m.parameterTypes.mapIndexed { i, type ->
+            when {
+                i < leading.size -> leading[i]
+                type == String::class.java -> if (strings++ == 0) "com.android.shell" else null
+                type == Int::class.javaPrimitiveType -> if (ints++ == 0) 0 else 0
+                else -> null
+            }
+        }.toTypedArray()
+    }
+
+    private fun readClip() {
+        val cb = clipCallback ?: return
+        runCatching {
+            val c = clipboard()
+            val get = c.javaClass.methods.first { it.name == "getPrimaryClip" }
+            val clip = get.invoke(c, *args(get)) as? android.content.ClipData ?: return
+            val source = runCatching {
+                val m = c.javaClass.methods.first { it.name == "getPrimaryClipSource" }
+                m.invoke(c, *args(m)) as? String
+            }.getOrNull()
+            val sensitive = clip.description?.extras?.getBoolean("android.content.extra.IS_SENSITIVE") == true
+            val item = if (clip.itemCount > 0) clip.getItemAt(0) else null
+            val text = item?.text?.toString() ?: item?.uri?.toString() ?: item?.intent?.toUri(0) ?: return
+            cb.onClip(if (sensitive) "" else text, source.orEmpty(), sensitive, System.currentTimeMillis())
+        }
+    }
+
+    override fun watchClipboard(callback: de.emil.shizubox.IClipCallback) {
+        unwatchClipboard()
+        clipCallback = callback
+        val listener = object : android.os.Binder() {
+            override fun onTransact(code: Int, data: android.os.Parcel, reply: android.os.Parcel?, flags: Int): Boolean {
+                if (code == FIRST_CALL_TRANSACTION) {
+                    // dispatchPrimaryClipChanged(): read it on another thread, the binder thread must return.
+                    thread { readClip() }
+                    return true
+                }
+                return super.onTransact(code, data, reply, flags)
+            }
+        }
+        val proxy = Class.forName("android.content.IOnPrimaryClipChangedListener\$Stub").getMethod("asInterface", android.os.IBinder::class.java).invoke(null, listener)
+        val c = clipboard()
+        val add = c.javaClass.methods.first { it.name == "addPrimaryClipChangedListener" }
+        add.invoke(c, *args(add, proxy))
+        clipListener = listener
+        // If ShizuBox dies, stop listening.
+        runCatching { callback.asBinder().linkToDeath({ unwatchClipboard() }, 0) }
+    }
+
+    override fun unwatchClipboard() {
+        val l = clipListener ?: return
+        clipListener = null
+        clipCallback = null
+        runCatching {
+            val proxy = Class.forName("android.content.IOnPrimaryClipChangedListener\$Stub").getMethod("asInterface", android.os.IBinder::class.java).invoke(null, l)
+            val c = clipboard()
+            val rm = c.javaClass.methods.first { it.name == "removePrimaryClipChangedListener" }
+            rm.invoke(c, *args(rm, proxy))
+        }
+    }
+
     override fun writeFile(fd: ParcelFileDescriptor, path: String): Long = try {
         File(path).parentFile?.mkdirs()
         ParcelFileDescriptor.AutoCloseInputStream(fd).use { input ->

@@ -68,6 +68,7 @@ class DebugReceiver : BroadcastReceiver() {
                     "debloat" -> de.emil.shizubox.ui.apps.DebloatScreen(ready, noop)
                     "privacy" -> de.emil.shizubox.ui.system.PrivacyScreen(ready, noop)
                     "battery" -> de.emil.shizubox.ui.system.BatteryReportScreen(ready, noop)
+                    "clipboard" -> de.emil.shizubox.ui.system.ClipboardScreen(ready, noop)
                     "errorlog" -> de.emil.shizubox.ui.settings.ErrorLogScreen(noop)
                     "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
@@ -266,6 +267,21 @@ class DebugReceiver : BroadcastReceiver() {
                             val t1 = System.currentTimeMillis()
                             val labels = all.count { it.label.isNotBlank() }
                             "apps=${all.size} system=${all.count { it.isSystem }} list=${t1 - t0}ms cpu=${android.os.Process.getElapsedCpuTime() - cpu0}ms labels=$labels heapMB=${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}"
+                        }
+                        "clip" -> {
+                            // --es mode on|off|show ; set/test: --es text "…" copies via shell `cmd …`? (no) – we copy ourselves.
+                            val ch = de.emil.shizubox.clipboard.ClipHistory
+                            when (intent.getStringExtra("mode")) {
+                                "set" -> kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                                    // Writing is allowed in the background, only reading is restricted.
+                                    context.getSystemService(android.content.ClipboardManager::class.java)
+                                        .setPrimaryClip(android.content.ClipData.newPlainText("test", intent.getStringExtra("text") ?: "ShizuBox Test 123"))
+                                }
+                                "on" -> ch.update { it.copy(enabled = true) }
+                                "off" -> { ch.update { it.copy(enabled = false) }; ch.deleteAll() }
+                            }
+                            kotlinx.coroutines.delay(1500)
+                            "listening=${ch.listening.value} clips=" + ch.clips().take(5).joinToString(" || ") { "${it.text.take(40)} [${it.source}]" }
                         }
                         "schoolstats" -> {
                             val ss = de.emil.shizubox.schoolstats.SchoolStats

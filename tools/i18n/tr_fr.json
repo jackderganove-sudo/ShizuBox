@@ -1095,5 +1095,22 @@
 "ss_end_emergency": "Sortie de secours : %1$d",
 "ss_scheduled": "Lancées par horaire : %1$d",
 "ss_screen_ons": "Écran allumé : %1$d×",
-"ss_chart_hint": "14 derniers jours – touche un jour"
+"ss_chart_hint": "14 derniers jours – touche un jour",
+"cb_title": "Historique du presse-papiers",
+"cb_title_short": "Presse-papiers",
+"cb_sub": "Textes et liens copiés",
+"cb_intro": "ShizuBox garde ce que tu copies – textes et liens – pour le recoller plus tard d'un toucher. Ça fonctionne en arrière-plan via Shizuku, sans interrogation permanente.",
+"cb_toast_note": "Jamais enregistrés : mots de passe et autres contenus marqués sensibles, tout ce qui vient d'un gestionnaire de mots de passe. Android affiche brièvement « Shell a collé depuis le presse-papiers » à chaque copie – masquable dans les paramètres.",
+"cb_enable": "Activer l'historique",
+"cb_not_listening": "⚠ N'écoute pas pour l'instant – Shizuku doit tourner.",
+"cb_record": "Enregistrer le presse-papiers",
+"cb_hide_toast": "Masquer la note du presse-papiers",
+"cb_hide_toast_sub": "Désactive « Afficher l'accès au presse-papiers » dans les paramètres de confidentialité d'Android – plus aucune appli n'affiche la note. Le désactiver ici rétablit ton réglage précédent.",
+"cb_never": "Les gestionnaires de mots de passe sont toujours exclus.",
+"cb_delete_all": "Tout supprimer sauf l'épinglé",
+"cb_empty": "Rien de copié pour l'instant",
+"cb_empty_hint": "Copie un texte n'importe où – il apparaît ici.",
+"cb_pin": "Épingler",
+"cb_unpin": "Désépingler",
+"cb_exclude_app": "Ne pas enregistrer cette appli"
 }

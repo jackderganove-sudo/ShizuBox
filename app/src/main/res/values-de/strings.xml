@@ -1097,5 +1097,22 @@
     <string name="ss_scheduled">Per Zeitplan gestartet: %1$d</string>
     <string name="ss_screen_ons">Bildschirm eingeschaltet: %1$d×</string>
     <string name="ss_chart_hint">Letzte 14 Tage – Tag antippen</string>
+    <string name="cb_title">Zwischenablage-Verlauf</string>
+    <string name="cb_title_short">Zwischenablage</string>
+    <string name="cb_sub">Kopierte Texte und Links</string>
+    <string name="cb_intro">ShizuBox merkt sich, was du kopierst – Texte und Links –, damit du es später mit einem Tipp wieder einfügen kannst. Das klappt über Shizuku auch im Hintergrund, ohne Dauerabfrage.</string>
+    <string name="cb_toast_note">Nie gespeichert: Passwörter und andere als sensibel markierte Inhalte sowie alles aus Passwort-Managern. Android zeigt bei jedem neuen Eintrag kurz „Shell hat Informationen aus der Zwischenablage eingefügt“ – das lässt sich in den Einstellungen ausblenden.</string>
+    <string name="cb_enable">Zwischenablage-Verlauf einschalten</string>
+    <string name="cb_not_listening">⚠ Hört gerade nicht mit – Shizuku muss laufen.</string>
+    <string name="cb_record">Zwischenablage aufzeichnen</string>
+    <string name="cb_hide_toast">Androids Zwischenablage-Hinweis ausblenden</string>
+    <string name="cb_hide_toast_sub">Schaltet „Zugriff auf Zwischenablage anzeigen“ in Androids Datenschutz-Einstellungen aus – dann zeigt keine App mehr den Hinweis. Ausschalten stellt deine vorherige Einstellung wieder her.</string>
+    <string name="cb_never">Passwort-Manager sind immer ausgeschlossen.</string>
+    <string name="cb_delete_all">Alles außer Angehefteten löschen</string>
+    <string name="cb_empty">Noch nichts kopiert</string>
+    <string name="cb_empty_hint">Kopiere irgendwo einen Text – er erscheint hier.</string>
+    <string name="cb_pin">Anheften</string>
+    <string name="cb_unpin">Lösen</string>
+    <string name="cb_exclude_app">Diese App nicht aufzeichnen</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

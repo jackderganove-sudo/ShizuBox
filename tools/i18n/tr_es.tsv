@@ -1035,3 +1035,20 @@ ss_end_emergency	Salida de emergencia: %1$d
 ss_scheduled	Iniciadas por horario: %1$d
 ss_screen_ons	Pantalla encendida: %1$d×
 ss_chart_hint	Últimos 14 días: toca un día
+cb_title	Historial del portapapeles
+cb_title_short	Portapapeles
+cb_sub	Textos y enlaces copiados
+cb_intro	ShizuBox guarda lo que copias (textos y enlaces) para volver a pegarlo con un toque. Funciona en segundo plano mediante Shizuku, sin consultas continuas.
+cb_toast_note	Nunca se guardan: contraseñas y otros contenidos marcados como sensibles, ni nada copiado de un gestor de contraseñas. Android muestra un breve aviso «Shell ha pegado desde el portapapeles» con cada copia; se puede ocultar en los ajustes.
+cb_enable	Activar historial del portapapeles
+cb_not_listening	⚠ Ahora no está escuchando: Shizuku debe estar activo.
+cb_record	Registrar portapapeles
+cb_hide_toast	Ocultar el aviso del portapapeles
+cb_hide_toast_sub	Desactiva «Mostrar acceso al portapapeles» en los ajustes de privacidad de Android: ninguna app mostrará el aviso. Al desactivarlo aquí se restaura tu ajuste anterior.
+cb_never	Los gestores de contraseñas siempre se excluyen.
+cb_delete_all	Borrar todo salvo lo fijado
+cb_empty	Aún no se ha copiado nada
+cb_empty_hint	Copia un texto en cualquier sitio: aparecerá aquí.
+cb_pin	Fijar
+cb_unpin	Desfijar
+cb_exclude_app	No registrar esta app

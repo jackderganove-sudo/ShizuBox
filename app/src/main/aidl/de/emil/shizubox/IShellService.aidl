@@ -1,5 +1,7 @@
 package de.emil.shizubox;
 
+import de.emil.shizubox.IClipCallback;
+
 interface IShellService {
     // Reserved transaction code Shizuku uses to tear down the user service.
     void destroy() = 16777114;
@@ -16,4 +18,9 @@ interface IShellService {
     // Like exec, but kills the command and everything it started after `limitMs`.
     // Result: "<exitCode>\0<stdout>\0<stderr>", exit code 124 on timeout.
     String execLimited(String cmd, long limitMs) = 3;
+
+    // Clipboard history: the shell user may read the clipboard in the background
+    // (READ_CLIPBOARD_IN_BACKGROUND); the service listens for changes and reports them.
+    void watchClipboard(in IClipCallback callback) = 4;
+    void unwatchClipboard() = 5;
 }

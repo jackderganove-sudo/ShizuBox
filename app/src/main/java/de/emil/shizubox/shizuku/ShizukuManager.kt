@@ -42,7 +42,7 @@ enum class ShizukuStatus {
 
 object ShizukuManager {
     /** Bump when IShellService changes. */
-    private const val SERVICE_REV = 2
+    private const val SERVICE_REV = 3
     /** Hard limit for a shell command when the caller gives none. */
     const val DEFAULT_LIMIT = 60_000L
 
@@ -164,6 +164,16 @@ object ShizukuManager {
     }
 
     val isReady get() = _status.value == ShizukuStatus.Ready
+
+    /** Clipboard changes are reported to [callback] until [unwatchClipboard] (or ShizuBox dies). */
+    suspend fun watchClipboard(callback: de.emil.shizubox.IClipCallback): Boolean = withContext(Dispatchers.IO) {
+        val svc = awaitService(3000) ?: return@withContext false
+        runCatching { svc.watchClipboard(callback) }.onFailure { Log.e(TAG, "watchClipboard failed", it) }.isSuccess
+    }
+
+    suspend fun unwatchClipboard() = withContext(Dispatchers.IO) {
+        runCatching { awaitService(1000)?.unwatchClipboard() }
+    }
 
     /** Copies [fd] to [path] as the Shizuku user. Returns bytes written or -1. */
     suspend fun writeFile(fd: android.os.ParcelFileDescriptor, path: String): Long = withContext(Dispatchers.IO) {

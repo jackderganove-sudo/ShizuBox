@@ -1097,4 +1097,21 @@
     <string name="ss_scheduled">Plana göre başladı: %1$d</string>
     <string name="ss_screen_ons">Ekran açıldı: %1$d×</string>
     <string name="ss_chart_hint">Son 14 gün – bir güne dokun</string>
+    <string name="cb_title">Pano geçmişi</string>
+    <string name="cb_title_short">Pano</string>
+    <string name="cb_sub">Kopyalanan metinler ve bağlantılar</string>
+    <string name="cb_intro">ShizuBox kopyaladıklarını – metin ve bağlantıları – saklar, böylece tek dokunuşla tekrar yapıştırabilirsin. Shizuku sayesinde arka planda, sürekli sorgulama olmadan çalışır.</string>
+    <string name="cb_toast_note">Asla saklanmaz: şifreler ve hassas olarak işaretlenen diğer içerikler, şifre yöneticilerinden kopyalananlar. Android her yeni kopyada kısa bir “Shell panodan yapıştırdı” notu gösterir – ayarlardan gizlenebilir.</string>
+    <string name="cb_enable">Pano geçmişini aç</string>
+    <string name="cb_not_listening">⚠ Şu an dinlemiyor – Shizuku çalışmalı.</string>
+    <string name="cb_record">Panoyu kaydet</string>
+    <string name="cb_hide_toast">Android\'in pano notunu gizle</string>
+    <string name="cb_hide_toast_sub">Android gizlilik ayarlarındaki “Pano erişimini göster”i kapatır – o zaman hiçbir uygulama notu göstermez. Buradan kapatmak önceki ayarı geri yükler.</string>
+    <string name="cb_never">Şifre yöneticileri her zaman hariçtir.</string>
+    <string name="cb_delete_all">Sabitlenenler hariç tümünü sil</string>
+    <string name="cb_empty">Henüz bir şey kopyalanmadı</string>
+    <string name="cb_empty_hint">Herhangi bir yerde bir metin kopyala – burada görünür.</string>
+    <string name="cb_pin">Sabitle</string>
+    <string name="cb_unpin">Sabitlemeyi kaldır</string>
+    <string name="cb_exclude_app">Bu uygulamayı kaydetme</string>
 </resources>

@@ -5303,5 +5303,90 @@
   "en": "Last 14 days – tap a day",
   "de": "Letzte 14 Tage – Tag antippen",
   "plural": false
+ },
+ "cb_title": {
+  "en": "Clipboard history",
+  "de": "Zwischenablage-Verlauf",
+  "plural": false
+ },
+ "cb_title_short": {
+  "en": "Clipboard",
+  "de": "Zwischenablage",
+  "plural": false
+ },
+ "cb_sub": {
+  "en": "Copied texts and links",
+  "de": "Kopierte Texte und Links",
+  "plural": false
+ },
+ "cb_intro": {
+  "en": "ShizuBox keeps what you copy – texts and links – so you can paste it again later with one tap. It works in the background through Shizuku, without constant polling.",
+  "de": "ShizuBox merkt sich, was du kopierst – Texte und Links –, damit du es später mit einem Tipp wieder einfügen kannst. Das klappt über Shizuku auch im Hintergrund, ohne Dauerabfrage.",
+  "plural": false
+ },
+ "cb_toast_note": {
+  "en": "Never stored: passwords and other content marked sensitive, anything copied from a password manager. Android shows a short “Shell pasted from your clipboard” note for each new clip – it can be hidden in the settings.",
+  "de": "Nie gespeichert: Passwörter und andere als sensibel markierte Inhalte sowie alles aus Passwort-Managern. Android zeigt bei jedem neuen Eintrag kurz „Shell hat Informationen aus der Zwischenablage eingefügt“ – das lässt sich in den Einstellungen ausblenden.",
+  "plural": false
+ },
+ "cb_enable": {
+  "en": "Turn on clipboard history",
+  "de": "Zwischenablage-Verlauf einschalten",
+  "plural": false
+ },
+ "cb_not_listening": {
+  "en": "⚠ Not listening right now – Shizuku must be running.",
+  "de": "⚠ Hört gerade nicht mit – Shizuku muss laufen.",
+  "plural": false
+ },
+ "cb_record": {
+  "en": "Record clipboard",
+  "de": "Zwischenablage aufzeichnen",
+  "plural": false
+ },
+ "cb_hide_toast": {
+  "en": "Hide Android's clipboard note",
+  "de": "Androids Zwischenablage-Hinweis ausblenden",
+  "plural": false
+ },
+ "cb_hide_toast_sub": {
+  "en": "Switches off “Show clipboard access” in Android's privacy settings – then no app shows the note. Turning it off here restores your previous setting.",
+  "de": "Schaltet „Zugriff auf Zwischenablage anzeigen“ in Androids Datenschutz-Einstellungen aus – dann zeigt keine App mehr den Hinweis. Ausschalten stellt deine vorherige Einstellung wieder her.",
+  "plural": false
+ },
+ "cb_never": {
+  "en": "Password managers are always excluded.",
+  "de": "Passwort-Manager sind immer ausgeschlossen.",
+  "plural": false
+ },
+ "cb_delete_all": {
+  "en": "Delete everything except pinned",
+  "de": "Alles außer Angehefteten löschen",
+  "plural": false
+ },
+ "cb_empty": {
+  "en": "Nothing copied yet",
+  "de": "Noch nichts kopiert",
+  "plural": false
+ },
+ "cb_empty_hint": {
+  "en": "Copy a text anywhere – it shows up here.",
+  "de": "Kopiere irgendwo einen Text – er erscheint hier.",
+  "plural": false
+ },
+ "cb_pin": {
+  "en": "Pin",
+  "de": "Anheften",
+  "plural": false
+ },
+ "cb_unpin": {
+  "en": "Unpin",
+  "de": "Lösen",
+  "plural": false
+ },
+ "cb_exclude_app": {
+  "en": "Don't record this app",
+  "de": "Diese App nicht aufzeichnen",
+  "plural": false
  }
 }

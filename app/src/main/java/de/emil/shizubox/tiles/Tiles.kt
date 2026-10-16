@@ -124,3 +124,25 @@ class CacheTile : ShellTile() {
     override suspend fun read() = QuickActions.read(QuickAction.Cache)
     override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Cache, current)
 }
+
+/** Opens the clipboard history (to paste an older entry again). */
+class ClipboardTile : TileService() {
+    override fun onStartListening() {
+        qsTile?.apply {
+            state = if (de.emil.shizubox.clipboard.ClipHistory.settings.value.enabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+            updateTile()
+        }
+    }
+
+    override fun onClick() {
+        startActivityAndCollapse(
+            PendingIntent.getActivity(
+                this, 31,
+                Intent(this, MainActivity::class.java).putExtra(MainActivity.EXTRA_SECTION, "System")
+                    .putExtra(de.emil.shizubox.privacy.PrivacyLog.EXTRA_PAGE, "clipboard")
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+            ),
+        )
+    }
+}
