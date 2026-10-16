@@ -46,7 +46,7 @@
 - Fix: Update-APKs blieben nach der stillen Installation im Cache liegen (bei mir fast 900 MB) – werden jetzt sofort gelöscht
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 
-## 0.7.1 (in Arbeit)
+## 0.7.1 – 2026-10-16
 - Update-Dateien für den System-Installer werden nach 1 Stunde gelöscht (vorher 1 Tag → über 1 GB nach mehreren
   manuellen Updates), zusätzlich beim App-Start
 - Pausierte Update-Version wird automatisch freigegeben, sobald sie (von Hand) installiert ist
