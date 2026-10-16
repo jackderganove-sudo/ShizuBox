@@ -69,7 +69,6 @@ fun CacheScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     LaunchedEffect(reload) { list = runCatching { CacheCleaner.list(context) }.getOrDefault(emptyList()) }
     val total = list.orEmpty().sumOf { it.bytes }
     val max = list.orEmpty().maxOfOrNull { it.bytes } ?: 1L
-    val heavy = list.orEmpty().filter { it.pkg in CacheCleaner.heavy && it.bytes > 500L * 1024 * 1024 }
     val listStart = rememberListStart(list != null)
     fun size(b: Long) = Formatter.formatShortFileSize(context, b)
 
@@ -120,7 +119,6 @@ fun CacheScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                                 Text(a.label, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
                                 Text(size(a.bytes), style = MaterialTheme.typography.bodyLarge)
                             }
-                            if (a.pkg in CacheCleaner.heavy) Text(t(R.string.cc_heavy_one), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.tertiary)
                             LinearProgressIndicator(progress = { a.bytes.toFloat() / max }, modifier = Modifier.fillMaxWidth().padding(top = 4.dp))
                         }
                         // Own cache directly; other apps: Android 17 only lets the settings do it.
@@ -152,10 +150,7 @@ fun CacheScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             onDismissRequest = { confirm = false },
             title = { Text(t(R.string.cc_clean_all_q)) },
             text = {
-                Text(
-                    t(R.string.cc_clean_all_body, size(total)) +
-                        if (heavy.isNotEmpty()) "\n\n" + t(R.string.cc_heavy_warn, heavy.joinToString { "${it.label} (${size(it.bytes)})" }) else "",
-                )
+                Text(t(R.string.cc_clean_all_body, size(total)))
             },
             confirmButton = {
                 TextButton(onClick = {

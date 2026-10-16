@@ -301,6 +301,7 @@ class DebugReceiver : BroadcastReceiver() {
                             if (intent.getStringExtra("mode") == "own") return@launch run {
                                 fun size(f: java.io.File): Long = if (f.isDirectory) f.listFiles().orEmpty().sumOf(::size) else f.length()
                                 Log.i(TAG, "test cache own: " + context.cacheDir.listFiles().orEmpty().joinToString { "${it.name}=${size(it) / 1024}K" } +
+                                    " updates=[" + java.io.File(context.cacheDir, "updates").listFiles().orEmpty().joinToString { "${it.name}:${it.length() / 1024}K@${java.text.SimpleDateFormat("HH:mm", java.util.Locale.US).format(java.util.Date(it.lastModified()))}" } + "]" +
                                     " ext=" + context.externalCacheDir?.listFiles().orEmpty().joinToString { "${it.name}=${size(it) / 1024}K" })
                             }
                             val p = intent.getStringExtra("pkg") ?: "com.google.android.calculator"

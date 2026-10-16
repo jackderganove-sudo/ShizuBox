@@ -77,6 +77,16 @@ object Updates {
         )
         Source.GitHub.token = _settings.value.githubToken
         ensureSelfTracked()
+        ioScope.launch { cleanOldDownloads() }
+    }
+
+    /**
+     * Downloaded APKs for the system installer stay until it has read them. An hour is plenty;
+     * a day let manual updates pile up to over a gigabyte. Never touches files of running downloads.
+     */
+    private fun cleanOldDownloads() {
+        val hourAgo = System.currentTimeMillis() - 3600_000L
+        File(appContext.cacheDir, "updates").listFiles()?.filter { it.lastModified() < hourAgo }?.forEach { it.delete() }
     }
 
     /** ShizuBox's own releases on GitHub – always tracked, so a new version shows up like any other update. */
@@ -275,10 +285,7 @@ object Updates {
     suspend fun download(app: TrackedApp, onProgress: (Float) -> Unit): Pair<TrackedApp, Uri> = withContext(Dispatchers.IO) {
         val asset = app.chosenApk ?: throw SourceException(t(R.string.e_no_apk))
         val dir = File(appContext.cacheDir, "updates").apply { mkdirs() }
-        // Never delete files of other downloads (the installer may still be reading them),
-        // only leftovers older than a day.
-        val dayAgo = System.currentTimeMillis() - 24 * 3600_000L
-        dir.listFiles()?.filter { it.lastModified() < dayAgo }?.forEach { it.delete() }
+        cleanOldDownloads()
         val target = File(dir, "${System.currentTimeMillis()}_" + asset.name.replace(Regex("[^A-Za-z0-9._-]"), "_"))
         val conn = if (isApkPureHost(asset.url)) withNetHint {
             openFollowingRedirects(asset.url).also { if (it.responseCode == 403 || it.responseCode >= 500) throw SourceException("HTTP ${it.responseCode}") }

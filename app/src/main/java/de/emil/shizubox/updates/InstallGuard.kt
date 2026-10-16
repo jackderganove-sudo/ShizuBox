@@ -73,7 +73,16 @@ object InstallGuard {
     /** Version of [key] that hung last time and must not be installed automatically. */
     fun blockedVersion(key: String): String? = prefs.getString("blocked_$key", null)
 
-    fun isBlocked(app: TrackedApp) = app.latestVersion != null && blockedVersion(app.key) == app.latestVersion
+    fun isBlocked(app: TrackedApp): Boolean {
+        val blocked = blockedVersion(app.key) ?: return false
+        // Installed by hand in the meantime: the hold is no longer needed.
+        val installed = runCatching { appContext.packageManager.getPackageInfo(app.id, 0).versionName }.getOrNull()
+        if (installed != null && (Versions.compare(installed, blocked) ?: -1) >= 0) {
+            clearBlock(app.key)
+            return false
+        }
+        return app.latestVersion != null && blocked == app.latestVersion
+    }
 
     /** The user asked for this install explicitly: lift the hold. */
     fun clearBlock(key: String) {

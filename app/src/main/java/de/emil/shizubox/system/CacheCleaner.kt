@@ -18,12 +18,12 @@ data class AppCache(val pkg: String, val label: String, val bytes: Long)
  * itself like for screen time). Tested on Android 17 (Pixel):
  * - `pm trim-caches <size>` returns at once; with a target only a little above the free space it
  *   frees nothing, so "clean everything" asks for an unreachable 999G (the documented way).
+ * - `pm trim-caches 999G` freed ~4 GB of app caches; AICore's 7.6 GB "cache" (on-device AI models)
+ *   stayed untouched – the system protects it.
  * - `pm clear --cache-only <pkg>` (also `cmd package clear --user 0 …`) hangs forever and deletes
  *   nothing – single apps therefore open their storage page in the settings instead.
  */
 object CacheCleaner {
-    /** Large caches that are really downloaded models etc. (re-downloaded after cleaning). */
-    val heavy = setOf("com.google.android.aicore")
 
     /** Cache per app, largest first (apps without cache are left out). */
     suspend fun list(context: Context): List<AppCache> = withContext(Dispatchers.IO) {
