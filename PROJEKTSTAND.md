@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.7.1** (versionCode 7, veröffentlicht 2026-10-16; per Selbst-Update installiert, vom Nutzer bestätigt) |
+| Version | **0.7.2** (versionCode 8, 2026-10-16, Stabilitätsrunde, nicht veröffentlicht) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -181,5 +181,51 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - R8: commons-compress (youtubedl-android) und NewPipe/Rhino brauchen Keep-Regeln, sonst scheitert das Entpacken bzw. die Extraktion
 - uiautomator wird durch die pulsierende Shizuku-Animation nie „idle“ → Koordinaten per Screenshot bestimmen
 
+## Stabilitätsbericht (0.7.2, 2026-10-16)
+
+**Gefunden und behoben**
+- Animierter Glas-Hintergrund und Shizuku-Puls lasen ihre Animation im Compose-Body → Neuaufbau in jedem Frame,
+  alle Glas-Karten neu weichgezeichnet: **70–100 % eines CPU-Kerns** auf einem stillstehenden Bildschirm.
+  Jetzt nur beim Zeichnen gelesen, 8 bzw. 20 Bilder/s, Pause wenn unsichtbar → System 7 %, Startseite 11 %.
+- Shell: harte Zeitlimits (seit 0.7.0); Massen-Aktionen (Einfrieren/Auftauen/Beenden) bekamen ein Limit, das mit der
+  Paketzahl wächst (sonst Abbruch nach 60 s bei Hunderten Apps); `pm install` (Schnell-Installer, Neu-Installieren) 5 min;
+  Internet-Sperre ebenfalls skaliert. FFmpeg-Konvertierung hatte gar kein Limit und lief nach Abbruch weiter → 30 min,
+  wird beim Abbrechen beendet, halbe Datei gelöscht.
+- Temporäre Dateien: VirusTotal-Upload-Kopien (`vt_upload_*`) blieben liegen; Schnell-Installer-Splits bei Fehlern;
+  dazu Aufräumen alter Temp-Dateien (Parser, Splits, geteilte APKs, Debug-Bilder) beim Start.
+- Speicher: Prüfung auf freien Platz vor Update-Downloads (Datei ×2 + 200 MB) und Video-Downloads (≥ 500 MB).
+- Direct Boot: Download-Warteschlange wurde vor dem ersten Entsperren leer geladen und hätte beim nächsten Download die
+  gespeicherte Liste überschrieben → lädt jetzt erst nach dem Entsperren (`Unlock.whenUnlocked`); WorkManager-Absturz (0.7.0).
+- Benachrichtigungen: Boost-Benachrichtigung bei jeder Schieberegler-Bewegung (~60/s) → erst wenn der Wert steht;
+  Download-Benachrichtigung bei mehreren parallelen Downloads → max. 2/s; Updates (0.7.0) gedrosselt.
+- Download-Dienst: `onTimeout` (Tagesbudget für dataSync-Dienste ab Android 15) pausiert statt abzustürzen.
+- Benachrichtigungs-Verlauf: Obergrenzen 50 000 Einträge und 300 MB Bilder (älteste Bilder zuerst), Größe in den Einstellungen.
+- UI-Thread: App-Namen/Icons in Bildschirmzeit, Prozessen, Berechtigungen, Verlauf und die Spieleliste wurden beim Zeichnen
+  von der Platte geladen → im Hintergrund + Cache (`AppLabels`).
+- Automationen: Schleifenschutz – eine Regel, die öfter als 6× pro Minute startet (Aktion schaltet eigenen Auslöser um),
+  wird abgeschaltet und im Fehlerprotokoll vermerkt.
+- Keine Installationen und keine Update-Prüfung während des Schulmodus.
+- Neues **Fehlerprotokoll** (Einstellungen): eigene Abstürze, ANRs/native Abstürze/Kills aus Androids Exit-Gründen
+  (mit Thread-Dump), InstallGuard-Hänger, Automations-Schleifen; Kopieren/Teilen, 30 Tage, nicht im Backup.
+- StrictMode-Schalter für Tests (`--es strict on|off`).
+
+**Gemessen auf dem Pixel (Android 17)**
+- StrictMode beim Durchklicken aller Bereiche: keine Verstöße beim Zeichnen; nur das übliche Laden kleiner
+  Einstellungsdateien beim App-Start.
+- CPU (Anteil eines Kerns): System-Bereich 7 %, Startseite 11 % (vorher 70–100 %), im Hintergrund 0 %;
+  Automationen + Boost + Verlauf gleichzeitig im Hintergrund 0,1 %.
+- RAM (PSS): Leerlauf/Hintergrund 16 MB; App-Liste mit 460 Apps offen 209 MB (davon 103 MB Grafik für die Glas-Unschärfe),
+  nach Verlassen 64 MB.
+- Akku seit letztem Laden: Hintergrund 0,37 mAh, Wakelocks 21 ms, 1 Job – Verbrauch fast nur bei offener App.
+- Stresstests: 3 Downloads parallel (inkl. FFmpeg) ok, 28 Threads; Prüfung von 74 Apps in 27 s (3 s CPU, 25 Threads);
+  App-Liste 460 Apps in 0,75 s.
+- Schulmodus nur geprüft, nicht geändert: ShizuBox, Shizuku, Telefon, Einstellungen, Launcher, Tastatur sind ausgenommen;
+  kein Feature schaltet Netz ein oder entpausiert Apps; Automationen pausieren; Skript-Laufzeit (~1–3 s) weit unter dem 60-s-Limit.
+
+**Offen**
+- „Alle aktualisieren“ mit echten Updates konnte nicht gestresst werden (es standen keine an).
+- Grafikspeicher der Glas-Unschärfe (~100 MB bei offener App) – bei Bedarf Glas-Effekt in den Einstellungen ausschalten.
+- Netz seit letztem Laden: 2,4 GB empfangen / 831 MB gesendet (Downloads, VirusTotal-Uploads) – plausibel, aber beobachten.
+
 ## Offene Ideen
-- Schulmodus-Statistik, Debloat-Vorschläge mit Rückgängig, weitere Kacheln, Update-Benachrichtigung mit „Installieren“
+- Weitere Kacheln

@@ -85,6 +85,10 @@ class DebugReceiver : BroadcastReceiver() {
         intent.getStringExtra("test")?.let { what ->
             // Backend checks without the UI: --es test processes|tweaks|cpu|device
             val pending = goAsync()
+            // Long tests release the broadcast right away: Android counts a background broadcast
+            // that takes over 60 s as an ANR and kills the process (seen with "vt" and "dlstress").
+            val long = what in setOf("vt", "vtbg", "dlstress", "apkpurefull", "ytdl", "apkpure", "checkall")
+            if (long) pending.finish()
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val result = when (what) {
@@ -223,6 +227,43 @@ class DebugReceiver : BroadcastReceiver() {
                             val on = intent.getStringExtra("mode") != "off"
                             de.emil.shizubox.settings.AppSettings.update { it.copy(animatedBackground = on) }
                             "animatedBackground=$on"
+                        }
+                        "dlstress" -> {
+                            // Three downloads at once (video + 2 audio formats incl. FFmpeg), then everything is deleted again.
+                            val q = de.emil.shizubox.downloader.DownloadQueue
+                            val url = "https://www.youtube.com/watch?v=jNQXAC9IVRw"
+                            val before = q.tasks.value.map { it.id }.toSet()
+                            q.enqueue(url, "TEST video", de.emil.shizubox.downloader.FormatChoice(kind = de.emil.shizubox.downloader.MediaKind.VIDEO, height = 360))
+                            q.enqueue(url, "TEST m4a", de.emil.shizubox.downloader.FormatChoice(kind = de.emil.shizubox.downloader.MediaKind.AUDIO, audioFormat = "m4a"))
+                            q.enqueue(url, "TEST mp3", de.emil.shizubox.downloader.FormatChoice(kind = de.emil.shizubox.downloader.MediaKind.AUDIO, audioFormat = "mp3"))
+                            val t0 = System.currentTimeMillis()
+                            var mine = q.tasks.value.filter { it.id !in before }
+                            var maxRunning = 0
+                            while (System.currentTimeMillis() - t0 < 5 * 60_000) {
+                                mine = q.tasks.value.filter { it.id !in before }
+                                maxRunning = maxOf(maxRunning, mine.count { it.state == de.emil.shizubox.downloader.TaskState.RUNNING })
+                                if (mine.none { it.state == de.emil.shizubox.downloader.TaskState.RUNNING || it.state == de.emil.shizubox.downloader.TaskState.QUEUED }) break
+                                kotlinx.coroutines.delay(1000)
+                            }
+                            val summary = mine.joinToString { "${it.title}:${it.state}${it.error?.let { e -> "($e)" } ?: ""}" }
+                            val threads = Thread.getAllStackTraces().size
+                            mine.forEach { q.deleteFile(it.id) }
+                            "took ${(System.currentTimeMillis() - t0) / 1000}s maxParallel=$maxRunning threads=$threads $summary -> deleted"
+                        }
+                        "updlist" -> Updates.installableUpdates().joinToString { "${it.name} ${it.installedVersion}->${it.latestVersion} (${it.chosenApk?.name?.substringAfterLast('.')})" }.ifBlank { "none" }
+                        "checkall" -> {
+                            val t0 = System.currentTimeMillis()
+                            val cpu0 = android.os.Process.getElapsedCpuTime()
+                            val n = Updates.checkAll()
+                            "apps=${Updates.apps.value.size} took=${(System.currentTimeMillis() - t0) / 1000}s cpu=${(android.os.Process.getElapsedCpuTime() - cpu0) / 1000}s threads=${Thread.getAllStackTraces().size} updates=$n errors=${Updates.apps.value.count { it.error != null }}"
+                        }
+                        "appslist" -> {
+                            val t0 = System.currentTimeMillis()
+                            val cpu0 = android.os.Process.getElapsedCpuTime()
+                            val all = de.emil.shizubox.apps.Apps.list()
+                            val t1 = System.currentTimeMillis()
+                            val labels = all.count { it.label.isNotBlank() }
+                            "apps=${all.size} system=${all.count { it.isSystem }} list=${t1 - t0}ms cpu=${android.os.Process.getElapsedCpuTime() - cpu0}ms labels=$labels heapMB=${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}"
                         }
                         "errlog" -> {
                             // --es mode clear|show
@@ -403,7 +444,7 @@ class DebugReceiver : BroadcastReceiver() {
                 } catch (e: Throwable) {
                     Log.e(TAG, "test $what failed", e)
                 } finally {
-                    pending.finish()
+                    if (!long) pending.finish()
                 }
             }
             return

@@ -46,6 +46,18 @@
 - Fix: Update-APKs blieben nach der stillen Installation im Cache liegen (bei mir fast 900 MB) – werden jetzt sofort gelöscht
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 
+## 0.7.2 – Stabilitätsrunde (2026-10-16)
+- Akku: offene App brauchte durch den animierten Hintergrund 70–100 % eines CPU-Kerns, jetzt 7–11 %
+- Fehlerprotokoll unter Einstellungen (Abstürze, ANRs, Hänger; Kopieren/Teilen; 30 Tage; nicht im Backup)
+- Zeitlimits für Massen-Aktionen, Installationen und FFmpeg passend; FFmpeg wird beim Abbrechen beendet
+- Temporäre Dateien werden aufgeräumt; Speicherprüfung vor großen Downloads
+- Download-Liste geht nach einem Neustart nicht mehr verloren (Start vor dem ersten Entsperren)
+- Benachrichtigungen von Boost und Downloads gedrosselt; Download-Dienst übersteht das Android-Zeitbudget
+- Benachrichtigungs-Verlauf mit Größenbremse und Größenanzeige
+- App-Namen und Icons werden nicht mehr beim Zeichnen von der Platte geladen
+- Automationen: Schleifenschutz; keine Installationen während des Schulmodus
+- Details und Messwerte: Stabilitätsbericht in PROJEKTSTAND.md
+
 ## 0.7.1 – 2026-10-16 – Selbst-Update 0.7.0 → 0.7.1 vom Nutzer bestätigt
 - Update-Dateien für den System-Installer werden nach 1 Stunde gelöscht (vorher 1 Tag → über 1 GB nach mehreren
   manuellen Updates), zusätzlich beim App-Start

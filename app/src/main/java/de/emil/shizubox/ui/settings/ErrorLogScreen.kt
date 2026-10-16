@@ -28,7 +28,6 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -88,7 +87,7 @@ fun ErrorLogScreen(onBack: () -> Unit) {
                         context.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("ShizuBox", ErrorLog.asText()))
                         message = t(R.string.el_copied)
                     }) { Text(t(R.string.el_copy)) }
-                    OutlinedButton(shapes = ButtonDefaults.shapes(), onClick = {
+                    FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = {
                         context.startActivity(
                             Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, ErrorLog.asText()), null)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
