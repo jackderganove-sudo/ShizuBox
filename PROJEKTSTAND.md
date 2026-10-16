@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.7.0** (versionCode 6, 2026-10-15, noch nicht veröffentlicht) |
+| Version | **0.7.0** (versionCode 6, veröffentlicht 2026-10-16) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -59,6 +59,8 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Hintergrundprüfung, „Alle aktualisieren“ als Vordergrund-Arbeit mit Fortschritt | ✅ |
 | Sicherheit: VirusTotal-Sperre, Signatur-Sperre | ✅ |
 | Version überspringen, Sortierung, Anheften | ✅ |
+| Selbst-Update: ShizuBox trägt `github.com/jackderganove-sudo/ShizuBox` automatisch ein (`Updates.ensureSelfTracked`), eigenes Update ohne VirusTotal-Sperre, wenn die Signatur passt; `InstallGuard` erkennt das Ende der eigenen Installation am neuen Versionsnamen | ✅ Quelle getestet (findet Releases + APK) |
+| VirusTotal-Upload/Analyse app-weit (`VirusTotal.startUpload`, `scans`), bis 10 min, Datei-Bericht als Abkürzung | ✅ getestet (4-KB-Testdatei: queued → clean in 28 s) |
 | Benachrichtigung mit „Installieren“/„Alle installieren“/„Überspringen“ (`UpdateNotifications`) | ✅ Darstellung getestet (Test-Einträge), Installation nutzt den getesteten Update-Pfad |
 
 ### System (`system/`, `ui/system/`)

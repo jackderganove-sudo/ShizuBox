@@ -206,6 +206,36 @@ class DebugReceiver : BroadcastReceiver() {
                                 "state=fg:${s.foreground} hp:${s.headphones} bt:${s.bluetooth.size} chg:${s.charging} bat:${s.battery} wifi:${s.ssid?.let { if (it.isEmpty()) "unnamed" else "named" }} " +
                                 "calc=${ShizukuManager.exec("cmd connectivity get-package-networking-enabled $calc").out.trim()}"
                         }
+                        "vtbg" -> {
+                            // Same path as the card: start in the background, then only watch the shared state.
+                            val vt = de.emil.shizubox.installer.VirusTotal
+                            val f = java.io.File(context.cacheDir, "vt_probe_${System.currentTimeMillis()}.bin").apply { writeBytes(java.security.SecureRandom().generateSeed(4096)) }
+                            val sha = f.inputStream().use { vt.sha256(it) }
+                            val t0 = System.currentTimeMillis()
+                            vt.startUpload(sha) { f }
+                            var last = ""
+                            while (vt.scans.value[sha]?.busy != false && System.currentTimeMillis() - t0 < 11 * 60_000) {
+                                val s = vt.scans.value[sha]?.status.toString()
+                                if (s != last) { last = s; Log.i(TAG, "vtbg +${(System.currentTimeMillis() - t0) / 1000}s $s") }
+                                kotlinx.coroutines.delay(500)
+                            }
+                            f.delete()
+                            "final +${(System.currentTimeMillis() - t0) / 1000}s ${vt.scans.value[sha]?.status} total=${vt.scans.value[sha]?.total}"
+                        }
+                        "vt" -> {
+                            // Uploads 4 KB of random bytes and logs every state with the time since start.
+                            val vt = de.emil.shizubox.installer.VirusTotal
+                            val f = java.io.File(context.cacheDir, "vt_probe_${System.currentTimeMillis()}.bin").apply { writeBytes(java.security.SecureRandom().generateSeed(4096)) }
+                            val sha = f.inputStream().use { vt.sha256(it) }
+                            val t0 = System.currentTimeMillis()
+                            var last = ""
+                            val r = vt.uploadAndScan(f, sha) { p ->
+                                val s = "${p.status}${if (p.status == de.emil.shizubox.installer.VtStatus.UPLOADING) " ${p.uploadProgress}%" else ""}"
+                                if (s != last) { last = s; Log.i(TAG, "vt +${(System.currentTimeMillis() - t0) / 1000}s $s") }
+                            }
+                            f.delete()
+                            "final +${(System.currentTimeMillis() - t0) / 1000}s ${r.status} err=${r.errorMessage} total=${r.total} lookupNow=${vt.lookup(sha).status}"
+                        }
                         "ig" -> when (intent.getStringExtra("mode")) {
                             // sim: journal an install of --es key <url> and kill the process mid-way
                             "sim" -> {
@@ -231,7 +261,7 @@ class DebugReceiver : BroadcastReceiver() {
                             val df = java.text.SimpleDateFormat("MM-dd HH:mm:ss", java.util.Locale.US)
                             val pm = context.packageManager
                             append("settings=${Updates.settings.value.copy(githubToken = "")}\n")
-                            Updates.apps.value.filter { it.pendingSince > 0 || it.url.contains("apkpure") }.sortedByDescending { it.pendingSince }.forEach { a ->
+                            Updates.apps.value.filter { it.pendingSince > 0 || it.url.contains("apkpure") || Updates.isSelf(it) || it.url.contains("ShizuBox") }.sortedByDescending { it.pendingSince }.forEach { a ->
                                 val pi = runCatching { pm.getPackageInfo(a.id, 0) }.getOrNull()
                                 append("${a.name} id=${a.id} src=${Source.forUrl(a.url)?.label} installed=${a.installedVersion}/${pi?.versionName} ")
                                 append("lastUpdate=${pi?.lastUpdateTime?.let { df.format(java.util.Date(it)) }} latest=${a.latestVersion} pending=${a.pendingVersion}@${if (a.pendingSince > 0) df.format(java.util.Date(a.pendingSince)) else "-"} ")

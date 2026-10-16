@@ -46,6 +46,14 @@ object InstallGuard {
             return
         }
         val i = parse(running) ?: return
+        // The app is installed in exactly that version: the install went through, only ShizuBox
+        // didn't see the end (its own update always ends like this – the process is replaced).
+        val pkg = runCatching { JSONObject(running).optString("pkg") }.getOrDefault("")
+        val now = runCatching { context.packageManager.getPackageInfo(pkg, 0).versionName }.getOrNull()
+        if (now != null && i.version.isNotBlank() && Versions.compare(i.version, now) == 0) {
+            prefs.edit().remove("running").commit()
+            return
+        }
         lastInterrupted = i
         // Hold this version back from automatic installs until the user retries on purpose.
         prefs.edit()
@@ -78,7 +86,7 @@ object InstallGuard {
     /** Runs one install under the journal; only one install at a time. */
     suspend fun <T> guarded(app: TrackedApp, workId: String, block: suspend (journal: (file: String, sizeKb: Long) -> Unit) -> T): T = lock.withLock {
         fun write(file: String, size: Long) {
-            val o = JSONObject().put("key", app.key).put("name", app.name).put("version", app.latestVersion.orEmpty())
+            val o = JSONObject().put("key", app.key).put("pkg", app.id).put("name", app.name).put("version", app.latestVersion.orEmpty())
                 .put("file", file).put("size", size).put("work", workId).put("since", System.currentTimeMillis())
             // commit(), not apply(): it must be on disk before a possible freeze.
             prefs.edit().putString("running", o.toString()).commit()

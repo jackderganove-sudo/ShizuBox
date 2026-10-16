@@ -11,6 +11,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
@@ -88,7 +89,23 @@ object VirusTotal {
         }.getOrElse { VtResult(VtStatus.ERROR, errorMessage = networkMessage(it), sha256 = sha256) }
     }
 
-    /** Uploads [file] and waits for the analysis (up to ~3 minutes). */
+    private val scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + Dispatchers.IO)
+    private val _scans = kotlinx.coroutines.flow.MutableStateFlow<Map<String, VtResult>>(emptyMap())
+    /** Uploads by SHA-256 – they keep running when the screen is left or the card scrolls away. */
+    val scans: kotlinx.coroutines.flow.StateFlow<Map<String, VtResult>> = _scans
+
+    /** Starts (once per file) an upload + analysis in the background; progress lands in [scans]. */
+    fun startUpload(sha256: String, file: suspend () -> File?) {
+        if (_scans.value[sha256]?.busy == true) return
+        fun set(r: VtResult) { _scans.value = _scans.value + (sha256 to r.copy(sha256 = sha256)) }
+        set(VtResult(VtStatus.UPLOADING))
+        scope.launch {
+            val f = runCatching { file() }.getOrNull()
+            set(if (f == null) VtResult(VtStatus.ERROR, errorMessage = t(R.string.file_unreadable)) else uploadAndScan(f, sha256) { set(it) })
+        }
+    }
+
+    /** Uploads [file] and waits for the analysis (up to ~10 minutes). */
     suspend fun uploadAndScan(file: File, sha256: String, onProgress: (VtResult) -> Unit): VtResult = withContext(Dispatchers.IO) {
         val key = apiKey
         if (key.isBlank()) return@withContext VtResult(VtStatus.NO_API_KEY)
@@ -149,10 +166,16 @@ object VirusTotal {
 
     /** Staggered polling to stay within the free tier's 4 requests/minute. */
     private suspend fun poll(key: String, id: String, sha256: String, onProgress: (VtResult) -> Unit): VtResult {
-        val deadline = System.currentTimeMillis() + 3 * 60_000
+        // The free tier queues uploads for a while when VirusTotal is busy: 3 minutes were often
+        // too short. Every third round also ask for the file report, which can be ready earlier.
+        val deadline = System.currentTimeMillis() + 10 * 60_000
         var attempt = 0
         while (System.currentTimeMillis() < deadline) {
             delay(when (attempt++) { 0 -> 3_000L; 1, 2 -> 5_000L; 3, 4 -> 10_000L; else -> 15_000L })
+            if (attempt % 3 == 0) {
+                val report = lookup(sha256)
+                if (report.status == VtStatus.CLEAN || report.status == VtStatus.SUSPICIOUS || report.status == VtStatus.MALICIOUS) return report
+            }
             val result = runCatching {
                 val c = open("$BASE_URL/analyses/$id", key)
                 if (c.responseCode !in 200..299) return@runCatching httpFailure(c)
@@ -170,7 +193,8 @@ object VirusTotal {
             }
             return result
         }
-        return VtResult(VtStatus.ERROR, errorMessage = t(R.string.vt_too_long), sha256 = sha256)
+        return lookup(sha256).takeIf { it.status == VtStatus.CLEAN || it.status == VtStatus.SUSPICIOUS || it.status == VtStatus.MALICIOUS }
+            ?: VtResult(VtStatus.ERROR, errorMessage = t(R.string.vt_too_long), sha256 = sha256)
     }
 
     private fun open(url: String, key: String) = (URL(url).openConnection() as HttpURLConnection).apply {

@@ -1,6 +1,12 @@
 # Changelog
 
 ## 0.7.0 – Sitzung 2026-10-15 (Abend) / 2026-10-16
+- ShizuBox verfolgt seine eigenen GitHub-Releases automatisch: neue Version → Benachrichtigung mit „Installieren“,
+  Download und Installation in der App (eigenes, gleich signiertes Update wird nicht von der VirusTotal-Sperre aufgehalten)
+- Fix: VirusTotal-Scan blieb bei „In Warteschlange“ hängen – Upload und Analyse laufen jetzt im Hintergrund weiter,
+  auch wenn der Bildschirm gewechselt wird; bis zu 10 min Wartezeit, zwischendurch Abfrage des fertigen Datei-Berichts
+- Fix: „Aktualisieren“ in der App brach beim Bildschirmwechsel ab („rememberCoroutineScope left the composition“) –
+  Download läuft jetzt app-weit
 - **Fix Handy-Hänger bei Updates (2026-10-16):** zwei erzwungene Neustarts während stiller XAPK-Installationen
   (Crunchyroll 3.125.0, 123 MB; danach automatische Wiederholung mit Google Home, 78 MB). Schutz:
   - Fortschritts-Benachrichtigung höchstens 2× pro Sekunde (vorher bei jedem 64-KB-Block, ~2000 Updates pro XAPK)

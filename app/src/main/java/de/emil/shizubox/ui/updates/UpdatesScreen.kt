@@ -284,7 +284,8 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
     var showUpdates by rememberSaveable { mutableStateOf(true) }
     var busy by remember { mutableStateOf<String?>(null) }
     val updatingAll by Updates.updatingAll.collectAsStateWithLifecycle()
-    val busyKey = busy ?: updatingAll?.first
+    val downloads by Updates.downloads.collectAsStateWithLifecycle()
+    val busyKey = busy ?: downloads.keys.firstOrNull() ?: updatingAll?.first
     var query by rememberSaveable { mutableStateOf("") }
     val updListStart = rememberListStart()
     var searching by rememberSaveable { mutableStateOf(false) }
@@ -301,13 +302,7 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
             onBrowser(app.releaseUrl ?: app.url)
             return
         }
-        busy = app.key
-        scope.launch {
-            runCatching { Updates.download(app) {} }
-                .onSuccess { (_, uri) -> openInstaller(context, uri) }
-                .onFailure { Updates.update(app.copy(error = it.message)) }
-            busy = null
-        }
+        Updates.downloadAndInstall(app)
     }
 
     fun matches(a: TrackedApp) = query.isBlank() || a.name.contains(query, true) || a.author.contains(query, true)

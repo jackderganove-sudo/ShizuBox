@@ -29,6 +29,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -73,10 +74,12 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
         result = if (sha.isNullOrBlank()) VtResult(VtStatus.ERROR, errorMessage = t(R.string.file_unreadable)) else VirusTotal.lookup(sha)
     }
 
+    // A background upload for this file wins over the local state (it survives leaving the screen).
+    val scans by VirusTotal.scans.collectAsStateWithLifecycle()
     GlassCard(Modifier.fillMaxWidth()) {
         Text("VirusTotal", style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(6.dp))
-        val r = result
+        val r = result?.let { scans[it.sha256].takeIf { _ -> it.sha256.isNotBlank() } ?: it }
         if (keyVersion < 0 && r == null) {
             FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = { keyVersion = 0 }) { Text(t(R.string.vt_scan)) }
             return@GlassCard
@@ -120,18 +123,7 @@ fun VirusTotalCard(key: Any, open: () -> InputStream?, asFile: suspend () -> Fil
                 Text(t(R.string.vt_unknown_file), style = MaterialTheme.typography.bodyMedium)
                 FilledTonalButton(shapes = ButtonDefaults.shapes(), 
                     modifier = Modifier.padding(top = 8.dp),
-                    onClick = {
-                        scope.launch {
-                            val sha = r.sha256
-                            result = VtResult(VtStatus.UPLOADING, sha256 = sha)
-                            val file = runCatching { asFile() }.getOrNull()
-                            result = if (file == null) {
-                                VtResult(VtStatus.ERROR, errorMessage = t(R.string.file_unreadable))
-                            } else {
-                                VirusTotal.uploadAndScan(file, sha) { result = it }
-                            }
-                        }
-                    },
+                    onClick = { VirusTotal.startUpload(r.sha256, asFile) },
                 ) { Text(t(R.string.vt_upload)) }
             }
             VtStatus.CLEAN, VtStatus.SUSPICIOUS, VtStatus.MALICIOUS -> {

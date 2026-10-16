@@ -76,6 +76,22 @@ object Updates {
             notify = prefs.getBoolean("notify", true),
         )
         Source.GitHub.token = _settings.value.githubToken
+        ensureSelfTracked()
+    }
+
+    /** ShizuBox's own releases on GitHub – always tracked, so a new version shows up like any other update. */
+    const val SELF_URL = "https://github.com/jackderganove-sudo/ShizuBox"
+
+    fun isSelf(app: TrackedApp) = app.id == appContext.packageName
+
+    private fun ensureSelfTracked() {
+        if (_apps.value.any { isSelf(it) || it.url.equals(SELF_URL, ignoreCase = true) }) return
+        val self = TrackedApp(
+            id = appContext.packageName, url = SELF_URL, name = "ShizuBox", author = "jackderganove-sudo",
+            installedVersion = de.emil.shizubox.BuildConfig.VERSION_NAME, pinned = true,
+        )
+        _apps.update { it + self }
+        saveAsync()
     }
 
     fun setSettings(s: UpdateSettings) {
@@ -337,7 +353,10 @@ object Updates {
         val info = ApkParser.parse(appContext, uri)
         if (info.signatureMismatch == true) return t(R.string.h_sig)
         val vt = de.emil.shizubox.installer.VirusTotal
-        if (_settings.value.virusTotalGate && vt.apiKey.isNotBlank()) {
+        // ShizuBox's own update is signed with the same key as the running app (checked just above),
+        // and a fresh release is usually still unknown to VirusTotal: the gate would always hold it.
+        val trustedSelf = isSelf(current) && info.signatureMismatch == false
+        if (_settings.value.virusTotalGate && vt.apiKey.isNotBlank() && !trustedSelf) {
             val sha = appContext.contentResolver.openInputStream(uri)!!.use { vt.sha256(it) }
             val r = vt.lookup(sha)
             if (r.status != de.emil.shizubox.installer.VtStatus.CLEAN) {
@@ -478,6 +497,36 @@ object Updates {
     }
 
     private val ioScope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + Dispatchers.IO)
+
+    private val _downloads = MutableStateFlow<Map<String, Float>>(emptyMap())
+    /** Manual downloads in progress (key → 0..1); they run independently of any screen. */
+    val downloads: StateFlow<Map<String, Float>> = _downloads.asStateFlow()
+
+    /**
+     * Downloads the update and opens the installer. Runs app-wide: before, it ran in the screen's
+     * scope and was cancelled when the screen changed ("rememberCoroutineScope left the
+     * composition" ended up as the app's error).
+     */
+    fun downloadAndInstall(app: TrackedApp) {
+        if (app.key in _downloads.value) return
+        _downloads.update { it + (app.key to 0f) }
+        ioScope.launch {
+            var last = 0L
+            try {
+                val (_, uri) = download(app) { p ->
+                    val now = android.os.SystemClock.uptimeMillis()
+                    if (now - last > 250) { last = now; _downloads.update { it + (app.key to p) } }
+                }
+                withContext(Dispatchers.Main) { de.emil.shizubox.ui.updates.openInstaller(appContext, uri) }
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _apps.value.firstOrNull { it.key == app.key }?.let { update(it.copy(error = e.message ?: e.toString())) }
+            } finally {
+                _downloads.update { it - app.key }
+            }
+        }
+    }
 
     private fun saveAsync() {
         ioScope.launch { save() }

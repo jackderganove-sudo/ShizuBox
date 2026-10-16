@@ -37,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,7 +64,8 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
     val scope = rememberCoroutineScope()
     val state = remember(app, resumeTick) { Updates.state(app) }
     val realVersion = remember(app, resumeTick) { Updates.installedVersionName(app.id) }
-    var progress by remember { mutableStateOf<Float?>(null) }
+    val downloads by Updates.downloads.collectAsStateWithLifecycle()
+    val progress = downloads[app.key]
     var checking by remember { mutableStateOf(false) }
     var confirmRemove by remember { mutableStateOf(false) }
     var filter by remember(app.key) { mutableStateOf(app.apkFilterRegex) }
@@ -127,15 +129,7 @@ fun UpdateDetailScreen(app: TrackedApp, resumeTick: Int, onBack: () -> Unit, onO
                         Button(shapes = ButtonDefaults.shapes(), onClick = { onOpenBrowser(app.releaseUrl ?: app.url) }) { Text(t(R.string.load_apkmirror)) }
                     } else Button(shapes = ButtonDefaults.shapes(), 
                         enabled = progress == null && app.chosenApk != null,
-                        onClick = {
-                            progress = 0f
-                            scope.launch {
-                                runCatching { Updates.download(app) { progress = it } }
-                                    .onSuccess { (_, uri) -> openInstaller(context, uri) }
-                                    .onFailure { Updates.update(app.copy(error = it.message)) }
-                                progress = null
-                            }
-                        },
+                        onClick = { Updates.downloadAndInstall(app) },
                     ) { Text(if (state == UpdateState.NotInstalled) t(R.string.install) else if (state == UpdateState.Update) t(R.string.update) else t(R.string.reinstall)) }
                     OutlinedButton(shapes = ButtonDefaults.shapes(), enabled = !checking, onClick = {
                         checking = true

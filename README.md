@@ -37,6 +37,8 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 - Alle aktualisieren im Hintergrund mit Fortschrittsbenachrichtigung, optional nur nach sauberem VirusTotal-Ergebnis
 - Version überspringen, Sortierung nach Name/Veröffentlichung/Quelle
 - **Benachrichtigung bei neuen Updates** mit „Installieren“ / „Alle installieren“ / „Überspringen“ – still über Shizuku, sonst System-Dialog
+- **ShizuBox aktualisiert sich selbst**: neue Version auf GitHub → Benachrichtigung, Download und Installation direkt in der App
+- Schutz vor Hängern: Installationen werden protokolliert, eine hängengebliebene Version wird nicht automatisch wiederholt; automatische Installationen nur bei ausgeschaltetem Bildschirm
 - Verständliche Hinweise, wenn ein VPN oder DNS-Filter (NextDNS) APKPure blockiert
 
 ### Automationen
