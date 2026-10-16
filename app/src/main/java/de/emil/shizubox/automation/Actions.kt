@@ -38,6 +38,11 @@ object Actions {
             am.setStreamVolume(AudioManager.STREAM_MUSIC, (a.value / 100f * max).roundToInt().coerceIn(0, max), 0)
             a.copy(value = (before * 100f / max).roundToInt())
         }
+        ActionKind.AppVolume -> {
+            val before = de.emil.shizubox.audio.AppVolume.get(a.pkg)
+            de.emil.shizubox.audio.AppVolume.set(a.pkg, a.value)
+            a.copy(value = before)
+        }
         ActionKind.Boost -> {
             val before = VolumeBoost.settings.value.enabled
             VolumeBoost.update { it.copy(enabled = a.on) }

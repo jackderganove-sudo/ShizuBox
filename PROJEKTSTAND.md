@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.7.2** (versionCode 8, 2026-10-16, Stabilitätsrunde, nicht veröffentlicht) |
+| Version | **0.8.0** (versionCode 9, 2026-10-16: Stabilitätsrunde + Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -81,6 +81,7 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Schulmodus-Statistik (`schoolstats/SchoolStats`, Widget `SchoolStatsWidget`): wertet `school.log` lesend aus (activated/exit requested/restored/screen/Schedule-alarm), Ende-Grund abgeleitet (Power-Sequenz, Endzeit, sonst Notausstieg), eigene DB weil das Log rotiert; keine Änderung am Schulmodus | ✅ getestet (3 Sitzungen erkannt) |
 | Zwischenablage-Verlauf (`clipboard/ClipHistory`, Kachel `ClipboardTile`): Shell-UID hat `READ_CLIPBOARD_IN_BACKGROUND` (Android 17 ✓) → ShellService registriert per Reflection `IClipboard.addPrimaryClipChangedListener` (eigener Binder als Listener, kein Polling), liest Clip + `getPrimaryClipSource`, meldet über `IClipCallback`; `EXTRA_IS_SENSITIVE`/Passwort-Manager nie gespeichert. Android zeigt dabei „Shell hat … eingefügt“ – nur abschaltbar über `clipboard_show_access_notifications` (systemweit, optional, wiederherstellbar) | ✅ getestet (Erfassung mit Quell-App, Hinweis-Unterdrückung) |
 | Cache aufräumen (`CacheCleaner`, System → Cache aufräumen): Cache pro App nach Größe (StorageStatsManager), „Alles aufräumen“ = eigener Cache + `pm trim-caches 999G`, freigegebener Platz mit rollenden Ziffern, Warnung bei KI-Modellen (AICore), Schnellaktion + Kachel „Cache aufräumen“ | ✅ vom Nutzer ausgeführt: ~4 GB frei, AICore (7,6 GB Modelle) bleibt unangetastet. Einzel-App-Cache per Shell unmöglich: `pm clear --cache-only` hängt auf Android 17 und löscht nichts → „Öffnen“ führt in die App-Einstellungen |
+| Lautstärke pro App (`audio/AppVolume`, System → Lautstärke pro App): ShellService (Shell hat `MODIFY_AUDIO_ROUTING`, Android 17 ✓) holt per Reflection `IAudioService.getActivePlaybackConfigurations` und setzt `PlayerProxy.setVolume` auf jeden Player der UID; `registerPlaybackCallback` (eigener Binder) wendet die Pegel bei neuen Playern wieder an; Pegel in Prefs `app_volume` (im Backup), nach Shizuku-Start erneut angewendet | ✅ getestet: InterTune-Track −2,8 dB → −8,8 dB bei 50 % und zurück; Bildschirm + Automations-Aktion; per Ohr vom Nutzer zu prüfen |
 | Gehörschutz: Schalldosis (CSD) zurücksetzen/wiederherstellen (`cmd audio set-sound-dose-value`); abschalten geht per Shell nicht | ✅ |
 
 ### Automationen (`automation/`, `ui/automation/`)
@@ -88,7 +89,7 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 |---|---|
 | Regeln Wenn → Dann, an/aus, Liste + Editor, Vorlagen (Brawl Stars → Gaming, Kopfhörer → Boost aus, Laden → wach bleiben, Akku < 15 % → 60 Hz + Animationen aus, 22:30 Nachtruhe, 07:00 Guten Morgen), im Backup | ✅ |
 | Auslöser: App geöffnet/geschlossen (UsageEvents, Abfrage nur bei Bildschirm an + App-Regel), Uhrzeit + Wochentage (exakter Wecker), Kopfhörer/Bluetooth-Gerät (AudioDeviceCallback, Gerätename ohne BT-Berechtigung), Ladekabel + Akku unter X % (ACTION_BATTERY_CHANGED), WLAN (NetworkCallback + `cmd wifi status` für den Namen) | ✅ Akku-, App- (simuliert) und Zeit-Regel auf dem Pixel getestet |
-| Aktionen: Gaming, Medienlautstärke, Boost, Bildwiederholrate, Animationen, Graustufen (`accessibility_display_daltonizer*`), Bitte nicht stören (`cmd notification set_dnd`), wach bleiben, Internet-Sperre, App/Activity starten (per `am start`), Shell | ✅ Internet-Sperre + Shell getestet; Graustufen/DND-Befehle laufen, Wirkung vom Nutzer zu prüfen |
+| Aktionen: Gaming, Medienlautstärke, Lautstärke pro App, Boost, Bildwiederholrate, Animationen, Graustufen (`accessibility_display_daltonizer*`), Bitte nicht stören (`cmd notification set_dnd`), wach bleiben, Internet-Sperre, App/Activity starten (per `am start`), Shell | ✅ Internet-Sperre + Shell getestet; Graustufen/DND-Befehle laufen, Wirkung vom Nutzer zu prüfen |
 | „Danach zurücksetzen“: vorheriger Zustand wird beim Start gemerkt und beim Ende rückwärts wiederhergestellt (auch nach Neustart gespeichert) | ✅ getestet |
 | Schulmodus: keine Aktion kann ihn starten/beenden; solange er aktiv ist, pausieren alle Regeln | ✅ |
 | Foreground-Service nur, wenn eine Nicht-Zeit-Regel aktiv ist; startet nach Neustart/Update wieder | ✅ |

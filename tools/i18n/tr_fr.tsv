@@ -1052,3 +1052,12 @@ cb_empty_hint	Copie un texte n'importe où – il apparaît ici.
 cb_pin	Épingler
 cb_unpin	Désépingler
 cb_exclude_app	Ne pas enregistrer cette appli
+av_title	Volume par appli
+av_title_short	Volume des applis
+av_sub	Spotify 80 %, jeux 30 %
+av_intro	Chaque appli a son propre niveau en plus du volume multimédia – vrai mixage via Shizuku. Compatible avec le boost du volume.
+av_empty	Rien ne joue pour l'instant
+av_empty_hint	Lance de la musique ou une vidéo – l'appli apparaît ici. Ou ajoute une appli ci-dessous.
+av_add	Ajouter une appli
+av_playing	En lecture
+av_reset	Revenir à 100 %

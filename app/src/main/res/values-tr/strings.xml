@@ -1114,4 +1114,13 @@
     <string name="cb_pin">Sabitle</string>
     <string name="cb_unpin">Sabitlemeyi kaldır</string>
     <string name="cb_exclude_app">Bu uygulamayı kaydetme</string>
+    <string name="av_title">Uygulama başına ses</string>
+    <string name="av_title_short">Uygulama sesi</string>
+    <string name="av_sub" formatted="false">Spotify %80, oyunlar %30</string>
+    <string name="av_intro">Her uygulama medya sesine ek olarak kendi seviyesini alır – Shizuku ile gerçek karıştırma. Ses yükselticiyle uyumlu.</string>
+    <string name="av_empty">Şu an hiçbir şey çalmıyor</string>
+    <string name="av_empty_hint">Müzik veya video başlat – uygulama burada görünür. Ya da aşağıdan uygulama ekle.</string>
+    <string name="av_add">Uygulama ekle</string>
+    <string name="av_playing">Şu an çalıyor</string>
+    <string name="av_reset" formatted="false">%100\'e geri dön</string>
 </resources>

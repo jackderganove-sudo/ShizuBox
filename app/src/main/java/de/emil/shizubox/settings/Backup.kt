@@ -43,6 +43,7 @@ object Backup {
         "battery_report" to setOf("last_snapshot"),
         // Only the settings; copied texts never leave the device.
         "clipboard" to emptySet(),
+        "app_volume" to emptySet(),
         "privacy" to setOf("since_CAMERA", "since_RECORD_AUDIO", "since_FINE_LOCATION", "since_COARSE_LOCATION"),
     )
 
@@ -115,6 +116,7 @@ object Backup {
         de.emil.shizubox.privacy.PrivacyLog.load()
         de.emil.shizubox.battery.BatteryReport.load()
         de.emil.shizubox.clipboard.ClipHistory.load()
+        de.emil.shizubox.audio.AppVolume.load()
         runCatching { de.emil.shizubox.apps.NetBlock.restore(force = true) }
         Updates.init(context)
         UpdateWorker.schedule(context)

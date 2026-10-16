@@ -1114,4 +1114,13 @@
     <string name="cb_pin">Épingler</string>
     <string name="cb_unpin">Désépingler</string>
     <string name="cb_exclude_app">Ne pas enregistrer cette appli</string>
+    <string name="av_title">Volume par appli</string>
+    <string name="av_title_short">Volume des applis</string>
+    <string name="av_sub" formatted="false">Spotify 80 %, jeux 30 %</string>
+    <string name="av_intro">Chaque appli a son propre niveau en plus du volume multimédia – vrai mixage via Shizuku. Compatible avec le boost du volume.</string>
+    <string name="av_empty">Rien ne joue pour l\'instant</string>
+    <string name="av_empty_hint">Lance de la musique ou une vidéo – l\'appli apparaît ici. Ou ajoute une appli ci-dessous.</string>
+    <string name="av_add">Ajouter une appli</string>
+    <string name="av_playing">En lecture</string>
+    <string name="av_reset" formatted="false">Revenir à 100 %</string>
 </resources>

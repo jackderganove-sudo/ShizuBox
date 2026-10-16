@@ -13,6 +13,7 @@ Das Handy bleibt an, aber es passiert absolut nichts – als wäre es aus.
 - Alle Apps pausiert (außer Telefon/Notruf, Einstellungen, Shizuku)
 - Komplett schwarzer Bildschirm, auch über dem Sperrbildschirm
 - **Ausstieg: 3× schnell die Power-Taste** – danach wird jede Einstellung exakt wiederhergestellt
+- **Statistik**: Zeit im Schulmodus heute/Woche/Monat, 14-Tage-Verlauf, Art des Beendens – auch als Homescreen-Widget
 - Automatisches Ende nach einer festen Zeit, **Zeitplan** (z. B. Mo–Fr um 7:50 automatisch starten, einmal aussetzen), Schnelleinstellungs-Kachel
 - Überlebt Neustarts; ist Shizuku danach aus, führt eine kurze Anleitung durch die Wiederherstellung
 
@@ -44,7 +45,7 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 ### Automationen
 Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
 - Auslöser: App geöffnet/geschlossen, Uhrzeit + Wochentage, Kopfhörer, Bluetooth-Gerät, Ladekabel, Akku unter X %, WLAN (bestimmtes Netz)
-- Aktionen: Gaming-Modus, Lautstärke, Boost, Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, Wach bleiben, Internet-Sperre, App oder Activity starten, Shell-Befehl
+- Aktionen: Gaming-Modus, Lautstärke, Lautstärke pro App, Boost, Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, Wach bleiben, Internet-Sperre, App oder Activity starten, Shell-Befehl
 - „Danach zurücksetzen“, wenn der Auslöser endet; akkuschonend (Callbacks statt Dauerabfrage); pausiert während des Schulmodus
 
 ### System
@@ -57,6 +58,10 @@ Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
 - **Lautstärke-Boost** bis +100 % über das Maximum, getrennte Stufen für Lautsprecher und Kopfhörer, einstellbare Obergrenze, Gehörschutz-Schalldosis zurücksetzen
 - **Benachrichtigungs-Verlauf**: alle Benachrichtigungen lokal gespeichert (nicht im Backup), nach App oder chronologisch, Suche, **gelöschte/zurückgezogene Nachrichten** markiert, Bilder, Fingerabdruck-Sperre
 - **Cache aufräumen**: Cache pro App nach Größe, „Alles aufräumen“ mit rollender Anzeige des freien Platzes
+- **Privatsphäre-Protokoll**: welche App wann Kamera, Mikrofon, Standort, Kontakte oder die Zwischenablage nutzte – Zeitleiste und pro App, Hinweis auf Zugriffe im Hintergrund oder bei ausgeschaltetem Bildschirm, Berechtigung direkt entziehen, optionale Warnung bei Kamera/Mikrofon im Hintergrund
+- **Akku-Report**: Verbrauch pro App (mAh und %, Vorder-/Hintergrund), Wakelocks, mobile Daten und Weckrufe – seit dem Laden, 24 Stunden oder über Nacht, Ladestand-Diagramm, direkte Aktionen (einschränken, beenden, einfrieren, Internet sperren), optionale Morgen-Zusammenfassung
+- **Zwischenablage-Verlauf** (auch im Hintergrund, ohne Dauerabfrage): Suche, Anheften, erneut kopieren, Apps ausschließen, Auto-Löschen, Fingerabdruck-Sperre; Passwörter und Passwort-Manager werden nie gespeichert
+- **Lautstärke pro App**: jede App bekommt einen eigenen Pegel über der Medienlautstärke (echtes Mischen über Shizuku), auch als Automations-Aktion
 - Gaming-Modus (Benachrichtigungen, Bildwiederholrate, Helligkeit, Hintergrund-Apps – wird exakt zurückgesetzt)
 - Logcat-Viewer mit Filtern
 
@@ -70,10 +75,10 @@ Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
 - Speicherort wählbar (Standard `Download/ShizuBox`), Cookies für altersbeschränkte Videos, Video→Audio offline, yt-dlp-Update in der App
 
 ### Kacheln & Widget
-Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate, Wach bleiben (Caffeine), Lautstärke-Boost und Cache aufräumen. Gaming bis Cache gibt es auch als Schnellaktionen auf der Startseite, die ersten vier zusätzlich als **Homescreen-Widget** (Material-You-Farben).
+Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate, Wach bleiben (Caffeine), Lautstärke-Boost, Cache aufräumen und Zwischenablage-Verlauf. Gaming bis Cache gibt es auch als Schnellaktionen auf der Startseite, die ersten vier zusätzlich als **Homescreen-Widget** (Material-You-Farben).
 
 ### Einstellungen
-Sprache, Design (System/Hell/Dunkel, AMOLED, Farben, Paletten, Glas-Effekt), Startseite (Startbereich, Bereiche ein-/ausblenden), Installationsart, VirusTotal-Schlüssel, **Sichern & Wiederherstellen** aller Einstellungen in einer Datei.
+Sprache, Design (System/Hell/Dunkel, AMOLED, Farben, Paletten, Glas-Effekt), Startseite (Startbereich, Bereiche ein-/ausblenden), Installationsart, VirusTotal-Schlüssel, **Sichern & Wiederherstellen** aller Einstellungen in einer Datei, **Fehlerprotokoll** (Abstürze, Hänger; kopieren/teilen) für Fehlerberichte.
 
 Ohne Shizuku funktionieren: App-Updates, Universal Installer (über den System-Dialog), App-Liste mit Details, APK teilen/extrahieren, VirusTotal und Geräteinfo.
 

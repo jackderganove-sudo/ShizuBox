@@ -157,6 +157,67 @@ class ShellService : IShellService.Stub() {
         }
     }
 
+    // ------------------------------------------------------------------ volume per app
+
+    private val appVolumes = java.util.concurrent.ConcurrentHashMap<Int, Float>()
+    private var playbackListener: android.os.Binder? = null
+
+    private fun audio(): Any {
+        val binder = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java).invoke(null, "audio") as android.os.IBinder
+        return Class.forName("android.media.IAudioService\$Stub").getMethod("asInterface", android.os.IBinder::class.java).invoke(null, binder)!!
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun configs(): List<Any> = runCatching {
+        val a = audio()
+        a.javaClass.getMethod("getActivePlaybackConfigurations").invoke(a) as List<Any>
+    }.getOrDefault(emptyList())
+
+    private fun uidOf(c: Any) = c.javaClass.getMethod("getClientUid").invoke(c) as Int
+
+    override fun listPlayers(): String = configs().joinToString("\n") { c ->
+        val piid = c.javaClass.getMethod("getPlayerInterfaceId").invoke(c)
+        val state = c.javaClass.getMethod("getPlayerState").invoke(c)
+        val usage = (c.javaClass.getMethod("getAudioAttributes").invoke(c) as android.media.AudioAttributes).usage
+        "${uidOf(c)}|$piid|$state|$usage"
+    }
+
+    /** Sets the player volume of every player of [only] (or of all configured apps). */
+    private fun apply(only: Int? = null) {
+        for (c in configs()) {
+            val uid = uidOf(c)
+            if (only != null && uid != only) continue
+            val v = appVolumes[uid] ?: if (uid == only) 1f else continue
+            runCatching {
+                val proxy = c.javaClass.getMethod("getPlayerProxy").invoke(c) ?: return@runCatching
+                proxy.javaClass.getMethod("setVolume", Float::class.javaPrimitiveType).invoke(proxy, v)
+            }
+        }
+    }
+
+    override fun setAppVolume(uid: Int, volume: Float) {
+        if (volume >= 0.999f) appVolumes.remove(uid) else appVolumes[uid] = volume.coerceIn(0f, 1f)
+        apply(uid)
+        if (appVolumes.isNotEmpty() && playbackListener == null) {
+            // dispatchPlaybackConfigChange(): a player started/changed – it begins at volume 1 again.
+            val listener = object : android.os.Binder() {
+                override fun onTransact(code: Int, data: android.os.Parcel, reply: android.os.Parcel?, flags: Int): Boolean {
+                    if (code == FIRST_CALL_TRANSACTION) {
+                        thread { apply() }
+                        return true
+                    }
+                    return super.onTransact(code, data, reply, flags)
+                }
+            }
+            runCatching {
+                val dispatcher = Class.forName("android.media.IPlaybackConfigDispatcher\$Stub").getMethod("asInterface", android.os.IBinder::class.java).invoke(null, listener)
+                val a = audio()
+                a.javaClass.methods.first { it.name == "registerPlaybackCallback" }.invoke(a, dispatcher)
+                playbackListener = listener
+            }
+        }
+    }
+
     override fun writeFile(fd: ParcelFileDescriptor, path: String): Long = try {
         File(path).parentFile?.mkdirs()
         ParcelFileDescriptor.AutoCloseInputStream(fd).use { input ->

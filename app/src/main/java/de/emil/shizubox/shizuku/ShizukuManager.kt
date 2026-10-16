@@ -42,7 +42,7 @@ enum class ShizukuStatus {
 
 object ShizukuManager {
     /** Bump when IShellService changes. */
-    private const val SERVICE_REV = 3
+    private const val SERVICE_REV = 4
     /** Hard limit for a shell command when the caller gives none. */
     const val DEFAULT_LIMIT = 60_000L
 
@@ -169,6 +169,15 @@ object ShizukuManager {
     suspend fun watchClipboard(callback: de.emil.shizubox.IClipCallback): Boolean = withContext(Dispatchers.IO) {
         val svc = awaitService(3000) ?: return@withContext false
         runCatching { svc.watchClipboard(callback) }.onFailure { Log.e(TAG, "watchClipboard failed", it) }.isSuccess
+    }
+
+    /** Players right now: "uid|piid|state|usage" per line (state 2 = playing). */
+    suspend fun listPlayers(): String = withContext(Dispatchers.IO) {
+        runCatching { awaitService(3000)?.listPlayers() }.getOrNull().orEmpty()
+    }
+
+    suspend fun setAppVolume(uid: Int, volume: Float): Boolean = withContext(Dispatchers.IO) {
+        runCatching { awaitService(3000)?.setAppVolume(uid, volume) }.isSuccess
     }
 
     suspend fun unwatchClipboard() = withContext(Dispatchers.IO) {

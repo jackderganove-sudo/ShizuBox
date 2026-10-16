@@ -46,7 +46,7 @@
 - Fix: Update-APKs blieben nach der stillen Installation im Cache liegen (bei mir fast 900 MB) – werden jetzt sofort gelöscht
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
 
-## 0.8.0 (in Arbeit)
+## 0.8.0 – 2026-10-16
 - Privatsphäre-Protokoll (System): welche App wann Kamera, Mikrofon, Standort, Kontakte, Zwischenablage nutzte –
   Zeitleiste und pro App, Hervorhebung „Hintergrund“, „Dienst“ und „Bildschirm aus“, Filter, aus jedem Eintrag
   Berechtigung entziehen / App-Details / Internet sperren, optionale Benachrichtigung bei Kamera/Mikrofon im Hintergrund,
@@ -60,9 +60,12 @@
   ohne Dauerabfrage), Suche, Anheften, erneut kopieren mit einem Tipp, Teilen, Löschen; sensible Inhalte und
   Passwort-Manager werden nie gespeichert, Apps ausschließen, Auto-Löschen, Fingerabdruck-Sperre, nicht im Backup;
   optional Androids „… hat eingefügt“-Hinweis ausblenden (systemweit, wiederherstellbar)
+- Lautstärke pro App (System + Automations-Aktion): eigener Pegel je App über der Medienlautstärke, echtes Mischen
+  per Shizuku (`PlayerProxy.setVolume` auf jeden Player der App), gerade spielende Apps oben, wird bei jedem neuen
+  Player automatisch wieder angewendet; Aktion „Lautstärke pro App“ mit „Danach zurücksetzen“, im Backup
 - Shell-Dienst kürzt sehr lange Ausgaben (> 512 KB) statt am Binder-Limit zu scheitern (sah aus wie „Shizuku getrennt“)
 
-## 0.7.2 – Stabilitätsrunde (2026-10-16)
+## 0.7.2 – Stabilitätsrunde (2026-10-16, nicht einzeln veröffentlicht, in 0.8.0 enthalten)
 - Akku: offene App brauchte durch den animierten Hintergrund 70–100 % eines CPU-Kerns, jetzt 7–11 %
 - Fehlerprotokoll unter Einstellungen (Abstürze, ANRs, Hänger; Kopieren/Teilen; 30 Tage; nicht im Backup)
 - Zeitlimits für Massen-Aktionen, Installationen und FFmpeg passend; FFmpeg wird beim Abbrechen beendet

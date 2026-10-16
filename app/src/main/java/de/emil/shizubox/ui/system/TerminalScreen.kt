@@ -82,6 +82,7 @@ object SystemPage {
     const val PRIVACY = "privacy"
     const val BATTERY = "battery"
     const val CLIPBOARD = "clipboard"
+    const val APP_VOLUME = "appvolume"
 }
 
 private data class TermEntry(val cmd: String, val code: Int?, val output: String)

@@ -23,4 +23,10 @@ interface IShellService {
     // (READ_CLIPBOARD_IN_BACKGROUND); the service listens for changes and reports them.
     void watchClipboard(in IClipCallback callback) = 4;
     void unwatchClipboard() = 5;
+
+    // Volume per app: the shell user holds MODIFY_AUDIO_ROUTING, so it sees every player with its
+    // app and may set each player's volume. Lines: "uid|piid|state|usage".
+    String listPlayers() = 6;
+    // 0..1; 1 removes the setting. Re-applied whenever playback changes (new players start at 1).
+    void setAppVolume(int uid, float volume) = 7;
 }

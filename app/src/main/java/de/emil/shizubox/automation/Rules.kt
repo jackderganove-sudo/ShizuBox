@@ -43,6 +43,7 @@ data class Trigger(
 enum class ActionKind(val labelRes: Int, val revertible: Boolean = true) {
     Gaming(R.string.gaming),
     Volume(R.string.au_a_volume),
+    AppVolume(R.string.av_title),
     Boost(R.string.vb_title),
     Refresh(R.string.cust_refresh),
     Animations(R.string.tile_animations),

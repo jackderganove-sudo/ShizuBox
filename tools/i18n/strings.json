@@ -5388,5 +5388,50 @@
   "en": "Don't record this app",
   "de": "Diese App nicht aufzeichnen",
   "plural": false
+ },
+ "av_title": {
+  "en": "Volume per app",
+  "de": "Lautstärke pro App",
+  "plural": false
+ },
+ "av_title_short": {
+  "en": "App volume",
+  "de": "App-Lautstärke",
+  "plural": false
+ },
+ "av_sub": {
+  "en": "Spotify 80 %, games 30 %",
+  "de": "Spotify 80 %, Spiele 30 %",
+  "plural": false
+ },
+ "av_intro": {
+  "en": "Each app gets its own level on top of the media volume – real mixing via Shizuku. Works together with the volume boost.",
+  "de": "Jede App bekommt eine eigene Stufe zusätzlich zur Medienlautstärke – echtes Mischen über Shizuku. Verträgt sich mit dem Lautstärke-Boost.",
+  "plural": false
+ },
+ "av_empty": {
+  "en": "Nothing playing right now",
+  "de": "Gerade spielt nichts",
+  "plural": false
+ },
+ "av_empty_hint": {
+  "en": "Start music or a video – the app appears here. Or add an app below.",
+  "de": "Starte Musik oder ein Video – die App erscheint hier. Oder unten eine App hinzufügen.",
+  "plural": false
+ },
+ "av_add": {
+  "en": "Add app",
+  "de": "App hinzufügen",
+  "plural": false
+ },
+ "av_playing": {
+  "en": "Playing now",
+  "de": "Spielt gerade",
+  "plural": false
+ },
+ "av_reset": {
+  "en": "Back to 100 %",
+  "de": "Zurück auf 100 %",
+  "plural": false
  }
 }

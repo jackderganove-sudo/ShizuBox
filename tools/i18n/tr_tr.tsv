@@ -1052,3 +1052,12 @@ cb_empty_hint	Herhangi bir yerde bir metin kopyala – burada görünür.
 cb_pin	Sabitle
 cb_unpin	Sabitlemeyi kaldır
 cb_exclude_app	Bu uygulamayı kaydetme
+av_title	Uygulama başına ses
+av_title_short	Uygulama sesi
+av_sub	Spotify %80, oyunlar %30
+av_intro	Her uygulama medya sesine ek olarak kendi seviyesini alır – Shizuku ile gerçek karıştırma. Ses yükselticiyle uyumlu.
+av_empty	Şu an hiçbir şey çalmıyor
+av_empty_hint	Müzik veya video başlat – uygulama burada görünür. Ya da aşağıdan uygulama ekle.
+av_add	Uygulama ekle
+av_playing	Şu an çalıyor
+av_reset	%100'e geri dön

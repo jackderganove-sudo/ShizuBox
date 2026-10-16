@@ -69,6 +69,7 @@ class DebugReceiver : BroadcastReceiver() {
                     "privacy" -> de.emil.shizubox.ui.system.PrivacyScreen(ready, noop)
                     "battery" -> de.emil.shizubox.ui.system.BatteryReportScreen(ready, noop)
                     "clipboard" -> de.emil.shizubox.ui.system.ClipboardScreen(ready, noop)
+                    "appvolume" -> de.emil.shizubox.ui.system.AppVolumeScreen(ready, noop)
                     "errorlog" -> de.emil.shizubox.ui.settings.ErrorLogScreen(noop)
                     "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
@@ -267,6 +268,16 @@ class DebugReceiver : BroadcastReceiver() {
                             val t1 = System.currentTimeMillis()
                             val labels = all.count { it.label.isNotBlank() }
                             "apps=${all.size} system=${all.count { it.isSystem }} list=${t1 - t0}ms cpu=${android.os.Process.getElapsedCpuTime() - cpu0}ms labels=$labels heapMB=${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}"
+                        }
+                        "appvol" -> {
+                            // --es pkg <p> --ei n <percent>; without pkg only lists players
+                            val pkg = intent.getStringExtra("pkg")
+                            if (pkg != null) {
+                                // Same path as the slider and the automation action (stored + applied).
+                                de.emil.shizubox.audio.AppVolume.set(pkg, intent.getIntExtra("n", 100))
+                            }
+                            kotlinx.coroutines.delay(500)
+                            "levels=" + de.emil.shizubox.audio.AppVolume.levels.value + " players=" + ShizukuManager.listPlayers().lines().joinToString(" ; ")
                         }
                         "clip" -> {
                             // --es mode on|off|show ; set/test: --es text "…" copies via shell `cmd …`? (no) – we copy ourselves.

@@ -28,6 +28,7 @@ import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.rounded.CleaningServices
 import androidx.compose.material.icons.rounded.BatteryChargingFull
 import androidx.compose.material.icons.rounded.ContentPaste
+import androidx.compose.material.icons.rounded.GraphicEq
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.PrivacyTip
 import androidx.compose.material.icons.rounded.Memory
@@ -125,6 +126,12 @@ fun SystemScreen(
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ToolTile(Icons.Rounded.BatteryChargingFull, t(R.string.br_title_short), t(R.string.br_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.BATTERY) }
                 ToolTile(Icons.Rounded.ContentPaste, t(R.string.cb_title_short), t(R.string.cb_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.CLIPBOARD) }
+            }
+        }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                ToolTile(Icons.Rounded.GraphicEq, t(R.string.av_title_short), t(R.string.av_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.APP_VOLUME) }
+                Spacer(Modifier.weight(1f))
             }
         }
         item { GamingCard(shizukuReady) }

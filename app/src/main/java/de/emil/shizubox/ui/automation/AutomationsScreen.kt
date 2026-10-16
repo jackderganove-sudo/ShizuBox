@@ -226,7 +226,7 @@ private fun RuleEditor(initial: Rule, onDone: () -> Unit) {
                         ActionKind.entries.forEach { k ->
                             DropdownMenuItem(text = { Text(k.label) }, onClick = {
                                 addMenu = false
-                                rule = rule.copy(actions = rule.actions + Action(k, value = if (k == ActionKind.Volume) 50 else if (k == ActionKind.Animations) 100 else 0))
+                                rule = rule.copy(actions = rule.actions + Action(k, value = if (k == ActionKind.Volume || k == ActionKind.AppVolume) 50 else if (k == ActionKind.Animations) 100 else 0))
                             })
                         }
                     }
@@ -342,6 +342,11 @@ private fun ActionParams(a: Action, onChange: (Action) -> Unit) {
     }
     when (a.kind) {
         ActionKind.Gaming, ActionKind.Boost, ActionKind.Grayscale, ActionKind.Dnd, ActionKind.StayAwake -> onOff()
+        ActionKind.AppVolume -> {
+            AppButton(a.pkg) { onChange(a.copy(pkg = it)) }
+            Text("${a.value} %", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
+            Slider(value = a.value.toFloat(), onValueChange = { onChange(a.copy(value = it.toInt())) }, valueRange = 0f..100f)
+        }
         ActionKind.Volume -> {
             Text("${a.value} %", style = MaterialTheme.typography.bodyMedium)
             Slider(value = a.value.toFloat(), onValueChange = { onChange(a.copy(value = it.toInt())) }, valueRange = 0f..100f)
@@ -400,7 +405,7 @@ private fun AppButton(pkg: String, onPick: (String) -> Unit) {
 }
 
 @Composable
-private fun AppPicker(onDismiss: () -> Unit, onPick: (String) -> Unit) {
+internal fun AppPicker(onDismiss: () -> Unit, onPick: (String) -> Unit) {
     val context = LocalContext.current
     var query by rememberSaveable { mutableStateOf("") }
     val apps by produceState<List<Pair<String, String>>?>(null) {
@@ -472,6 +477,7 @@ private fun triggerText(tr: Trigger): String = when (tr.kind) {
 
 private fun actionText(a: Action): String = when (a.kind) {
     ActionKind.Volume -> "${a.kind.label} ${a.value} %"
+    ActionKind.AppVolume -> appLabel(a.pkg) + " ${a.value} %"
     ActionKind.Refresh -> RefreshMode.entries.getOrElse(a.value) { RefreshMode.Adaptive }.label
     ActionKind.Animations -> "${a.kind.label} " + if (a.value == 0) t(R.string.off) else "${a.value / 100f}×"
     ActionKind.NetBlock -> (if (a.on) t(R.string.nb_block) else t(R.string.nb_allow)) + " (" + appLabel(a.pkg) + ")"

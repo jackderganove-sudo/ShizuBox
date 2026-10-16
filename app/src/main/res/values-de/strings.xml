@@ -1114,5 +1114,14 @@
     <string name="cb_pin">Anheften</string>
     <string name="cb_unpin">Lösen</string>
     <string name="cb_exclude_app">Diese App nicht aufzeichnen</string>
+    <string name="av_title">Lautstärke pro App</string>
+    <string name="av_title_short">App-Lautstärke</string>
+    <string name="av_sub" formatted="false">Spotify 80 %, Spiele 30 %</string>
+    <string name="av_intro">Jede App bekommt eine eigene Stufe zusätzlich zur Medienlautstärke – echtes Mischen über Shizuku. Verträgt sich mit dem Lautstärke-Boost.</string>
+    <string name="av_empty">Gerade spielt nichts</string>
+    <string name="av_empty_hint">Starte Musik oder ein Video – die App erscheint hier. Oder unten eine App hinzufügen.</string>
+    <string name="av_add">App hinzufügen</string>
+    <string name="av_playing">Spielt gerade</string>
+    <string name="av_reset" formatted="false">Zurück auf 100 %</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

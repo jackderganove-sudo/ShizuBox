@@ -1112,5 +1112,14 @@
 "cb_empty_hint": "Copia un texto en cualquier sitio: aparecerá aquí.",
 "cb_pin": "Fijar",
 "cb_unpin": "Desfijar",
-"cb_exclude_app": "No registrar esta app"
+"cb_exclude_app": "No registrar esta app",
+"av_title": "Volumen por app",
+"av_title_short": "Volumen de apps",
+"av_sub": "Spotify 80 %, juegos 30 %",
+"av_intro": "Cada app tiene su propio nivel además del volumen multimedia: mezcla real mediante Shizuku. Compatible con el refuerzo de volumen.",
+"av_empty": "Ahora no suena nada",
+"av_empty_hint": "Pon música o un vídeo: la app aparecerá aquí. O añade una app abajo.",
+"av_add": "Añadir app",
+"av_playing": "Sonando ahora",
+"av_reset": "Volver al 100 %"
 }

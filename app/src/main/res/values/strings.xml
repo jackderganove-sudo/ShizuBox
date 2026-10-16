@@ -1116,4 +1116,13 @@
     <string name="cb_pin">Pin</string>
     <string name="cb_unpin">Unpin</string>
     <string name="cb_exclude_app">Don\'t record this app</string>
+    <string name="av_title">Volume per app</string>
+    <string name="av_title_short">App volume</string>
+    <string name="av_sub" formatted="false">Spotify 80 %, games 30 %</string>
+    <string name="av_intro">Each app gets its own level on top of the media volume – real mixing via Shizuku. Works together with the volume boost.</string>
+    <string name="av_empty">Nothing playing right now</string>
+    <string name="av_empty_hint">Start music or a video – the app appears here. Or add an app below.</string>
+    <string name="av_add">Add app</string>
+    <string name="av_playing">Playing now</string>
+    <string name="av_reset" formatted="false">Back to 100 %</string>
 </resources>
