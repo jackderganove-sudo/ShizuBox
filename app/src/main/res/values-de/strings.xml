@@ -1332,5 +1332,25 @@
     <string name="du_exact_group">Identisch</string>
     <string name="du_keep">bleibt</string>
     <string name="du_keep_one">⚠ Eine Datei der Gruppe muss bleiben</string>
+    <string name="qa_clean">Reinigen</string>
+    <string name="qa_clean_hint">Reinigt die in den Reiniger-Einstellungen gewählten Kategorien (standardmäßig nur sichere) in den Papierkorb.</string>
+    <string name="cl_ch_done">Reinigung fertig</string>
+    <string name="ac_done_title">%1$s aufgeräumt ✓</string>
+    <plurals name="ac_done_text">
+        <item quantity="one">%1$d Eintrag im Papierkorb – %2$d Tage wiederherstellbar</item>
+        <item quantity="other">%1$d Einträge im Papierkorb – %2$d Tage wiederherstellbar</item>
+    </plurals>
+    <string name="cs_title">Geplante Reinigung</string>
+    <string name="cs_sub">Läuft nur bei ausgeschaltetem Bildschirm, nie im Schulmodus; alles landet im Papierkorb, danach eine Benachrichtigung.</string>
+    <string name="cs_time">Uhrzeit</string>
+    <string name="cs_charging">Nur beim Laden</string>
+    <string name="cs_what">Wird automatisch gereinigt (auch Kachel und Automation)</string>
+    <string name="cs_app_caches">App-Caches (Android/data)</string>
+    <string name="cs_dupes">Identische Duplikate</string>
+    <string name="cs_what_hint">Leichen und Duplikate nur, wenn du sie hier einschaltest. Laufende Apps und AICore werden übersprungen.</string>
+    <string name="cl_scan_all">Alles scannen</string>
+    <string name="cl_scanning">Wird gescannt …</string>
+    <string name="cl_found_total">Gefunden: %1$s, die weg können</string>
+    <string name="qa_clean_short">Reinigen</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

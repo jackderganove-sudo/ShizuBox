@@ -385,6 +385,7 @@ private fun ActionParams(a: Action, onChange: (Action) -> Unit) {
             value = a.text, onValueChange = { onChange(a.copy(text = it)) },
             label = { Text(t(R.string.au_command)) }, modifier = Modifier.fillMaxWidth(),
         )
+        ActionKind.Clean -> Text(t(R.string.qa_clean_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -484,5 +485,6 @@ private fun actionText(a: Action): String = when (a.kind) {
     ActionKind.StartApp -> t(R.string.au_tt_start, appLabel(a.pkg))
     ActionKind.StartActivity -> t(R.string.au_tt_start, a.text.substringAfterLast('.'))
     ActionKind.Shell -> "$ " + a.text.take(30)
+    ActionKind.Clean -> a.kind.label
     else -> "${a.kind.label} " + if (a.on) t(R.string.on) else t(R.string.off)
 }

@@ -6370,5 +6370,96 @@
   "en": "⚠ One file of the group must stay",
   "de": "⚠ Eine Datei der Gruppe muss bleiben",
   "plural": false
+ },
+ "qa_clean": {
+  "en": "Clean up",
+  "de": "Reinigen",
+  "plural": false
+ },
+ "qa_clean_hint": {
+  "en": "Cleans the categories chosen in the cleaner settings (by default only safe ones) into the trash.",
+  "de": "Reinigt die in den Reiniger-Einstellungen gewählten Kategorien (standardmäßig nur sichere) in den Papierkorb.",
+  "plural": false
+ },
+ "cl_ch_done": {
+  "en": "Cleaning finished",
+  "de": "Reinigung fertig",
+  "plural": false
+ },
+ "ac_done_title": {
+  "en": "%1$s cleaned up ✓",
+  "de": "%1$s aufgeräumt ✓",
+  "plural": false
+ },
+ "ac_done_text": {
+  "en": {
+   "one": "%1$d item in the trash – restorable for %2$d days",
+   "other": "%1$d items in the trash – restorable for %2$d days"
+  },
+  "de": {
+   "one": "%1$d Eintrag im Papierkorb – %2$d Tage wiederherstellbar",
+   "other": "%1$d Einträge im Papierkorb – %2$d Tage wiederherstellbar"
+  },
+  "plural": true
+ },
+ "cs_title": {
+  "en": "Scheduled cleaning",
+  "de": "Geplante Reinigung",
+  "plural": false
+ },
+ "cs_sub": {
+  "en": "Runs only with the screen off, never during school mode; everything goes to the trash, then a notification.",
+  "de": "Läuft nur bei ausgeschaltetem Bildschirm, nie im Schulmodus; alles landet im Papierkorb, danach eine Benachrichtigung.",
+  "plural": false
+ },
+ "cs_time": {
+  "en": "Time",
+  "de": "Uhrzeit",
+  "plural": false
+ },
+ "cs_charging": {
+  "en": "Only while charging",
+  "de": "Nur beim Laden",
+  "plural": false
+ },
+ "cs_what": {
+  "en": "Cleaned automatically (also tile and automation)",
+  "de": "Wird automatisch gereinigt (auch Kachel und Automation)",
+  "plural": false
+ },
+ "cs_app_caches": {
+  "en": "App caches (Android/data)",
+  "de": "App-Caches (Android/data)",
+  "plural": false
+ },
+ "cs_dupes": {
+  "en": "Identical duplicates",
+  "de": "Identische Duplikate",
+  "plural": false
+ },
+ "cs_what_hint": {
+  "en": "Leftovers and duplicates only if you switch them on here. Running apps and AICore are skipped.",
+  "de": "Leichen und Duplikate nur, wenn du sie hier einschaltest. Laufende Apps und AICore werden übersprungen.",
+  "plural": false
+ },
+ "cl_scan_all": {
+  "en": "Scan everything",
+  "de": "Alles scannen",
+  "plural": false
+ },
+ "cl_scanning": {
+  "en": "Scanning …",
+  "de": "Wird gescannt …",
+  "plural": false
+ },
+ "cl_found_total": {
+  "en": "Found: %1$s that can go",
+  "de": "Gefunden: %1$s, die weg können",
+  "plural": false
+ },
+ "qa_clean_short": {
+  "en": "Clean",
+  "de": "Reinigen",
+  "plural": false
  }
 }

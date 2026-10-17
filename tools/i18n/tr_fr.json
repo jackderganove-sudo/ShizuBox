@@ -1330,5 +1330,25 @@
 "du_similar_group": "Similaires",
 "du_exact_group": "Identiques",
 "du_keep": "reste",
-"du_keep_one": "⚠ Un fichier du groupe doit rester"
+"du_keep_one": "⚠ Un fichier du groupe doit rester",
+"qa_clean": "Nettoyer",
+"qa_clean_hint": "Nettoie vers la corbeille les catégories choisies dans les réglages du nettoyeur (par défaut, seulement les sûres).",
+"cl_ch_done": "Nettoyage terminé",
+"ac_done_title": "%1$s nettoyés ✓",
+"ac_done_text": {
+"one": "%1$d élément dans la corbeille – récupérable %2$d jours",
+"other": "%1$d éléments dans la corbeille – récupérables %2$d jours"
+},
+"cs_title": "Nettoyage planifié",
+"cs_sub": "Uniquement écran éteint, jamais en mode école ; tout va à la corbeille, puis une notification.",
+"cs_time": "Heure",
+"cs_charging": "Seulement en charge",
+"cs_what": "Nettoyé automatiquement (aussi tuile et automatisation)",
+"cs_app_caches": "Caches d'apps (Android/data)",
+"cs_dupes": "Doublons identiques",
+"cs_what_hint": "Restes et doublons seulement si tu les actives ici. Les apps en cours et AICore sont ignorées.",
+"cl_scan_all": "Tout analyser",
+"cl_scanning": "Analyse …",
+"cl_found_total": "Trouvé : %1$s à supprimer",
+"qa_clean_short": "Nettoyer"
 }

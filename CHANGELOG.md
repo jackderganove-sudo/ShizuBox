@@ -19,6 +19,10 @@
   in den Papierkorb (laufende Apps überspringen oder vorher beenden), KI-Modelle (AICore) standardmäßig ausgenommen
 - Duplikat-Finder: exakt (Größe → Teil-Hash → SHA-256) und optional ähnliche Bilder (Serienfotos, andere Auflösung),
   Vorschaubilder, automatisch behalten (Kamera-Ordner, älteste, beste Auflösung), immer mindestens eine Datei pro Gruppe
+- „Alles scannen“ führt alle Werkzeuge nacheinander aus und zeigt pro Werkzeug den Fund
+- Geplante Reinigung (standardmäßig aus): Wochentage, Uhrzeit, nur beim Laden, nur bei ausgeschaltetem Bildschirm,
+  pro Kategorie wählbar (Standard: nur sichere), nie im Schulmodus, Benachrichtigung „X aufgeräumt“ mit Link zum Papierkorb
+- Kachel, Schnellaktion und Automations-Aktion „Reinigen“
 - Scans laufen im Hintergrund weiter (Benachrichtigung mit Fortschritt und „Abbrechen“)
 - CHANGELOG sortiert (neueste Version oben)
 

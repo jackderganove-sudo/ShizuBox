@@ -1234,3 +1234,20 @@ du_similar_group	Benzer
 du_exact_group	Aynı
 du_keep	kalır
 du_keep_one	⚠ Gruptan bir dosya kalmalı
+qa_clean	Temizle
+qa_clean_hint	Temizleyici ayarlarında seçilen kategorileri (varsayılan olarak yalnızca güvenli olanları) çöp kutusuna temizler.
+cl_ch_done	Temizlik tamamlandı
+ac_done_title	%1$s temizlendi ✓
+ac_done_text	Çöp kutusunda %1$d öğe – %2$d gün geri yüklenebilir|||Çöp kutusunda %1$d öğe – %2$d gün geri yüklenebilir
+cs_title	Zamanlanmış temizlik
+cs_sub	Yalnızca ekran kapalıyken çalışır, okul modunda asla; her şey çöp kutusuna gider, ardından bildirim gelir.
+cs_time	Saat
+cs_charging	Yalnızca şarj olurken
+cs_what	Otomatik temizlenir (kutucuk ve otomasyon dahil)
+cs_app_caches	Uygulama önbellekleri (Android/data)
+cs_dupes	Aynı kopyalar
+cs_what_hint	Artıklar ve kopyalar yalnızca burada açarsan. Çalışan uygulamalar ve AICore atlanır.
+cl_scan_all	Her şeyi tara
+cl_scanning	Taranıyor …
+cl_found_total	Bulundu: silinebilecek %1$s
+qa_clean_short	Temizle

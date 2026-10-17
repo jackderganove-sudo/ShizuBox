@@ -1334,4 +1334,24 @@
     <string name="du_exact_group">Identical</string>
     <string name="du_keep">stays</string>
     <string name="du_keep_one">⚠ One file of the group must stay</string>
+    <string name="qa_clean">Clean up</string>
+    <string name="qa_clean_hint">Cleans the categories chosen in the cleaner settings (by default only safe ones) into the trash.</string>
+    <string name="cl_ch_done">Cleaning finished</string>
+    <string name="ac_done_title">%1$s cleaned up ✓</string>
+    <plurals name="ac_done_text">
+        <item quantity="one">%1$d item in the trash – restorable for %2$d days</item>
+        <item quantity="other">%1$d items in the trash – restorable for %2$d days</item>
+    </plurals>
+    <string name="cs_title">Scheduled cleaning</string>
+    <string name="cs_sub">Runs only with the screen off, never during school mode; everything goes to the trash, then a notification.</string>
+    <string name="cs_time">Time</string>
+    <string name="cs_charging">Only while charging</string>
+    <string name="cs_what">Cleaned automatically (also tile and automation)</string>
+    <string name="cs_app_caches">App caches (Android/data)</string>
+    <string name="cs_dupes">Identical duplicates</string>
+    <string name="cs_what_hint">Leftovers and duplicates only if you switch them on here. Running apps and AICore are skipped.</string>
+    <string name="cl_scan_all">Scan everything</string>
+    <string name="cl_scanning">Scanning …</string>
+    <string name="cl_found_total">Found: %1$s that can go</string>
+    <string name="qa_clean_short">Clean</string>
 </resources>

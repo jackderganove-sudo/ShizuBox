@@ -85,6 +85,10 @@ object Actions {
             NetBlock.set(listOf(a.pkg), a.on)
             a.copy(on = before)
         }
+        ActionKind.Clean -> {
+            de.emil.shizubox.cleaner.AutoClean.run(context).let { de.emil.shizubox.cleaner.AutoClean.notify(context, it) }
+            null
+        }
         ActionKind.StartApp -> {
             Apps.launchIntent(a.pkg)?.component?.let { start(context, it.packageName, it.className) }
             null

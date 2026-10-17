@@ -1332,4 +1332,24 @@
     <string name="du_exact_group">Idénticos</string>
     <string name="du_keep">se queda</string>
     <string name="du_keep_one">⚠ Debe quedar un archivo del grupo</string>
+    <string name="qa_clean">Limpiar</string>
+    <string name="qa_clean_hint">Limpia a la papelera las categorías elegidas en los ajustes del limpiador (por defecto, solo las seguras).</string>
+    <string name="cl_ch_done">Limpieza terminada</string>
+    <string name="ac_done_title">%1$s limpiados ✓</string>
+    <plurals name="ac_done_text">
+        <item quantity="one">%1$d elemento en la papelera: recuperable %2$d días</item>
+        <item quantity="other">%1$d elementos en la papelera: recuperables %2$d días</item>
+    </plurals>
+    <string name="cs_title">Limpieza programada</string>
+    <string name="cs_sub">Solo con la pantalla apagada, nunca en el modo escuela; todo va a la papelera y luego llega una notificación.</string>
+    <string name="cs_time">Hora</string>
+    <string name="cs_charging">Solo mientras se carga</string>
+    <string name="cs_what">Se limpia automáticamente (también mosaico y automatización)</string>
+    <string name="cs_app_caches">Cachés de apps (Android/data)</string>
+    <string name="cs_dupes">Duplicados idénticos</string>
+    <string name="cs_what_hint">Restos y duplicados solo si los activas aquí. Se omiten las apps en ejecución y AICore.</string>
+    <string name="cl_scan_all">Escanear todo</string>
+    <string name="cl_scanning">Escaneando …</string>
+    <string name="cl_found_total">Encontrado: %1$s que se pueden quitar</string>
+    <string name="qa_clean_short">Limpiar</string>
 </resources>

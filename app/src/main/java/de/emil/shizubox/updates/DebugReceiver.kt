@@ -280,6 +280,21 @@ class DebugReceiver : BroadcastReceiver() {
                                 "cats=${a.categories.map { "${it.key}=${it.value / 1_000_000}MB" }} top3=${a.top.take(3).map { "${it.path.substringAfterLast('/')}=${it.size / 1_000_000}MB" }} " +
                                 "apps=${a.apps.size} topApps=${a.apps.take(3).map { "${it.pkg}=${it.total / 1_000_000}MB ext=${it.extData / 1_000_000}" }}"
                         }
+                        "autoclean" -> {
+                            // Only the category "broken downloads" (empty on the test phone) plus a test file; --es mode next shows the schedule
+                            val R0 = de.emil.shizubox.cleaner.Fs.ROOT
+                            val base = de.emil.shizubox.cleaner.CleanerSettings.current
+                            if (intent.getStringExtra("mode") == "next") {
+                                val S = de.emil.shizubox.cleaner.CleanerSchedule
+                                val c = base.copy(schedule = true)
+                                "sun3=${java.util.Date(S.next(c.copy(scheduleDays = 1 shl 6, scheduleMinute = 180))!!)} weekday2230=${java.util.Date(S.next(c.copy(scheduleDays = 0b11111, scheduleMinute = 22 * 60 + 30))!!)} off=${S.next(base.copy(schedule = false))} real=${S.next(base)?.let { java.util.Date(it) }}"
+                            } else {
+                                ShizukuManager.exec("mkdir -p $R0/Download/sbx_test_auto && head -c 50000 /dev/urandom > $R0/Download/sbx_test_auto/x.crdownload && touch -d '2026-10-01 10:00' $R0/Download/sbx_test_auto/x.crdownload", 5000, 15_000)
+                                val preview = de.emil.shizubox.cleaner.SystemCleaner.scan(context, setOf(de.emil.shizubox.cleaner.SysCat.Partial)).values.flatten().map { it.path }
+                                if (preview.any { !it.contains("sbx_test") }) "aborted, real files would be touched: $preview"
+                                else de.emil.shizubox.cleaner.AutoClean.run(context, base.copy(autoKeys = setOf("Partial"))).also { de.emil.shizubox.cleaner.AutoClean.notify(context, it) }.toString()
+                            }
+                        }
                         "dupes" -> {
                             // --es mode mk|clean|rm (only Download/sbx_test_dup), otherwise scan (read-only) with --ez similar
                             val R0 = de.emil.shizubox.cleaner.Fs.ROOT

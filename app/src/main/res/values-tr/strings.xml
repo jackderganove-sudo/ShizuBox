@@ -1332,4 +1332,24 @@
     <string name="du_exact_group">Aynı</string>
     <string name="du_keep">kalır</string>
     <string name="du_keep_one">⚠ Gruptan bir dosya kalmalı</string>
+    <string name="qa_clean">Temizle</string>
+    <string name="qa_clean_hint">Temizleyici ayarlarında seçilen kategorileri (varsayılan olarak yalnızca güvenli olanları) çöp kutusuna temizler.</string>
+    <string name="cl_ch_done">Temizlik tamamlandı</string>
+    <string name="ac_done_title">%1$s temizlendi ✓</string>
+    <plurals name="ac_done_text">
+        <item quantity="one">Çöp kutusunda %1$d öğe – %2$d gün geri yüklenebilir</item>
+        <item quantity="other">Çöp kutusunda %1$d öğe – %2$d gün geri yüklenebilir</item>
+    </plurals>
+    <string name="cs_title">Zamanlanmış temizlik</string>
+    <string name="cs_sub">Yalnızca ekran kapalıyken çalışır, okul modunda asla; her şey çöp kutusuna gider, ardından bildirim gelir.</string>
+    <string name="cs_time">Saat</string>
+    <string name="cs_charging">Yalnızca şarj olurken</string>
+    <string name="cs_what">Otomatik temizlenir (kutucuk ve otomasyon dahil)</string>
+    <string name="cs_app_caches">Uygulama önbellekleri (Android/data)</string>
+    <string name="cs_dupes">Aynı kopyalar</string>
+    <string name="cs_what_hint">Artıklar ve kopyalar yalnızca burada açarsan. Çalışan uygulamalar ve AICore atlanır.</string>
+    <string name="cl_scan_all">Her şeyi tara</string>
+    <string name="cl_scanning">Taranıyor …</string>
+    <string name="cl_found_total">Bulundu: silinebilecek %1$s</string>
+    <string name="qa_clean_short">Temizle</string>
 </resources>

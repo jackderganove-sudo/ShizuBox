@@ -125,6 +125,11 @@ class CacheTile : ShellTile() {
     override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Cache, current)
 }
 
+class CleanTile : ShellTile() {
+    override suspend fun read() = QuickActions.read(QuickAction.Clean)
+    override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Clean, current)
+}
+
 /** Opens the clipboard history (to paste an older entry again). */
 class ClipboardTile : TileService() {
     override fun onStartListening() {

@@ -1332,4 +1332,24 @@
     <string name="du_exact_group">Identiques</string>
     <string name="du_keep">reste</string>
     <string name="du_keep_one">⚠ Un fichier du groupe doit rester</string>
+    <string name="qa_clean">Nettoyer</string>
+    <string name="qa_clean_hint">Nettoie vers la corbeille les catégories choisies dans les réglages du nettoyeur (par défaut, seulement les sûres).</string>
+    <string name="cl_ch_done">Nettoyage terminé</string>
+    <string name="ac_done_title">%1$s nettoyés ✓</string>
+    <plurals name="ac_done_text">
+        <item quantity="one">%1$d élément dans la corbeille – récupérable %2$d jours</item>
+        <item quantity="other">%1$d éléments dans la corbeille – récupérables %2$d jours</item>
+    </plurals>
+    <string name="cs_title">Nettoyage planifié</string>
+    <string name="cs_sub">Uniquement écran éteint, jamais en mode école ; tout va à la corbeille, puis une notification.</string>
+    <string name="cs_time">Heure</string>
+    <string name="cs_charging">Seulement en charge</string>
+    <string name="cs_what">Nettoyé automatiquement (aussi tuile et automatisation)</string>
+    <string name="cs_app_caches">Caches d\'apps (Android/data)</string>
+    <string name="cs_dupes">Doublons identiques</string>
+    <string name="cs_what_hint">Restes et doublons seulement si tu les actives ici. Les apps en cours et AICore sont ignorées.</string>
+    <string name="cl_scan_all">Tout analyser</string>
+    <string name="cl_scanning">Analyse …</string>
+    <string name="cl_found_total">Trouvé : %1$s à supprimer</string>
+    <string name="qa_clean_short">Nettoyer</string>
 </resources>

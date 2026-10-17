@@ -17,6 +17,7 @@ enum class QuickAction(private val labelRes: Int, private val shortRes: Int) {
     StayAwake(R.string.tile_stay_awake, R.string.qa_awake),
     Boost(R.string.vb_title, R.string.vb_tile),
     Cache(R.string.cc_title, R.string.cc_short),
+    Clean(R.string.qa_clean, R.string.qa_clean_short),
     ;
     val label get() = t(labelRes)
     /** For the narrow buttons on the home screen. */
@@ -39,6 +40,7 @@ object QuickActions {
         QuickAction.StayAwake -> onOff(Tweaks.caffeine())
         QuickAction.Cache -> TileInfo(false, prefs.getLong("cache_freed", -1).let { if (it < 0) t(R.string.cc_tap) else android.text.format.Formatter.formatShortFileSize(Str.context, it) })
         QuickAction.Boost -> VolumeBoost.settings.value.let { TileInfo(it.enabled, if (it.enabled) "+${VolumeBoost.currentPercent(it)} %" else t(R.string.off)) }
+        QuickAction.Clean -> TileInfo(false, prefs.getLong("clean_moved", -1).let { if (it < 0) t(R.string.cc_tap) else android.text.format.Formatter.formatShortFileSize(Str.context, it) })
     }
 
     suspend fun toggle(a: QuickAction, current: TileInfo) {
@@ -56,6 +58,11 @@ object QuickActions {
             }
             QuickAction.StayAwake -> Tweaks.setCaffeine(!current.active)
             QuickAction.Cache -> prefs.edit().putLong("cache_freed", de.emil.shizubox.system.CacheCleaner.clearAll(Str.context)).apply()
+            // The cleaner's automatic categories, into the trash (restorable).
+            QuickAction.Clean -> de.emil.shizubox.cleaner.AutoClean.run(Str.context).let { r ->
+                if (r.skipped == null) prefs.edit().putLong("clean_moved", r.bytes).apply()
+                de.emil.shizubox.cleaner.AutoClean.notify(Str.context, r)
+            }
             QuickAction.Boost -> {
                 VolumeBoost.update { it.copy(enabled = !current.active) }
                 BoostService.sync(Str.context)

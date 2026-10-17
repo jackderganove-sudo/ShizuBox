@@ -1234,3 +1234,20 @@ du_similar_group	Parecidas
 du_exact_group	Idénticos
 du_keep	se queda
 du_keep_one	⚠ Debe quedar un archivo del grupo
+qa_clean	Limpiar
+qa_clean_hint	Limpia a la papelera las categorías elegidas en los ajustes del limpiador (por defecto, solo las seguras).
+cl_ch_done	Limpieza terminada
+ac_done_title	%1$s limpiados ✓
+ac_done_text	%1$d elemento en la papelera: recuperable %2$d días|||%1$d elementos en la papelera: recuperables %2$d días
+cs_title	Limpieza programada
+cs_sub	Solo con la pantalla apagada, nunca en el modo escuela; todo va a la papelera y luego llega una notificación.
+cs_time	Hora
+cs_charging	Solo mientras se carga
+cs_what	Se limpia automáticamente (también mosaico y automatización)
+cs_app_caches	Cachés de apps (Android/data)
+cs_dupes	Duplicados idénticos
+cs_what_hint	Restos y duplicados solo si los activas aquí. Se omiten las apps en ejecución y AICore.
+cl_scan_all	Escanear todo
+cl_scanning	Escaneando …
+cl_found_total	Encontrado: %1$s que se pueden quitar
+qa_clean_short	Limpiar

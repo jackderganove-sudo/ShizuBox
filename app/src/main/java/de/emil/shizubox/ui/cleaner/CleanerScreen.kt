@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -21,8 +23,12 @@ import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.FolderDelete
 import androidx.compose.material.icons.rounded.PieChart
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearWavyProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -90,6 +96,7 @@ fun CleanerScreen(shizukuReady: Boolean, onBack: () -> Unit) {
 private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
     val context = LocalContext.current
     val trash by Trash.items.collectAsStateWithLifecycle()
+    val running by de.emil.shizubox.cleaner.CleanerJobs.running.collectAsStateWithLifecycle()
     var numbers by remember { mutableStateOf(StorageAccess.numbers()) }
     LaunchedEffect(trash.size) { numbers = StorageAccess.numbers() }
     fun open(p: String) { CleanerNav.page.value = p }
@@ -123,28 +130,50 @@ private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
             }
         }
         item {
+            val sys by de.emil.shizubox.cleaner.SystemCleaner.result.collectAsStateWithLifecycle()
+            val corpses by de.emil.shizubox.cleaner.CorpseFinder.result.collectAsStateWithLifecycle()
+            val caches by de.emil.shizubox.cleaner.AppCleaner.result.collectAsStateWithLifecycle()
+            val dupes by de.emil.shizubox.cleaner.Duplicates.result.collectAsStateWithLifecycle()
+            val anyRunning = running.isNotEmpty()
+            Button(
+                shapes = ButtonDefaults.shapes(), enabled = shizukuReady && !anyRunning, onClick = { scanAll(context) },
+                modifier = Modifier.fillMaxWidth().height(64.dp),
+            ) {
+                Icon(Icons.Rounded.Search, null, Modifier.padding(end = 8.dp))
+                Text(t(if (anyRunning) R.string.cl_scanning else R.string.cl_scan_all), style = MaterialTheme.typography.titleMedium)
+            }
+            val found = listOfNotNull(
+                sys?.values?.flatten()?.sumOf { it.size }, corpses?.values?.flatten()?.sumOf { it.size },
+                caches?.filter { de.emil.shizubox.cleaner.AppCleaner.blockReason(it) == null }?.sumOf { it.ext }, dupes?.sumOf { it.waste },
+            )
+            if (found.isNotEmpty() && !anyRunning) Text(
+                t(R.string.cl_found_total, size(context, found.sum())),
+                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp, start = 8.dp),
+            )
+        }
+        item {
             val analysis by de.emil.shizubox.cleaner.StorageAnalysis.result.collectAsStateWithLifecycle()
-            ToolCard(Icons.Rounded.PieChart, t(R.string.cl_analysis), t(R.string.sa_sub),
+            ToolCard(Icons.Rounded.PieChart, t(R.string.cl_analysis), t(R.string.sa_sub), running = de.emil.shizubox.cleaner.CleanTool.Analysis in running,
                 found = analysis?.let { tp(R.plurals.sa_files, it.files, it.files) }) { open(CleanerPage.ANALYSIS) }
         }
         item {
             val sys by de.emil.shizubox.cleaner.SystemCleaner.result.collectAsStateWithLifecycle()
-            ToolCard(Icons.Rounded.CleaningServices, t(R.string.cl_system), t(R.string.sc_sub),
+            ToolCard(Icons.Rounded.CleaningServices, t(R.string.cl_system), t(R.string.sc_sub), running = de.emil.shizubox.cleaner.CleanTool.System in running,
                 found = sys?.values?.flatten()?.sumOf { it.size }?.let { size(context, it) }) { open(CleanerPage.SYSTEM) }
         }
         item {
             val corpses by de.emil.shizubox.cleaner.CorpseFinder.result.collectAsStateWithLifecycle()
-            ToolCard(Icons.Rounded.FolderDelete, t(R.string.cl_corpses), t(R.string.cf_sub),
+            ToolCard(Icons.Rounded.FolderDelete, t(R.string.cl_corpses), t(R.string.cf_sub), running = de.emil.shizubox.cleaner.CleanTool.Corpses in running,
                 found = corpses?.values?.flatten()?.let { l -> if (l.isEmpty()) "0" else size(context, l.sumOf { it.size }) }) { open(CleanerPage.CORPSES) }
         }
         item {
             val caches by de.emil.shizubox.cleaner.AppCleaner.result.collectAsStateWithLifecycle()
-            ToolCard(Icons.Rounded.Apps, t(R.string.cl_appcache), t(R.string.cc_sub),
+            ToolCard(Icons.Rounded.Apps, t(R.string.cl_appcache), t(R.string.cc_sub), running = de.emil.shizubox.cleaner.CleanTool.AppCache in running,
                 found = caches?.let { l -> size(context, l.sumOf { it.total }) }) { open(CleanerPage.APPCACHE) }
         }
         item {
             val dupes by de.emil.shizubox.cleaner.Duplicates.result.collectAsStateWithLifecycle()
-            ToolCard(Icons.Rounded.ContentCopy, t(R.string.cl_dupes), t(R.string.du_sub),
+            ToolCard(Icons.Rounded.ContentCopy, t(R.string.cl_dupes), t(R.string.du_sub), running = de.emil.shizubox.cleaner.CleanTool.Duplicates in running,
                 found = dupes?.let { l -> size(context, l.sumOf { it.waste }) }) { open(CleanerPage.DUPES) }
         }
         item {
@@ -158,8 +187,17 @@ private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
     }
 }
 
+/** "Scan everything": all tools one after the other (the job queue runs one at a time). */
+fun scanAll(context: android.content.Context) {
+    scanCorpses()
+    scanSystem(context)
+    scanAppCaches(context)
+    scanDuplicates(de.emil.shizubox.cleaner.KeepRule.Camera)
+    scanAnalysis(context)
+}
+
 @Composable
-fun ToolCard(icon: ImageVector, title: String, subtitle: String, found: String? = null, onClick: () -> Unit) {
+fun ToolCard(icon: ImageVector, title: String, subtitle: String, found: String? = null, running: Boolean = false, onClick: () -> Unit) {
     GlassCard(Modifier.fillMaxWidth(), onClick = onClick, contentPadding = 16.dp) {
         Row {
             Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(end = 16.dp, top = 2.dp))
@@ -167,7 +205,8 @@ fun ToolCard(icon: ImageVector, title: String, subtitle: String, found: String? 
                 Text(title, style = MaterialTheme.typography.titleMedium)
                 Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-            if (found != null) RollingText(found, MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+            if (running) LoadingIndicator(Modifier.size(32.dp))
+            else if (found != null) RollingText(found, MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
         }
     }
 }

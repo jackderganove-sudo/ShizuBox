@@ -40,6 +40,8 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.cleaner.Trash.init(this)
         de.emil.shizubox.cleaner.CleanerJobs.init(this)
         de.emil.shizubox.cleaner.Duplicates.init(this)
+        // Scheduled cleaning: re-armed at every start (also after a reboot).
+        runCatching { de.emil.shizubox.cleaner.CleanerSchedule.schedule(this) }
         de.emil.shizubox.util.Unlock.whenUnlocked(this) {
             kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
                 de.emil.shizubox.system.CacheCleaner.cleanStale(this@ShizuBoxApp)
