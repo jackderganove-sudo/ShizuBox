@@ -20,7 +20,7 @@ class DownloadShareActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val text = intent.getStringExtra(android.content.Intent.EXTRA_TEXT) ?: intent.dataString
-        val url = text?.let { Regex("""https?://\S+""").find(it)?.value }
+        val url = text?.let(::sharedUrl)
         if (url == null) {
             Toast.makeText(this, t(R.string.dl_no_link), Toast.LENGTH_SHORT).show()
             finish()
@@ -39,4 +39,26 @@ class DownloadShareActivity : ComponentActivity() {
             }
         }
     }
+}
+
+/**
+ * First link in a shared text. Punctuation that ends a sentence or closes a bracket around the
+ * link ("(see https://x.y/a)") is not part of it (0.11.1); a closing bracket the link itself
+ * opened (Wikipedia "Foo_(bar)") stays.
+ */
+internal fun sharedUrl(text: String): String? {
+    var url = Regex("""https?://\S+""").find(text)?.value ?: return null
+    while (url.isNotEmpty()) {
+        val last = url.last()
+        val strip = when (last) {
+            '.', ',', ';', ':', '!', '?', '"', '\'', '>', '»', '“', '”' -> true
+            ')' -> url.count { it == '(' } < url.count { it == ')' }
+            ']' -> url.count { it == '[' } < url.count { it == ']' }
+            '}' -> url.count { it == '{' } < url.count { it == '}' }
+            else -> false
+        }
+        if (!strip) break
+        url = url.dropLast(1)
+    }
+    return url.takeIf { it.length > "https://".length }
 }

@@ -19,8 +19,11 @@ import java.util.zip.ZipOutputStream
  */
 object ApkExport {
 
-    fun fileName(app: AppEntry) =
-        "${app.label.replace(Regex("[^A-Za-z0-9._ -]"), "_")}_${app.versionName ?: "app"}.${if (app.isSplit) "apks" else "apk"}"
+    /** Label and version may contain anything, e.g. "1.0/beta" – a `/` made a sub folder (0.11.1). */
+    fun fileName(app: AppEntry): String {
+        fun safe(s: String) = s.replace(Regex("[^A-Za-z0-9._ -]"), "_").trim('.', ' ').ifEmpty { "app" }
+        return "${safe(app.label)}_${safe(app.versionName ?: "app")}.${if (app.isSplit) "apks" else "apk"}"
+    }
 
     suspend fun writeTo(app: AppEntry, out: OutputStream) = withContext(Dispatchers.IO) {
         val paths = Apps.apkPaths(app.pkg)

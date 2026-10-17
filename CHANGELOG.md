@@ -49,6 +49,9 @@
 - Uhrzeit/Zeitzone geändert: Automationen und automatisches Aufräumen planen ihren nächsten Termin neu; der
   Schulmodus-Zeitplan ist jetzt im Backup; Import erst vollständig prüfen, dann schreiben (ein kaputter Eintrag ließ
   vorher eine Mischung aus alten und neuen Einstellungen zurück – live geprüft)
+- Logcat: App-Filter wird gequotet (Freitext landete ungeschützt im Shell-Befehl); APK-Export: Version mit `/` im
+  Dateinamen ersetzt; geteilte Links ohne angehängtes `)`, `.` oder `,` (Klammern des Links selbst bleiben,
+  `SharedUrlTest`, 4 Unit-Tests)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

@@ -16,7 +16,9 @@ object Logcat {
      */
     suspend fun read(level: Char, pkg: String?, lines: Int = 800): List<LogLine> {
         val pidFilter = if (pkg.isNullOrBlank()) "" else {
-            val pids = ShizukuManager.exec("pidof ${pkg.trim()}").out.trim()
+            // Free text from the search field: quoted, never part of the command (0.11.1).
+            val pids = ShizukuManager.exec("pidof ${de.emil.shizubox.cleaner.Fs.q(pkg.trim())}").out.trim()
+                .split(' ').filter { p -> p.isNotEmpty() && p.all { it.isDigit() } }.joinToString(" ")
             if (pids.isEmpty()) return listOf(LogLine('W', t(R.string.proc_not_running, pkg.trim())))
             // logcat accepts a single --pid; take the main process.
             "--pid=${pids.split(' ').first()}"
