@@ -1518,5 +1518,9 @@
 },
 "sr_text": "Restes du mode école. Touche « Réessayer » – ShizuBox réessaie aussi tout seul dès que Shizuku fonctionne.",
 "sr_retry": "Réessayer",
-"sr_channel": "Restauration du mode école"
+"sr_channel": "Restauration du mode école",
+"bk_priv_title": "Fonctions de confidentialité",
+"bk_priv_text": "Elles étaient activées dans la sauvegarde. Elles enregistrent des données privées ou modifient un réglage système, elles ne sont donc pas activées automatiquement – ouvre-les pour les activer ici.",
+"bk_priv_open": "Ouvrir",
+"bk_priv_later": "Pas maintenant"
 }

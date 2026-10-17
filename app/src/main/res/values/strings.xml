@@ -1522,4 +1522,8 @@
     <string name="sr_text">Left over from school mode. Tap “Try again” – ShizuBox also retries by itself as soon as Shizuku is running.</string>
     <string name="sr_retry">Try again</string>
     <string name="sr_channel">School mode restore</string>
+    <string name="bk_priv_title">Privacy features</string>
+    <string name="bk_priv_text">These were on in the backup. They record private data or change a system setting, so they are not switched on automatically – open them to turn them on here.</string>
+    <string name="bk_priv_open">Open</string>
+    <string name="bk_priv_later">Not now</string>
 </resources>

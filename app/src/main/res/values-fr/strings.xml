@@ -1520,4 +1520,8 @@
     <string name="sr_text">Restes du mode école. Touche « Réessayer » – ShizuBox réessaie aussi tout seul dès que Shizuku fonctionne.</string>
     <string name="sr_retry">Réessayer</string>
     <string name="sr_channel">Restauration du mode école</string>
+    <string name="bk_priv_title">Fonctions de confidentialité</string>
+    <string name="bk_priv_text">Elles étaient activées dans la sauvegarde. Elles enregistrent des données privées ou modifient un réglage système, elles ne sont donc pas activées automatiquement – ouvre-les pour les activer ici.</string>
+    <string name="bk_priv_open">Ouvrir</string>
+    <string name="bk_priv_later">Pas maintenant</string>
 </resources>

@@ -25,6 +25,10 @@
   (`TimeTrigger`, 5 Unit-Tests)
 - Zwischenablage- und Benachrichtigungsverlauf: Sperre greift wieder, sobald ShizuBox verlassen wird (Home, andere App,
   Display aus); beide Seiten mit FLAG_SECURE (keine Screenshots, keine Vorschau in „Letzte Apps“)
+- Backup-Import schaltet keine Datenschutz-Funktionen mehr ein (Zwischenablage-, Benachrichtigungsverlauf,
+  Datenschutz-Protokoll, ausgeblendeter Zwischenablage-Hinweis): das Backup merkt sich nur, dass sie an waren, danach
+  fragt ein Dialog mit „Öffnen“; `toast_before` (Systemwert dieses Handys) gehört nicht mehr ins Backup
+  (live geprüft mit einem Backup im alten Format, in dem alles eingeschaltet war)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

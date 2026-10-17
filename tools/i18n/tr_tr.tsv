@@ -1416,3 +1416,7 @@ sr_title	%d ayar geri yüklenemedi|||%d ayar geri yüklenemedi
 sr_text	Okul modundan kalanlar. “Tekrar dene”ye dokun – ShizuBox, Shizuku çalışır çalışmaz kendisi de tekrar dener.
 sr_retry	Tekrar dene
 sr_channel	Okul modu geri yükleme
+bk_priv_title	Gizlilik özellikleri
+bk_priv_text	Bunlar yedekte açıktı. Özel verileri kaydettikleri veya bir sistem ayarını değiştirdikleri için otomatik olarak açılmazlar – burada açmak için onları aç.
+bk_priv_open	Aç
+bk_priv_later	Şimdi değil

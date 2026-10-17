@@ -1520,5 +1520,9 @@
     <string name="sr_text">Übrig vom Schulmodus. Tippe auf „Erneut versuchen“ – ShizuBox versucht es auch selbst, sobald Shizuku läuft.</string>
     <string name="sr_retry">Erneut versuchen</string>
     <string name="sr_channel">Schulmodus-Wiederherstellung</string>
+    <string name="bk_priv_title">Datenschutz-Funktionen</string>
+    <string name="bk_priv_text">Diese waren im Backup eingeschaltet. Sie zeichnen Privates auf oder ändern eine Systemeinstellung und werden deshalb nicht automatisch eingeschaltet – öffne sie, um sie hier einzuschalten.</string>
+    <string name="bk_priv_open">Öffnen</string>
+    <string name="bk_priv_later">Nicht jetzt</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

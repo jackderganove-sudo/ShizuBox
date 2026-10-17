@@ -7292,5 +7292,25 @@
   "en": "School mode restore",
   "de": "Schulmodus-Wiederherstellung",
   "plural": false
+ },
+ "bk_priv_title": {
+  "en": "Privacy features",
+  "de": "Datenschutz-Funktionen",
+  "plural": false
+ },
+ "bk_priv_text": {
+  "en": "These were on in the backup. They record private data or change a system setting, so they are not switched on automatically – open them to turn them on here.",
+  "de": "Diese waren im Backup eingeschaltet. Sie zeichnen Privates auf oder ändern eine Systemeinstellung und werden deshalb nicht automatisch eingeschaltet – öffne sie, um sie hier einzuschalten.",
+  "plural": false
+ },
+ "bk_priv_open": {
+  "en": "Open",
+  "de": "Öffnen",
+  "plural": false
+ },
+ "bk_priv_later": {
+  "en": "Not now",
+  "de": "Nicht jetzt",
+  "plural": false
  }
 }

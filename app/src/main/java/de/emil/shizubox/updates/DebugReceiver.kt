@@ -116,7 +116,22 @@ class DebugReceiver : BroadcastReceiver() {
                             val a = de.emil.shizubox.settings.Backup.export(context, includeSecrets = false)
                             val r = de.emil.shizubox.settings.Backup.import(context, a)
                             val b = de.emil.shizubox.settings.Backup.export(context, includeSecrets = false)
-                            "roundtrip equal=${strip(a) == strip(b)} result=$r size=${a.length} keys=${org.json.JSONObject(a).getJSONObject("prefs").keys().asSequence().toList()} vtKeyKept=${de.emil.shizubox.installer.VirusTotal.apiKey.isNotBlank()}"
+                            // 0.11.1: a backup with every privacy switch on (old format, inside "prefs") must not switch anything on.
+                            val clipP = context.createDeviceProtectedStorageContext().getSharedPreferences("clipboard", android.content.Context.MODE_PRIVATE)
+                            val privBefore = clipP.all.filterKeys { it == "enabled" || it == "toast_before" }
+                            val evil = org.json.JSONObject(a).apply {
+                                remove("privacy_switches")
+                                val pj = getJSONObject("prefs")
+                                fun on(file: String, key: String, v: org.json.JSONObject) = pj.put(file, (pj.optJSONObject(file) ?: org.json.JSONObject()).put(key, v))
+                                val t = org.json.JSONObject().put("t", "b").put("v", true)
+                                on("clipboard", "enabled", t); on("notif_history", "enabled", t); on("privacy", "enabled", t)
+                                on("clipboard", "toast_before", org.json.JSONObject().put("t", "s").put("v", "1"))
+                            }.toString()
+                            val r2 = de.emil.shizubox.settings.Backup.import(context, evil)
+                            val privAfter = clipP.all.filterKeys { it == "enabled" || it == "toast_before" }
+                            "roundtrip equal=${strip(a) == strip(b)} result=$r size=${a.length} keys=${org.json.JSONObject(a).getJSONObject("prefs").keys().asSequence().toList()} vtKeyKept=${de.emil.shizubox.installer.VirusTotal.apiKey.isNotBlank()} " +
+                                "privacy: offers=${r2.offers} clipboard before=$privBefore after=$privAfter unchanged=${privBefore == privAfter} " +
+                                "clip=${de.emil.shizubox.clipboard.ClipHistory.settings.value.enabled} nh=${de.emil.shizubox.notifications.NotifHistory.settings.value.enabled} pv=${de.emil.shizubox.privacy.PrivacyLog.settings.value.enabled}"
                         }
                         "schedule" -> {
                             val sch = de.emil.shizubox.school.SchoolSchedule

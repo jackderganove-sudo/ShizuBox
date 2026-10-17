@@ -8,7 +8,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.PrivacyTip
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -25,6 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import de.emil.shizubox.R
+import de.emil.shizubox.nav.AppNav
+import de.emil.shizubox.search.SearchIndex
 import de.emil.shizubox.settings.Backup
 import de.emil.shizubox.t
 import de.emil.shizubox.ui.glass.GlassCard
@@ -41,6 +49,7 @@ fun BackupCard() {
     val scope = rememberCoroutineScope()
     var secrets by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf<String?>(null) }
+    var offers by remember { mutableStateOf<List<Backup.PrivacySwitch>>(emptyList()) }
 
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         uri ?: return@rememberLauncherForActivityResult
@@ -60,10 +69,13 @@ fun BackupCard() {
             message = runCatching {
                 val text = withContext(Dispatchers.IO) { context.contentResolver.openInputStream(uri)!!.use { it.readBytes().decodeToString() } }
                 val r = Backup.import(context, text)
+                offers = r.offers
                 t(R.string.bk_imported, r.trackedApps)
             }.getOrElse { t(R.string.ie_import_failed, it.message) }
         }
     }
+
+    if (offers.isNotEmpty()) PrivacyOffersDialog(offers, onDismiss = { offers = emptyList() })
 
     GlassCard(Modifier.fillMaxWidth()) {
         Text(t(R.string.bk_card), style = MaterialTheme.typography.titleMedium)
@@ -88,4 +100,43 @@ fun BackupCard() {
             )
         }
     }
+}
+
+/**
+ * After an import: privacy features that were on in the backup stay off until the user turns
+ * them on deliberately on their own page (0.11.1).
+ */
+@Composable
+private fun PrivacyOffersDialog(offers: List<Backup.PrivacySwitch>, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = { Icon(Icons.Rounded.PrivacyTip, null) },
+        title = { Text(t(R.string.bk_priv_title)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(t(R.string.bk_priv_text), style = MaterialTheme.typography.bodyMedium)
+                for (o in offers) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            t(
+                                when (o) {
+                                    Backup.PrivacySwitch.Clipboard -> R.string.cb_title
+                                    Backup.PrivacySwitch.ClipboardHint -> R.string.cb_hide_toast
+                                    Backup.PrivacySwitch.NotifHistory -> R.string.nh_title
+                                    Backup.PrivacySwitch.PrivacyLog -> R.string.pv_title
+                                },
+                            ),
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.weight(1f),
+                        )
+                        TextButton(onClick = {
+                            SearchIndex.byId(o.target)?.let { AppNav.go(it.target) }
+                            onDismiss()
+                        }) { Text(t(R.string.bk_priv_open)) }
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(t(R.string.bk_priv_later)) } },
+    )
 }

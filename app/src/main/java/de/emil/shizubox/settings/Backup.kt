@@ -34,26 +34,43 @@ object Backup {
         "activity_launcher" to emptySet(),
         "downloader" to emptySet(),
         "boost" to setOf("enabled", "dose_before_reset"),
-        // Only the settings: the history itself never leaves the device.
+        // Only the settings: the history itself never leaves the device; on/off see PrivacySwitch.
         "notif_history" to setOf("enabled"),
         "net_block" to emptySet(),
         "automations" to emptySet(),
         "debloat" to emptySet(),
         // Only the settings; the access log itself stays on the device.
         "battery_report" to setOf("last_snapshot"),
-        // Only the settings; copied texts never leave the device.
-        "clipboard" to emptySet(),
+        // Only the settings; copied texts never leave the device. on/off see PrivacySwitch;
+        // toast_before is this phone's previous system value (device state), it never travels.
+        "clipboard" to setOf("enabled", "toast_before"),
         "app_volume" to emptySet(),
         // Only the settings (exclusions, schedule, categories); trash and scan results stay on the device.
         "cleaner" to emptySet(),
         "hilight" to emptySet(),
-        "privacy" to setOf("since_CAMERA", "since_RECORD_AUDIO", "since_FINE_LOCATION", "since_COARSE_LOCATION"),
+        "privacy" to setOf("enabled", "since_CAMERA", "since_RECORD_AUDIO", "since_FINE_LOCATION", "since_COARSE_LOCATION"),
     )
+
+    /**
+     * Features that record private data or change a system-wide privacy setting. An import never
+     * switches them on (Daniel's review 0.11.1) – the backup only remembers that they were on, and
+     * the user is asked afterwards. [target] is the [de.emil.shizubox.search.SearchIndex] entry.
+     */
+    enum class PrivacySwitch(val prefs: String, val key: String, val target: String) {
+        Clipboard("clipboard", "enabled", "clipboard"),
+        ClipboardHint("clipboard", "toast_before", "clipboard"),
+        NotifHistory("notif_history", "enabled", "notifhistory"),
+        PrivacyLog("privacy", "enabled", "privacy");
+
+        /** On on this phone? The hint is hidden while ShizuBox keeps the previous system value. */
+        fun isOn(p: SharedPreferences) = if (this == ClipboardHint) p.contains(key) else p.getBoolean(key, false)
+    }
 
     /** Only exported when the user asks for it. */
     private val SECRETS = mapOf("updates" to setOf("github_token"), "virustotal" to setOf("api_key"))
 
-    data class Result(val prefs: Int, val trackedApps: Int)
+    /** [offers]: privacy features that were on in the backup but are off here – ask the user. */
+    data class Result(val prefs: Int, val trackedApps: Int, val offers: List<PrivacySwitch> = emptyList())
 
     private fun dp(context: Context) = context.createDeviceProtectedStorageContext()
     private fun prefs(context: Context, name: String) = dp(context).getSharedPreferences(name, Context.MODE_PRIVATE)
@@ -78,6 +95,7 @@ object Backup {
             .put("created", System.currentTimeMillis())
             .put("prefs", prefsJson)
             .put("tracked_apps", runCatching { trackedFile(context).readText() }.getOrDefault(""))
+            .put("privacy_switches", JSONObject().apply { PrivacySwitch.entries.forEach { put(it.name, it.isOn(prefs(context, it.prefs))) } })
             .put("school", JSONObject().put("auto_end", school.autoEndMinutes).put("wait_for_shizuku", school.waitForShizukuAfterReboot))
             .put("language", Language.current(context))
             .toString(2)
@@ -90,6 +108,14 @@ object Backup {
         val tracked = root.optString("tracked_apps")
         // Validate before anything is overwritten.
         val apps = if (tracked.isBlank()) 0 else JSONArray(tracked).length()
+        // Older backups (≤ 0.11.0) still carry the switches inside "prefs".
+        val switches = root.optJSONObject("privacy_switches")
+        val offers = PrivacySwitch.entries.filter { s ->
+            val inBackup = if (switches != null) switches.optBoolean(s.name) else prefsJson.optJSONObject(s.prefs)?.let { o ->
+                if (s == PrivacySwitch.ClipboardHint) o.has(s.key) else o.optJSONObject(s.key)?.optBoolean("v") == true
+            } == true
+            inBackup && !s.isOn(prefs(context, s.prefs))
+        }
         var count = 0
         for ((name, excluded) in PREFS) {
             val o = prefsJson.optJSONObject(name) ?: continue
@@ -131,7 +157,7 @@ object Backup {
             SchoolMode.setWaitForShizukuAfterReboot(s.optBoolean("wait_for_shizuku", SchoolMode.state.value.waitForShizukuAfterReboot))
         }
         root.optString("language").takeIf { root.has("language") && it != Language.current(context) }?.let { Language.set(context, it) }
-        return Result(count, apps)
+        return Result(count, apps, offers)
     }
 
     private fun typed(v: Any): JSONObject = when (v) {

@@ -1520,4 +1520,8 @@
     <string name="sr_text">Okul modundan kalanlar. “Tekrar dene”ye dokun – ShizuBox, Shizuku çalışır çalışmaz kendisi de tekrar dener.</string>
     <string name="sr_retry">Tekrar dene</string>
     <string name="sr_channel">Okul modu geri yükleme</string>
+    <string name="bk_priv_title">Gizlilik özellikleri</string>
+    <string name="bk_priv_text">Bunlar yedekte açıktı. Özel verileri kaydettikleri veya bir sistem ayarını değiştirdikleri için otomatik olarak açılmazlar – burada açmak için onları aç.</string>
+    <string name="bk_priv_open">Aç</string>
+    <string name="bk_priv_later">Şimdi değil</string>
 </resources>
