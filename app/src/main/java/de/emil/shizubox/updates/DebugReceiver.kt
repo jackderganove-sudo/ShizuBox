@@ -71,6 +71,7 @@ class DebugReceiver : BroadcastReceiver() {
                     "clipboard" -> de.emil.shizubox.ui.system.ClipboardScreen(ready, noop)
                     "appvolume" -> de.emil.shizubox.ui.system.AppVolumeScreen(ready, noop)
                     "errorlog" -> de.emil.shizubox.ui.settings.ErrorLogScreen(noop)
+                    "hilight" -> de.emil.shizubox.ui.system.HiLightScreen(ready, noop)
                     "cleaner" -> {
                         de.emil.shizubox.ui.cleaner.CleanerNav.page.value = intent.getStringExtra("page")
                         de.emil.shizubox.ui.cleaner.CleanerNav.tab = intent.getIntExtra("tab", 0)
@@ -285,6 +286,42 @@ class DebugReceiver : BroadcastReceiver() {
                             intent.extras?.keySet()?.filter { it != "test" }?.forEach { k -> put(k, intent.extras!!.get(k)) }
                             if (!has("op")) put("op", "info")
                         }.toString(), 8000)
+                        // App level (with all gates): --es op show --es pattern … --ei color … --el ms …; notify: simulates a notification rule
+                        "hl" -> when (intent.getStringExtra("op")) {
+                            "show" -> de.emil.shizubox.hilight.HiLight.show(de.emil.shizubox.hilight.LightRequest(
+                                "dbg", de.emil.shizubox.hilight.Layer.valueOf(intent.getStringExtra("layer") ?: "Manual"),
+                                de.emil.shizubox.hilight.Pattern.of(intent.getStringExtra("pattern") ?: "pulse"),
+                                intArrayOf(intent.getIntExtra("color", -16711936)), intent.getLongExtra("ms", 3000),
+                                intent.getStringExtra("progress")?.toDouble() ?: 0.0,
+                            )).toString() + " last=" + de.emil.shizubox.hilight.HiLight.last.value
+                            "progress" -> {
+                                val key = intent.getStringExtra("key") ?: "dbgp"
+                                val f = intent.getStringExtra("progress")?.toDouble()
+                                if (intent.getBooleanExtra("finish", false)) de.emil.shizubox.hilight.HiLightProgress.finish(key, intent.getBooleanExtra("own", true), intent.getBooleanExtra("ok", true))
+                                else de.emil.shizubox.hilight.HiLightProgress.update(key, intent.getBooleanExtra("own", true), f)
+                                kotlinx.coroutines.delay(800)
+                                "last=" + de.emil.shizubox.hilight.HiLight.last.value
+                            }
+                            "enable" -> { de.emil.shizubox.hilight.HiLightSettings.update { it.copy(enabled = intent.getBooleanExtra("on", true)) }; "enabled=" + de.emil.shizubox.hilight.HiLightSettings.current.enabled }
+                            "quiet" -> "quiet=" + de.emil.shizubox.hilight.HiLight.quietReason() + " facedown=" + de.emil.shizubox.hilight.FaceDown.isFaceDown(context)
+                            "off" -> { de.emil.shizubox.hilight.HiLight.off(); "off" }
+                            "dnd" -> { de.emil.shizubox.hilight.HiLightSettings.update { it.copy(quietDnd = intent.getBooleanExtra("on", true)) }; "quietDnd=" + de.emil.shizubox.hilight.HiLightSettings.current.quietDnd }
+                            // Test rule for notifications posted by the shell (`cmd notification post`); --ez on false removes it
+                            "rule" -> {
+                                val on = intent.getBooleanExtra("on", true)
+                                de.emil.shizubox.hilight.HiLightSettings.update { c ->
+                                    c.copy(appRules = c.appRules.filterNot { it.pkg == "com.android.shell" } +
+                                        (if (on) listOf(de.emil.shizubox.hilight.AppRule("com.android.shell", intent.getIntExtra("color", -16711936), intent.getStringExtra("pattern") ?: "pulse")) else emptyList()))
+                                }
+                                "rules=" + de.emil.shizubox.hilight.HiLightSettings.current.appRules.map { it.pkg } + " access=" + de.emil.shizubox.notifications.NotifHistory.hasAccess(context)
+                            }
+                            "privacy" -> {
+                                de.emil.shizubox.hilight.HiLightSettings.update { it.copy(privacy = intent.getBooleanExtra("on", true)) }
+                                kotlinx.coroutines.delay(1500)
+                                "privacy=" + de.emil.shizubox.hilight.HiLightSettings.current.privacy + " watching=" + de.emil.shizubox.hilight.HiLightPrivacy.isWatching
+                            }
+                            else -> de.emil.shizubox.hilight.HiLight.status().toString()
+                        }
                         "cleanercfg" -> {
                             // Writes the current cleaner settings unchanged (creates the prefs file for the backup test).
                             de.emil.shizubox.cleaner.CleanerSettings.update { it }

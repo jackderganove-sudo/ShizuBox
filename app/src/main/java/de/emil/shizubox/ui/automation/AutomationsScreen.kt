@@ -63,6 +63,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import de.emil.shizubox.ui.system.label
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
@@ -226,7 +227,7 @@ private fun RuleEditor(initial: Rule, onDone: () -> Unit) {
                         ActionKind.entries.forEach { k ->
                             DropdownMenuItem(text = { Text(k.label) }, onClick = {
                                 addMenu = false
-                                rule = rule.copy(actions = rule.actions + Action(k, value = if (k == ActionKind.Volume || k == ActionKind.AppVolume) 50 else if (k == ActionKind.Animations) 100 else 0))
+                                rule = rule.copy(actions = rule.actions + Action(k, value = if (k == ActionKind.Volume || k == ActionKind.AppVolume) 50 else if (k == ActionKind.Animations) 100 else if (k == ActionKind.HiLightPlay) 0xFF2979FF.toInt() else 0))
                             })
                         }
                     }
@@ -386,6 +387,18 @@ private fun ActionParams(a: Action, onChange: (Action) -> Unit) {
             label = { Text(t(R.string.au_command)) }, modifier = Modifier.fillMaxWidth(),
         )
         ActionKind.Clean -> Text(t(R.string.qa_clean_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        ActionKind.HiLightPlay -> {
+            var picking by remember { mutableStateOf(false) }
+            val pattern = de.emil.shizubox.hilight.Pattern.of(a.text.ifEmpty { "breathe" })
+            de.emil.shizubox.ui.system.LedBar(pattern, a.value)
+            de.emil.shizubox.ui.system.PatternChips(pattern) { onChange(a.copy(text = it.key)) }
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
+                de.emil.shizubox.ui.system.ColorDot(a.value, 32) { picking = true }
+                Text(t(R.string.hl_a_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 12.dp))
+            }
+            if (picking) de.emil.shizubox.ui.system.ColorPickerDialog(onDismiss = { picking = false }) { onChange(a.copy(value = it)); picking = false }
+        }
+        ActionKind.HiLightOff -> Unit
     }
 }
 
@@ -486,5 +499,7 @@ private fun actionText(a: Action): String = when (a.kind) {
     ActionKind.StartActivity -> t(R.string.au_tt_start, a.text.substringAfterLast('.'))
     ActionKind.Shell -> "$ " + a.text.take(30)
     ActionKind.Clean -> a.kind.label
+    ActionKind.HiLightPlay -> "HiLight: " + de.emil.shizubox.hilight.Pattern.of(a.text.ifEmpty { "breathe" }).label()
+    ActionKind.HiLightOff -> a.kind.label
     else -> "${a.kind.label} " + if (a.on) t(R.string.on) else t(R.string.off)
 }

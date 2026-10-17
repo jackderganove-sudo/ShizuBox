@@ -45,7 +45,7 @@ enum class ShizukuStatus {
 
 object ShizukuManager {
     /** Bump when IShellService changes. */
-    private const val SERVICE_REV = 6
+    private const val SERVICE_REV = 7
     /** Hard limit for a shell command when the caller gives none. */
     const val DEFAULT_LIMIT = 60_000L
 
@@ -223,6 +223,13 @@ object ShizukuManager {
         val svc = awaitService(timeoutMs) ?: throw ShizukuUnavailableException()
         try { svc.hilight(json) } catch (e: Exception) { throw ShizukuUnavailableException() }
     }
+
+    suspend fun watchPrivacy(callback: de.emil.shizubox.IHiLightCallback): Boolean = withContext(Dispatchers.IO) {
+        val svc = awaitService(3000) ?: return@withContext false
+        runCatching { svc.watchPrivacy(callback) }.onFailure { Log.e(TAG, "watchPrivacy failed", it) }.isSuccess
+    }
+
+    suspend fun unwatchPrivacy() = withContext(Dispatchers.IO) { runCatching { awaitService(1000)?.unwatchPrivacy() } }
 
     /** Pure rename as the Shizuku user (never a copy). Returns null on success, else the error. */
     suspend fun rename(from: String, to: String): String? = withContext(Dispatchers.IO) {

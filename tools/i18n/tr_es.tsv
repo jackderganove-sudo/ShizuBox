@@ -1251,3 +1251,72 @@ cl_scan_all	Escanear todo
 cl_scanning	Escaneando …
 cl_found_total	Encontrado: %1$s que se pueden quitar
 qa_clean_short	Limpiar
+hl_sub	Barra LED del Pixel: notificaciones, progreso
+hl_intro	Los 8 LED de la barra de la cámara. Límites de seguridad de HiLight Studio: efectos de notificación ≤ 1 min, otros ≤ 5 min, atenuados tras 10 s, encendidos como máximo la mitad de cada 10 minutos. Siempre apagados en modo escuela.
+hl_enabled	Usar HiLight
+hl_studio_warn	⚠ HiLight Studio está instalada. Solo una app puede controlar los LED; mientras los use, ShizuBox se queda a oscuras.
+hl_access	⚠ Falta el acceso a notificaciones: necesario para los colores por app y el progreso de otras apps.
+hl_grant	Conceder con Shizuku
+hl_brightness	Brillo %1$d %%
+hl_facedown	Solo con la pantalla hacia abajo
+hl_facedown_sub	Se comprueba un momento con el sensor de movimiento cuando algo debe encenderse; al levantar el móvil se apaga.
+hl_facedown_short	pantalla abajo
+hl_facedown_rule	Solo boca abajo
+hl_alert_s	Efectos de notificación: %1$d s
+hl_ambient_s	Efectos de automatización: %1$d s
+hl_safety	Límites que no se pueden desactivar: atenuado tras 10 s, como máximo la mitad de cada 10 minutos, solo una app a la vez.
+hl_reset	Restablecer LED
+hl_reset_done	LED en negro y liberados ✓
+hl_last	Último: %1$s
+hl_preview	Vista previa
+hl_play	Reproducir
+hl_stop	Detener
+hl_test	Probar
+hl_preview_on	Se muestra en los LED (8 s)
+hl_progress	Progreso
+hl_progress_sub	Como barra en los 8 LED, brevemente al empezar, cada 10 % y como mucho cada 90 s, nunca de forma continua. Verde o rojo al final.
+hl_own	Tareas propias de ShizuBox
+hl_own_sub	Actualizaciones, descargas, análisis del limpiador
+hl_sysupdate	Actualización del sistema Android
+hl_add_app	Añadir app
+hl_apps	Color por app
+hl_apps_sub	Cuando llega una notificación. Toca para cambiar color y patrón.
+hl_contacts	Color por contacto
+hl_contacts_sub	Remitente de un mensaje (nombre como en la notificación); prevalece sobre el color de la app.
+hl_add_contact	Añadir contacto
+hl_contact	Contacto
+hl_contact_name	Nombre como en las notificaciones
+hl_charging	Carga
+hl_charging_sub	Nivel de batería como barra al enchufar; verde un momento al 100 %
+hl_privacy	Cámara/micrófono en uso
+hl_privacy_sub	10 s encendido, 10 s apagado, solo durante el primer minuto de cada uso (tiempos de HiLight Studio)
+hl_quiet	Horas de silencio
+hl_q_dnd	Apagado con No molestar
+hl_q_night	Apagado por la noche
+hl_q_power	Apagado en ahorro de batería
+hl_q_battery	Apagado por debajo del %1$d %% de batería
+hl_q_school	Durante el modo escuela, HiLight siempre está apagado.
+hl_color	Color
+hl_color_wallpaper	De tu fondo de pantalla
+hl_color_presets	Colores
+hl_p_solid	Fijo
+hl_p_pulse	Pulso
+hl_p_breathe	Respirar
+hl_p_blink	Parpadeo
+hl_p_chase	Luz corrida
+hl_p_comet	Cometa
+hl_p_wave	Ola
+hl_p_heartbeat	Latido
+hl_p_rainbow	Arcoíris
+hl_p_progress	Barra de progreso
+hl_p_scan	Escáner
+hl_r_ok	mostrado
+hl_r_busy	otra app ocupa los LED: no se muestra nada
+hl_r_school	modo escuela: apagado
+hl_r_off	HiLight está desactivado
+hl_r_quiet	hora de silencio
+hl_r_facedown	el móvil no está boca abajo
+hl_r_lower	se muestra algo más importante
+hl_a_play	Reproducir patrón HiLight
+hl_a_off	Apagar HiLight
+hl_a_hint	Duración: efectos de automatización en los ajustes de HiLight

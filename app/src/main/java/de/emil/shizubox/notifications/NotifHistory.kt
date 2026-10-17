@@ -398,7 +398,13 @@ class HistoryListener : NotificationListenerService() {
         @Volatile var instance: HistoryListener? = null
     }
 
-    override fun onNotificationPosted(sbn: StatusBarNotification) = NotifHistory.posted(sbn)
+    override fun onNotificationPosted(sbn: StatusBarNotification) {
+        NotifHistory.posted(sbn)
+        runCatching { de.emil.shizubox.hilight.HiLightNotifications.posted(this, sbn) }
+    }
 
-    override fun onNotificationRemoved(sbn: StatusBarNotification, rankingMap: RankingMap, reason: Int) = NotifHistory.removed(sbn, reason)
+    override fun onNotificationRemoved(sbn: StatusBarNotification, rankingMap: RankingMap, reason: Int) {
+        NotifHistory.removed(sbn, reason)
+        runCatching { de.emil.shizubox.hilight.HiLightNotifications.removed(sbn) }
+    }
 }

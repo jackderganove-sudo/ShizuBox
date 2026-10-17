@@ -46,6 +46,7 @@ object Backup {
         "app_volume" to emptySet(),
         // Only the settings (exclusions, schedule, categories); trash and scan results stay on the device.
         "cleaner" to emptySet(),
+        "hilight" to emptySet(),
         "privacy" to setOf("since_CAMERA", "since_RECORD_AUDIO", "since_FINE_LOCATION", "since_COARSE_LOCATION"),
     )
 
@@ -120,6 +121,7 @@ object Backup {
         de.emil.shizubox.clipboard.ClipHistory.load()
         de.emil.shizubox.audio.AppVolume.load()
         de.emil.shizubox.cleaner.CleanerSettings.load()
+        de.emil.shizubox.hilight.HiLightSettings.load()
         runCatching { de.emil.shizubox.cleaner.CleanerSchedule.schedule(context) }
         runCatching { de.emil.shizubox.apps.NetBlock.restore(force = true) }
         Updates.init(context)

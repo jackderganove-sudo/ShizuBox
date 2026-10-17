@@ -362,6 +362,7 @@ object BatteryReport {
 class BatteryWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         runCatching { BatteryReport.sampleLevel() }
+        runCatching { de.emil.shizubox.hilight.HiLightCharging.check(applicationContext) }
         // Also takes school-mode sessions over before its small log rotates them away.
         runCatching { de.emil.shizubox.schoolstats.SchoolStats.collect() }
         if (de.emil.shizubox.school.SchoolMode.state.value.active) return Result.success()

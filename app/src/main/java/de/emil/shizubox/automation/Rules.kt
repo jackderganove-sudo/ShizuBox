@@ -52,6 +52,8 @@ enum class ActionKind(val labelRes: Int, val revertible: Boolean = true) {
     StayAwake(R.string.tile_stay_awake),
     NetBlock(R.string.au_a_netblock),
     Clean(R.string.qa_clean, false),
+    HiLightPlay(R.string.hl_a_play, false),
+    HiLightOff(R.string.hl_a_off, false),
     StartApp(R.string.au_a_start_app, false),
     StartActivity(R.string.au_a_start_activity, false),
     Shell(R.string.au_a_shell, false),

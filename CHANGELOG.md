@@ -1,12 +1,21 @@
 # Changelog
 
-## 0.10.0 (in Arbeit) – HiLight
-- Untersuchung: HiLight (8 LEDs, Pixel 11 Pro) lässt sich über ShizuBox' Shell-Dienst steuern
-  (`ILightsManager`, Shell-Nutzer hat `CONTROL_DEVICE_LIGHTS`); Test eine LED grün → sauber schwarz, Session freigegeben
-  (vom Nutzer am Gerät bestätigt)
-- Übernahme aus HiLight Studio (MIT, Lizenz in NOTICE und den Dateien): Licht-Session, Schwarz-Löschfolge,
-  Muster (Dauerlicht, Pulsieren, Atmen, Blinken, Lauflicht, Komet, Welle, Herzschlag, Regenbogen) plus Fortschrittsbalken,
-  Sicherheitsbegrenzer; Renderer im Shell-Dienst mit fester Höchstdauer je Art und „nur ein Renderer“
+## 0.10.0 – 2026-10-17 – HiLight (Pixel 11 Pro)
+- Neue Karte „HiLight“ unter System (nur Pixel 11 Pro / Pro XL / Pro Fold mit Android 17): steuert die 8 LEDs der
+  Kameraleiste über ShizuBox' Shell-Dienst (Shell-Nutzer hat `CONTROL_DEVICE_LIGHTS`), Code/Logik aus HiLight Studio
+  übernommen (MIT, Lizenz in NOTICE und in den Dateien)
+- Fortschritt als Balken (3 von 8 LEDs ≈ 37 %): App-Updates, Downloads, Reiniger-Scans sowie Fortschritts-Benachrichtigungen
+  anderer Apps (Standard: Android-Systemupdate und Play Store, pro App schaltbar); nur kurz beim Start, bei jedem 10-%-Schritt
+  und höchstens alle 90 s, unbestimmter Fortschritt als Scanner; am Ende grün bzw. rot
+- Farbe und Muster pro App und pro Kontakt (Absender der Nachricht) bei Benachrichtigungen; Muster: Dauerlicht, Pulsieren,
+  Atmen, Blinken, Lauflicht, Komet, Welle, Herzschlag, Regenbogen; Farbvorschläge aus dem Hintergrundbild; Vorschau in der App
+- Laden (Akkustand als Balken, grün bei 100 %), Kamera/Mikrofon-Hinweis (10 s an / 10 s aus, nur in der ersten Minute)
+- Nur mit Display nach unten (global und pro Regel), Ruhezeiten (Bitte nicht stören, nachts, Energiesparmodus, niedriger Akku),
+  im Schulmodus immer aus
+- Sicherheit (nicht abschaltbar): Benachrichtigungs-Effekte ≤ 1 Min., sonst ≤ 5 Min., nach 10 s gedimmt, höchstens die Hälfte
+  jeder 10 Minuten an, nur eine Session (belegt eine andere App die LEDs, bleibt ShizuBox dunkel), sauberes Schwarz +
+  Freigabe beim Ende, beim App-Start/Shizuku-Verbinden und per „LEDs zurücksetzen“; Fehler ins Fehlerprotokoll
+- Automations-Aktionen „HiLight-Muster abspielen“ und „HiLight aus“, Kachel „HiLight“, Einstellungen und Regeln im Backup
 
 ## 0.9.0 – 2026-10-17 – Reiniger
 - Neuer Startseiten-Bereich „Reiniger“ (nach Vorbild von SD Maid) mit Speicherübersicht

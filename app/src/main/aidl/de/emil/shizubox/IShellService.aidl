@@ -1,6 +1,7 @@
 package de.emil.shizubox;
 
 import de.emil.shizubox.IClipCallback;
+import de.emil.shizubox.IHiLightCallback;
 
 interface IShellService {
     // Reserved transaction code Shizuku uses to tear down the user service.
@@ -42,4 +43,8 @@ interface IShellService {
     // HiLight (Pixel 11 Pro LED bar) through the hidden ILightsManager – the shell user holds
     // CONTROL_DEVICE_LIGHTS. JSON in, JSON out; see hilight/ for the commands.
     String hilight(String commandJson) = 10;
+
+    // Camera/microphone activity (AppOps "active" watcher, shell may watch it) for HiLight.
+    void watchPrivacy(in IHiLightCallback callback) = 11;
+    void unwatchPrivacy() = 12;
 }

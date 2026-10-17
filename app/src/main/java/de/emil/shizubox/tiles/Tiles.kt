@@ -125,6 +125,26 @@ class CacheTile : ShellTile() {
     override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Cache, current)
 }
 
+/** HiLight on/off (switching off also darkens the LEDs at once). */
+class HiLightTile : TileService() {
+    override fun onStartListening() {
+        qsTile?.apply {
+            state = when {
+                !de.emil.shizubox.hilight.HiLight.supported -> Tile.STATE_UNAVAILABLE
+                de.emil.shizubox.hilight.HiLightSettings.current.enabled -> Tile.STATE_ACTIVE
+                else -> Tile.STATE_INACTIVE
+            }
+            updateTile()
+        }
+    }
+
+    override fun onClick() {
+        if (!de.emil.shizubox.hilight.HiLight.supported) return
+        de.emil.shizubox.hilight.HiLightSettings.update { it.copy(enabled = !it.enabled) }
+        onStartListening()
+    }
+}
+
 class CleanTile : ShellTile() {
     override suspend fun read() = QuickActions.read(QuickAction.Clean)
     override suspend fun toggle(current: TileInfo) = QuickActions.toggle(QuickAction.Clean, current)

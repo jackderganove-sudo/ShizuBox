@@ -73,6 +73,7 @@ import org.json.JSONArray
 /** Sub pages of the System section. */
 object SystemPage {
     const val LOGCAT = "logcat"
+    const val HILIGHT = "hilight"
     /** Moved to the cleaner (app cleaner); the System tile only links there. */
     const val CACHE = "cache"
     const val DEVICE = "device"

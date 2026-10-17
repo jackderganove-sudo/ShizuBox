@@ -29,6 +29,7 @@ import androidx.compose.material.icons.rounded.CleaningServices
 import androidx.compose.material.icons.rounded.BatteryChargingFull
 import androidx.compose.material.icons.rounded.ContentPaste
 import androidx.compose.material.icons.rounded.GraphicEq
+import androidx.compose.material.icons.rounded.Lightbulb
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.PrivacyTip
 import androidx.compose.material.icons.rounded.Memory
@@ -131,7 +132,12 @@ fun SystemScreen(
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ToolTile(Icons.Rounded.GraphicEq, t(R.string.av_title_short), t(R.string.av_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.APP_VOLUME) }
-                Spacer(Modifier.weight(1f))
+                // Only on the Pixel 11 Pro family with Android 17 – nowhere else are there LEDs to drive.
+                if (de.emil.shizubox.hilight.HiLight.supported) {
+                    ToolTile(Icons.Rounded.Lightbulb, "HiLight", t(R.string.hl_sub), Modifier.weight(1f)) { onOpenPage(SystemPage.HILIGHT) }
+                } else {
+                    Spacer(Modifier.weight(1f))
+                }
             }
         }
         item { GamingCard(shizukuReady) }

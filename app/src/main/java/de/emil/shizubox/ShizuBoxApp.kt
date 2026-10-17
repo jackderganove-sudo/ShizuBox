@@ -40,6 +40,7 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.cleaner.Trash.init(this)
         de.emil.shizubox.cleaner.CleanerJobs.init(this)
         de.emil.shizubox.cleaner.Duplicates.init(this)
+        de.emil.shizubox.hilight.HiLightSettings.init(this)
         // Scheduled cleaning: re-armed at every start (also after a reboot).
         runCatching { de.emil.shizubox.cleaner.CleanerSchedule.schedule(this) }
         de.emil.shizubox.util.Unlock.whenUnlocked(this) {
@@ -77,5 +78,8 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.automation.AutomationEngine.init(this)
         // Watches school mode's state (read-only) – must come after SchoolMode.init.
         de.emil.shizubox.schoolstats.SchoolStats.init(this)
+        // HiLight only reads school mode's state – after SchoolMode.init.
+        de.emil.shizubox.hilight.HiLight.init(this)
+        de.emil.shizubox.hilight.OwnSources.init()
     }
 }

@@ -59,6 +59,7 @@ private fun kindLabel(k: ErrorKind) = when (k) {
     ErrorKind.Native -> t(R.string.el_native)
     ErrorKind.Killed -> t(R.string.el_killed)
     ErrorKind.Hang -> t(R.string.el_hang)
+    ErrorKind.HiLight -> "HiLight"
 }
 
 /** Settings → error log: ShizuBox's own crashes, ANRs and hangs, to copy or share. */

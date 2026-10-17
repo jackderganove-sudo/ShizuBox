@@ -85,6 +85,19 @@ object Actions {
             NetBlock.set(listOf(a.pkg), a.on)
             a.copy(on = before)
         }
+        // value = colour, text = pattern key; ambient length from the HiLight settings (≤ 5 min).
+        ActionKind.HiLightPlay -> {
+            val cfg = de.emil.shizubox.hilight.HiLightSettings.current
+            de.emil.shizubox.hilight.HiLight.show(
+                de.emil.shizubox.hilight.LightRequest("auto", de.emil.shizubox.hilight.Layer.Manual,
+                    de.emil.shizubox.hilight.Pattern.of(a.text.ifEmpty { "breathe" }), intArrayOf(a.value), cfg.ambientSeconds * 1000L),
+            )
+            null
+        }
+        ActionKind.HiLightOff -> {
+            de.emil.shizubox.hilight.HiLight.off()
+            null
+        }
         ActionKind.Clean -> {
             de.emil.shizubox.cleaner.AutoClean.run(context).let { de.emil.shizubox.cleaner.AutoClean.notify(context, it) }
             null

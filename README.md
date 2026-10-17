@@ -45,7 +45,7 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 ### Automationen
 Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
 - Auslöser: App geöffnet/geschlossen, Uhrzeit + Wochentage, Kopfhörer, Bluetooth-Gerät, Ladekabel, Akku unter X %, WLAN (bestimmtes Netz)
-- Aktionen: Gaming-Modus, Lautstärke, Lautstärke pro App, Reinigen, Boost, Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, Wach bleiben, Internet-Sperre, App oder Activity starten, Shell-Befehl
+- Aktionen: Gaming-Modus, Lautstärke, Lautstärke pro App, Reinigen, HiLight-Muster/aus, Boost, Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, Wach bleiben, Internet-Sperre, App oder Activity starten, Shell-Befehl
 - „Danach zurücksetzen“, wenn der Auslöser endet; akkuschonend (Callbacks statt Dauerabfrage); pausiert während des Schulmodus
 
 ### System
@@ -63,6 +63,14 @@ Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
 - **Lautstärke pro App**: jede App bekommt einen eigenen Pegel über der Medienlautstärke (echtes Mischen über Shizuku), auch als Automations-Aktion
 - Gaming-Modus (Benachrichtigungen, Bildwiederholrate, Helligkeit, Hintergrund-Apps – wird exakt zurückgesetzt)
 - Logcat-Viewer mit Filtern
+
+### HiLight (Pixel 11 Pro)
+Die 8 LEDs in der Kameraleiste des Pixel 11 Pro / Pro XL / Pro Fold (Android 17), über Shizuku – nach dem Vorbild von [HiLight Studio](https://github.com/DhananjayBhosale/hilight-studio) (MIT).
+- **Fortschritt** als Balken: App-Updates, Downloads, Reiniger-Scans, **Android-Systemupdates** und Play-Store-Downloads – kurz und in Abständen, am Ende grün oder rot
+- **Farbe pro App und pro Kontakt** bei Benachrichtigungen, 9 Muster, Farbvorschläge aus dem Hintergrundbild, Vorschau
+- Laden, Kamera/Mikrofon-Hinweis, nur mit Display nach unten, Ruhezeiten; im Schulmodus immer aus
+- Feste Sicherheitsgrenzen (höchstens 1 bzw. 5 Minuten, nach 10 s gedimmt, höchstens die Hälfte jeder 10 Minuten), nur eine App steuert die LEDs, „LEDs zurücksetzen“
+- Automations-Aktionen und Schnelleinstellungs-Kachel
 
 ### Reiniger (nach Vorbild von SD Maid)
 Speicherübersicht und **„Alles scannen“** – jedes Werkzeug zeigt, wie viel es gefunden hat. **Nichts wird sofort gelöscht:** alles landet im ShizuBox-Papierkorb und ist 7 Tage (einstellbar) wiederherstellbar.
@@ -86,7 +94,7 @@ Speicherübersicht und **„Alles scannen“** – jedes Werkzeug zeigt, wie vie
 - Speicherort wählbar (Standard `Download/ShizuBox`), Cookies für altersbeschränkte Videos, Video→Audio offline, yt-dlp-Update in der App
 
 ### Kacheln & Widget
-Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate, Wach bleiben (Caffeine), Lautstärke-Boost, Cache aufräumen, Reinigen und Zwischenablage-Verlauf. Gaming bis Reinigen gibt es auch als Schnellaktionen auf der Startseite, die ersten vier zusätzlich als **Homescreen-Widget** (Material-You-Farben).
+Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate, Wach bleiben (Caffeine), Lautstärke-Boost, Cache aufräumen, Reinigen, HiLight und Zwischenablage-Verlauf. Gaming bis Reinigen gibt es auch als Schnellaktionen auf der Startseite, die ersten vier zusätzlich als **Homescreen-Widget** (Material-You-Farben).
 
 ### Einstellungen
 Sprache, Design (System/Hell/Dunkel, AMOLED, Farben, Paletten, Glas-Effekt), Startseite (Startbereich, Bereiche ein-/ausblenden), Installationsart, VirusTotal-Schlüssel, **Sichern & Wiederherstellen** aller Einstellungen in einer Datei, **Fehlerprotokoll** (Abstürze, Hänger; kopieren/teilen) für Fehlerberichte.

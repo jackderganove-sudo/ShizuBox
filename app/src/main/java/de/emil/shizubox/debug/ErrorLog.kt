@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import org.json.JSONObject
 import java.io.File
 
-enum class ErrorKind { Crash, Anr, Native, Killed, Hang }
+enum class ErrorKind { Crash, Anr, Native, Killed, Hang, HiLight }
 
 data class ErrorEntry(val time: Long, val kind: ErrorKind, val title: String, val details: String)
 

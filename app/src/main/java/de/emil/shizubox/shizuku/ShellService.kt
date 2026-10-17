@@ -258,6 +258,14 @@ class ShellService : IShellService.Stub() {
         "error: " + (e.cause ?: e).toString()
     }
 
+    override fun watchPrivacy(callback: de.emil.shizubox.IHiLightCallback) {
+        de.emil.shizubox.hilight.PrivacyWatcher.watch(callback)
+    }
+
+    override fun unwatchPrivacy() {
+        de.emil.shizubox.hilight.PrivacyWatcher.unwatch()
+    }
+
     override fun writeFile(fd: ParcelFileDescriptor, path: String): Long = try {
         File(path).parentFile?.mkdirs()
         ParcelFileDescriptor.AutoCloseInputStream(fd).use { input ->

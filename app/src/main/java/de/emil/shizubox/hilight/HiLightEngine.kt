@@ -87,7 +87,7 @@ object HiLightEngine {
                 cmd.optLong("speedMs", 1500L), cmd.optDouble("brightness", 1.0).coerceIn(0.05, 1.0),
                 cmd.optDouble("progress", 0.0), now, now + duration,
             )
-            if (thread?.isAlive != true) {
+            if (thread == null) {
                 thread = Thread(::loop, "hilight").apply { isDaemon = true; start() }
             }
         }
@@ -101,14 +101,24 @@ object HiLightEngine {
         }
     }
 
+    /**
+     * The only render thread. It ends only while holding [lock] and seeing no effect, so an effect
+     * that arrives during the final clear is never lost (play() starts a thread only when none runs).
+     */
     private fun loop() {
         try {
             while (true) {
-                val e = synchronized(lock) { effect }
                 val now = SystemClock.elapsedRealtime()
-                if (e == null || now >= e.until) {
-                    synchronized(lock) { if (effect === e) effect = null }
-                    if (synchronized(lock) { effect } == null) break
+                val e = synchronized(lock) { effect?.takeIf { now < it.until } ?: run { effect = null; null } }
+                if (e == null) {
+                    runCatching { io?.clearAndClose() }
+                    lastFrame = null
+                    synchronized(lock) {
+                        if (effect == null) {
+                            thread = null
+                            return
+                        }
+                    }
                     continue
                 }
                 val io = io()
@@ -131,10 +141,12 @@ object HiLightEngine {
             }
         } catch (t: Throwable) {
             lastError = t.toString()
-        } finally {
             runCatching { io?.clearAndClose() }
             lastFrame = null
-            synchronized(lock) { thread = null }
+            synchronized(lock) {
+                thread = null
+                effect = null
+            }
         }
     }
 
@@ -144,7 +156,7 @@ object HiLightEngine {
      */
     fun reset() {
         stop()
-        thread?.join(2000)
+        synchronized(lock) { thread }?.join(2000)
         runCatching { io?.clearAndClose() }
         if (foreignSessions() == 0) runCatching {
             val io = io()

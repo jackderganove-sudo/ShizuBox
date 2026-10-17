@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.9.0** (versionCode 10, 2026-10-17: Reiniger nach Vorbild von SD Maid; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
+| Version | **0.10.0** (versionCode 11, 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -107,6 +107,18 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Mehr: eigener Ordner (SAF), Cookies-Import | ✅ vom Nutzer bestätigt |
 | Warteschlange: Pause/Fortsetzen bei langen Downloads | ✅ vom Nutzer bestätigt |
 
+### HiLight (`hilight/`, `ui/system/HiLightScreen.kt`) – Pixel 11 Pro, nach HiLight Studio (MIT)
+| Funktion | Status |
+|---|---|
+| Zugriff: Shell-Nutzer hat `CONTROL_DEVICE_LIGHTS`; `LightsIo` im Shell-Dienst über das versteckte `ILightsManager` (Reflection): 8 LEDs (ids 1–8, Typ APPLICATION, RGB, 33 ms), Session öffnen/Farben setzen/schließen; Schwarz-Löschfolge aus HiLight Studio (0x01000000, dann 0, je 33 ms, dann schließen) | ✅ eine LED grün → schwarz, Session frei – vom Nutzer am Gerät bestätigt |
+| Renderer `HiLightEngine` (Shell-Prozess, ein Thread, 30 fps, schreibt nur geänderte Bilder): feste Höchstdauer je Art (Benachrichtigung 1 Min., Umgebung 5 Min., Vorschau 15 s, Fortschritt 1 Min.), `SafetyGuard` (nach 10 s auf 55 % dimmen, ≤ 50 % an pro 10 Min.), „nur ein Renderer“: vor dem Öffnen `dumpsys lights` – fremde Session → „busy“, nichts anzeigen; dunkle Animationsphasen geben die Session frei; Ende/Fehler → Schwarz + schließen; Prozess-Tod → LightsService schließt mit dem Token | ✅ Fortschritt 37 % = 3 LEDs, Pulsieren, Aus, keine offene Session danach; Rennen beim Effektwechsel behoben (Thread endet nur unter Lock) |
+| App-Seite `HiLight`: Sperren in dieser Reihenfolge – Gerät, Schulmodus (nur gelesen), ausgeschaltet, Shizuku, Bitte-nicht-stören, Nacht, Energiesparen, Akku < X % – dann Ebenen (Vorschau > Automation > eigener Fortschritt > Benachrichtigung > Kamera/Mikro > fremder Fortschritt > Laden), dann „Display nach unten“ (Schwerkraftsensor nur kurz beim Auslösen, kein Dauer-Sensor, ohne Sensor = nein; Hochheben beendet) | ✅ Sperren getestet (aus, DND des Nutzers aktiv → nichts), Vorrang und Anzeige getestet |
+| Fortschritt (`HiLightProgress`): eigene Vorgänge über ihre Zustände (Downloader, Reiniger, Update-Downloads) + App-Update-Benachrichtigung; fremde über den Benachrichtigungs-Listener (`EXTRA_PROGRESS*`), Standard: Systemupdate (Play-Dienste, Kanal `system_update.default_notification_channel` – auf dem Pixel gefunden) und Play Store; zeigt 4 s beim Start, bei jedem 10-%-Schritt, sonst alle 90 s; Ende grün/rot (fremd: grün nur bei 100 %). `system_update`-Dienst liefert nur einen Status, keine Prozente | ✅ mit simuliertem Fortschritt (Balken, Abstände, grünes Ende); echtes Systemupdate nicht abgewartet |
+| Benachrichtigungen: Farbe/Muster pro App (Vorgaben WhatsApp grün, Snapchat gelb, ByCS blau) und pro Kontakt (Absender aus MessagingStyle bzw. Titel, vor der App-Farbe), „nur einmal alarmieren“-Updates lösen nicht erneut aus | ✅ mit Shell-Benachrichtigung und Test-Regel |
+| Kamera/Mikrofon: `PrivacyWatcher` im Shell-Prozess (AppOps `startWatchingActive`, wie HiLight Studio), Rückmeldung per `IHiLightCallback`; Taktung aus HiLight Studio (10 s an, 10 s aus, nur erste Minute je Nutzung) | 🟡 Beobachter startet/stoppt; mit echter Kamera noch vom Nutzer zu prüfen |
+| Laden: Laufzeit-Empfänger für Netzteil-Anschluss (Manifest-Empfänger bekommen ihn seit Android 8 nicht mehr) → Balken 5 s; 100 % über den 15-Min.-Akku-Worker | 🟡 nicht am Gerät getestet |
+| Automations-Aktionen „HiLight-Muster abspielen“/„HiLight aus“, Kachel „HiLight“ (an/aus), Farbvorschläge aus dem Hintergrundbild (system_accent), Vorschau mit animierter LED-Leiste auf dem Bildschirm, „LEDs zurücksetzen“, Hinweis wenn HiLight Studio installiert ist, Einstellungen/Regeln im Backup (`hilight`) | ✅ |
+
 ### Reiniger (`cleaner/`, `ui/cleaner/`) – nach Vorbild von SD Maid (0.9)
 | Funktion | Status |
 |---|---|
@@ -171,6 +183,7 @@ app/src/main/java/de/emil/shizubox/
   settings/             AppSettings, Language, Backup
   debug/                ScreenRenderer (Offscreen-Screenshots per adb)
   downloader/           Ytdl (yt-dlp/FFmpeg), DownloadQueue, DownloadService, DlStorage, Discover (NewPipe), Settings, ShareActivity
+  hilight/              HiLight: LightsIo/HiLightEngine/PrivacyWatcher (Shell-Prozess), HiLight (Sperren), Quellen, Einstellungen
   cleaner/              Reiniger: Fs (Shell-Dateilisten), Guard (Schutzregeln), Trash (Papierkorb + Protokoll), Einstellungen, Worker
   ui/motion/            Motion (Federn, pressScale, RollingText, Stagger), Shared (Container-Übergang), EmptyState
   ui/                   Compose-Screens je Bereich, ui/glass (GlassCard, GlassBackground), ui/theme

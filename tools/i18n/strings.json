@@ -6461,5 +6461,350 @@
   "en": "Clean",
   "de": "Reinigen",
   "plural": false
+ },
+ "hl_sub": {
+  "en": "Pixel LED bar: notifications, progress",
+  "de": "Pixel-LED-Leiste: Benachrichtigungen, Fortschritt",
+  "plural": false
+ },
+ "hl_intro": {
+  "en": "The 8 LEDs in the camera bar. Safety limits from HiLight Studio: notification effects ≤ 1 min, others ≤ 5 min, dimmed after 10 s, lit at most half of every 10 minutes. Always off in school mode.",
+  "de": "Die 8 LEDs in der Kameraleiste. Sicherheitsgrenzen aus HiLight Studio: Benachrichtigungs-Effekte ≤ 1 Min., sonst ≤ 5 Min., nach 10 s gedimmt, höchstens die Hälfte jeder 10 Minuten an. Im Schulmodus immer aus.",
+  "plural": false
+ },
+ "hl_enabled": {
+  "en": "Use HiLight",
+  "de": "HiLight verwenden",
+  "plural": false
+ },
+ "hl_studio_warn": {
+  "en": "⚠ HiLight Studio is installed. Only one app may drive the LEDs – while it holds them, ShizuBox stays dark.",
+  "de": "⚠ HiLight Studio ist installiert. Nur eine App darf die LEDs steuern – solange sie sie belegt, bleibt ShizuBox dunkel.",
+  "plural": false
+ },
+ "hl_access": {
+  "en": "⚠ Notification access is missing – needed for app colours and other apps' progress.",
+  "de": "⚠ Benachrichtigungszugriff fehlt – nötig für App-Farben und den Fortschritt anderer Apps.",
+  "plural": false
+ },
+ "hl_grant": {
+  "en": "Grant via Shizuku",
+  "de": "Über Shizuku erteilen",
+  "plural": false
+ },
+ "hl_brightness": {
+  "en": "Brightness %1$d %%",
+  "de": "Helligkeit %1$d %%",
+  "plural": false
+ },
+ "hl_facedown": {
+  "en": "Only with the display facing down",
+  "de": "Nur bei Display nach unten",
+  "plural": false
+ },
+ "hl_facedown_sub": {
+  "en": "Checked briefly with the motion sensor when something should light up; lifting the phone ends it.",
+  "de": "Wird kurz mit dem Bewegungssensor geprüft, wenn etwas leuchten soll; Hochheben beendet es.",
+  "plural": false
+ },
+ "hl_facedown_short": {
+  "en": "face down",
+  "de": "Display nach unten",
+  "plural": false
+ },
+ "hl_facedown_rule": {
+  "en": "Only face down",
+  "de": "Nur Display nach unten",
+  "plural": false
+ },
+ "hl_alert_s": {
+  "en": "Notification effects: %1$d s",
+  "de": "Benachrichtigungs-Effekte: %1$d s",
+  "plural": false
+ },
+ "hl_ambient_s": {
+  "en": "Automation effects: %1$d s",
+  "de": "Automations-Effekte: %1$d s",
+  "plural": false
+ },
+ "hl_safety": {
+  "en": "Limits that cannot be switched off: dimmed after 10 s, at most half of every 10 minutes lit, only one app at a time.",
+  "de": "Grenzen, die sich nicht abschalten lassen: nach 10 s gedimmt, höchstens die Hälfte jeder 10 Minuten an, immer nur eine App.",
+  "plural": false
+ },
+ "hl_reset": {
+  "en": "Reset LEDs",
+  "de": "LEDs zurücksetzen",
+  "plural": false
+ },
+ "hl_reset_done": {
+  "en": "LEDs set to black and released ✓",
+  "de": "LEDs auf Schwarz gesetzt und freigegeben ✓",
+  "plural": false
+ },
+ "hl_last": {
+  "en": "Last: %1$s",
+  "de": "Zuletzt: %1$s",
+  "plural": false
+ },
+ "hl_preview": {
+  "en": "Preview",
+  "de": "Vorschau",
+  "plural": false
+ },
+ "hl_play": {
+  "en": "Play",
+  "de": "Abspielen",
+  "plural": false
+ },
+ "hl_stop": {
+  "en": "Stop",
+  "de": "Stopp",
+  "plural": false
+ },
+ "hl_test": {
+  "en": "Test",
+  "de": "Testen",
+  "plural": false
+ },
+ "hl_preview_on": {
+  "en": "Shown on the LEDs (8 s)",
+  "de": "Wird auf den LEDs gezeigt (8 s)",
+  "plural": false
+ },
+ "hl_progress": {
+  "en": "Progress",
+  "de": "Fortschritt",
+  "plural": false
+ },
+ "hl_progress_sub": {
+  "en": "As a bar on the 8 LEDs, briefly at the start, every 10 % and at most every 90 s – never permanently. Green or red at the end.",
+  "de": "Als Balken auf den 8 LEDs, kurz beim Start, bei jedem 10-%-Schritt und höchstens alle 90 s – nie dauerhaft. Am Ende grün oder rot.",
+  "plural": false
+ },
+ "hl_own": {
+  "en": "ShizuBox' own work",
+  "de": "Eigene Vorgänge",
+  "plural": false
+ },
+ "hl_own_sub": {
+  "en": "App updates, downloads, cleaner scans",
+  "de": "App-Updates, Downloads, Reiniger-Scans",
+  "plural": false
+ },
+ "hl_sysupdate": {
+  "en": "Android system update",
+  "de": "Android-Systemupdate",
+  "plural": false
+ },
+ "hl_add_app": {
+  "en": "Add app",
+  "de": "App hinzufügen",
+  "plural": false
+ },
+ "hl_apps": {
+  "en": "Colour per app",
+  "de": "Farbe pro App",
+  "plural": false
+ },
+ "hl_apps_sub": {
+  "en": "When a notification arrives. Tap to change colour and pattern.",
+  "de": "Wenn eine Benachrichtigung kommt. Tippen ändert Farbe und Muster.",
+  "plural": false
+ },
+ "hl_contacts": {
+  "en": "Colour per contact",
+  "de": "Farbe pro Kontakt",
+  "plural": false
+ },
+ "hl_contacts_sub": {
+  "en": "Sender of a message (name as in the notification); wins over the app colour.",
+  "de": "Absender einer Nachricht (Name wie in der Benachrichtigung); gilt vor der App-Farbe.",
+  "plural": false
+ },
+ "hl_add_contact": {
+  "en": "Add contact",
+  "de": "Kontakt hinzufügen",
+  "plural": false
+ },
+ "hl_contact": {
+  "en": "Contact",
+  "de": "Kontakt",
+  "plural": false
+ },
+ "hl_contact_name": {
+  "en": "Name as shown in notifications",
+  "de": "Name wie in Benachrichtigungen",
+  "plural": false
+ },
+ "hl_charging": {
+  "en": "Charging",
+  "de": "Laden",
+  "plural": false
+ },
+ "hl_charging_sub": {
+  "en": "Battery level as a bar when plugged in; briefly green at 100 %",
+  "de": "Akkustand als Balken beim Anstecken; kurz grün bei 100 %",
+  "plural": false
+ },
+ "hl_privacy": {
+  "en": "Camera/microphone in use",
+  "de": "Kamera/Mikrofon aktiv",
+  "plural": false
+ },
+ "hl_privacy_sub": {
+  "en": "10 s on, 10 s off, only during the first minute of each use (HiLight Studio's timing)",
+  "de": "10 s an, 10 s aus, nur in der ersten Minute jeder Nutzung (Taktzeiten aus HiLight Studio)",
+  "plural": false
+ },
+ "hl_quiet": {
+  "en": "Quiet times",
+  "de": "Ruhezeiten",
+  "plural": false
+ },
+ "hl_q_dnd": {
+  "en": "Off during Do Not Disturb",
+  "de": "Aus bei „Bitte nicht stören“",
+  "plural": false
+ },
+ "hl_q_night": {
+  "en": "Off at night",
+  "de": "Nachts aus",
+  "plural": false
+ },
+ "hl_q_power": {
+  "en": "Off in battery saver",
+  "de": "Aus im Energiesparmodus",
+  "plural": false
+ },
+ "hl_q_battery": {
+  "en": "Off below %1$d %% battery",
+  "de": "Aus unter %1$d %% Akku",
+  "plural": false
+ },
+ "hl_q_school": {
+  "en": "During school mode HiLight is always off.",
+  "de": "Während des Schulmodus ist HiLight immer aus.",
+  "plural": false
+ },
+ "hl_color": {
+  "en": "Colour",
+  "de": "Farbe",
+  "plural": false
+ },
+ "hl_color_wallpaper": {
+  "en": "From your wallpaper",
+  "de": "Aus deinem Hintergrundbild",
+  "plural": false
+ },
+ "hl_color_presets": {
+  "en": "Colours",
+  "de": "Farben",
+  "plural": false
+ },
+ "hl_p_solid": {
+  "en": "Solid",
+  "de": "Dauerlicht",
+  "plural": false
+ },
+ "hl_p_pulse": {
+  "en": "Pulse",
+  "de": "Pulsieren",
+  "plural": false
+ },
+ "hl_p_breathe": {
+  "en": "Breathe",
+  "de": "Atmen",
+  "plural": false
+ },
+ "hl_p_blink": {
+  "en": "Blink",
+  "de": "Blinken",
+  "plural": false
+ },
+ "hl_p_chase": {
+  "en": "Running light",
+  "de": "Lauflicht",
+  "plural": false
+ },
+ "hl_p_comet": {
+  "en": "Comet",
+  "de": "Komet",
+  "plural": false
+ },
+ "hl_p_wave": {
+  "en": "Wave",
+  "de": "Welle",
+  "plural": false
+ },
+ "hl_p_heartbeat": {
+  "en": "Heartbeat",
+  "de": "Herzschlag",
+  "plural": false
+ },
+ "hl_p_rainbow": {
+  "en": "Rainbow",
+  "de": "Regenbogen",
+  "plural": false
+ },
+ "hl_p_progress": {
+  "en": "Progress bar",
+  "de": "Fortschrittsbalken",
+  "plural": false
+ },
+ "hl_p_scan": {
+  "en": "Scanner",
+  "de": "Scanner",
+  "plural": false
+ },
+ "hl_r_ok": {
+  "en": "shown",
+  "de": "angezeigt",
+  "plural": false
+ },
+ "hl_r_busy": {
+  "en": "another app holds the LEDs – nothing shown",
+  "de": "eine andere App belegt die LEDs – nichts angezeigt",
+  "plural": false
+ },
+ "hl_r_school": {
+  "en": "school mode – off",
+  "de": "Schulmodus – aus",
+  "plural": false
+ },
+ "hl_r_off": {
+  "en": "HiLight is switched off",
+  "de": "HiLight ist ausgeschaltet",
+  "plural": false
+ },
+ "hl_r_quiet": {
+  "en": "quiet time",
+  "de": "Ruhezeit",
+  "plural": false
+ },
+ "hl_r_facedown": {
+  "en": "phone not face down",
+  "de": "Handy liegt nicht mit dem Display nach unten",
+  "plural": false
+ },
+ "hl_r_lower": {
+  "en": "something more important is shown",
+  "de": "etwas Wichtigeres wird gezeigt",
+  "plural": false
+ },
+ "hl_a_play": {
+  "en": "Play HiLight pattern",
+  "de": "HiLight-Muster abspielen",
+  "plural": false
+ },
+ "hl_a_off": {
+  "en": "HiLight off",
+  "de": "HiLight aus",
+  "plural": false
+ },
+ "hl_a_hint": {
+  "en": "Length: automation effects in the HiLight settings",
+  "de": "Dauer: Automations-Effekte in den HiLight-Einstellungen",
+  "plural": false
  }
 }

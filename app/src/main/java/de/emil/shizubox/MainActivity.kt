@@ -205,6 +205,7 @@ class MainActivity : ComponentActivity() {
                             SystemPage.TERMINAL -> TerminalScreen(ready, onBack = close)
                             SystemPage.SCREEN_TIME -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, onBack = close)
                             SystemPage.APP_VOLUME -> de.emil.shizubox.ui.system.AppVolumeScreen(ready, onBack = close)
+                            SystemPage.HILIGHT -> de.emil.shizubox.ui.system.HiLightScreen(ready, onBack = close)
                             SystemPage.CLIPBOARD -> de.emil.shizubox.ui.system.ClipboardScreen(ready, onBack = close)
                             SystemPage.BATTERY -> de.emil.shizubox.ui.system.BatteryReportScreen(ready, onBack = close)
                             SystemPage.PRIVACY -> de.emil.shizubox.ui.system.PrivacyScreen(ready, onBack = close)

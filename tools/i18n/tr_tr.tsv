@@ -1251,3 +1251,72 @@ cl_scan_all	Her şeyi tara
 cl_scanning	Taranıyor …
 cl_found_total	Bulundu: silinebilecek %1$s
 qa_clean_short	Temizle
+hl_sub	Pixel LED çubuğu: bildirimler, ilerleme
+hl_intro	Kamera çubuğundaki 8 LED. HiLight Studio güvenlik sınırları: bildirim efektleri ≤ 1 dk, diğerleri ≤ 5 dk, 10 sn sonra kısılır, her 10 dakikanın en fazla yarısı yanar. Okul modunda her zaman kapalı.
+hl_enabled	HiLight'ı kullan
+hl_studio_warn	⚠ HiLight Studio yüklü. LED'leri yalnızca bir uygulama yönetebilir – o kullanırken ShizuBox karanlık kalır.
+hl_access	⚠ Bildirim erişimi yok – uygulama renkleri ve diğer uygulamaların ilerlemesi için gerekli.
+hl_grant	Shizuku ile ver
+hl_brightness	Parlaklık %%%1$d
+hl_facedown	Yalnızca ekran aşağı bakarken
+hl_facedown_sub	Bir şey yanacağında hareket sensörüyle kısaca kontrol edilir; telefonu kaldırmak bitirir.
+hl_facedown_short	ekran aşağı
+hl_facedown_rule	Yalnızca ekran aşağı
+hl_alert_s	Bildirim efektleri: %1$d sn
+hl_ambient_s	Otomasyon efektleri: %1$d sn
+hl_safety	Kapatılamayan sınırlar: 10 sn sonra kısılır, her 10 dakikanın en fazla yarısı yanar, aynı anda yalnızca bir uygulama.
+hl_reset	LED'leri sıfırla
+hl_reset_done	LED'ler siyaha ayarlandı ve serbest bırakıldı ✓
+hl_last	Son: %1$s
+hl_preview	Önizleme
+hl_play	Oynat
+hl_stop	Durdur
+hl_test	Dene
+hl_preview_on	LED'lerde gösteriliyor (8 sn)
+hl_progress	İlerleme
+hl_progress_sub	8 LED'de çubuk olarak; başlangıçta, her %10 adımda ve en çok 90 sn'de bir kısaca – asla sürekli değil. Sonunda yeşil veya kırmızı.
+hl_own	ShizuBox'ın kendi işleri
+hl_own_sub	Uygulama güncellemeleri, indirmeler, temizleyici taramaları
+hl_sysupdate	Android sistem güncellemesi
+hl_add_app	Uygulama ekle
+hl_apps	Uygulama başına renk
+hl_apps_sub	Bir bildirim geldiğinde. Renk ve deseni değiştirmek için dokun.
+hl_contacts	Kişi başına renk
+hl_contacts_sub	Mesajın göndereni (bildirimdeki ad); uygulama renginden önce gelir.
+hl_add_contact	Kişi ekle
+hl_contact	Kişi
+hl_contact_name	Bildirimlerde görünen ad
+hl_charging	Şarj
+hl_charging_sub	Takıldığında pil seviyesi çubuk olarak; %100'de kısaca yeşil
+hl_privacy	Kamera/mikrofon kullanımda
+hl_privacy_sub	10 sn açık, 10 sn kapalı, her kullanımın yalnızca ilk dakikasında (HiLight Studio zamanlaması)
+hl_quiet	Sessiz zamanlar
+hl_q_dnd	Rahatsız Etmeyin sırasında kapalı
+hl_q_night	Gece kapalı
+hl_q_power	Pil tasarrufunda kapalı
+hl_q_battery	%%%1$d pilin altında kapalı
+hl_q_school	Okul modunda HiLight her zaman kapalıdır.
+hl_color	Renk
+hl_color_wallpaper	Duvar kâğıdından
+hl_color_presets	Renkler
+hl_p_solid	Sabit
+hl_p_pulse	Nabız
+hl_p_breathe	Nefes
+hl_p_blink	Yanıp sönme
+hl_p_chase	Koşan ışık
+hl_p_comet	Kuyruklu yıldız
+hl_p_wave	Dalga
+hl_p_heartbeat	Kalp atışı
+hl_p_rainbow	Gökkuşağı
+hl_p_progress	İlerleme çubuğu
+hl_p_scan	Tarayıcı
+hl_r_ok	gösterildi
+hl_r_busy	LED'ler başka bir uygulamada – hiçbir şey gösterilmedi
+hl_r_school	okul modu – kapalı
+hl_r_off	HiLight kapalı
+hl_r_quiet	sessiz zaman
+hl_r_facedown	telefon ekranı aşağı değil
+hl_r_lower	daha önemli bir şey gösteriliyor
+hl_a_play	HiLight desenini oynat
+hl_a_off	HiLight kapat
+hl_a_hint	Süre: HiLight ayarlarındaki otomasyon efektleri
