@@ -1219,4 +1219,43 @@
     <string name="cl_aicore">Include AI models (AICore)</string>
     <string name="cl_aicore_sub">Off by default: AICore keeps on-device AI models (several GB) in its cache; they would be downloaded again.</string>
     <string name="cl_just_now">just now</string>
+    <string name="sa_apps">Apps</string>
+    <string name="sa_images">Pictures</string>
+    <string name="sa_videos">Videos</string>
+    <string name="sa_audio">Audio</string>
+    <string name="sa_docs">Documents</string>
+    <string name="sa_downloads">Downloads</string>
+    <string name="sa_system">System</string>
+    <string name="sa_other">Other</string>
+    <string name="sa_progress">%1$d files read …</string>
+    <string name="sa_progress_apps">Measuring apps …</string>
+    <string name="sa_sub">Who uses how much space – folders, largest files, apps</string>
+    <plurals name="sa_files">
+        <item quantity="one">%1$d file</item>
+        <item quantity="other">%1$d files</item>
+    </plurals>
+    <string name="cl_rescan">Scan again</string>
+    <string name="cl_waiting">Waiting …</string>
+    <string name="cl_ch_scan">Cleaner scans</string>
+    <string name="sa_tab_overview">Overview</string>
+    <string name="sa_tab_folders">Folders</string>
+    <string name="sa_tab_largest">Largest</string>
+    <string name="sa_tab_apps">Apps</string>
+    <string name="sa_used_by">Used storage</string>
+    <string name="sa_tap_hint">Tap the bar or a row for details</string>
+    <string name="sa_system_hint">System = Android itself, other users and everything ShizuBox cannot see. Apps include their data in Android/data and Android/obb.</string>
+    <string name="sa_scanned">%1$d files scanned · %2$s</string>
+    <string name="sa_up">Up</string>
+    <string name="sa_empty_folder">Empty folder</string>
+    <string name="sa_largest_hint">The 50 largest files on the internal storage. Tap for actions.</string>
+    <string name="sa_apps_hint">Per app: APK, data, cache, Android/data and obb. Tap opens the app\'s system page.</string>
+    <string name="sa_apk">APK %1$s</string>
+    <string name="sa_data">Data %1$s</string>
+    <string name="sa_cache">Cache %1$s</string>
+    <string name="cl_open">Open</string>
+    <string name="cl_share">Share</string>
+    <string name="cl_show_in_folder">Show in folder</string>
+    <string name="cl_exclude">Exclude from cleaning</string>
+    <string name="cl_excluded_done">Excluded ✓</string>
+    <string name="cl_cannot_open">⚠ Cannot open this file (Android/data is closed to apps)</string>
 </resources>

@@ -4,4 +4,6 @@
     <cache-path name="shared_apks" path="shared_apks/" />
     <cache-path name="updates" path="updates/" />
     <files-path name="notif_images" path="notif_images/" />
+    <!-- Cleaner: open/share files of the shared storage (with all-files access). -->
+    <root-path name="storage" path="storage/emulated/0/" />
 </paths>

@@ -1128,3 +1128,39 @@ cl_locked_info	Siempre bloqueado: carpetas del sistema y estándar, Android/data
 cl_aicore	Incluir modelos de IA (AICore)
 cl_aicore_sub	Desactivado por defecto: AICore guarda en su caché los modelos de IA del dispositivo (varios GB); se volverían a descargar.
 cl_just_now	ahora mismo
+sa_apps	Apps
+sa_images	Imágenes
+sa_videos	Vídeos
+sa_audio	Audio
+sa_docs	Documentos
+sa_downloads	Descargas
+sa_system	Sistema
+sa_other	Otros
+sa_progress	%1$d archivos leídos …
+sa_progress_apps	Midiendo apps …
+sa_sub	Quién ocupa cuánto espacio: carpetas, archivos más grandes, apps
+sa_files	%1$d archivo|||%1$d archivos
+cl_rescan	Volver a escanear
+cl_waiting	En espera …
+cl_ch_scan	Análisis del limpiador
+sa_tab_overview	Resumen
+sa_tab_folders	Carpetas
+sa_tab_largest	Más grandes
+sa_tab_apps	Apps
+sa_used_by	Almacenamiento ocupado
+sa_tap_hint	Toca la barra o una fila para ver detalles
+sa_system_hint	Sistema = el propio Android, otros usuarios y todo lo que ShizuBox no puede ver. Las apps incluyen sus datos en Android/data y Android/obb.
+sa_scanned	%1$d archivos analizados · %2$s
+sa_up	Subir
+sa_empty_folder	Carpeta vacía
+sa_largest_hint	Los 50 archivos más grandes del almacenamiento interno. Toca para ver acciones.
+sa_apps_hint	Por app: APK, datos, caché, Android/data y obb. Al tocar se abre la página del sistema de la app.
+sa_apk	APK %1$s
+sa_data	Datos %1$s
+sa_cache	Caché %1$s
+cl_open	Abrir
+cl_share	Compartir
+cl_show_in_folder	Mostrar en la carpeta
+cl_exclude	Excluir de la limpieza
+cl_excluded_done	Excluido ✓
+cl_cannot_open	⚠ No se puede abrir este archivo (Android/data está cerrado a las apps)

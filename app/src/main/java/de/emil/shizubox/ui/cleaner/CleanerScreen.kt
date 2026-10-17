@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.PieChart
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,11 +48,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 /** Sub pages of the cleaner; set from outside (notification, debug) through [CleanerNav]. */
 object CleanerPage {
     const val TRASH = "trash"
+    const val ANALYSIS = "analysis"
     const val SETTINGS = "settings"
 }
 
 object CleanerNav {
     val page = MutableStateFlow<String?>(null)
+    /** First tab of a page with tabs (debug screenshots). */
+    var tab = 0
 }
 
 @Composable
@@ -63,6 +67,7 @@ fun CleanerScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         val close = { CleanerNav.page.value = null }
         when (p) {
             CleanerPage.TRASH -> TrashScreen(shizukuReady, close)
+            CleanerPage.ANALYSIS -> AnalysisScreen(shizukuReady, close)
             CleanerPage.SETTINGS -> CleanerSettingsScreen(close)
             else -> CleanerHome(shizukuReady, onBack)
         }
@@ -104,6 +109,11 @@ private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
                 if (!shizukuReady) Text(t(R.string.shizuku_must), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 8.dp))
             }
+        }
+        item {
+            val analysis by de.emil.shizubox.cleaner.StorageAnalysis.result.collectAsStateWithLifecycle()
+            ToolCard(Icons.Rounded.PieChart, t(R.string.cl_analysis), t(R.string.sa_sub),
+                found = analysis?.let { tp(R.plurals.sa_files, it.files, it.files) }) { open(CleanerPage.ANALYSIS) }
         }
         item {
             ToolCard(Icons.Rounded.Delete, t(R.string.cl_trash),

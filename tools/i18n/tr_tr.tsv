@@ -1128,3 +1128,39 @@ cl_locked_info	Her zaman kilitli: sistem ve standart klasörler, yüklü uygulam
 cl_aicore	Yapay zekâ modellerini (AICore) dahil et
 cl_aicore_sub	Varsayılan olarak kapalı: AICore cihazdaki yapay zekâ modellerini (birkaç GB) önbelleğinde tutar; yeniden indirilirler.
 cl_just_now	az önce
+sa_apps	Uygulamalar
+sa_images	Resimler
+sa_videos	Videolar
+sa_audio	Ses
+sa_docs	Belgeler
+sa_downloads	İndirilenler
+sa_system	Sistem
+sa_other	Diğer
+sa_progress	%1$d dosya okundu …
+sa_progress_apps	Uygulamalar ölçülüyor …
+sa_sub	Kim ne kadar yer kaplıyor – klasörler, en büyük dosyalar, uygulamalar
+sa_files	%1$d dosya|||%1$d dosya
+cl_rescan	Yeniden tara
+cl_waiting	Bekliyor …
+cl_ch_scan	Temizleyici taramaları
+sa_tab_overview	Genel
+sa_tab_folders	Klasörler
+sa_tab_largest	En büyük
+sa_tab_apps	Uygulamalar
+sa_used_by	Kullanılan depolama
+sa_tap_hint	Ayrıntılar için çubuğa veya bir satıra dokun
+sa_system_hint	Sistem = Android'in kendisi, diğer kullanıcılar ve ShizuBox'ın göremediği her şey. Uygulamalar, Android/data ve Android/obb içindeki verilerini de kapsar.
+sa_scanned	%1$d dosya tarandı · %2$s
+sa_up	Yukarı
+sa_empty_folder	Boş klasör
+sa_largest_hint	Dahili depolamadaki en büyük 50 dosya. İşlemler için dokun.
+sa_apps_hint	Uygulama başına: APK, veri, önbellek, Android/data ve obb. Dokununca uygulamanın sistem sayfası açılır.
+sa_apk	APK %1$s
+sa_data	Veri %1$s
+sa_cache	Önbellek %1$s
+cl_open	Aç
+cl_share	Paylaş
+cl_show_in_folder	Klasörde göster
+cl_exclude	Temizlikten hariç tut
+cl_excluded_done	Hariç tutuldu ✓
+cl_cannot_open	⚠ Bu dosya açılamıyor (Android/data uygulamalara kapalı)

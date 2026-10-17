@@ -1217,4 +1217,43 @@
     <string name="cl_aicore">Incluir modelos de IA (AICore)</string>
     <string name="cl_aicore_sub">Desactivado por defecto: AICore guarda en su caché los modelos de IA del dispositivo (varios GB); se volverían a descargar.</string>
     <string name="cl_just_now">ahora mismo</string>
+    <string name="sa_apps">Apps</string>
+    <string name="sa_images">Imágenes</string>
+    <string name="sa_videos">Vídeos</string>
+    <string name="sa_audio">Audio</string>
+    <string name="sa_docs">Documentos</string>
+    <string name="sa_downloads">Descargas</string>
+    <string name="sa_system">Sistema</string>
+    <string name="sa_other">Otros</string>
+    <string name="sa_progress">%1$d archivos leídos …</string>
+    <string name="sa_progress_apps">Midiendo apps …</string>
+    <string name="sa_sub">Quién ocupa cuánto espacio: carpetas, archivos más grandes, apps</string>
+    <plurals name="sa_files">
+        <item quantity="one">%1$d archivo</item>
+        <item quantity="other">%1$d archivos</item>
+    </plurals>
+    <string name="cl_rescan">Volver a escanear</string>
+    <string name="cl_waiting">En espera …</string>
+    <string name="cl_ch_scan">Análisis del limpiador</string>
+    <string name="sa_tab_overview">Resumen</string>
+    <string name="sa_tab_folders">Carpetas</string>
+    <string name="sa_tab_largest">Más grandes</string>
+    <string name="sa_tab_apps">Apps</string>
+    <string name="sa_used_by">Almacenamiento ocupado</string>
+    <string name="sa_tap_hint">Toca la barra o una fila para ver detalles</string>
+    <string name="sa_system_hint">Sistema = el propio Android, otros usuarios y todo lo que ShizuBox no puede ver. Las apps incluyen sus datos en Android/data y Android/obb.</string>
+    <string name="sa_scanned">%1$d archivos analizados · %2$s</string>
+    <string name="sa_up">Subir</string>
+    <string name="sa_empty_folder">Carpeta vacía</string>
+    <string name="sa_largest_hint">Los 50 archivos más grandes del almacenamiento interno. Toca para ver acciones.</string>
+    <string name="sa_apps_hint">Por app: APK, datos, caché, Android/data y obb. Al tocar se abre la página del sistema de la app.</string>
+    <string name="sa_apk">APK %1$s</string>
+    <string name="sa_data">Datos %1$s</string>
+    <string name="sa_cache">Caché %1$s</string>
+    <string name="cl_open">Abrir</string>
+    <string name="cl_share">Compartir</string>
+    <string name="cl_show_in_folder">Mostrar en la carpeta</string>
+    <string name="cl_exclude">Excluir de la limpieza</string>
+    <string name="cl_excluded_done">Excluido ✓</string>
+    <string name="cl_cannot_open">⚠ No se puede abrir este archivo (Android/data está cerrado a las apps)</string>
 </resources>

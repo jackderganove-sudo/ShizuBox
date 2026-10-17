@@ -74,6 +74,7 @@ class DebugReceiver : BroadcastReceiver() {
                     "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
                     "cleaner" -> {
                         de.emil.shizubox.ui.cleaner.CleanerNav.page.value = intent.getStringExtra("page")
+                        de.emil.shizubox.ui.cleaner.CleanerNav.tab = intent.getIntExtra("tab", 0)
                         de.emil.shizubox.ui.cleaner.CleanerScreen(ready, noop)
                     }
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
@@ -95,7 +96,7 @@ class DebugReceiver : BroadcastReceiver() {
             val pending = goAsync()
             // Long tests release the broadcast right away: Android counts a background broadcast
             // that takes over 60 s as an ANR and kills the process (seen with "vt" and "dlstress").
-            val long = what in setOf("vt", "vtbg", "dlstress", "apkpurefull", "ytdl", "apkpure", "checkall", "privacy")
+            val long = what in setOf("analysis", "vt", "vtbg", "dlstress", "apkpurefull", "ytdl", "apkpure", "checkall", "privacy")
             if (long) pending.finish()
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -272,6 +273,13 @@ class DebugReceiver : BroadcastReceiver() {
                             val t1 = System.currentTimeMillis()
                             val labels = all.count { it.label.isNotBlank() }
                             "apps=${all.size} system=${all.count { it.isSystem }} list=${t1 - t0}ms cpu=${android.os.Process.getElapsedCpuTime() - cpu0}ms labels=$labels heapMB=${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}"
+                        }
+                        "analysis" -> {
+                            val t0 = System.currentTimeMillis()
+                            val a = de.emil.shizubox.cleaner.StorageAnalysis.scan(context)
+                            "ms=${System.currentTimeMillis() - t0} files=${a.files} dirs=${a.dirSizes.size} used=${a.numbers.used / 1_000_000}MB " +
+                                "cats=${a.categories.map { "${it.key}=${it.value / 1_000_000}MB" }} top3=${a.top.take(3).map { "${it.path.substringAfterLast('/')}=${it.size / 1_000_000}MB" }} " +
+                                "apps=${a.apps.size} topApps=${a.apps.take(3).map { "${it.pkg}=${it.total / 1_000_000}MB ext=${it.extData / 1_000_000}" }}"
                         }
                         "trash" -> {
                             // Only ShizuBox' own test files: --es mode mk|move|list|restore|purge|guard

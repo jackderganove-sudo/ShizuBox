@@ -5822,5 +5822,191 @@
   "en": "just now",
   "de": "gerade eben",
   "plural": false
+ },
+ "sa_apps": {
+  "en": "Apps",
+  "de": "Apps",
+  "plural": false
+ },
+ "sa_images": {
+  "en": "Pictures",
+  "de": "Bilder",
+  "plural": false
+ },
+ "sa_videos": {
+  "en": "Videos",
+  "de": "Videos",
+  "plural": false
+ },
+ "sa_audio": {
+  "en": "Audio",
+  "de": "Audio",
+  "plural": false
+ },
+ "sa_docs": {
+  "en": "Documents",
+  "de": "Dokumente",
+  "plural": false
+ },
+ "sa_downloads": {
+  "en": "Downloads",
+  "de": "Downloads",
+  "plural": false
+ },
+ "sa_system": {
+  "en": "System",
+  "de": "System",
+  "plural": false
+ },
+ "sa_other": {
+  "en": "Other",
+  "de": "Sonstiges",
+  "plural": false
+ },
+ "sa_progress": {
+  "en": "%1$d files read …",
+  "de": "%1$d Dateien gelesen …",
+  "plural": false
+ },
+ "sa_progress_apps": {
+  "en": "Measuring apps …",
+  "de": "Apps werden gemessen …",
+  "plural": false
+ },
+ "sa_sub": {
+  "en": "Who uses how much space – folders, largest files, apps",
+  "de": "Wer belegt wie viel Platz – Ordner, größte Dateien, Apps",
+  "plural": false
+ },
+ "sa_files": {
+  "en": {
+   "one": "%1$d file",
+   "other": "%1$d files"
+  },
+  "de": {
+   "one": "%1$d Datei",
+   "other": "%1$d Dateien"
+  },
+  "plural": true
+ },
+ "cl_rescan": {
+  "en": "Scan again",
+  "de": "Neu scannen",
+  "plural": false
+ },
+ "cl_waiting": {
+  "en": "Waiting …",
+  "de": "Wartet …",
+  "plural": false
+ },
+ "cl_ch_scan": {
+  "en": "Cleaner scans",
+  "de": "Reiniger-Scans",
+  "plural": false
+ },
+ "sa_tab_overview": {
+  "en": "Overview",
+  "de": "Übersicht",
+  "plural": false
+ },
+ "sa_tab_folders": {
+  "en": "Folders",
+  "de": "Ordner",
+  "plural": false
+ },
+ "sa_tab_largest": {
+  "en": "Largest",
+  "de": "Größte",
+  "plural": false
+ },
+ "sa_tab_apps": {
+  "en": "Apps",
+  "de": "Apps",
+  "plural": false
+ },
+ "sa_used_by": {
+  "en": "Used storage",
+  "de": "Belegter Speicher",
+  "plural": false
+ },
+ "sa_tap_hint": {
+  "en": "Tap the bar or a row for details",
+  "de": "Tippe auf den Balken oder eine Zeile für Details",
+  "plural": false
+ },
+ "sa_system_hint": {
+  "en": "System = Android itself, other users and everything ShizuBox cannot see. Apps include their data in Android/data and Android/obb.",
+  "de": "System = Android selbst, andere Nutzer und alles, was ShizuBox nicht sehen kann. Apps enthalten ihre Daten in Android/data und Android/obb.",
+  "plural": false
+ },
+ "sa_scanned": {
+  "en": "%1$d files scanned · %2$s",
+  "de": "%1$d Dateien gescannt · %2$s",
+  "plural": false
+ },
+ "sa_up": {
+  "en": "Up",
+  "de": "Nach oben",
+  "plural": false
+ },
+ "sa_empty_folder": {
+  "en": "Empty folder",
+  "de": "Leerer Ordner",
+  "plural": false
+ },
+ "sa_largest_hint": {
+  "en": "The 50 largest files on the internal storage. Tap for actions.",
+  "de": "Die 50 größten Dateien im internen Speicher. Tippen für Aktionen.",
+  "plural": false
+ },
+ "sa_apps_hint": {
+  "en": "Per app: APK, data, cache, Android/data and obb. Tap opens the app's system page.",
+  "de": "Pro App: APK, Daten, Cache, Android/data und obb. Tippen öffnet die Systemseite der App.",
+  "plural": false
+ },
+ "sa_apk": {
+  "en": "APK %1$s",
+  "de": "APK %1$s",
+  "plural": false
+ },
+ "sa_data": {
+  "en": "Data %1$s",
+  "de": "Daten %1$s",
+  "plural": false
+ },
+ "sa_cache": {
+  "en": "Cache %1$s",
+  "de": "Cache %1$s",
+  "plural": false
+ },
+ "cl_open": {
+  "en": "Open",
+  "de": "Öffnen",
+  "plural": false
+ },
+ "cl_share": {
+  "en": "Share",
+  "de": "Teilen",
+  "plural": false
+ },
+ "cl_show_in_folder": {
+  "en": "Show in folder",
+  "de": "Im Ordner anzeigen",
+  "plural": false
+ },
+ "cl_exclude": {
+  "en": "Exclude from cleaning",
+  "de": "Von der Reinigung ausschließen",
+  "plural": false
+ },
+ "cl_excluded_done": {
+  "en": "Excluded ✓",
+  "de": "Ausgeschlossen ✓",
+  "plural": false
+ },
+ "cl_cannot_open": {
+  "en": "⚠ Cannot open this file (Android/data is closed to apps)",
+  "de": "⚠ Datei lässt sich nicht öffnen (Android/data ist für Apps gesperrt)",
+  "plural": false
  }
 }

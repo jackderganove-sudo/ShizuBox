@@ -116,6 +116,8 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | ShizuBox' private Temp-Dateien: per `writeFile` in den Papierkorb kopiert, dann gelöscht („internal:“), Wiederherstellen liest mit Allen-Dateien-Zugriff zurück | 🟡 nur Codepfad, wird mit dem System-Reiniger getestet |
 | Schutz (`Guard`, letzte Prüfung vor jedem Verschieben): nur interner Speicher, keine Standard-/Systemordner, nicht der Papierkorb, nie Shizuku, Android/data+obb installierter Apps gesperrt (alle Nutzer/Profile, auch „deinstalliert, Daten behalten“; leere Paketliste bricht ab) außer deren `cache` im App-Cleaner, AICore standardmäßig ausgeschlossen, eigene Ausschlüsse (Pfade + Apps) | ✅ `--es test trash --es mode guard` |
 | Einstellungen (Aufbewahrung, Ausschlüsse, AICore) im Backup (`cleaner`); Papierkorb und Ergebnisse nicht | ✅ |
+| Scans (`CleanerJobs`): app-weit, eins nach dem anderen (Semaphore), abbrechbar, Foreground-Service `CleanerService` mit gedrosselter Fortschritts-Benachrichtigung und „Abbrechen“ | ✅ |
+| Speicher-Analyse (`StorageAnalysis`): ein gestreamter `find` über alles (inkl. Android/data/obb) summiert Ordnergrößen (Speicher wächst mit Ordnern, nicht Dateien), Top 50 per Heap; Kategorien Apps (StorageStats: APK + Daten inkl. Android/data, Cache), Bilder/Videos/Audio/Dokumente/Downloads/Sonstiges nach Endung, System = Rest von „belegt“; gestapelter Balken (geprüfte 8-Farben-Palette, Legende als Tabelle, Tippen zeigt Wert), Ordner-Browser mit Balken (seitenweise 100), größte Dateien, Apps mit APK/Daten/Cache/Android/data/obb; Aktionen öffnen/teilen (FileProvider, Allen-Dateien-Zugriff), im Ordner anzeigen, Papierkorb, ausschließen | ✅ getestet: 4718 Dateien, 621 Ordner, 342 Apps in 4 s |
 
 ### Kacheln & Widget (`tiles/`)
 | Funktion | Status |

@@ -1217,5 +1217,44 @@
     <string name="cl_aicore">KI-Modelle (AICore) einbeziehen</string>
     <string name="cl_aicore_sub">Standardmäßig aus: AICore legt die KI-Modelle auf dem Gerät (mehrere GB) in seinem Cache ab; sie würden neu geladen.</string>
     <string name="cl_just_now">gerade eben</string>
+    <string name="sa_apps">Apps</string>
+    <string name="sa_images">Bilder</string>
+    <string name="sa_videos">Videos</string>
+    <string name="sa_audio">Audio</string>
+    <string name="sa_docs">Dokumente</string>
+    <string name="sa_downloads">Downloads</string>
+    <string name="sa_system">System</string>
+    <string name="sa_other">Sonstiges</string>
+    <string name="sa_progress">%1$d Dateien gelesen …</string>
+    <string name="sa_progress_apps">Apps werden gemessen …</string>
+    <string name="sa_sub">Wer belegt wie viel Platz – Ordner, größte Dateien, Apps</string>
+    <plurals name="sa_files">
+        <item quantity="one">%1$d Datei</item>
+        <item quantity="other">%1$d Dateien</item>
+    </plurals>
+    <string name="cl_rescan">Neu scannen</string>
+    <string name="cl_waiting">Wartet …</string>
+    <string name="cl_ch_scan">Reiniger-Scans</string>
+    <string name="sa_tab_overview">Übersicht</string>
+    <string name="sa_tab_folders">Ordner</string>
+    <string name="sa_tab_largest">Größte</string>
+    <string name="sa_tab_apps">Apps</string>
+    <string name="sa_used_by">Belegter Speicher</string>
+    <string name="sa_tap_hint">Tippe auf den Balken oder eine Zeile für Details</string>
+    <string name="sa_system_hint">System = Android selbst, andere Nutzer und alles, was ShizuBox nicht sehen kann. Apps enthalten ihre Daten in Android/data und Android/obb.</string>
+    <string name="sa_scanned">%1$d Dateien gescannt · %2$s</string>
+    <string name="sa_up">Nach oben</string>
+    <string name="sa_empty_folder">Leerer Ordner</string>
+    <string name="sa_largest_hint">Die 50 größten Dateien im internen Speicher. Tippen für Aktionen.</string>
+    <string name="sa_apps_hint">Pro App: APK, Daten, Cache, Android/data und obb. Tippen öffnet die Systemseite der App.</string>
+    <string name="sa_apk">APK %1$s</string>
+    <string name="sa_data">Daten %1$s</string>
+    <string name="sa_cache">Cache %1$s</string>
+    <string name="cl_open">Öffnen</string>
+    <string name="cl_share">Teilen</string>
+    <string name="cl_show_in_folder">Im Ordner anzeigen</string>
+    <string name="cl_exclude">Von der Reinigung ausschließen</string>
+    <string name="cl_excluded_done">Ausgeschlossen ✓</string>
+    <string name="cl_cannot_open">⚠ Datei lässt sich nicht öffnen (Android/data ist für Apps gesperrt)</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

@@ -104,6 +104,7 @@ fun EntryRow(
     onLongClick: (() -> Unit)? = null,
     leading: (@Composable () -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
+    showParent: Boolean = true,
 ) {
     val context = LocalContext.current
     GlassCard(Modifier.fillMaxWidth(), contentPadding = 12.dp, onClick = onClick ?: checked?.let { { onCheck(!it) } }, onLongClick = onLongClick) {
@@ -113,7 +114,7 @@ fun EntryRow(
             Column(Modifier.weight(1f)) {
                 Text(path.substringAfterLast('/'), style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(
-                    Fs.rel(path.substringBeforeLast('/')) + (if (time > 0) " · " + ago(time) else ""),
+                    listOfNotNull(Fs.rel(path.substringBeforeLast('/')).takeIf { showParent }, time.takeIf { it > 0 }?.let(::ago)).joinToString(" · "),
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis,
                 )
                 if (!note.isNullOrEmpty()) Text(note, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)

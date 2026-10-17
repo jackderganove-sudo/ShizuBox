@@ -295,6 +295,12 @@
             android:name=".updates.UpdateSkipReceiver"
             android:exported="false" />
 
+        <!-- Cleaner: scans of the whole storage run in this service while they last. -->
+        <service
+            android:name=".cleaner.CleanerService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
         <!-- Video downloader: queue runs in this service while the app is closed. -->
         <service
             android:name=".downloader.DownloadService"

@@ -1217,4 +1217,43 @@
     <string name="cl_aicore">Yapay zekâ modellerini (AICore) dahil et</string>
     <string name="cl_aicore_sub">Varsayılan olarak kapalı: AICore cihazdaki yapay zekâ modellerini (birkaç GB) önbelleğinde tutar; yeniden indirilirler.</string>
     <string name="cl_just_now">az önce</string>
+    <string name="sa_apps">Uygulamalar</string>
+    <string name="sa_images">Resimler</string>
+    <string name="sa_videos">Videolar</string>
+    <string name="sa_audio">Ses</string>
+    <string name="sa_docs">Belgeler</string>
+    <string name="sa_downloads">İndirilenler</string>
+    <string name="sa_system">Sistem</string>
+    <string name="sa_other">Diğer</string>
+    <string name="sa_progress">%1$d dosya okundu …</string>
+    <string name="sa_progress_apps">Uygulamalar ölçülüyor …</string>
+    <string name="sa_sub">Kim ne kadar yer kaplıyor – klasörler, en büyük dosyalar, uygulamalar</string>
+    <plurals name="sa_files">
+        <item quantity="one">%1$d dosya</item>
+        <item quantity="other">%1$d dosya</item>
+    </plurals>
+    <string name="cl_rescan">Yeniden tara</string>
+    <string name="cl_waiting">Bekliyor …</string>
+    <string name="cl_ch_scan">Temizleyici taramaları</string>
+    <string name="sa_tab_overview">Genel</string>
+    <string name="sa_tab_folders">Klasörler</string>
+    <string name="sa_tab_largest">En büyük</string>
+    <string name="sa_tab_apps">Uygulamalar</string>
+    <string name="sa_used_by">Kullanılan depolama</string>
+    <string name="sa_tap_hint">Ayrıntılar için çubuğa veya bir satıra dokun</string>
+    <string name="sa_system_hint">Sistem = Android\'in kendisi, diğer kullanıcılar ve ShizuBox\'ın göremediği her şey. Uygulamalar, Android/data ve Android/obb içindeki verilerini de kapsar.</string>
+    <string name="sa_scanned">%1$d dosya tarandı · %2$s</string>
+    <string name="sa_up">Yukarı</string>
+    <string name="sa_empty_folder">Boş klasör</string>
+    <string name="sa_largest_hint">Dahili depolamadaki en büyük 50 dosya. İşlemler için dokun.</string>
+    <string name="sa_apps_hint">Uygulama başına: APK, veri, önbellek, Android/data ve obb. Dokununca uygulamanın sistem sayfası açılır.</string>
+    <string name="sa_apk">APK %1$s</string>
+    <string name="sa_data">Veri %1$s</string>
+    <string name="sa_cache">Önbellek %1$s</string>
+    <string name="cl_open">Aç</string>
+    <string name="cl_share">Paylaş</string>
+    <string name="cl_show_in_folder">Klasörde göster</string>
+    <string name="cl_exclude">Temizlikten hariç tut</string>
+    <string name="cl_excluded_done">Hariç tutuldu ✓</string>
+    <string name="cl_cannot_open">⚠ Bu dosya açılamıyor (Android/data uygulamalara kapalı)</string>
 </resources>

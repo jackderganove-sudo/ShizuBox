@@ -8,6 +8,9 @@
   eigene Ausschlüsse für Pfade und Apps; KI-Modelle (AICore) standardmäßig ausgeschlossen; Einstellungen im Backup
 - Shell-Dienst: Ausgabe als Datenstrom ohne Größenlimit und reines Umbenennen (nie Kopieren – ein kopierendes `mv`
   nach Android/data brachte den Speicher-Dienst von Android zum Absturz)
+- Speicher-Analyse: Kategorien als animierter Balken, Ordner-Browser sortiert nach Größe, die 50 größten Dateien,
+  Platz pro App (APK, Daten, Cache, Android/data, obb); öffnen, teilen, im Ordner zeigen, in den Papierkorb, ausschließen
+- Scans laufen im Hintergrund weiter (Benachrichtigung mit Fortschritt und „Abbrechen“)
 - CHANGELOG sortiert (neueste Version oben)
 
 ## 0.8.0 – 2026-10-16
