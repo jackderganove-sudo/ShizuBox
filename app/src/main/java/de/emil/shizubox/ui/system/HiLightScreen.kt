@@ -192,7 +192,7 @@ fun HiLightScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                     Button(shapes = ButtonDefaults.shapes(), enabled = shizukuReady, onClick = {
                         scope.launch {
                             val ok = HiLight.show(LightRequest("preview", Layer.Preview, previewPattern, intArrayOf(previewColor), 8000, 0.5))
-                            message = if (ok) t(R.string.hl_preview_on) else null
+                            message = if (ok) t(R.string.hl_preview_on) else "⚠ " + reasonText(HiLight.last.value.orEmpty())
                         }
                     }) {
                         Icon(Icons.Rounded.PlayArrow, null, Modifier.padding(end = 8.dp))
@@ -200,6 +200,7 @@ fun HiLightScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                     }
                     TextButton(onClick = { scope.launch { HiLight.off() } }) { Text(t(R.string.hl_stop)) }
                 }
+                message?.takeIf { it != "access" }?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = if (it.startsWith("⚠")) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary) }
             }
         }
         item {
@@ -405,6 +406,7 @@ private fun RuleDialog(
     var name by remember { mutableStateOf(name0) }
     var picking by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
@@ -417,7 +419,11 @@ private fun RuleDialog(
                     ColorDot(color, 36) { picking = true }
                     Spacer(Modifier.width(12.dp))
                     FilledTonalButton(shapes = ButtonDefaults.shapes(), onClick = {
-                        scope.launch { HiLight.show(LightRequest("preview", Layer.Preview, pattern, intArrayOf(color), 6000)) }
+                        scope.launch {
+                            if (!HiLight.show(LightRequest("preview", Layer.Preview, pattern, intArrayOf(color), 6000))) {
+                                android.widget.Toast.makeText(context, "⚠ " + reasonText(HiLight.last.value.orEmpty()), android.widget.Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }) { Text(t(R.string.hl_test)) }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {

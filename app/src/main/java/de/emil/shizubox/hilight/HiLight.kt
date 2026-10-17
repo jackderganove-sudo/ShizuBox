@@ -111,12 +111,15 @@ object HiLight {
 
     private suspend fun send(cmd: JSONObject): String = ShizukuManager.hilight(cmd.toString(), 4000)
 
-    /** Why nothing may light up right now, or null. */
+    /** Why nothing may light up right now, or null. A [preview] skips the quiet times. */
     fun quietReason(cfg: HiLightConfig = HiLightSettings.current, preview: Boolean = false): String? {
         if (!supported) return "unsupported"
         if (SchoolMode.state.value.active) return "school"
         if (!cfg.enabled && !preview) return "off"
         if (!ShizukuManager.isReady) return "shizuku"
+        // A preview is started by hand on purpose: quiet times do not apply (school mode and the
+        // renderer's safety limits still do).
+        if (preview) return null
         if (cfg.quietDnd && appContext.getSystemService(NotificationManager::class.java).currentInterruptionFilter > NotificationManager.INTERRUPTION_FILTER_ALL) return "dnd"
         if (cfg.quietNight) {
             val c = Calendar.getInstance()
