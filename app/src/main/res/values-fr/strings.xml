@@ -1278,4 +1278,16 @@
     <string name="sc_hint">Les catégories sûres sont présélectionnées. Les anciens APK et corbeilles d\'autres apps seulement si tu les choisis. Appui long pour exclure.</string>
     <string name="cl_moving">Déplacement vers la corbeille …</string>
     <string name="cl_moving_n">Déplacement %1$d sur %2$d …</string>
+    <string name="cf_sub">Restes d\'apps désinstallées</string>
+    <string name="cf_progress_pkgs">Lecture des apps installées (tous les utilisateurs) …</string>
+    <string name="cf_progress_dirs">Vérification des dossiers d\'apps …</string>
+    <string name="cf_progress_sizes">Mesure …</string>
+    <string name="cf_known">Appartenait à %1$s (non installée)</string>
+    <string name="cf_storage">Stockage interne</string>
+    <string name="cf_storage_sub">Dossiers d\'apps qui ne sont plus installées</string>
+    <string name="cf_app_sub">Paquet installé pour aucun utilisateur ni profil</string>
+    <string name="cf_intro">Trouve les dossiers dans Android/data, obb, media et le stockage dont l\'app a disparu. Les apps d\'autres utilisateurs et profils comptent comme installées ; en cas de doute, rien n\'est affiché.</string>
+    <string name="cf_none">Aucun reste trouvé</string>
+    <string name="cf_none_hint">Chaque dossier d\'app appartient à une app installée.</string>
+    <string name="cf_hint">Avant de déplacer, ShizuBox vérifie à nouveau que l\'app n\'est toujours pas installée. Appui long pour exclure un dossier.</string>
 </resources>

@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CleaningServices
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.FolderDelete
 import androidx.compose.material.icons.rounded.PieChart
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
@@ -51,6 +52,7 @@ object CleanerPage {
     const val TRASH = "trash"
     const val ANALYSIS = "analysis"
     const val SYSTEM = "system"
+    const val CORPSES = "corpses"
     const val SETTINGS = "settings"
 }
 
@@ -71,6 +73,7 @@ fun CleanerScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             CleanerPage.TRASH -> TrashScreen(shizukuReady, close)
             CleanerPage.ANALYSIS -> AnalysisScreen(shizukuReady, close)
             CleanerPage.SYSTEM -> SystemCleanerScreen(shizukuReady, close)
+            CleanerPage.CORPSES -> CorpseScreen(shizukuReady, close)
             CleanerPage.SETTINGS -> CleanerSettingsScreen(close)
             else -> CleanerHome(shizukuReady, onBack)
         }
@@ -122,6 +125,11 @@ private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
             val sys by de.emil.shizubox.cleaner.SystemCleaner.result.collectAsStateWithLifecycle()
             ToolCard(Icons.Rounded.CleaningServices, t(R.string.cl_system), t(R.string.sc_sub),
                 found = sys?.values?.flatten()?.sumOf { it.size }?.let { size(context, it) }) { open(CleanerPage.SYSTEM) }
+        }
+        item {
+            val corpses by de.emil.shizubox.cleaner.CorpseFinder.result.collectAsStateWithLifecycle()
+            ToolCard(Icons.Rounded.FolderDelete, t(R.string.cl_corpses), t(R.string.cf_sub),
+                found = corpses?.values?.flatten()?.let { l -> if (l.isEmpty()) "0" else size(context, l.sumOf { it.size }) }) { open(CleanerPage.CORPSES) }
         }
         item {
             ToolCard(Icons.Rounded.Delete, t(R.string.cl_trash),

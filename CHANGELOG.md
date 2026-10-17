@@ -13,6 +13,8 @@
 - System-Reiniger: Thumbnails, leere Ordner, Log-/Temp-Dateien, abgebrochene Downloads, alte APKs im Download-Ordner
   (mit Hinweis auf die installierte Version), Papierkörbe anderer Apps, ShizuBox-Reste; Kategorien einzeln schaltbar,
   aufklappbar bis zur Datei, sichere Kategorien vorausgewählt, Vorschau vor dem Verschieben
+- Leichen-Finder: Ordner deinstallierter Apps in Android/data, obb, media und bekannte App-Ordner im Speicher;
+  Apps anderer Nutzer/Profile zählen als installiert, im Zweifel wird nichts angezeigt
 - Scans laufen im Hintergrund weiter (Benachrichtigung mit Fortschritt und „Abbrechen“)
 - CHANGELOG sortiert (neueste Version oben)
 

@@ -281,6 +281,21 @@ class DebugReceiver : BroadcastReceiver() {
                                 "cats=${a.categories.map { "${it.key}=${it.value / 1_000_000}MB" }} top3=${a.top.take(3).map { "${it.path.substringAfterLast('/')}=${it.size / 1_000_000}MB" }} " +
                                 "apps=${a.apps.size} topApps=${a.apps.take(3).map { "${it.pkg}=${it.total / 1_000_000}MB ext=${it.extData / 1_000_000}" }}"
                         }
+                        "corpses" -> {
+                            // --es mode mk|clean|rm (only the test folders sbx.test.corpse*), otherwise scan
+                            val R0 = de.emil.shizubox.cleaner.Fs.ROOT
+                            val tests = listOf("$R0/Android/data/sbx.test.corpse", "$R0/Android/media/sbx.test.corpse", "$R0/sbx.test.corpse")
+                            when (intent.getStringExtra("mode")) {
+                                "mk" -> ShizukuManager.exec(tests.joinToString(" && ") { "mkdir -p $it/files && head -c 40000 /dev/urandom > $it/files/x.bin" }, 5000, 30_000).code.toString()
+                                "clean" -> de.emil.shizubox.cleaner.CorpseFinder.clean(
+                                    de.emil.shizubox.cleaner.CorpseFinder.result.value.orEmpty().values.flatten().filter { it.path in tests },
+                                ).toString()
+                                "rm" -> ShizukuManager.exec("rm -rf ${tests.joinToString(" ")}", 5000, 30_000).code.toString()
+                                else -> de.emil.shizubox.cleaner.CorpseFinder.scan().entries.joinToString(" ## ") { (z, l) ->
+                                    "$z: " + l.joinToString(", ") { "${it.path.removePrefix(R0)} ${it.size / 1000}kB [${it.note}]" }
+                                }
+                            }
+                        }
                         "syscl" -> {
                             // --es mode mk|scan|clean (clean only moves ShizuBox' own test files)
                             val R0 = de.emil.shizubox.cleaner.Fs.ROOT

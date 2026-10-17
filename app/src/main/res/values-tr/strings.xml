@@ -1278,4 +1278,16 @@
     <string name="sc_hint">Güvenli kategoriler önceden seçilidir. Eski APK\'lar ve diğer çöp kutuları yalnızca sen seçersen. Bir girişi hariç tutmak için uzun bas.</string>
     <string name="cl_moving">Çöp kutusuna taşınıyor …</string>
     <string name="cl_moving_n">%2$d öğeden %1$d taşınıyor …</string>
+    <string name="cf_sub">Kaldırılan uygulamaların artıkları</string>
+    <string name="cf_progress_pkgs">Yüklü uygulamalar okunuyor (tüm kullanıcılar) …</string>
+    <string name="cf_progress_dirs">Uygulama klasörleri kontrol ediliyor …</string>
+    <string name="cf_progress_sizes">Ölçülüyor …</string>
+    <string name="cf_known">%1$s uygulamasına aitti (yüklü değil)</string>
+    <string name="cf_storage">Dahili depolama</string>
+    <string name="cf_storage_sub">Artık yüklü olmayan uygulamaların klasörleri</string>
+    <string name="cf_app_sub">Paket hiçbir kullanıcı veya profil için yüklü değil</string>
+    <string name="cf_intro">Uygulaması kaldırılmış Android/data, obb, media ve depolama klasörlerini bulur. Diğer kullanıcı ve profillerin uygulamaları yüklü sayılır; şüphede hiçbir şey gösterilmez.</string>
+    <string name="cf_none">Artık bulunamadı</string>
+    <string name="cf_none_hint">Her uygulama klasörü yüklü bir uygulamaya ait.</string>
+    <string name="cf_hint">Taşımadan önce ShizuBox uygulamanın hâlâ yüklü olmadığını tekrar kontrol eder. Bir klasörü hariç tutmak için uzun bas.</string>
 </resources>

@@ -1278,5 +1278,17 @@
     <string name="sc_hint">Sichere Kategorien sind vorausgewählt. Alte APKs und fremde Papierkörbe nur, wenn du sie auswählst. Lange drücken schließt einen Eintrag aus.</string>
     <string name="cl_moving">Wird in den Papierkorb verschoben …</string>
     <string name="cl_moving_n">Verschiebe %1$d von %2$d …</string>
+    <string name="cf_sub">Reste deinstallierter Apps</string>
+    <string name="cf_progress_pkgs">Installierte Apps werden gelesen (alle Nutzer) …</string>
+    <string name="cf_progress_dirs">App-Ordner werden geprüft …</string>
+    <string name="cf_progress_sizes">Wird gemessen …</string>
+    <string name="cf_known">Gehörte zu %1$s (nicht installiert)</string>
+    <string name="cf_storage">Hauptspeicher</string>
+    <string name="cf_storage_sub">Ordner von Apps, die nicht mehr installiert sind</string>
+    <string name="cf_app_sub">Paket für keinen Nutzer und kein Profil installiert</string>
+    <string name="cf_intro">Findet Ordner in Android/data, obb, media und im Speicher, deren App weg ist. Apps anderer Nutzer und Profile zählen als installiert; im Zweifel wird nichts angezeigt.</string>
+    <string name="cf_none">Keine Reste gefunden</string>
+    <string name="cf_none_hint">Jeder App-Ordner gehört zu einer installierten App.</string>
+    <string name="cf_hint">Vor dem Verschieben prüft ShizuBox erneut, dass die App weiterhin nicht installiert ist. Lange drücken schließt einen Ordner aus.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

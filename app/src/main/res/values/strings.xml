@@ -1280,4 +1280,16 @@
     <string name="sc_hint">Safe categories are preselected. Old APKs and other apps\' trash only if you pick them. Long-press an entry to exclude it.</string>
     <string name="cl_moving">Moving to the trash …</string>
     <string name="cl_moving_n">Moving %1$d of %2$d …</string>
+    <string name="cf_sub">Leftovers of uninstalled apps</string>
+    <string name="cf_progress_pkgs">Reading installed apps (all users) …</string>
+    <string name="cf_progress_dirs">Checking app folders …</string>
+    <string name="cf_progress_sizes">Measuring …</string>
+    <string name="cf_known">Belonged to %1$s (not installed)</string>
+    <string name="cf_storage">Internal storage</string>
+    <string name="cf_storage_sub">Folders of apps that are no longer installed</string>
+    <string name="cf_app_sub">Package not installed for any user or profile</string>
+    <string name="cf_intro">Finds folders in Android/data, obb, media and the storage whose app is gone. Apps of other users and profiles count as installed; when in doubt, nothing is shown.</string>
+    <string name="cf_none">No leftovers found</string>
+    <string name="cf_none_hint">Every app folder belongs to an installed app.</string>
+    <string name="cf_hint">Before moving, ShizuBox checks again that the app is still not installed. Long-press to exclude a folder.</string>
 </resources>

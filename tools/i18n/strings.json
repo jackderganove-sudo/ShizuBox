@@ -6118,5 +6118,65 @@
   "en": "Moving %1$d of %2$d …",
   "de": "Verschiebe %1$d von %2$d …",
   "plural": false
+ },
+ "cf_sub": {
+  "en": "Leftovers of uninstalled apps",
+  "de": "Reste deinstallierter Apps",
+  "plural": false
+ },
+ "cf_progress_pkgs": {
+  "en": "Reading installed apps (all users) …",
+  "de": "Installierte Apps werden gelesen (alle Nutzer) …",
+  "plural": false
+ },
+ "cf_progress_dirs": {
+  "en": "Checking app folders …",
+  "de": "App-Ordner werden geprüft …",
+  "plural": false
+ },
+ "cf_progress_sizes": {
+  "en": "Measuring …",
+  "de": "Wird gemessen …",
+  "plural": false
+ },
+ "cf_known": {
+  "en": "Belonged to %1$s (not installed)",
+  "de": "Gehörte zu %1$s (nicht installiert)",
+  "plural": false
+ },
+ "cf_storage": {
+  "en": "Internal storage",
+  "de": "Hauptspeicher",
+  "plural": false
+ },
+ "cf_storage_sub": {
+  "en": "Folders of apps that are no longer installed",
+  "de": "Ordner von Apps, die nicht mehr installiert sind",
+  "plural": false
+ },
+ "cf_app_sub": {
+  "en": "Package not installed for any user or profile",
+  "de": "Paket für keinen Nutzer und kein Profil installiert",
+  "plural": false
+ },
+ "cf_intro": {
+  "en": "Finds folders in Android/data, obb, media and the storage whose app is gone. Apps of other users and profiles count as installed; when in doubt, nothing is shown.",
+  "de": "Findet Ordner in Android/data, obb, media und im Speicher, deren App weg ist. Apps anderer Nutzer und Profile zählen als installiert; im Zweifel wird nichts angezeigt.",
+  "plural": false
+ },
+ "cf_none": {
+  "en": "No leftovers found",
+  "de": "Keine Reste gefunden",
+  "plural": false
+ },
+ "cf_none_hint": {
+  "en": "Every app folder belongs to an installed app.",
+  "de": "Jeder App-Ordner gehört zu einer installierten App.",
+  "plural": false
+ },
+ "cf_hint": {
+  "en": "Before moving, ShizuBox checks again that the app is still not installed. Long-press to exclude a folder.",
+  "de": "Vor dem Verschieben prüft ShizuBox erneut, dass die App weiterhin nicht installiert ist. Lange drücken schließt einen Ordner aus.",
+  "plural": false
  }
 }

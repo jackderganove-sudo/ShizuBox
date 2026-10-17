@@ -1276,5 +1276,17 @@
 "sc_cats": "Buscar",
 "sc_hint": "Las categorías seguras están preseleccionadas. Los APK antiguos y las papeleras ajenas, solo si los eliges. Mantén pulsado para excluir.",
 "cl_moving": "Moviendo a la papelera …",
-"cl_moving_n": "Moviendo %1$d de %2$d …"
+"cl_moving_n": "Moviendo %1$d de %2$d …",
+"cf_sub": "Restos de apps desinstaladas",
+"cf_progress_pkgs": "Leyendo apps instaladas (todos los usuarios) …",
+"cf_progress_dirs": "Comprobando carpetas de apps …",
+"cf_progress_sizes": "Midiendo …",
+"cf_known": "Era de %1$s (no instalada)",
+"cf_storage": "Almacenamiento interno",
+"cf_storage_sub": "Carpetas de apps que ya no están instaladas",
+"cf_app_sub": "Paquete no instalado para ningún usuario ni perfil",
+"cf_intro": "Encuentra carpetas en Android/data, obb, media y el almacenamiento cuya app ya no está. Las apps de otros usuarios y perfiles cuentan como instaladas; ante la duda, no se muestra nada.",
+"cf_none": "No se encontraron restos",
+"cf_none_hint": "Cada carpeta de app pertenece a una app instalada.",
+"cf_hint": "Antes de mover, ShizuBox vuelve a comprobar que la app sigue sin estar instalada. Mantén pulsado para excluir una carpeta."
 }
