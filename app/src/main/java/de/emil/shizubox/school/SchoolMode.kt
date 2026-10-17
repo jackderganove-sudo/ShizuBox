@@ -7,6 +7,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import de.emil.shizubox.customization.Customization
+import de.emil.shizubox.debug.ErrorKind
+import de.emil.shizubox.debug.ErrorLog
 import de.emil.shizubox.shizuku.ShizukuManager
 import de.emil.shizubox.shizuku.ShizukuStatus
 import kotlinx.coroutines.CoroutineScope
@@ -101,6 +103,10 @@ object SchoolMode {
         return restore()
     }
 
+    /**
+     * Every step on its own (see [RestorePlan]); only what was really restored leaves the snapshot,
+     * which is deleted only once nothing is left (fail safe, Daniel's review 0.11.1).
+     */
     private suspend fun restore(): Boolean = mutex.withLock {
         val s = store.current()
         if (!s.pendingRestore) return true
@@ -109,16 +115,33 @@ object SchoolMode {
             return false
         }
         try {
-            SchoolCommands.restore(JSONObject(s.snapshot ?: "{}"), s.suspended)
+            val snapshot = JSONObject(s.snapshot ?: "{}")
+            val steps = SchoolCommands.restoreSteps(snapshot, s.suspended)
+            val out = RestorePlan.run(snapshot, s.suspended, steps, SchoolCommands::runRestoreStep)
             // The restore released all status bar flags; bring back the user's own ones.
-            if (Customization.hasStatusBarCustomization()) Customization.applyStatusBar()
-            store.clear()
-            SchoolLog.log(TAG, "restored")
-            true
+            if (Customization.hasStatusBarCustomization()) runCatching { Customization.applyStatusBar() }
+            if (out.done) {
+                store.clear()
+                RestoreNotice.cancel(appContext)
+                SchoolLog.log(TAG, "restored")
+                true
+            } else {
+                if (out.restored.any { it.keys.isNotEmpty() }) store.saveSnapshot(out.snapshot.toString(), out.suspended)
+                val failed = out.failed.joinToString("\n") { it.keys.joinToString().ifEmpty { "statusbar" } }
+                SchoolLog.log(TAG, "restore incomplete: ${out.failed.size} left\n$failed")
+                ErrorLog.add(ErrorKind.School, "School mode: ${out.failed.size} settings not restored", failed)
+                RestoreNotice.show(appContext, out.failed.size)
+                false
+            }
         } catch (e: Exception) {
             SchoolLog.log(TAG, "restore failed", e)
             false
         }
+    }
+
+    /** "Erneut versuchen" in the notification. */
+    fun retryRestore() {
+        scope.launch { restore() }
     }
 
     suspend fun setAutoEndMinutes(minutes: Int) = store.setAutoEndMinutes(minutes)

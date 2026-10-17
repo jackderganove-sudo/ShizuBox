@@ -7266,5 +7266,31 @@
   "en": "⚠ VirusTotal check is on, but no API key is set – nothing is checked, so automatic installs are held back.",
   "de": "⚠ VirusTotal-Prüfung ist an, aber kein API-Schlüssel hinterlegt – es wird nichts geprüft, automatische Installationen werden zurückgehalten.",
   "plural": false
+ },
+ "sr_title": {
+  "en": {
+   "one": "%d setting could not be restored",
+   "other": "%d settings could not be restored"
+  },
+  "de": {
+   "one": "%d Einstellung konnte nicht zurückgesetzt werden",
+   "other": "%d Einstellungen konnten nicht zurückgesetzt werden"
+  },
+  "plural": true
+ },
+ "sr_text": {
+  "en": "Left over from school mode. Tap “Try again” – ShizuBox also retries by itself as soon as Shizuku is running.",
+  "de": "Übrig vom Schulmodus. Tippe auf „Erneut versuchen“ – ShizuBox versucht es auch selbst, sobald Shizuku läuft.",
+  "plural": false
+ },
+ "sr_retry": {
+  "en": "Try again",
+  "de": "Erneut versuchen",
+  "plural": false
+ },
+ "sr_channel": {
+  "en": "School mode restore",
+  "de": "Schulmodus-Wiederherstellung",
+  "plural": false
  }
 }

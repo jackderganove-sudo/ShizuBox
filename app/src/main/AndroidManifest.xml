@@ -299,6 +299,10 @@
         </receiver>
 
         <receiver
+            android:name=".school.RestoreRetryReceiver"
+            android:exported="false" />
+
+        <receiver
             android:name=".school.AutoEndReceiver"
             android:directBootAware="true"
             android:exported="false" />

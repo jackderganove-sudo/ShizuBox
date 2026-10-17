@@ -1511,5 +1511,12 @@
 "ug_wrong_package": "⚠ İndirilen APK başka bir uygulamaya ait (%1$s) – yüklenmedi",
 "ug_not_installed": "⚠ Uygulama yüklü değil – yalnızca onayınla yüklenir (Güncelleyicide “Güncelle”)",
 "ug_sig_unknown": "⚠ İmza kontrol edilemedi – otomatik yüklenmedi",
-"ug_no_vt_key": "⚠ VirusTotal denetimi açık ama API anahtarı yok – hiçbir şey denetlenmiyor, otomatik yüklemeler bekletiliyor."
+"ug_no_vt_key": "⚠ VirusTotal denetimi açık ama API anahtarı yok – hiçbir şey denetlenmiyor, otomatik yüklemeler bekletiliyor.",
+"sr_title": {
+"one": "%d ayar geri yüklenemedi",
+"other": "%d ayar geri yüklenemedi"
+},
+"sr_text": "Okul modundan kalanlar. “Tekrar dene”ye dokun – ShizuBox, Shizuku çalışır çalışmaz kendisi de tekrar dener.",
+"sr_retry": "Tekrar dene",
+"sr_channel": "Okul modu geri yükleme"
 }

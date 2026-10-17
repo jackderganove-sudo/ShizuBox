@@ -4,6 +4,11 @@
 - Updates: Paketname der geladenen APK muss zur verfolgten App passen (sonst Abbruch); stille Installation nur für
   installierte Apps mit gleicher Signatur; Self-Update nur bei Paket ShizuBox + gleicher Signatur; VirusTotal-Sperre
   ohne Schlüssel wird angezeigt und hält automatische Installationen zurück (`UpdateGate`, 10 Unit-Tests)
+- Schulmodus-Wiederherstellung: jeder Schritt einzeln mit eigenem Zeitlimit (hängender Befehl blockiert die anderen
+  nicht), Erfolg = Exit-Code 0; nur Wiederhergestelltes verlässt den Snapshot, gelöscht wird er erst, wenn alles zurück
+  ist; sonst Benachrichtigung „X Einstellungen konnten nicht zurückgesetzt werden“ mit „Erneut versuchen“ + Eintrag im
+  Fehlerprotokoll. Fehlende Snapshot-Schlüssel werden nie mehr gelöscht; eine während des Schulmodus deinstallierte App
+  blockiert das Entsperren der anderen nicht mehr (`RestorePlan`, 11 Unit-Tests)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

@@ -1513,5 +1513,12 @@
     <string name="ug_not_installed">⚠ App nicht installiert – Installation nur mit deiner Bestätigung („Aktualisieren“ im Updater)</string>
     <string name="ug_sig_unknown">⚠ Signatur konnte nicht geprüft werden – nicht automatisch installiert</string>
     <string name="ug_no_vt_key">⚠ VirusTotal-Prüfung ist an, aber kein API-Schlüssel hinterlegt – es wird nichts geprüft, automatische Installationen werden zurückgehalten.</string>
+    <plurals name="sr_title">
+        <item quantity="one">%d Einstellung konnte nicht zurückgesetzt werden</item>
+        <item quantity="other">%d Einstellungen konnten nicht zurückgesetzt werden</item>
+    </plurals>
+    <string name="sr_text">Übrig vom Schulmodus. Tippe auf „Erneut versuchen“ – ShizuBox versucht es auch selbst, sobald Shizuku läuft.</string>
+    <string name="sr_retry">Erneut versuchen</string>
+    <string name="sr_channel">Schulmodus-Wiederherstellung</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

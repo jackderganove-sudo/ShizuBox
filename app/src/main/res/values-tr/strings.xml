@@ -1513,4 +1513,11 @@
     <string name="ug_not_installed">⚠ Uygulama yüklü değil – yalnızca onayınla yüklenir (Güncelleyicide “Güncelle”)</string>
     <string name="ug_sig_unknown">⚠ İmza kontrol edilemedi – otomatik yüklenmedi</string>
     <string name="ug_no_vt_key">⚠ VirusTotal denetimi açık ama API anahtarı yok – hiçbir şey denetlenmiyor, otomatik yüklemeler bekletiliyor.</string>
+    <plurals name="sr_title">
+        <item quantity="one">%d ayar geri yüklenemedi</item>
+        <item quantity="other">%d ayar geri yüklenemedi</item>
+    </plurals>
+    <string name="sr_text">Okul modundan kalanlar. “Tekrar dene”ye dokun – ShizuBox, Shizuku çalışır çalışmaz kendisi de tekrar dener.</string>
+    <string name="sr_retry">Tekrar dene</string>
+    <string name="sr_channel">Okul modu geri yükleme</string>
 </resources>

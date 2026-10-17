@@ -2,6 +2,7 @@ package de.emil.shizubox.school
 
 import android.util.Log
 import de.emil.shizubox.shizuku.ShizukuManager
+import de.emil.shizubox.shizuku.ShizukuUnavailableException
 import org.json.JSONObject
 
 /**
@@ -141,29 +142,23 @@ object SchoolCommands {
         run(script.joinToString("; "))
     }
 
-    /** Restores exactly what [takeSnapshot] recorded. */
-    suspend fun restore(snapshot: JSONObject, suspended: Set<String>) {
-        fun value(name: String) = snapshot.optString(name, "null")
-        val script = buildList {
-            add("cmd statusbar send-disable-flag none")
-            if (suspended.isNotEmpty()) add("pm unsuspend ${suspended.joinToString(" ")} > /dev/null")
+    /** The steps that bring back exactly what [takeSnapshot] recorded (only keys still in the snapshot). */
+    fun restoreSteps(snapshot: JSONObject, suspended: Set<String>): List<RestorePlan.Step> =
+        RestorePlan.steps(snapshot, suspended, SETTINGS.map { it.first to it.second } + PRESERVED)
 
-            // Airplane mode first, then the individual radios.
-            add("cmd connectivity airplane-mode ${if (value("global/airplane_mode_on") == "1") "enable" else "disable"}")
-            if (value("global/wifi_on") in setOf("1", "2")) add("cmd wifi set-wifi-enabled enabled")
-            if (value("global/bluetooth_on") in setOf("1", "2")) add("cmd bluetooth_manager enable")
-            if (value("global/mobile_data") == "1") add("svc data enable")
-
-            // DND off before touching the ringer, it blocks ringer changes.
-            add("cmd notification set_dnd ${zenName(value("global/zen_mode"))}")
-            add("cmd audio set-ringer-mode ${ringerName(value("global/mode_ringer"))}")
-
-            for ((ns, key) in SETTINGS.map { it.first to it.second } + PRESERVED) {
-                val v = value("$ns/$key")
-                add(if (v == "null") "settings delete $ns $key" else "settings put $ns $key ${shellQuote(v)}")
-            }
+    /**
+     * One restore step with its own hard limit; success = exit code 0. Without Shizuku nothing
+     * further can work: [RestorePlan.Abort] leaves the rest for the next attempt.
+     */
+    suspend fun runRestoreStep(step: RestorePlan.Step): Boolean {
+        val cmd = step.command ?: return true
+        val r = try {
+            ShizukuManager.exec(cmd, timeoutMs = 5000, limitMs = step.limitMs)
+        } catch (_: ShizukuUnavailableException) {
+            throw RestorePlan.Abort()
         }
-        run(script.joinToString("; "))
+        if (!r.ok) Log.w(TAG, "restore step exit ${r.code}: ${cmd.take(120)} ${r.err.take(300)}")
+        return r.ok
     }
 
     /** Closes shade, quick settings and the power menu if someone managed to open them. */
@@ -174,21 +169,6 @@ object SchoolCommands {
     suspend fun screenOff() {
         run("input keyevent KEYCODE_SLEEP")
     }
-
-    private fun zenName(v: String) = when (v) {
-        "1" -> "priority"
-        "2" -> "none"
-        "3" -> "alarms"
-        else -> "off"
-    }
-
-    private fun ringerName(v: String) = when (v) {
-        "0" -> "SILENT"
-        "1" -> "VIBRATE"
-        else -> "NORMAL"
-    }
-
-    private fun shellQuote(s: String) = "'" + s.replace("'", "'\\''") + "'"
 
     private suspend fun run(script: String): String {
         val r = ShizukuManager.exec(script, timeoutMs = 5000)

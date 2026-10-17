@@ -60,6 +60,7 @@ private fun kindLabel(k: ErrorKind) = when (k) {
     ErrorKind.Killed -> t(R.string.el_killed)
     ErrorKind.Hang -> t(R.string.el_hang)
     ErrorKind.HiLight -> "HiLight"
+    ErrorKind.School -> t(R.string.sec_school)
 }
 
 /** Settings → error log: ShizuBox's own crashes, ANRs and hangs, to copy or share. */
