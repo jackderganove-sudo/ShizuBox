@@ -161,6 +161,11 @@ object SchoolCommands {
         return r.ok
     }
 
+    /** Only the status bar lock of [apply], e.g. again after a reboot. */
+    suspend fun lockStatusBar() {
+        run(STATUSBAR_LOCK)
+    }
+
     /** Closes shade, quick settings and the power menu if someone managed to open them. */
     suspend fun closeSystemDialogs() {
         run("cmd statusbar collapse; am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS > /dev/null")

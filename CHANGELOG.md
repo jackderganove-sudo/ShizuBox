@@ -31,6 +31,8 @@
   (live geprüft mit einem Backup im alten Format, in dem alles eingeschaltet war)
 - Kacheln/Schnellaktionen „Cache leeren“ und „Aufräumen“ laufen app-weit über die Cleaner-Aufgaben (Vordergrunddienst
   mit Fortschritt) – vorher brach das Schließen der Schnelleinstellungen sie ab
+- Schulmodus nach Neustart: die Statusleisten-Sperre (lebt nur im Speicher von system_server) wird wieder gesetzt,
+  sobald Shizuku läuft; Aktivieren, Schwarzbild und 3× Power unverändert
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

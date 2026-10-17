@@ -51,10 +51,16 @@ object SchoolMode {
                         // Status bar flags are lost on reboot; re-apply once Shizuku is back.
                         !s.active && shizukuReady && Customization.hasStatusBarCustomization() ->
                             runCatching { Customization.applyStatusBar() }
-                        // Optional reboot behavior: black screen returns together with Shizuku.
-                        s.active && shizukuReady && !SchoolService.running -> {
-                            SchoolLog.log(TAG, "Shizuku back while active, starting black screen")
-                            SchoolService.start(appContext)
+                        s.active && shizukuReady -> {
+                            // The status bar lock lives only in system_server's memory (dumpsys statusbar:
+                            // mDisableRecords) and is gone after a reboot, unlike the settings and the
+                            // suspended apps – set it again once Shizuku is back (0.11.1). Idempotent.
+                            runCatching { SchoolCommands.lockStatusBar() }
+                            // Optional reboot behavior: black screen returns together with Shizuku.
+                            if (!SchoolService.running) {
+                                SchoolLog.log(TAG, "Shizuku back while active, starting black screen")
+                                SchoolService.start(appContext)
+                            }
                         }
                     }
                 }
