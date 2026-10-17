@@ -132,11 +132,10 @@ object VirusTotal {
         poll(key, analysisId, sha256, onProgress)
     }
 
-    private fun upload(url: String, key: String, file: File, onProgress: (Int) -> Unit): String? {
+    internal fun upload(url: String, key: String, file: File, onProgress: (Int) -> Unit): String? {
         val boundary = "----ShizuBox${System.currentTimeMillis()}"
-        val head = "--$boundary\r\nContent-Disposition: form-data; name=\"file\"; filename=\"${file.name}\"\r\n" +
-            "Content-Type: application/octet-stream\r\n\r\n"
-        val tail = "\r\n--$boundary--\r\n"
+        val head = multipartHead(boundary, file.name)
+        val tail = "\r\n--$boundary--\r\n".toByteArray()
         val conn = (URL(url).openConnection() as HttpURLConnection).apply {
             requestMethod = "POST"
             doOutput = true
@@ -145,10 +144,11 @@ object VirusTotal {
             setRequestProperty("x-apikey", key)
             setRequestProperty("Accept", "application/json")
             setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
-            setFixedLengthStreamingMode(head.length + file.length() + tail.length)
+            // Bytes, not characters: "Prüfung.apk" is longer in UTF-8 (Daniel's review, 0.11.1).
+            setFixedLengthStreamingMode(head.size + file.length() + tail.size)
         }
         conn.outputStream.use { out ->
-            out.write(head.toByteArray())
+            out.write(head)
             val total = file.length()
             var sent = 0L
             var lastPct = -1
@@ -163,7 +163,7 @@ object VirusTotal {
                     if (pct != lastPct) { lastPct = pct; onProgress(pct) }
                 }
             }
-            out.write(tail.toByteArray())
+            out.write(tail)
         }
         if (conn.responseCode !in 200..299) throw VtHttpException(httpFailure(conn))
         return JSONObject(conn.inputStream.bufferedReader().readText()).getJSONObject("data").getString("id")
@@ -251,4 +251,14 @@ object VirusTotal {
             t(R.string.no_internet)
         else -> e.message ?: e.toString()
     }
+}
+
+/**
+ * Start of the multipart body as UTF-8 bytes. Quotes and line breaks in the file name would break
+ * the header, so they are replaced.
+ */
+internal fun multipartHead(boundary: String, fileName: String): ByteArray {
+    val name = fileName.replace(Regex("[\"\\\\\r\n]"), "_")
+    return ("--$boundary\r\nContent-Disposition: form-data; name=\"file\"; filename=\"$name\"\r\n" +
+        "Content-Type: application/octet-stream\r\n\r\n").toByteArray(Charsets.UTF_8)
 }
