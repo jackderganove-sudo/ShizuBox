@@ -33,6 +33,7 @@ data class ClipSettings(val enabled: Boolean = false, val keepDays: Int = 30, va
  * Local only, not in the backup (only the settings are).
  */
 object ClipHistory {
+    private const val MAX_TEXT = 20_000
     /** Password managers: never recorded, whatever they mark. */
     private val PASSWORD_MANAGERS = setOf(
         "com.x8bit.bitwarden", "com.bitwarden.authenticator", "com.agilebits.onepassword", "com.lastpass.lpandroid", "com.dashlane",
@@ -86,14 +87,16 @@ object ClipHistory {
         prefs.edit().putBoolean("enabled", s.enabled).putInt("keep_days", s.keepDays).putBoolean("lock", s.lock).putStringSet("excluded", s.excluded).apply()
     }
 
-    private fun record(text: String, source: String, sensitive: Boolean, time: Long) {
+    private fun record(full: String, source: String, sensitive: Boolean, time: Long) {
         val s = _settings.value
-        if (!s.enabled || sensitive || text.isBlank()) return
+        if (!s.enabled || sensitive || full.isBlank()) return
+        // Stored shortened – compared shortened too, otherwise long texts were never found again (0.11.1).
+        val text = full.take(MAX_TEXT)
         if (source in PASSWORD_MANAGERS || source in s.excluded) return
         scope.launch {
             // The same text again (e.g. copied twice) only moves to the top.
             val updated = db.update("c", ContentValues().apply { put("time", time); put("source", source) }, "text = ?", arrayOf(text))
-            if (updated == 0) db.insert("c", null, ContentValues().apply { put("text", text.take(20_000)); put("source", source); put("time", time); put("pinned", 0) })
+            if (updated == 0) db.insert("c", null, ContentValues().apply { put("text", text); put("source", source); put("time", time); put("pinned", 0) })
             prune()
             _version.value++
         }

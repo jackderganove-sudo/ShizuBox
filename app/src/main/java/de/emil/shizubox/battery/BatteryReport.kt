@@ -103,7 +103,10 @@ object BatteryReport {
         val level = i.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) * 100 / i.getIntExtra(BatteryManager.EXTRA_SCALE, 100).coerceAtLeast(1)
         val charging = i.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) != 0
         if (level < 0) return
-        db.insert("level", null, ContentValues().apply { put("t", System.currentTimeMillis()); put("level", level); put("charging", if (charging) 1 else 0) })
+        val now = System.currentTimeMillis()
+        db.insert("level", null, ContentValues().apply { put("t", now); put("level", level); put("charging", if (charging) 1 else 0) })
+        // Also pruned here: without Shizuku no snapshot runs, and the table grew forever (0.11.1).
+        db.delete("level", "t < ?", arrayOf((now - 30 * 86_400_000L).toString()))
     }
 
     /** Snapshot of the per-app counters (needs Shizuku). Returns false if it could not be taken. */

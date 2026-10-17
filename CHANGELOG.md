@@ -42,6 +42,8 @@
   fehlgeschlagenen Kopieren einer Split-APK ab, statt `pm` einen unvollständigen Satz zu geben
 - Lautstärke-Boost startet pro Dienst nur noch einen Beobachter (vorher einen mehr bei jedem Start-Befehl);
   Datenschutz-Protokoll nutzt beim Sammeln eine einzige, geschlossene SQL-Anweisung
+- Zwischenablage: Texte über 20 000 Zeichen werden beim erneuten Kopieren wiedererkannt (vorher Duplikate);
+  Akku-Verlauf: Ladestand-Tabelle wird auch ohne Shizuku auf 30 Tage gekürzt
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,
