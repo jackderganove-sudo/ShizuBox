@@ -40,6 +40,8 @@
   /Telegram) und einen gleichnamigen Paket-Ordner, nicht nur Android/… (`GuardExclusionTest`, 4 Unit-Tests)
 - Kleinkram: Dateideskriptor-Leck beim Verschieben eigener Dateien in den Papierkorb; der Installer bricht bei einem
   fehlgeschlagenen Kopieren einer Split-APK ab, statt `pm` einen unvollständigen Satz zu geben
+- Lautstärke-Boost startet pro Dienst nur noch einen Beobachter (vorher einen mehr bei jedem Start-Befehl);
+  Datenschutz-Protokoll nutzt beim Sammeln eine einzige, geschlossene SQL-Anweisung
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

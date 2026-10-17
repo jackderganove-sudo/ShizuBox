@@ -147,6 +147,10 @@ object PrivacyLog {
                 newSince[o.op] = if (cut) lastRow else newest
             }
             db.beginTransaction()
+            // Compiled once and closed (was: a new statement per line, never closed – 0.11.1).
+            val update = db.compileStatement(
+                "UPDATE a SET count = count + ?, duration = duration + ? WHERE pkg = ? AND op = ? AND start = ? AND state = ?",
+            )
             try {
                 for ((k, v) in merged) {
                     val op = PrivOp.of(k.op) ?: continue
@@ -154,9 +158,8 @@ object PrivacyLog {
                     // Location already arrives in 10-minute blocks (see awk above).
                     val start = time
                     val off = screenOff.any { time in it }
-                    val updated = db.compileStatement(
-                        "UPDATE a SET count = count + ?, duration = duration + ? WHERE pkg = ? AND op = ? AND start = ? AND state = ?",
-                    ).apply {
+                    val updated = update.apply {
+                        clearBindings()
                         bindLong(1, maxOf(1, v.first).toLong()); bindLong(2, v.second)
                         bindString(3, k.pkg); bindString(4, op.op); bindLong(5, start); bindString(6, k.state)
                     }.executeUpdateDelete()
@@ -171,6 +174,7 @@ object PrivacyLog {
                 inserted += collectLastAccess(screenOff)
                 db.setTransactionSuccessful()
             } finally {
+                update.close()
                 db.endTransaction()
             }
             prefs.edit().apply { newSince.forEach { (op, s) -> putString("since_$op", s) } }.apply()

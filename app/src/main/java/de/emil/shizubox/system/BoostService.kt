@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 class BoostService : Service() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var notifyJob: kotlinx.coroutines.Job? = null
+    private var collector: kotlinx.coroutines.Job? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -31,7 +32,9 @@ class BoostService : Service() {
             VolumeBoost.update { it.copy(enabled = false) }
         }
         startForeground(ID, notification(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
-        scope.launch {
+        // One collector per service, not one more per start command (Daniel's review, 0.11.1).
+        if (collector?.isActive == true) return START_STICKY
+        collector = scope.launch {
             combine(VolumeBoost.settings, VolumeBoost.headphonesConnected) { s, _ -> s }.collect { s ->
                 if (!s.enabled) {
                     VolumeBoost.release()
