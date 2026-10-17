@@ -97,8 +97,10 @@ private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
     val context = LocalContext.current
     val trash by Trash.items.collectAsStateWithLifecycle()
     val running by de.emil.shizubox.cleaner.CleanerJobs.running.collectAsStateWithLifecycle()
-    var numbers by remember { mutableStateOf(StorageAccess.numbers()) }
-    LaunchedEffect(trash.size) { numbers = StorageAccess.numbers() }
+    // StatFs touches the disk: never on the main thread.
+    val numbers by androidx.compose.runtime.produceState(de.emil.shizubox.cleaner.StorageNumbers(0, 0), trash.size, running.isEmpty()) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { StorageAccess.numbers() }
+    }
     fun open(p: String) { CleanerNav.page.value = p }
     LazyColumn(
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.0 (in Arbeit) – Reiniger
+## 0.9.0 – 2026-10-17 – Reiniger
 - Neuer Startseiten-Bereich „Reiniger“ (nach Vorbild von SD Maid) mit Speicherübersicht
 - Papierkorb für alle Reiniger-Werkzeuge: nichts wird sofort gelöscht, 7 Tage (einstellbar) wiederherstellbar,
   dann automatisch endgültig gelöscht; einzeln oder alles wiederherstellen/löschen, Protokoll, Hinweis bei knappem Speicher

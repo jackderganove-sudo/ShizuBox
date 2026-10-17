@@ -119,6 +119,8 @@ object Backup {
         de.emil.shizubox.battery.BatteryReport.load()
         de.emil.shizubox.clipboard.ClipHistory.load()
         de.emil.shizubox.audio.AppVolume.load()
+        de.emil.shizubox.cleaner.CleanerSettings.load()
+        runCatching { de.emil.shizubox.cleaner.CleanerSchedule.schedule(context) }
         runCatching { de.emil.shizubox.apps.NetBlock.restore(force = true) }
         Updates.init(context)
         UpdateWorker.schedule(context)

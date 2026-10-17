@@ -85,7 +85,9 @@ fun TrashScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     LaunchedEffect(shizukuReady) { if (shizukuReady) runCatching { Trash.reconcile() } }
     val total = items.sumOf { it.size }
     // Tight on space: the trash still occupies it until it is emptied.
-    val free = remember(items.size) { runCatching { StatFs(Fs.ROOT).availableBytes }.getOrDefault(Long.MAX_VALUE) }
+    val free by produceState(Long.MAX_VALUE, items.size) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { runCatching { StatFs(Fs.ROOT).availableBytes }.getOrDefault(Long.MAX_VALUE) }
+    }
     val low = free < 5L * 1024 * 1024 * 1024 && total > 0
     val listStart = rememberListStart(showLog)
 

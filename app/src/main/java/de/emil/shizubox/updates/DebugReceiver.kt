@@ -280,6 +280,11 @@ class DebugReceiver : BroadcastReceiver() {
                                 "cats=${a.categories.map { "${it.key}=${it.value / 1_000_000}MB" }} top3=${a.top.take(3).map { "${it.path.substringAfterLast('/')}=${it.size / 1_000_000}MB" }} " +
                                 "apps=${a.apps.size} topApps=${a.apps.take(3).map { "${it.pkg}=${it.total / 1_000_000}MB ext=${it.extData / 1_000_000}" }}"
                         }
+                        "cleanercfg" -> {
+                            // Writes the current cleaner settings unchanged (creates the prefs file for the backup test).
+                            de.emil.shizubox.cleaner.CleanerSettings.update { it }
+                            de.emil.shizubox.cleaner.CleanerSettings.current.toString()
+                        }
                         "autoclean" -> {
                             // Only the category "broken downloads" (empty on the test phone) plus a test file; --es mode next shows the schedule
                             val R0 = de.emil.shizubox.cleaner.Fs.ROOT

@@ -55,6 +55,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -226,7 +228,12 @@ private fun GroupCard(g: DupGroup, onChange: (DupGroup) -> Unit) {
         )
         g.files.forEach { f ->
             val keep = f.path in g.keep
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
+            var menu by remember { mutableStateOf(false) }
+            if (menu) EntryMenu(f.path, false, f.size, CleanTool.Duplicates, onDismiss = { menu = false }, onMoved = { r -> if (r.moved > 0) Duplicates.forget(listOf(f.path)) })
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 8.dp).pointerInput(f.path) { detectTapGestures(onLongPress = { menu = true }) },
+            ) {
                 Thumb(f.path)
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {

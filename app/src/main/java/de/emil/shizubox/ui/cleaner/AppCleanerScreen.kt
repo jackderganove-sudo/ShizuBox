@@ -191,6 +191,10 @@ private fun AppCacheRow(a: AppCacheInfo, checked: Boolean, max: Long, onCheck: (
         runCatching {
             context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", a.pkg, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
+    }, onLongClick = {
+        // Long press: never clean this app's cache again.
+        CleanerSettings.update { it.copy(excludedApps = it.excludedApps + a.pkg) }
+        Toast.makeText(context, t(R.string.cl_excluded_done), Toast.LENGTH_SHORT).show()
     }) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AppIcon(a.pkg, 36)

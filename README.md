@@ -45,7 +45,7 @@ Animationsgeschwindigkeit, Bildwiederholrate, Schriftgröße und Fettschrift, An
 ### Automationen
 Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
 - Auslöser: App geöffnet/geschlossen, Uhrzeit + Wochentage, Kopfhörer, Bluetooth-Gerät, Ladekabel, Akku unter X %, WLAN (bestimmtes Netz)
-- Aktionen: Gaming-Modus, Lautstärke, Lautstärke pro App, Boost, Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, Wach bleiben, Internet-Sperre, App oder Activity starten, Shell-Befehl
+- Aktionen: Gaming-Modus, Lautstärke, Lautstärke pro App, Reinigen, Boost, Bildwiederholrate, Animationen, Graustufen, Bitte nicht stören, Wach bleiben, Internet-Sperre, App oder Activity starten, Shell-Befehl
 - „Danach zurücksetzen“, wenn der Auslöser endet; akkuschonend (Callbacks statt Dauerabfrage); pausiert während des Schulmodus
 
 ### System
@@ -57,13 +57,24 @@ Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
 - **Universal Installer**: APK, APKS, XAPK, APKM mit Vorschau, Versionsvergleich, Signaturprüfung, automatischer Split-Auswahl und VirusTotal-Scan; stille Installation über Shizuku; als Standard-Installer nutzbar
 - **Lautstärke-Boost** bis +100 % über das Maximum, getrennte Stufen für Lautsprecher und Kopfhörer, einstellbare Obergrenze, Gehörschutz-Schalldosis zurücksetzen
 - **Benachrichtigungs-Verlauf**: alle Benachrichtigungen lokal gespeichert (nicht im Backup), nach App oder chronologisch, Suche, **gelöschte/zurückgezogene Nachrichten** markiert, Bilder, Fingerabdruck-Sperre
-- **Cache aufräumen**: Cache pro App nach Größe, „Alles aufräumen“ mit rollender Anzeige des freien Platzes
 - **Privatsphäre-Protokoll**: welche App wann Kamera, Mikrofon, Standort, Kontakte oder die Zwischenablage nutzte – Zeitleiste und pro App, Hinweis auf Zugriffe im Hintergrund oder bei ausgeschaltetem Bildschirm, Berechtigung direkt entziehen, optionale Warnung bei Kamera/Mikrofon im Hintergrund
 - **Akku-Report**: Verbrauch pro App (mAh und %, Vorder-/Hintergrund), Wakelocks, mobile Daten und Weckrufe – seit dem Laden, 24 Stunden oder über Nacht, Ladestand-Diagramm, direkte Aktionen (einschränken, beenden, einfrieren, Internet sperren), optionale Morgen-Zusammenfassung
 - **Zwischenablage-Verlauf** (auch im Hintergrund, ohne Dauerabfrage): Suche, Anheften, erneut kopieren, Apps ausschließen, Auto-Löschen, Fingerabdruck-Sperre; Passwörter und Passwort-Manager werden nie gespeichert
 - **Lautstärke pro App**: jede App bekommt einen eigenen Pegel über der Medienlautstärke (echtes Mischen über Shizuku), auch als Automations-Aktion
 - Gaming-Modus (Benachrichtigungen, Bildwiederholrate, Helligkeit, Hintergrund-Apps – wird exakt zurückgesetzt)
 - Logcat-Viewer mit Filtern
+
+### Reiniger (nach Vorbild von SD Maid)
+Speicherübersicht und **„Alles scannen“** – jedes Werkzeug zeigt, wie viel es gefunden hat. **Nichts wird sofort gelöscht:** alles landet im ShizuBox-Papierkorb und ist 7 Tage (einstellbar) wiederherstellbar.
+- **Leichen-Finder**: Reste deinstallierter Apps in `Android/data`, `Android/obb`, `Android/media` und bekannte App-Ordner – Apps anderer Nutzer und Profile zählen als installiert, im Zweifel wird nichts angezeigt
+- **System-Reiniger**: Thumbnails, leere Ordner, Log-/Temp-Dateien, abgebrochene Downloads, alte APKs im Download-Ordner (mit installierter Version), Papierkörbe anderer Apps, ShizuBox-Reste
+- **App-Cleaner**: Cache pro App, `Android/data/<app>/cache` einzeln in den Papierkorb (laufende Apps überspringen oder beenden), „Alles aufräumen“ über Android; KI-Modelle (AICore) standardmäßig ausgenommen
+- **Duplikat-Finder**: identische Dateien (Größe → Teil-Hash → SHA-256) und optional ähnliche Bilder, Vorschaubilder, automatisch behalten (Kamera-Ordner, älteste, beste Auflösung) – immer mindestens eine Datei pro Gruppe
+- **Speicher-Analyse**: Kategorien als Balken, Ordner-Browser nach Größe, die 50 größten Dateien, Platz pro App; öffnen, teilen, im Ordner zeigen, in den Papierkorb
+- **Papierkorb** mit Protokoll, einzeln oder alles wiederherstellen/endgültig löschen, automatisches Leeren nach Ablauf
+- **Geplante Reinigung** (standardmäßig aus): Wochentage und Uhrzeit, nur bei ausgeschaltetem Bildschirm und optional nur beim Laden, standardmäßig nur sichere Kategorien, nie im Schulmodus
+- Fest gesperrt: System- und Standardordner, Daten installierter Apps, Shizuku; eigene Ausschlüsse für Ordner und Apps (auch per langem Drücken)
+- Zugriff auf `Android/data` und `Android/obb` über Shizuku; private App-Daten (`/data/data`) sind ohne Root nicht erreichbar
 
 ### Downloader (ohne Shizuku)
 - Videos und Musik von YouTube und vielen anderen Seiten über **yt-dlp** und **FFmpeg**
@@ -75,7 +86,7 @@ Regeln nach dem Schema **Wenn → Dann**, mit Editor und Vorlagen.
 - Speicherort wählbar (Standard `Download/ShizuBox`), Cookies für altersbeschränkte Videos, Video→Audio offline, yt-dlp-Update in der App
 
 ### Kacheln & Widget
-Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate, Wach bleiben (Caffeine), Lautstärke-Boost, Cache aufräumen und Zwischenablage-Verlauf. Gaming bis Cache gibt es auch als Schnellaktionen auf der Startseite, die ersten vier zusätzlich als **Homescreen-Widget** (Material-You-Farben).
+Schnelleinstellungs-Kacheln für Schulmodus, Gaming-Modus, Animationen an/aus, Bildwiederholrate, Wach bleiben (Caffeine), Lautstärke-Boost, Cache aufräumen, Reinigen und Zwischenablage-Verlauf. Gaming bis Reinigen gibt es auch als Schnellaktionen auf der Startseite, die ersten vier zusätzlich als **Homescreen-Widget** (Material-You-Farben).
 
 ### Einstellungen
 Sprache, Design (System/Hell/Dunkel, AMOLED, Farben, Paletten, Glas-Effekt), Startseite (Startbereich, Bereiche ein-/ausblenden), Installationsart, VirusTotal-Schlüssel, **Sichern & Wiederherstellen** aller Einstellungen in einer Datei, **Fehlerprotokoll** (Abstürze, Hänger; kopieren/teilen) für Fehlerberichte.
