@@ -17,7 +17,8 @@
   Freigabe beim Ende, beim App-Start/Shizuku-Verbinden und per „LEDs zurücksetzen“; Fehler ins Fehlerprotokoll
 - Automations-Aktionen „HiLight-Muster abspielen“ und „HiLight aus“, Kachel „HiLight“, Einstellungen und Regeln im Backup
 - Fix: „Abspielen“ in der Vorschau tat bei aktivem „Bitte nicht stören“ scheinbar nichts – die Vorschau ignoriert jetzt
-  Ruhezeiten (Schulmodus und Sicherheitsgrenzen gelten weiter), und ein blockierter Versuch nennt den Grund
+  Ruhezeiten (Schulmodus und Sicherheitsgrenzen gelten weiter), und ein blockierter Versuch nennt den Grund; mit
+  „Nur bei Display nach unten“ beendete der Hochheben-Wächter die Vorschau sofort – gilt jetzt nicht mehr für die Vorschau
 
 ## 0.9.0 – 2026-10-17 – Reiniger
 - Neuer Startseiten-Bereich „Reiniger“ (nach Vorbild von SD Maid) mit Speicherübersicht

@@ -156,7 +156,8 @@ object HiLight {
             res == "ok" -> {
                 current = r
                 currentUntil = now + r.durationMs
-                if (cfg.faceDownOnly || r.faceDown) watchLift(r)
+                // The preview skipped the face-down check, so lifting must not end it either.
+                if ((cfg.faceDownOnly || r.faceDown) && !preview) watchLift(r)
                 return true
             }
             res == "busy" -> return false
