@@ -38,6 +38,8 @@
   Zeilenumbrüche im Namen werden ersetzt (`VirusTotalUploadTest` gegen lokalen HTTP-Server, 2 Unit-Tests)
 - Cleaner-Schutz: eine ausgenommene App schützt jetzt auch ihre bekannten Ordner im Hauptspeicher (z. B. /WhatsApp,
   /Telegram) und einen gleichnamigen Paket-Ordner, nicht nur Android/… (`GuardExclusionTest`, 4 Unit-Tests)
+- Kleinkram: Dateideskriptor-Leck beim Verschieben eigener Dateien in den Papierkorb; der Installer bricht bei einem
+  fehlgeschlagenen Kopieren einer Split-APK ab, statt `pm` einen unvollständigen Satz zu geben
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

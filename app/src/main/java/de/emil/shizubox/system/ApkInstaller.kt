@@ -78,9 +78,11 @@ object ApkInstaller {
                         val target = "$TMP/b${out.size}.apk"
                         try {
                             tmp.outputStream().use { zip.copyTo(it) }
-                            ParcelFileDescriptor.open(tmp, ParcelFileDescriptor.MODE_READ_ONLY).use { pfd ->
+                            val written = ParcelFileDescriptor.open(tmp, ParcelFileDescriptor.MODE_READ_ONLY).use { pfd ->
                                 ShizukuManager.writeFile(pfd, target)
                             }
+                            // -1 or a short copy used to be ignored and pm got a broken split set.
+                            if (written != tmp.length()) error(t(R.string.copy_failed))
                         } finally {
                             tmp.delete()
                         }

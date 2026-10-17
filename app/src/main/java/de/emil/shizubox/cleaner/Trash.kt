@@ -131,7 +131,8 @@ object Trash {
                 })
                 val loc = "${Guard.TRASH_DIRS[0]}/$id"
                 val written = runCatching {
-                    ShizukuManager.writeFile(android.os.ParcelFileDescriptor.open(f, android.os.ParcelFileDescriptor.MODE_READ_ONLY), loc)
+                    // Closed here too: the binder only sends a duplicate of the descriptor.
+                    android.os.ParcelFileDescriptor.open(f, android.os.ParcelFileDescriptor.MODE_READ_ONLY).use { ShizukuManager.writeFile(it, loc) }
                 }.getOrDefault(-1L)
                 if (written == size && f.delete()) {
                     db.update("trash", ContentValues().apply { put("loc", loc) }, "id = ?", arrayOf(id.toString()))
