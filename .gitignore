@@ -5,3 +5,10 @@ local.properties
 .idea/
 *.iml
 captures/
+# Python caches, signing keys and build outputs never belong in the repo.
+*.pyc
+__pycache__/
+*.jks
+*.keystore
+*.apk
+*.aab

@@ -52,6 +52,8 @@
 - Logcat: App-Filter wird gequotet (Freitext landete ungeschützt im Shell-Befehl); APK-Export: Version mit `/` im
   Dateinamen ersetzt; geteilte Links ohne angehängtes `)`, `.` oder `,` (Klammern des Links selbst bleiben,
   `SharedUrlTest`, 4 Unit-Tests)
+- Repo: `.gitignore` um `*.pyc`, `__pycache__/`, `*.jks`, `*.keystore`, `*.apk`, `*.aab` ergänzt, versehentlich
+  eingecheckte `.pyc` entfernt
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,
