@@ -6008,5 +6008,115 @@
   "en": "⚠ Cannot open this file (Android/data is closed to apps)",
   "de": "⚠ Datei lässt sich nicht öffnen (Android/data ist für Apps gesperrt)",
   "plural": false
+ },
+ "sc_sub": {
+  "en": "Thumbnails, empty folders, logs, old APKs, broken downloads",
+  "de": "Thumbnails, leere Ordner, Logs, alte APKs, abgebrochene Downloads",
+  "plural": false
+ },
+ "sc_thumbs": {
+  "en": "Thumbnails",
+  "de": "Thumbnails",
+  "plural": false
+ },
+ "sc_thumbs_sub": {
+  "en": ".thumbnails folders – apps recreate them when needed",
+  "de": ".thumbnails-Ordner – Apps erstellen sie bei Bedarf neu",
+  "plural": false
+ },
+ "sc_empty": {
+  "en": "Empty folders",
+  "de": "Leere Ordner",
+  "plural": false
+ },
+ "sc_empty_sub": {
+  "en": "Folders without any content",
+  "de": "Ordner ganz ohne Inhalt",
+  "plural": false
+ },
+ "sc_logs": {
+  "en": "Logs and temp files",
+  "de": "Log- und Temp-Dateien",
+  "plural": false
+ },
+ "sc_logs_sub": {
+  "en": "*.log, *.tmp, .temp folders, crash dumps",
+  "de": "*.log, *.tmp, .temp-Ordner, Crash-Dumps",
+  "plural": false
+ },
+ "sc_partial": {
+  "en": "Broken downloads",
+  "de": "Abgebrochene Downloads",
+  "plural": false
+ },
+ "sc_partial_sub": {
+  "en": "*.part, *.crdownload (older than 1 h), .pending-* (older than 1 day)",
+  "de": "*.part, *.crdownload (älter als 1 Std.), .pending-* (älter als 1 Tag)",
+  "plural": false
+ },
+ "sc_own": {
+  "en": "ShizuBox leftovers",
+  "de": "ShizuBox-Reste",
+  "plural": false
+ },
+ "sc_own_sub": {
+  "en": "Temporary copies, old update APKs, VirusTotal copies, downloader temp",
+  "de": "Temporäre Kopien, alte Update-APKs, VirusTotal-Kopien, Downloader-Temp",
+  "plural": false
+ },
+ "sc_apks": {
+  "en": "Old APK files",
+  "de": "Alte APK-Dateien",
+  "plural": false
+ },
+ "sc_apks_sub": {
+  "en": "APK/XAPK/APKS/APKM in Download – with installed version",
+  "de": "APK/XAPK/APKS/APKM im Download-Ordner – mit installierter Version",
+  "plural": false
+ },
+ "sc_trash": {
+  "en": "Other apps' trash",
+  "de": "Papierkörbe anderer Apps",
+  "plural": false
+ },
+ "sc_trash_sub": {
+  "en": ".trash/.Trash-* folders and files in the system's trash (.trashed-*)",
+  "de": ".trash/.Trash-*-Ordner und Dateien im System-Papierkorb (.trashed-*)",
+  "plural": false
+ },
+ "sc_apk_not_installed": {
+  "en": "%1$s · not installed",
+  "de": "%1$s · nicht installiert",
+  "plural": false
+ },
+ "sc_apk_installed_same": {
+  "en": "%1$s · installed (same version)",
+  "de": "%1$s · installiert (gleiche Version)",
+  "plural": false
+ },
+ "sc_apk_installed_other": {
+  "en": "%1$s · installed: %2$s",
+  "de": "%1$s · installiert: %2$s",
+  "plural": false
+ },
+ "sc_cats": {
+  "en": "Look for",
+  "de": "Suchen nach",
+  "plural": false
+ },
+ "sc_hint": {
+  "en": "Safe categories are preselected. Old APKs and other apps' trash only if you pick them. Long-press an entry to exclude it.",
+  "de": "Sichere Kategorien sind vorausgewählt. Alte APKs und fremde Papierkörbe nur, wenn du sie auswählst. Lange drücken schließt einen Eintrag aus.",
+  "plural": false
+ },
+ "cl_moving": {
+  "en": "Moving to the trash …",
+  "de": "Wird in den Papierkorb verschoben …",
+  "plural": false
+ },
+ "cl_moving_n": {
+  "en": "Moving %1$d of %2$d …",
+  "de": "Verschiebe %1$d von %2$d …",
+  "plural": false
  }
 }

@@ -20,6 +20,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
@@ -72,6 +73,9 @@ object CleanerJobs {
         synchronized(jobs) { jobs[tool] = job }
         return job
     }
+
+    /** Moving to the trash must not stop half-way when the screen is left: runs app-wide, the caller awaits. */
+    fun <T> background(block: suspend () -> T): kotlinx.coroutines.Deferred<T> = scope.async { block() }
 
     fun cancel(tool: CleanTool) = synchronized(jobs) { jobs[tool] }?.cancel()
 

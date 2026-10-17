@@ -1256,5 +1256,27 @@
     <string name="cl_exclude">Von der Reinigung ausschließen</string>
     <string name="cl_excluded_done">Ausgeschlossen ✓</string>
     <string name="cl_cannot_open">⚠ Datei lässt sich nicht öffnen (Android/data ist für Apps gesperrt)</string>
+    <string name="sc_sub">Thumbnails, leere Ordner, Logs, alte APKs, abgebrochene Downloads</string>
+    <string name="sc_thumbs">Thumbnails</string>
+    <string name="sc_thumbs_sub">.thumbnails-Ordner – Apps erstellen sie bei Bedarf neu</string>
+    <string name="sc_empty">Leere Ordner</string>
+    <string name="sc_empty_sub">Ordner ganz ohne Inhalt</string>
+    <string name="sc_logs">Log- und Temp-Dateien</string>
+    <string name="sc_logs_sub">*.log, *.tmp, .temp-Ordner, Crash-Dumps</string>
+    <string name="sc_partial">Abgebrochene Downloads</string>
+    <string name="sc_partial_sub">*.part, *.crdownload (älter als 1 Std.), .pending-* (älter als 1 Tag)</string>
+    <string name="sc_own">ShizuBox-Reste</string>
+    <string name="sc_own_sub">Temporäre Kopien, alte Update-APKs, VirusTotal-Kopien, Downloader-Temp</string>
+    <string name="sc_apks">Alte APK-Dateien</string>
+    <string name="sc_apks_sub">APK/XAPK/APKS/APKM im Download-Ordner – mit installierter Version</string>
+    <string name="sc_trash">Papierkörbe anderer Apps</string>
+    <string name="sc_trash_sub">.trash/.Trash-*-Ordner und Dateien im System-Papierkorb (.trashed-*)</string>
+    <string name="sc_apk_not_installed">%1$s · nicht installiert</string>
+    <string name="sc_apk_installed_same">%1$s · installiert (gleiche Version)</string>
+    <string name="sc_apk_installed_other">%1$s · installiert: %2$s</string>
+    <string name="sc_cats">Suchen nach</string>
+    <string name="sc_hint">Sichere Kategorien sind vorausgewählt. Alte APKs und fremde Papierkörbe nur, wenn du sie auswählst. Lange drücken schließt einen Eintrag aus.</string>
+    <string name="cl_moving">Wird in den Papierkorb verschoben …</string>
+    <string name="cl_moving_n">Verschiebe %1$d von %2$d …</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

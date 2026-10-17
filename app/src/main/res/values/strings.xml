@@ -1258,4 +1258,26 @@
     <string name="cl_exclude">Exclude from cleaning</string>
     <string name="cl_excluded_done">Excluded ✓</string>
     <string name="cl_cannot_open">⚠ Cannot open this file (Android/data is closed to apps)</string>
+    <string name="sc_sub">Thumbnails, empty folders, logs, old APKs, broken downloads</string>
+    <string name="sc_thumbs">Thumbnails</string>
+    <string name="sc_thumbs_sub">.thumbnails folders – apps recreate them when needed</string>
+    <string name="sc_empty">Empty folders</string>
+    <string name="sc_empty_sub">Folders without any content</string>
+    <string name="sc_logs">Logs and temp files</string>
+    <string name="sc_logs_sub">*.log, *.tmp, .temp folders, crash dumps</string>
+    <string name="sc_partial">Broken downloads</string>
+    <string name="sc_partial_sub">*.part, *.crdownload (older than 1 h), .pending-* (older than 1 day)</string>
+    <string name="sc_own">ShizuBox leftovers</string>
+    <string name="sc_own_sub">Temporary copies, old update APKs, VirusTotal copies, downloader temp</string>
+    <string name="sc_apks">Old APK files</string>
+    <string name="sc_apks_sub">APK/XAPK/APKS/APKM in Download – with installed version</string>
+    <string name="sc_trash">Other apps\' trash</string>
+    <string name="sc_trash_sub">.trash/.Trash-* folders and files in the system\'s trash (.trashed-*)</string>
+    <string name="sc_apk_not_installed">%1$s · not installed</string>
+    <string name="sc_apk_installed_same">%1$s · installed (same version)</string>
+    <string name="sc_apk_installed_other">%1$s · installed: %2$s</string>
+    <string name="sc_cats">Look for</string>
+    <string name="sc_hint">Safe categories are preselected. Old APKs and other apps\' trash only if you pick them. Long-press an entry to exclude it.</string>
+    <string name="cl_moving">Moving to the trash …</string>
+    <string name="cl_moving_n">Moving %1$d of %2$d …</string>
 </resources>

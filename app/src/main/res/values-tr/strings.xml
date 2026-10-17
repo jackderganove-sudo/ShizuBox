@@ -1256,4 +1256,26 @@
     <string name="cl_exclude">Temizlikten hariç tut</string>
     <string name="cl_excluded_done">Hariç tutuldu ✓</string>
     <string name="cl_cannot_open">⚠ Bu dosya açılamıyor (Android/data uygulamalara kapalı)</string>
+    <string name="sc_sub">Küçük resimler, boş klasörler, kayıtlar, eski APK\'lar, yarım indirmeler</string>
+    <string name="sc_thumbs">Küçük resimler</string>
+    <string name="sc_thumbs_sub">.thumbnails klasörleri – uygulamalar gerektiğinde yeniden oluşturur</string>
+    <string name="sc_empty">Boş klasörler</string>
+    <string name="sc_empty_sub">Hiç içeriği olmayan klasörler</string>
+    <string name="sc_logs">Kayıt ve geçici dosyalar</string>
+    <string name="sc_logs_sub">*.log, *.tmp, .temp klasörleri, çökme dökümleri</string>
+    <string name="sc_partial">Yarım kalan indirmeler</string>
+    <string name="sc_partial_sub">*.part, *.crdownload (1 saatten eski), .pending-* (1 günden eski)</string>
+    <string name="sc_own">ShizuBox artıkları</string>
+    <string name="sc_own_sub">Geçici kopyalar, eski güncelleme APK\'ları, VirusTotal kopyaları, indirici geçici dosyaları</string>
+    <string name="sc_apks">Eski APK dosyaları</string>
+    <string name="sc_apks_sub">İndirilenler\'deki APK/XAPK/APKS/APKM – yüklü sürümle</string>
+    <string name="sc_trash">Diğer uygulamaların çöp kutuları</string>
+    <string name="sc_trash_sub">.trash/.Trash-* klasörleri ve sistem çöp kutusundaki dosyalar (.trashed-*)</string>
+    <string name="sc_apk_not_installed">%1$s · yüklü değil</string>
+    <string name="sc_apk_installed_same">%1$s · yüklü (aynı sürüm)</string>
+    <string name="sc_apk_installed_other">%1$s · yüklü: %2$s</string>
+    <string name="sc_cats">Şunları ara</string>
+    <string name="sc_hint">Güvenli kategoriler önceden seçilidir. Eski APK\'lar ve diğer çöp kutuları yalnızca sen seçersen. Bir girişi hariç tutmak için uzun bas.</string>
+    <string name="cl_moving">Çöp kutusuna taşınıyor …</string>
+    <string name="cl_moving_n">%2$d öğeden %1$d taşınıyor …</string>
 </resources>

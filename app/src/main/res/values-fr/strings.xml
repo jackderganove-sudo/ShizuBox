@@ -1256,4 +1256,26 @@
     <string name="cl_exclude">Exclure du nettoyage</string>
     <string name="cl_excluded_done">Exclu ✓</string>
     <string name="cl_cannot_open">⚠ Impossible d\'ouvrir ce fichier (Android/data est fermé aux apps)</string>
+    <string name="sc_sub">Miniatures, dossiers vides, journaux, anciens APK, téléchargements interrompus</string>
+    <string name="sc_thumbs">Miniatures</string>
+    <string name="sc_thumbs_sub">Dossiers .thumbnails – les apps les recréent si besoin</string>
+    <string name="sc_empty">Dossiers vides</string>
+    <string name="sc_empty_sub">Dossiers sans aucun contenu</string>
+    <string name="sc_logs">Journaux et fichiers temporaires</string>
+    <string name="sc_logs_sub">*.log, *.tmp, dossiers .temp, vidages de plantage</string>
+    <string name="sc_partial">Téléchargements interrompus</string>
+    <string name="sc_partial_sub">*.part, *.crdownload (plus d\'1 h), .pending-* (plus d\'1 jour)</string>
+    <string name="sc_own">Restes de ShizuBox</string>
+    <string name="sc_own_sub">Copies temporaires, anciens APK de mise à jour, copies VirusTotal, temporaires du téléchargeur</string>
+    <string name="sc_apks">Anciens fichiers APK</string>
+    <string name="sc_apks_sub">APK/XAPK/APKS/APKM dans Téléchargements – avec la version installée</string>
+    <string name="sc_trash">Corbeilles d\'autres apps</string>
+    <string name="sc_trash_sub">Dossiers .trash/.Trash-* et fichiers de la corbeille système (.trashed-*)</string>
+    <string name="sc_apk_not_installed">%1$s · non installée</string>
+    <string name="sc_apk_installed_same">%1$s · installée (même version)</string>
+    <string name="sc_apk_installed_other">%1$s · installée : %2$s</string>
+    <string name="sc_cats">Rechercher</string>
+    <string name="sc_hint">Les catégories sûres sont présélectionnées. Les anciens APK et corbeilles d\'autres apps seulement si tu les choisis. Appui long pour exclure.</string>
+    <string name="cl_moving">Déplacement vers la corbeille …</string>
+    <string name="cl_moving_n">Déplacement %1$d sur %2$d …</string>
 </resources>

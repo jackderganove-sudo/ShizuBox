@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CleaningServices
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.PieChart
 import androidx.compose.material.icons.rounded.Settings
@@ -49,6 +50,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 object CleanerPage {
     const val TRASH = "trash"
     const val ANALYSIS = "analysis"
+    const val SYSTEM = "system"
     const val SETTINGS = "settings"
 }
 
@@ -68,6 +70,7 @@ fun CleanerScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         when (p) {
             CleanerPage.TRASH -> TrashScreen(shizukuReady, close)
             CleanerPage.ANALYSIS -> AnalysisScreen(shizukuReady, close)
+            CleanerPage.SYSTEM -> SystemCleanerScreen(shizukuReady, close)
             CleanerPage.SETTINGS -> CleanerSettingsScreen(close)
             else -> CleanerHome(shizukuReady, onBack)
         }
@@ -114,6 +117,11 @@ private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
             val analysis by de.emil.shizubox.cleaner.StorageAnalysis.result.collectAsStateWithLifecycle()
             ToolCard(Icons.Rounded.PieChart, t(R.string.cl_analysis), t(R.string.sa_sub),
                 found = analysis?.let { tp(R.plurals.sa_files, it.files, it.files) }) { open(CleanerPage.ANALYSIS) }
+        }
+        item {
+            val sys by de.emil.shizubox.cleaner.SystemCleaner.result.collectAsStateWithLifecycle()
+            ToolCard(Icons.Rounded.CleaningServices, t(R.string.cl_system), t(R.string.sc_sub),
+                found = sys?.values?.flatten()?.sumOf { it.size }?.let { size(context, it) }) { open(CleanerPage.SYSTEM) }
         }
         item {
             ToolCard(Icons.Rounded.Delete, t(R.string.cl_trash),

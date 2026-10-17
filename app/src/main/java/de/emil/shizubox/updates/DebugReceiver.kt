@@ -281,6 +281,27 @@ class DebugReceiver : BroadcastReceiver() {
                                 "cats=${a.categories.map { "${it.key}=${it.value / 1_000_000}MB" }} top3=${a.top.take(3).map { "${it.path.substringAfterLast('/')}=${it.size / 1_000_000}MB" }} " +
                                 "apps=${a.apps.size} topApps=${a.apps.take(3).map { "${it.pkg}=${it.total / 1_000_000}MB ext=${it.extData / 1_000_000}" }}"
                         }
+                        "syscl" -> {
+                            // --es mode mk|scan|clean (clean only moves ShizuBox' own test files)
+                            val R0 = de.emil.shizubox.cleaner.Fs.ROOT
+                            val T = "$R0/Download/sbx_test_sys"
+                            when (intent.getStringExtra("mode")) {
+                                "mk" -> ShizukuManager.exec(
+                                    "mkdir -p $T/.thumbnails $T/empty_sbx $T/.trash $T/keep && echo l > $T/app.log && echo t > $T/b.tmp && head -c 70000 /dev/urandom > $T/c.part && " +
+                                        "touch -d '2026-10-01 10:00' $T/c.part && head -c 9000 /dev/urandom > $T/.thumbnails/1.jpg && echo x > $T/.trash/old.txt && echo k > $T/keep/k.txt && " +
+                                        "head -c 5000 /dev/urandom > $T/.trashed-1790000000-sbx.jpg && cp ${context.applicationInfo.sourceDir} $T/shizubox_sbx.apk && ls -la $T", 5000, 60_000,
+                                ).let { "code=${it.code} ${it.err}" }
+                                "clean" -> {
+                                    val r = de.emil.shizubox.cleaner.SystemCleaner.result.value.orEmpty().values.flatten()
+                                        .filter { it.path.startsWith(T) || (it.internal && it.path.contains("vt_probe_sbx")) }
+                                    de.emil.shizubox.cleaner.SystemCleaner.clean(r).toString()
+                                }
+                                "own" -> java.io.File(context.cacheDir, "vt_probe_sbx_test.bin").writeBytes(ByteArray(4096)).let { "own test file written" }
+                                else -> de.emil.shizubox.cleaner.SystemCleaner.scan(context).entries.joinToString(" ## ") { (c, l) ->
+                                    "$c n=${l.size} ${l.sumOf { it.size } / 1000}kB: " + l.take(6).joinToString(", ") { "${it.path.removePrefix(R0)}${if (it.note.isNotEmpty()) " [${it.note}]" else ""}" }
+                                }
+                            }
+                        }
                         "trash" -> {
                             // Only ShizuBox' own test files: --es mode mk|move|list|restore|purge|guard
                             val T = de.emil.shizubox.cleaner.Trash

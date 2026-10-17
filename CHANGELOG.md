@@ -10,6 +10,9 @@
   nach Android/data brachte den Speicher-Dienst von Android zum Absturz)
 - Speicher-Analyse: Kategorien als animierter Balken, Ordner-Browser sortiert nach Größe, die 50 größten Dateien,
   Platz pro App (APK, Daten, Cache, Android/data, obb); öffnen, teilen, im Ordner zeigen, in den Papierkorb, ausschließen
+- System-Reiniger: Thumbnails, leere Ordner, Log-/Temp-Dateien, abgebrochene Downloads, alte APKs im Download-Ordner
+  (mit Hinweis auf die installierte Version), Papierkörbe anderer Apps, ShizuBox-Reste; Kategorien einzeln schaltbar,
+  aufklappbar bis zur Datei, sichere Kategorien vorausgewählt, Vorschau vor dem Verschieben
 - Scans laufen im Hintergrund weiter (Benachrichtigung mit Fortschritt und „Abbrechen“)
 - CHANGELOG sortiert (neueste Version oben)
 

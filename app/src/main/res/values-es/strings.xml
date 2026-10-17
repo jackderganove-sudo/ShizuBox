@@ -1256,4 +1256,26 @@
     <string name="cl_exclude">Excluir de la limpieza</string>
     <string name="cl_excluded_done">Excluido ✓</string>
     <string name="cl_cannot_open">⚠ No se puede abrir este archivo (Android/data está cerrado a las apps)</string>
+    <string name="sc_sub">Miniaturas, carpetas vacías, registros, APK antiguos, descargas rotas</string>
+    <string name="sc_thumbs">Miniaturas</string>
+    <string name="sc_thumbs_sub">Carpetas .thumbnails: las apps las vuelven a crear si hace falta</string>
+    <string name="sc_empty">Carpetas vacías</string>
+    <string name="sc_empty_sub">Carpetas sin ningún contenido</string>
+    <string name="sc_logs">Registros y archivos temporales</string>
+    <string name="sc_logs_sub">*.log, *.tmp, carpetas .temp, volcados de fallos</string>
+    <string name="sc_partial">Descargas interrumpidas</string>
+    <string name="sc_partial_sub">*.part, *.crdownload (más de 1 h), .pending-* (más de 1 día)</string>
+    <string name="sc_own">Restos de ShizuBox</string>
+    <string name="sc_own_sub">Copias temporales, APK de actualización antiguos, copias de VirusTotal, temporales del descargador</string>
+    <string name="sc_apks">Archivos APK antiguos</string>
+    <string name="sc_apks_sub">APK/XAPK/APKS/APKM en Descargas, con la versión instalada</string>
+    <string name="sc_trash">Papeleras de otras apps</string>
+    <string name="sc_trash_sub">Carpetas .trash/.Trash-* y archivos en la papelera del sistema (.trashed-*)</string>
+    <string name="sc_apk_not_installed">%1$s · no instalada</string>
+    <string name="sc_apk_installed_same">%1$s · instalada (misma versión)</string>
+    <string name="sc_apk_installed_other">%1$s · instalada: %2$s</string>
+    <string name="sc_cats">Buscar</string>
+    <string name="sc_hint">Las categorías seguras están preseleccionadas. Los APK antiguos y las papeleras ajenas, solo si los eliges. Mantén pulsado para excluir.</string>
+    <string name="cl_moving">Moviendo a la papelera …</string>
+    <string name="cl_moving_n">Moviendo %1$d de %2$d …</string>
 </resources>
