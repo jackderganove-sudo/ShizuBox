@@ -12,6 +12,10 @@
 - Duplikate: identisch heißt immer gleicher SHA-256 über die ganze Datei – Dateien mit 64–128 KB wurden nach den
   ersten 64 KB als gleich gewertet (`DuplicatesTest`, 4 Unit-Tests; live: zwei 110-KB-Dateien mit anderem Ende
   werden nicht mehr gruppiert)
+- Kein automatisches Google-/Geräte-Backup mehr (`allowBackup="false"` + `data_extraction_rules.xml`, alle Bereiche
+  ausgeschlossen): Verläufe, Datenschutz-Protokoll, Schulmodus-Snapshot, VirusTotal-Schlüssel und Papierkorb-Index
+  gehören nicht in die Cloud oder auf ein anderes Handy; ShizuBox hat ein eigenes Backup nur für Einstellungen.
+  Geprüft: `ALLOW_BACKUP` fehlt jetzt in `dumpsys package`
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,
