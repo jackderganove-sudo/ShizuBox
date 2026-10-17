@@ -1302,5 +1302,35 @@
     <string name="ac_running">läuft</string>
     <string name="ac_self">ShizuBox: siehe System-Reiniger → Reste</string>
     <string name="ac_skipped_running">App läuft</string>
+    <string name="du_sub">Gleiche Dateien und auf Wunsch ähnliche Bilder</string>
+    <string name="du_no_access">⚠ Kein Dateizugriff – Shizuku wird einmal zum Erteilen gebraucht</string>
+    <string name="du_listing">Dateien werden aufgelistet …</string>
+    <string name="du_hashing">Vergleiche %1$d von %2$d …</string>
+    <string name="du_pictures">Bilder ansehen %1$d von %2$d …</string>
+    <string name="du_folders">Ordner</string>
+    <string name="du_add_folder">Ordner hinzufügen, z. B. Documents</string>
+    <string name="du_min_size">Mindestgröße</string>
+    <string name="du_similar">Ähnliche Bilder</string>
+    <string name="du_similar_sub">Serienfotos, gleiches Bild in anderer Auflösung (langsamer; du wählst selbst, was weg soll)</string>
+    <string name="du_scan">Duplikate suchen</string>
+    <string name="du_none">Keine Duplikate gefunden</string>
+    <plurals name="du_groups">
+        <item quantity="one">%1$d Gruppe · %2$s frei zu machen</item>
+        <item quantity="other">%1$d Gruppen · %2$s frei zu machen</item>
+    </plurals>
+    <string name="du_keep_rule">Automatisch behalten</string>
+    <string name="du_rule_camera">Im Kamera-Ordner</string>
+    <string name="du_rule_oldest">Älteste</string>
+    <string name="du_rule_res">Beste Auflösung</string>
+    <plurals name="du_remove_n">
+        <item quantity="one">%1$d Datei in den Papierkorb · %2$s</item>
+        <item quantity="other">%1$d Dateien in den Papierkorb · %2$s</item>
+    </plurals>
+    <string name="du_hint">★ = bleibt. Angehakte Dateien wandern in den Papierkorb; jede Gruppe behält mindestens eine Datei. Ähnliche Bilder werden nie automatisch ausgewählt.</string>
+    <string name="du_confirm_extra">Von jeder Gruppe bleibt mindestens eine Datei erhalten.</string>
+    <string name="du_similar_group">Ähnlich</string>
+    <string name="du_exact_group">Identisch</string>
+    <string name="du_keep">bleibt</string>
+    <string name="du_keep_one">⚠ Eine Datei der Gruppe muss bleiben</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

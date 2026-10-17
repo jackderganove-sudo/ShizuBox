@@ -17,6 +17,8 @@
   Apps anderer Nutzer/Profile zählen als installiert, im Zweifel wird nichts angezeigt
 - App-Cleaner: „Cache aufräumen“ ist in den Reiniger umgezogen; zusätzlich pro App den Cache in Android/data
   in den Papierkorb (laufende Apps überspringen oder vorher beenden), KI-Modelle (AICore) standardmäßig ausgenommen
+- Duplikat-Finder: exakt (Größe → Teil-Hash → SHA-256) und optional ähnliche Bilder (Serienfotos, andere Auflösung),
+  Vorschaubilder, automatisch behalten (Kamera-Ordner, älteste, beste Auflösung), immer mindestens eine Datei pro Gruppe
 - Scans laufen im Hintergrund weiter (Benachrichtigung mit Fortschritt und „Abbrechen“)
 - CHANGELOG sortiert (neueste Version oben)
 

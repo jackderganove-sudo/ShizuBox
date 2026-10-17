@@ -39,6 +39,7 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.cleaner.CleanerSettings.init(this)
         de.emil.shizubox.cleaner.Trash.init(this)
         de.emil.shizubox.cleaner.CleanerJobs.init(this)
+        de.emil.shizubox.cleaner.Duplicates.init(this)
         de.emil.shizubox.util.Unlock.whenUnlocked(this) {
             kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
                 de.emil.shizubox.system.CacheCleaner.cleanStale(this@ShizuBoxApp)

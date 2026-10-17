@@ -280,6 +280,29 @@ class DebugReceiver : BroadcastReceiver() {
                                 "cats=${a.categories.map { "${it.key}=${it.value / 1_000_000}MB" }} top3=${a.top.take(3).map { "${it.path.substringAfterLast('/')}=${it.size / 1_000_000}MB" }} " +
                                 "apps=${a.apps.size} topApps=${a.apps.take(3).map { "${it.pkg}=${it.total / 1_000_000}MB ext=${it.extData / 1_000_000}" }}"
                         }
+                        "dupes" -> {
+                            // --es mode mk|clean|rm (only Download/sbx_test_dup), otherwise scan (read-only) with --ez similar
+                            val R0 = de.emil.shizubox.cleaner.Fs.ROOT
+                            val T = "$R0/Download/sbx_test_dup"
+                            when (intent.getStringExtra("mode")) {
+                                "mk" -> ShizukuManager.exec("mkdir -p $T/sub && head -c 300000 /dev/urandom > $T/a.bin && cp $T/a.bin $T/sub/a_copy.bin && cp $T/a.bin $T/b.bin && touch -d '2026-01-01 10:00' $T/sub/a_copy.bin && " +
+                                    "head -c 300000 /dev/urandom > $T/c.bin && head -c 299999 $T/c.bin > $T/c_short.bin", 5000, 30_000).code.toString()
+                                "clean" -> {
+                                    val g = de.emil.shizubox.cleaner.Duplicates.result.value.orEmpty().filter { gr -> gr.files.all { it.path.startsWith(T) } }
+                                    de.emil.shizubox.cleaner.Duplicates.clean(de.emil.shizubox.cleaner.Duplicates.toRemove(g)).toString()
+                                }
+                                "rm" -> ShizukuManager.exec("rm -rf $T", 5000, 30_000).code.toString()
+                                else -> {
+                                    val t0 = System.currentTimeMillis()
+                                    val cfg = de.emil.shizubox.cleaner.CleanerSettings.current.let { c -> c.copy(dupeSimilar = intent.getBooleanExtra("similar", false), dupeFolders = c.dupeFolders) }
+                                    // In stages below the broadcast limit: a background process is frozen once the broadcast ends,
+                                    // and picture fingerprints are cached, so the next call goes on where this one stopped.
+                                    val l = kotlinx.coroutines.withTimeoutOrNull(45_000) { de.emil.shizubox.cleaner.Duplicates.scan(cfg) } ?: return@launch run { Log.i(TAG, "test dupes: not done yet, call again") }
+                                    "ms=${System.currentTimeMillis() - t0} groups=${l.size} exact=${l.count { !it.similar }} similar=${l.count { it.similar }} waste=${l.sumOf { it.waste } / 1000}kB: " +
+                                        l.take(5).joinToString(" | ") { g -> g.files.joinToString { f -> f.path.removePrefix(R0) + (if (f.path in g.keep) "*" else "") + (if (f.width > 0) " ${f.width}x${f.height}" else "") } }
+                                }
+                            }
+                        }
                         "appclean" -> {
                             // Scan; --es mode test: moves the cache of the not installed test package sbx.test.corpse (created here)
                             val R0 = de.emil.shizubox.cleaner.Fs.ROOT

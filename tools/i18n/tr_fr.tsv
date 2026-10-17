@@ -1210,3 +1210,27 @@ ac_ext	Android/data %1$s
 ac_running	en cours
 ac_self	ShizuBox : voir Nettoyeur système → restes
 ac_skipped_running	l'app est en cours
+du_sub	Fichiers identiques et, au choix, images similaires
+du_no_access	⚠ Pas d'accès aux fichiers – Shizuku est nécessaire une fois pour l'accorder
+du_listing	Liste des fichiers …
+du_hashing	Comparaison %1$d sur %2$d …
+du_pictures	Analyse des images %1$d sur %2$d …
+du_folders	Dossiers
+du_add_folder	Ajouter un dossier, p. ex. Documents
+du_min_size	Taille minimale
+du_similar	Images similaires
+du_similar_sub	Rafales, la même image dans une autre résolution (plus lent ; tu choisis ce qui part)
+du_scan	Chercher les doublons
+du_none	Aucun doublon trouvé
+du_groups	%1$d groupe · %2$s récupérables|||%1$d groupes · %2$s récupérables
+du_keep_rule	Garder automatiquement
+du_rule_camera	Dans le dossier appareil photo
+du_rule_oldest	La plus ancienne
+du_rule_res	Meilleure résolution
+du_remove_n	%1$d fichier vers la corbeille · %2$s|||%1$d fichiers vers la corbeille · %2$s
+du_hint	★ = reste. Les fichiers cochés vont à la corbeille ; chaque groupe garde au moins un fichier. Les images similaires ne sont jamais choisies automatiquement.
+du_confirm_extra	Au moins un fichier de chaque groupe est conservé.
+du_similar_group	Similaires
+du_exact_group	Identiques
+du_keep	reste
+du_keep_one	⚠ Un fichier du groupe doit rester

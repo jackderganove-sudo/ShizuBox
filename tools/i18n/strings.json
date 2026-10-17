@@ -6238,5 +6238,137 @@
   "en": "app is running",
   "de": "App läuft",
   "plural": false
+ },
+ "du_sub": {
+  "en": "Identical files and, optionally, similar pictures",
+  "de": "Gleiche Dateien und auf Wunsch ähnliche Bilder",
+  "plural": false
+ },
+ "du_no_access": {
+  "en": "⚠ No file access – Shizuku needed once to grant it",
+  "de": "⚠ Kein Dateizugriff – Shizuku wird einmal zum Erteilen gebraucht",
+  "plural": false
+ },
+ "du_listing": {
+  "en": "Listing files …",
+  "de": "Dateien werden aufgelistet …",
+  "plural": false
+ },
+ "du_hashing": {
+  "en": "Comparing %1$d of %2$d …",
+  "de": "Vergleiche %1$d von %2$d …",
+  "plural": false
+ },
+ "du_pictures": {
+  "en": "Looking at pictures %1$d of %2$d …",
+  "de": "Bilder ansehen %1$d von %2$d …",
+  "plural": false
+ },
+ "du_folders": {
+  "en": "Folders",
+  "de": "Ordner",
+  "plural": false
+ },
+ "du_add_folder": {
+  "en": "Add folder, e.g. Documents",
+  "de": "Ordner hinzufügen, z. B. Documents",
+  "plural": false
+ },
+ "du_min_size": {
+  "en": "Minimum size",
+  "de": "Mindestgröße",
+  "plural": false
+ },
+ "du_similar": {
+  "en": "Similar pictures",
+  "de": "Ähnliche Bilder",
+  "plural": false
+ },
+ "du_similar_sub": {
+  "en": "Series shots, the same picture in another resolution (slower; you choose what goes)",
+  "de": "Serienfotos, gleiches Bild in anderer Auflösung (langsamer; du wählst selbst, was weg soll)",
+  "plural": false
+ },
+ "du_scan": {
+  "en": "Search duplicates",
+  "de": "Duplikate suchen",
+  "plural": false
+ },
+ "du_none": {
+  "en": "No duplicates found",
+  "de": "Keine Duplikate gefunden",
+  "plural": false
+ },
+ "du_groups": {
+  "en": {
+   "one": "%1$d group · %2$s reclaimable",
+   "other": "%1$d groups · %2$s reclaimable"
+  },
+  "de": {
+   "one": "%1$d Gruppe · %2$s frei zu machen",
+   "other": "%1$d Gruppen · %2$s frei zu machen"
+  },
+  "plural": true
+ },
+ "du_keep_rule": {
+  "en": "Keep automatically",
+  "de": "Automatisch behalten",
+  "plural": false
+ },
+ "du_rule_camera": {
+  "en": "In the camera folder",
+  "de": "Im Kamera-Ordner",
+  "plural": false
+ },
+ "du_rule_oldest": {
+  "en": "Oldest",
+  "de": "Älteste",
+  "plural": false
+ },
+ "du_rule_res": {
+  "en": "Best resolution",
+  "de": "Beste Auflösung",
+  "plural": false
+ },
+ "du_remove_n": {
+  "en": {
+   "one": "%1$d file to the trash · %2$s",
+   "other": "%1$d files to the trash · %2$s"
+  },
+  "de": {
+   "one": "%1$d Datei in den Papierkorb · %2$s",
+   "other": "%1$d Dateien in den Papierkorb · %2$s"
+  },
+  "plural": true
+ },
+ "du_hint": {
+  "en": "★ = stays. Checked files go to the trash; every group keeps at least one file. Similar pictures are never picked automatically.",
+  "de": "★ = bleibt. Angehakte Dateien wandern in den Papierkorb; jede Gruppe behält mindestens eine Datei. Ähnliche Bilder werden nie automatisch ausgewählt.",
+  "plural": false
+ },
+ "du_confirm_extra": {
+  "en": "At least one file of every group stays.",
+  "de": "Von jeder Gruppe bleibt mindestens eine Datei erhalten.",
+  "plural": false
+ },
+ "du_similar_group": {
+  "en": "Similar",
+  "de": "Ähnlich",
+  "plural": false
+ },
+ "du_exact_group": {
+  "en": "Identical",
+  "de": "Identisch",
+  "plural": false
+ },
+ "du_keep": {
+  "en": "stays",
+  "de": "bleibt",
+  "plural": false
+ },
+ "du_keep_one": {
+  "en": "⚠ One file of the group must stay",
+  "de": "⚠ Eine Datei der Gruppe muss bleiben",
+  "plural": false
  }
 }

@@ -1302,4 +1302,34 @@
     <string name="ac_running">çalışıyor</string>
     <string name="ac_self">ShizuBox: Sistem temizleyici → artıklar</string>
     <string name="ac_skipped_running">uygulama çalışıyor</string>
+    <string name="du_sub">Aynı dosyalar ve isteğe bağlı benzer resimler</string>
+    <string name="du_no_access">⚠ Dosya erişimi yok – izni vermek için bir kez Shizuku gerekli</string>
+    <string name="du_listing">Dosyalar listeleniyor …</string>
+    <string name="du_hashing">%2$d dosyadan %1$d karşılaştırılıyor …</string>
+    <string name="du_pictures">Resimler inceleniyor %1$d / %2$d …</string>
+    <string name="du_folders">Klasörler</string>
+    <string name="du_add_folder">Klasör ekle, ör. Documents</string>
+    <string name="du_min_size">Minimum boyut</string>
+    <string name="du_similar">Benzer resimler</string>
+    <string name="du_similar_sub">Seri çekimler, farklı çözünürlükte aynı resim (daha yavaş; neyin gideceğini sen seçersin)</string>
+    <string name="du_scan">Kopyaları ara</string>
+    <string name="du_none">Kopya bulunamadı</string>
+    <plurals name="du_groups">
+        <item quantity="one">%1$d grup · %2$s boşaltılabilir</item>
+        <item quantity="other">%1$d grup · %2$s boşaltılabilir</item>
+    </plurals>
+    <string name="du_keep_rule">Otomatik sakla</string>
+    <string name="du_rule_camera">Kamera klasöründeki</string>
+    <string name="du_rule_oldest">En eski</string>
+    <string name="du_rule_res">En iyi çözünürlük</string>
+    <plurals name="du_remove_n">
+        <item quantity="one">%1$d dosya çöp kutusuna · %2$s</item>
+        <item quantity="other">%1$d dosya çöp kutusuna · %2$s</item>
+    </plurals>
+    <string name="du_hint">★ = kalır. İşaretli dosyalar çöp kutusuna gider; her grup en az bir dosya tutar. Benzer resimler asla otomatik seçilmez.</string>
+    <string name="du_confirm_extra">Her gruptan en az bir dosya kalır.</string>
+    <string name="du_similar_group">Benzer</string>
+    <string name="du_exact_group">Aynı</string>
+    <string name="du_keep">kalır</string>
+    <string name="du_keep_one">⚠ Gruptan bir dosya kalmalı</string>
 </resources>

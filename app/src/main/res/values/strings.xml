@@ -1304,4 +1304,34 @@
     <string name="ac_running">running</string>
     <string name="ac_self">ShizuBox: see System cleaner → leftovers</string>
     <string name="ac_skipped_running">app is running</string>
+    <string name="du_sub">Identical files and, optionally, similar pictures</string>
+    <string name="du_no_access">⚠ No file access – Shizuku needed once to grant it</string>
+    <string name="du_listing">Listing files …</string>
+    <string name="du_hashing">Comparing %1$d of %2$d …</string>
+    <string name="du_pictures">Looking at pictures %1$d of %2$d …</string>
+    <string name="du_folders">Folders</string>
+    <string name="du_add_folder">Add folder, e.g. Documents</string>
+    <string name="du_min_size">Minimum size</string>
+    <string name="du_similar">Similar pictures</string>
+    <string name="du_similar_sub">Series shots, the same picture in another resolution (slower; you choose what goes)</string>
+    <string name="du_scan">Search duplicates</string>
+    <string name="du_none">No duplicates found</string>
+    <plurals name="du_groups">
+        <item quantity="one">%1$d group · %2$s reclaimable</item>
+        <item quantity="other">%1$d groups · %2$s reclaimable</item>
+    </plurals>
+    <string name="du_keep_rule">Keep automatically</string>
+    <string name="du_rule_camera">In the camera folder</string>
+    <string name="du_rule_oldest">Oldest</string>
+    <string name="du_rule_res">Best resolution</string>
+    <plurals name="du_remove_n">
+        <item quantity="one">%1$d file to the trash · %2$s</item>
+        <item quantity="other">%1$d files to the trash · %2$s</item>
+    </plurals>
+    <string name="du_hint">★ = stays. Checked files go to the trash; every group keeps at least one file. Similar pictures are never picked automatically.</string>
+    <string name="du_confirm_extra">At least one file of every group stays.</string>
+    <string name="du_similar_group">Similar</string>
+    <string name="du_exact_group">Identical</string>
+    <string name="du_keep">stays</string>
+    <string name="du_keep_one">⚠ One file of the group must stay</string>
 </resources>

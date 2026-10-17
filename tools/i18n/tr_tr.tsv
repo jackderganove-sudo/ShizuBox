@@ -1210,3 +1210,27 @@ ac_ext	Android/data %1$s
 ac_running	çalışıyor
 ac_self	ShizuBox: Sistem temizleyici → artıklar
 ac_skipped_running	uygulama çalışıyor
+du_sub	Aynı dosyalar ve isteğe bağlı benzer resimler
+du_no_access	⚠ Dosya erişimi yok – izni vermek için bir kez Shizuku gerekli
+du_listing	Dosyalar listeleniyor …
+du_hashing	%2$d dosyadan %1$d karşılaştırılıyor …
+du_pictures	Resimler inceleniyor %1$d / %2$d …
+du_folders	Klasörler
+du_add_folder	Klasör ekle, ör. Documents
+du_min_size	Minimum boyut
+du_similar	Benzer resimler
+du_similar_sub	Seri çekimler, farklı çözünürlükte aynı resim (daha yavaş; neyin gideceğini sen seçersin)
+du_scan	Kopyaları ara
+du_none	Kopya bulunamadı
+du_groups	%1$d grup · %2$s boşaltılabilir|||%1$d grup · %2$s boşaltılabilir
+du_keep_rule	Otomatik sakla
+du_rule_camera	Kamera klasöründeki
+du_rule_oldest	En eski
+du_rule_res	En iyi çözünürlük
+du_remove_n	%1$d dosya çöp kutusuna · %2$s|||%1$d dosya çöp kutusuna · %2$s
+du_hint	★ = kalır. İşaretli dosyalar çöp kutusuna gider; her grup en az bir dosya tutar. Benzer resimler asla otomatik seçilmez.
+du_confirm_extra	Her gruptan en az bir dosya kalır.
+du_similar_group	Benzer
+du_exact_group	Aynı
+du_keep	kalır
+du_keep_one	⚠ Gruptan bir dosya kalmalı

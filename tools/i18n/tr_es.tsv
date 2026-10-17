@@ -1210,3 +1210,27 @@ ac_ext	Android/data %1$s
 ac_running	en ejecución
 ac_self	ShizuBox: ver Limpiador del sistema → restos
 ac_skipped_running	la app está en ejecución
+du_sub	Archivos idénticos y, si quieres, imágenes parecidas
+du_no_access	⚠ Sin acceso a archivos: se necesita Shizuku una vez para concederlo
+du_listing	Listando archivos …
+du_hashing	Comparando %1$d de %2$d …
+du_pictures	Revisando imágenes %1$d de %2$d …
+du_folders	Carpetas
+du_add_folder	Añadir carpeta, p. ej. Documents
+du_min_size	Tamaño mínimo
+du_similar	Imágenes parecidas
+du_similar_sub	Ráfagas, la misma imagen en otra resolución (más lento; tú eliges qué se va)
+du_scan	Buscar duplicados
+du_none	No se encontraron duplicados
+du_groups	%1$d grupo · %2$s recuperables|||%1$d grupos · %2$s recuperables
+du_keep_rule	Conservar automáticamente
+du_rule_camera	En la carpeta de la cámara
+du_rule_oldest	La más antigua
+du_rule_res	Mejor resolución
+du_remove_n	%1$d archivo a la papelera · %2$s|||%1$d archivos a la papelera · %2$s
+du_hint	★ = se queda. Los archivos marcados van a la papelera; cada grupo conserva al menos uno. Las imágenes parecidas nunca se eligen automáticamente.
+du_confirm_extra	De cada grupo se conserva al menos un archivo.
+du_similar_group	Parecidas
+du_exact_group	Idénticos
+du_keep	se queda
+du_keep_one	⚠ Debe quedar un archivo del grupo
