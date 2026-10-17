@@ -1121,5 +1121,99 @@
 "av_empty_hint": "Pon música o un vídeo: la app aparecerá aquí. O añade una app abajo.",
 "av_add": "Añadir app",
 "av_playing": "Sonando ahora",
-"av_reset": "Volver al 100 %"
+"av_reset": "Volver al 100 %",
+"sec_cleaner": "Limpiador",
+"sec_cleaner_sub": "Restos, basura, duplicados, almacenamiento",
+"cl_corpses": "Buscador de restos",
+"cl_system": "Limpiador del sistema",
+"cl_appcache": "Limpiador de apps",
+"cl_dupes": "Buscador de duplicados",
+"cl_analysis": "Análisis de almacenamiento",
+"cl_auto": "Limpieza automática",
+"cl_lock_outside": "Fuera del almacenamiento interno",
+"cl_lock_standard": "Carpeta estándar: bloqueada",
+"cl_lock_trash": "Parte de la papelera",
+"cl_lock_excluded": "Excluido por ti",
+"cl_lock_system": "Carpeta del sistema: bloqueada",
+"cl_lock_shizuku": "Shizuku: bloqueado",
+"cl_lock_installed": "Datos de una app instalada: bloqueados",
+"cl_lock_aicore": "Modelos de IA (AICore): excluidos",
+"cl_trash": "Papelera",
+"cl_trash_sub": "Vacía: todo lo que limpias llega aquí primero",
+"cl_trash_n": {
+"one": "%1$d elemento",
+"other": "%1$d elementos"
+},
+"cl_trash_keep": {
+"one": "recuperable durante %1$d día",
+"other": "recuperable durante %1$d días"
+},
+"cl_trash_low": "Queda poco espacio: solo se libera al vaciar la papelera.",
+"cl_trash_empty": "Vaciar la papelera ahora",
+"cl_restore_all": "Restaurar todo",
+"cl_restore": "Restaurar",
+"cl_delete_forever": "Eliminar definitivamente",
+"cl_trash_hint": "Los archivos solo se mueven: es instantáneo y no necesita espacio extra. Pasados los días, se eliminan definitivamente de forma automática.",
+"cl_trash_empty_title": "La papelera está vacía",
+"cl_trash_empty_hint": "Lo que eliminan las herramientas de limpieza espera aquí primero.",
+"cl_restored": {
+"one": "%1$d elemento restaurado ✓",
+"other": "%1$d elementos restaurados ✓"
+},
+"cl_freed": "%1$s liberados ✓",
+"cl_purge_q": "¿Eliminar definitivamente?",
+"cl_purge_body": {
+"one": "Se eliminará %1$d elemento (%2$s) y no se podrá restaurar.",
+"other": "Se eliminarán %1$d elementos (%2$s) y no se podrán restaurar."
+},
+"cl_days_left": {
+"one": "queda %1$d día",
+"other": "quedan %1$d días"
+},
+"cl_more": "Mostrar %1$d más",
+"cl_log": "Registro",
+"cl_log_empty": "Aún no se ha limpiado nada",
+"cl_log_trash": "A la papelera",
+"cl_log_restore": "Restaurado",
+"cl_log_delete": "Eliminado",
+"cl_log_expired": "Caducado, eliminado",
+"cl_log_blocked": "Bloqueado, omitido",
+"cl_log_failed": "⚠ Error",
+"cl_confirm_title": "¿Mover a la papelera?",
+"cl_confirm_body": {
+"one": "%1$d elemento · %2$s",
+"other": "%1$d elementos · %2$s"
+},
+"cl_confirm_days": {
+"one": "Recuperable durante %1$d día; después se elimina definitivamente. El espacio se libera al vaciar la papelera.",
+"other": "Recuperable durante %1$d días; después se elimina definitivamente. El espacio se libera al vaciar la papelera."
+},
+"cl_to_trash": "A la papelera",
+"cl_moved": {
+"one": "%1$d elemento movido a la papelera (%2$s) ✓",
+"other": "%1$d elementos movidos a la papelera (%2$s) ✓"
+},
+"cl_failed": {
+"one": "%1$d omitido: %2$s",
+"other": "%1$d omitidos, p. ej.: %2$s"
+},
+"cl_nothing": "Nada que hacer",
+"cl_used": "ocupado",
+"cl_free": "libre",
+"cl_of_total": "de %1$s de almacenamiento interno",
+"cl_private_hint": "ShizuBox accede a Android/data y Android/obb mediante Shizuku. Los datos privados de las apps (/data/data) no son accesibles sin root: sus cachés las limpia el sistema.",
+"cl_settings": "Ajustes del limpiador",
+"cl_keep_days": "Conservar lo eliminado durante",
+"cl_exclusions": "Exclusiones",
+"cl_exclusions_sub": "Ninguna herramienta los muestra ni los limpia. También: mantén pulsado un hallazgo.",
+"cl_excl_paths": "Carpetas y archivos",
+"cl_excl_path_hint": "Ruta, p. ej. Pictures/Guardar",
+"cl_excl_apps": "Apps",
+"cl_excl_add_app": "Excluir app",
+"cl_add": "Añadir",
+"cl_remove": "Quitar",
+"cl_locked_info": "Siempre bloqueado: carpetas del sistema y estándar, Android/data y Android/obb de apps instaladas (salvo su caché en el limpiador de apps), Shizuku y la propia papelera.",
+"cl_aicore": "Incluir modelos de IA (AICore)",
+"cl_aicore_sub": "Desactivado por defecto: AICore guarda en su caché los modelos de IA del dispositivo (varios GB); se volverían a descargar.",
+"cl_just_now": "ahora mismo"
 }

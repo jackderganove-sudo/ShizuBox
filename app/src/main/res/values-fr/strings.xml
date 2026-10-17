@@ -1123,4 +1123,98 @@
     <string name="av_add">Ajouter une appli</string>
     <string name="av_playing">En lecture</string>
     <string name="av_reset" formatted="false">Revenir à 100 %</string>
+    <string name="sec_cleaner">Nettoyeur</string>
+    <string name="sec_cleaner_sub">Restes, déchets, doublons, stockage</string>
+    <string name="cl_corpses">Détecteur de restes</string>
+    <string name="cl_system">Nettoyeur système</string>
+    <string name="cl_appcache">Nettoyeur d\'apps</string>
+    <string name="cl_dupes">Détecteur de doublons</string>
+    <string name="cl_analysis">Analyse du stockage</string>
+    <string name="cl_auto">Nettoyage automatique</string>
+    <string name="cl_lock_outside">Hors du stockage interne</string>
+    <string name="cl_lock_standard">Dossier standard – verrouillé</string>
+    <string name="cl_lock_trash">Fait partie de la corbeille</string>
+    <string name="cl_lock_excluded">Exclu par toi</string>
+    <string name="cl_lock_system">Dossier système – verrouillé</string>
+    <string name="cl_lock_shizuku">Shizuku – verrouillé</string>
+    <string name="cl_lock_installed">Données d\'une app installée – verrouillé</string>
+    <string name="cl_lock_aicore">Modèles d\'IA (AICore) – exclus</string>
+    <string name="cl_trash">Corbeille</string>
+    <string name="cl_trash_sub">Vide – tout ce que tu nettoies arrive d\'abord ici</string>
+    <plurals name="cl_trash_n">
+        <item quantity="one">%1$d élément</item>
+        <item quantity="other">%1$d éléments</item>
+    </plurals>
+    <plurals name="cl_trash_keep">
+        <item quantity="one">récupérable pendant %1$d jour</item>
+        <item quantity="other">récupérable pendant %1$d jours</item>
+    </plurals>
+    <string name="cl_trash_low">Le stockage est presque plein : l\'espace n\'est libéré qu\'une fois la corbeille vidée.</string>
+    <string name="cl_trash_empty">Vider la corbeille maintenant</string>
+    <string name="cl_restore_all">Tout restaurer</string>
+    <string name="cl_restore">Restaurer</string>
+    <string name="cl_delete_forever">Supprimer définitivement</string>
+    <string name="cl_trash_hint">Les fichiers sont seulement déplacés : c\'est instantané et ne prend pas de place en plus. Après le délai, ils sont supprimés définitivement automatiquement.</string>
+    <string name="cl_trash_empty_title">La corbeille est vide</string>
+    <string name="cl_trash_empty_hint">Ce que les outils de nettoyage retirent attend d\'abord ici.</string>
+    <plurals name="cl_restored">
+        <item quantity="one">%1$d élément restauré ✓</item>
+        <item quantity="other">%1$d éléments restaurés ✓</item>
+    </plurals>
+    <string name="cl_freed">%1$s libérés ✓</string>
+    <string name="cl_purge_q">Supprimer définitivement ?</string>
+    <plurals name="cl_purge_body">
+        <item quantity="one">%1$d élément (%2$s) sera supprimé et ne pourra pas être restauré.</item>
+        <item quantity="other">%1$d éléments (%2$s) seront supprimés et ne pourront pas être restaurés.</item>
+    </plurals>
+    <plurals name="cl_days_left">
+        <item quantity="one">encore %1$d jour</item>
+        <item quantity="other">encore %1$d jours</item>
+    </plurals>
+    <string name="cl_more">Afficher %1$d de plus</string>
+    <string name="cl_log">Journal</string>
+    <string name="cl_log_empty">Rien n\'a encore été nettoyé</string>
+    <string name="cl_log_trash">Vers la corbeille</string>
+    <string name="cl_log_restore">Restauré</string>
+    <string name="cl_log_delete">Supprimé</string>
+    <string name="cl_log_expired">Expiré, supprimé</string>
+    <string name="cl_log_blocked">Verrouillé, ignoré</string>
+    <string name="cl_log_failed">⚠ Échec</string>
+    <string name="cl_confirm_title">Déplacer vers la corbeille ?</string>
+    <plurals name="cl_confirm_body">
+        <item quantity="one">%1$d élément · %2$s</item>
+        <item quantity="other">%1$d éléments · %2$s</item>
+    </plurals>
+    <plurals name="cl_confirm_days">
+        <item quantity="one">Récupérable pendant %1$d jour, puis supprimé définitivement. L\'espace est libéré une fois la corbeille vidée.</item>
+        <item quantity="other">Récupérable pendant %1$d jours, puis supprimé définitivement. L\'espace est libéré une fois la corbeille vidée.</item>
+    </plurals>
+    <string name="cl_to_trash">Vers la corbeille</string>
+    <plurals name="cl_moved">
+        <item quantity="one">%1$d élément déplacé vers la corbeille (%2$s) ✓</item>
+        <item quantity="other">%1$d éléments déplacés vers la corbeille (%2$s) ✓</item>
+    </plurals>
+    <plurals name="cl_failed">
+        <item quantity="one">%1$d ignoré : %2$s</item>
+        <item quantity="other">%1$d ignorés, p. ex. : %2$s</item>
+    </plurals>
+    <string name="cl_nothing">Rien à faire</string>
+    <string name="cl_used">utilisé</string>
+    <string name="cl_free">libre</string>
+    <string name="cl_of_total">sur %1$s de stockage interne</string>
+    <string name="cl_private_hint">ShizuBox accède à Android/data et Android/obb via Shizuku. Les données privées des apps (/data/data) restent inaccessibles sans root – le système nettoie leurs caches.</string>
+    <string name="cl_settings">Réglages du nettoyeur</string>
+    <string name="cl_keep_days">Conserver les éléments supprimés pendant</string>
+    <string name="cl_exclusions">Exclusions</string>
+    <string name="cl_exclusions_sub">Jamais affichés ni nettoyés par un outil. Aussi : appui long sur un résultat.</string>
+    <string name="cl_excl_paths">Dossiers et fichiers</string>
+    <string name="cl_excl_path_hint">Chemin, p. ex. Pictures/Garder</string>
+    <string name="cl_excl_apps">Apps</string>
+    <string name="cl_excl_add_app">Exclure une app</string>
+    <string name="cl_add">Ajouter</string>
+    <string name="cl_remove">Retirer</string>
+    <string name="cl_locked_info">Toujours verrouillé : dossiers système et standard, Android/data et Android/obb des apps installées (sauf leur cache dans le nettoyeur d\'apps), Shizuku et la corbeille elle-même.</string>
+    <string name="cl_aicore">Inclure les modèles d\'IA (AICore)</string>
+    <string name="cl_aicore_sub">Désactivé par défaut : AICore garde les modèles d\'IA de l\'appareil (plusieurs Go) dans son cache ; ils seraient retéléchargés.</string>
+    <string name="cl_just_now">à l\'instant</string>
 </resources>

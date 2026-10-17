@@ -1061,3 +1061,70 @@ av_empty_hint	Müzik veya video başlat – uygulama burada görünür. Ya da a�
 av_add	Uygulama ekle
 av_playing	Şu an çalıyor
 av_reset	%100'e geri dön
+sec_cleaner	Temizleyici
+sec_cleaner_sub	Artıklar, çöp, kopyalar, depolama
+cl_corpses	Artık bulucu
+cl_system	Sistem temizleyici
+cl_appcache	Uygulama temizleyici
+cl_dupes	Kopya bulucu
+cl_analysis	Depolama analizi
+cl_auto	Otomatik temizlik
+cl_lock_outside	Dahili depolamanın dışında
+cl_lock_standard	Standart klasör – kilitli
+cl_lock_trash	Çöp kutusunun parçası
+cl_lock_excluded	Senin tarafından hariç tutuldu
+cl_lock_system	Sistem klasörü – kilitli
+cl_lock_shizuku	Shizuku – kilitli
+cl_lock_installed	Yüklü bir uygulamanın verileri – kilitli
+cl_lock_aicore	Yapay zekâ modelleri (AICore) – hariç
+cl_trash	Çöp kutusu
+cl_trash_sub	Boş – temizlediğin her şey önce buraya gelir
+cl_trash_n	%1$d öğe|||%1$d öğe
+cl_trash_keep	%1$d gün geri yüklenebilir|||%1$d gün geri yüklenebilir
+cl_trash_low	Depolama azalıyor: Alan ancak çöp kutusu boşaltıldığında serbest kalır.
+cl_trash_empty	Çöp kutusunu şimdi boşalt
+cl_restore_all	Tümünü geri yükle
+cl_restore	Geri yükle
+cl_delete_forever	Kalıcı olarak sil
+cl_trash_hint	Dosyalar yalnızca taşınır; bu anında olur ve ek alan gerektirmez. Süre dolunca otomatik olarak kalıcı şekilde silinir.
+cl_trash_empty_title	Çöp kutusu boş
+cl_trash_empty_hint	Temizleyici araçlarının kaldırdıkları önce burada bekler.
+cl_restored	%1$d öğe geri yüklendi ✓|||%1$d öğe geri yüklendi ✓
+cl_freed	%1$s boşaltıldı ✓
+cl_purge_q	Kalıcı olarak silinsin mi?
+cl_purge_body	%1$d öğe (%2$s) silinecek ve geri yüklenemeyecek.|||%1$d öğe (%2$s) silinecek ve geri yüklenemeyecek.
+cl_days_left	%1$d gün kaldı|||%1$d gün kaldı
+cl_more	%1$d tane daha göster
+cl_log	Kayıt
+cl_log_empty	Henüz hiçbir şey temizlenmedi
+cl_log_trash	Çöp kutusuna
+cl_log_restore	Geri yüklendi
+cl_log_delete	Silindi
+cl_log_expired	Süresi doldu, silindi
+cl_log_blocked	Kilitli, atlandı
+cl_log_failed	⚠ Başarısız
+cl_confirm_title	Çöp kutusuna taşınsın mı?
+cl_confirm_body	%1$d öğe · %2$s|||%1$d öğe · %2$s
+cl_confirm_days	%1$d gün geri yüklenebilir, sonra kalıcı olarak silinir. Alan, çöp kutusu boşaltılınca serbest kalır.|||%1$d gün geri yüklenebilir, sonra kalıcı olarak silinir. Alan, çöp kutusu boşaltılınca serbest kalır.
+cl_to_trash	Çöp kutusuna
+cl_moved	%1$d öğe çöp kutusuna taşındı (%2$s) ✓|||%1$d öğe çöp kutusuna taşındı (%2$s) ✓
+cl_failed	%1$d atlandı: %2$s|||%1$d atlandı, ör.: %2$s
+cl_nothing	Yapılacak bir şey yok
+cl_used	dolu
+cl_free	boş
+cl_of_total	%1$s dahili depolamanın
+cl_private_hint	ShizuBox, Android/data ve Android/obb klasörlerine Shizuku ile erişir. Özel uygulama verilerine (/data/data) root olmadan erişilemez – oradaki önbellekleri sistem temizler.
+cl_settings	Temizleyici ayarları
+cl_keep_days	Silinenleri sakla
+cl_exclusions	Hariç tutulanlar
+cl_exclusions_sub	Hiçbir araç tarafından gösterilmez veya temizlenmez. Ayrıca: bir bulguya uzun bas.
+cl_excl_paths	Klasörler ve dosyalar
+cl_excl_path_hint	Yol, ör. Pictures/Sakla
+cl_excl_apps	Uygulamalar
+cl_excl_add_app	Uygulamayı hariç tut
+cl_add	Ekle
+cl_remove	Kaldır
+cl_locked_info	Her zaman kilitli: sistem ve standart klasörler, yüklü uygulamaların Android/data ve Android/obb klasörleri (uygulama temizleyicideki önbellekleri hariç), Shizuku ve çöp kutusunun kendisi.
+cl_aicore	Yapay zekâ modellerini (AICore) dahil et
+cl_aicore_sub	Varsayılan olarak kapalı: AICore cihazdaki yapay zekâ modellerini (birkaç GB) önbelleğinde tutar; yeniden indirilirler.
+cl_just_now	az önce

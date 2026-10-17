@@ -72,6 +72,10 @@ class DebugReceiver : BroadcastReceiver() {
                     "appvolume" -> de.emil.shizubox.ui.system.AppVolumeScreen(ready, noop)
                     "errorlog" -> de.emil.shizubox.ui.settings.ErrorLogScreen(noop)
                     "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
+                    "cleaner" -> {
+                        de.emil.shizubox.ui.cleaner.CleanerNav.page.value = intent.getStringExtra("page")
+                        de.emil.shizubox.ui.cleaner.CleanerScreen(ready, noop)
+                    }
                     "auto" -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, noop, intent.getIntExtra("tpl", -1).takeIf { it >= 0 }?.let { de.emil.shizubox.automation.Rules.templates()[it] })
                     "screentime" -> de.emil.shizubox.ui.system.ScreenTimeScreen(ready, noop)
                     "nhistory" -> de.emil.shizubox.ui.system.NotificationHistoryScreen(ready, noop, intent.getStringExtra("pkg"), intent.getStringExtra("conv"))
@@ -268,6 +272,42 @@ class DebugReceiver : BroadcastReceiver() {
                             val t1 = System.currentTimeMillis()
                             val labels = all.count { it.label.isNotBlank() }
                             "apps=${all.size} system=${all.count { it.isSystem }} list=${t1 - t0}ms cpu=${android.os.Process.getElapsedCpuTime() - cpu0}ms labels=$labels heapMB=${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}"
+                        }
+                        "trash" -> {
+                            // Only ShizuBox' own test files: --es mode mk|move|list|restore|purge|guard
+                            val T = de.emil.shizubox.cleaner.Trash
+                            val R0 = de.emil.shizubox.cleaner.Fs.ROOT
+                            val testPaths = listOf("$R0/Download/sbx_test", "$R0/Android/data/sbx.test.corpse", "$R0/Android/data/de.emil.shizubox/cache/sbx_test.tmp", "$R0/Android/obb/sbx.test.corpse")
+                            fun mine(p: String) = p.contains("sbx_test") || p.contains("sbx.test.corpse")
+                            when (intent.getStringExtra("mode")) {
+                                "mk" -> ShizukuManager.exec(
+                                    "mkdir -p $R0/Download/sbx_test/sub $R0/Android/data/sbx.test.corpse/files $R0/Android/data/de.emil.shizubox/cache $R0/Android/obb/sbx.test.corpse && echo o > $R0/Android/obb/sbx.test.corpse/main.obb && " +
+                                        "head -c 300000 /dev/urandom > $R0/Download/sbx_test/a.bin && echo hi > $R0/Download/sbx_test/sub/b.txt && " +
+                                        "head -c 200000 /dev/urandom > $R0/Android/data/sbx.test.corpse/files/c.bin && head -c 1000 /dev/zero > $R0/Android/data/de.emil.shizubox/cache/sbx_test.tmp && " +
+                                        "ls -la $R0/Download/sbx_test $R0/Android/data/sbx.test.corpse/files $R0/Android/data/de.emil.shizubox/cache", 5000, 30_000,
+                                ).let { "code=${it.code} ${it.out.replace('\n', ' ')} ${it.err}" }
+                                "move" -> T.move(testPaths.map { de.emil.shizubox.cleaner.Candidate(it, -1, !it.endsWith(".tmp")) }, de.emil.shizubox.cleaner.CleanTool.System).toString()
+                                "restore" -> "restored=" + T.restore(T.items.value.filter { mine(it.orig) }.map { it.id }) +
+                                    " " + ShizukuManager.exec("ls -laR ${testPaths.joinToString(" ")}", 5000, 30_000).out.replace('\n', ' ')
+                                // Pure rename between two test paths: --es from … --es to …
+                                "rn" -> {
+                                    val from = intent.getStringExtra("from")!!
+                                    val to = intent.getStringExtra("to")!!
+                                    require((mine(from) || from == "$R0/Android/data/de.emil.shizubox/cache") && (mine(to) || to == "$R0/Android/data/de.emil.shizubox/cache"))
+                                    "rename ${from.removePrefix(R0)} -> ${to.removePrefix(R0)}: " + (ShizukuManager.rename(from, to) ?: "OK")
+                                }
+                                "purge" -> "freed=" + T.purge(T.items.value.filter { mine(it.orig) }.map { it.id })
+                                "clean" -> ShizukuManager.exec("rm -rf ${testPaths.joinToString(" ")}", 5000, 30_000).code.toString()
+                                "guard" -> {
+                                    de.emil.shizubox.cleaner.Guard.installedPackages(true)
+                                    listOf(
+                                        "$R0", "$R0/DCIM", "$R0/DCIM/Camera/x.jpg", "$R0/Android/data/com.whatsapp", "$R0/Android/data/com.whatsapp/cache",
+                                        "$R0/Android/data/com.google.android.aicore/cache", "$R0/Android/data/sbx.test.corpse", "$R0/Android/data/moe.shizuku.privileged.api/cache",
+                                        "$R0/Android/media/com.whatsapp/WhatsApp/Media/a.jpg", "$R0/.ShizuBoxTrash/1", "$R0/Android/obb/com.whatsapp", "/data/data/x", "$R0/Download/../x",
+                                    ).joinToString(" ; ") { p -> "${p.removePrefix(R0)}=" + (de.emil.shizubox.cleaner.Guard.blockReason(p, de.emil.shizubox.cleaner.CleanTool.AppCache) ?: "OK") }
+                                }
+                                else -> T.items.value.joinToString(" ; ") { "${it.id}:${it.orig}->${it.loc} ${it.size}" }
+                            }
                         }
                         "appvol" -> {
                             // --es pkg <p> --ei n <percent>; without pkg only lists players

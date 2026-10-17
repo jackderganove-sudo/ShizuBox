@@ -29,4 +29,13 @@ interface IShellService {
     String listPlayers() = 6;
     // 0..1; 1 removes the setting. Re-applied whenever playback changes (new players start at 1).
     void setAppVolume(int uid, float volume) = 7;
+
+    // Streams the stdout of `sh -c cmd` through a pipe – no size limit (file lists of the cleaner).
+    // stderr is dropped. The command is killed after `limitMs` or when the reader closes the pipe.
+    ParcelFileDescriptor execStream(String cmd, long limitMs) = 8;
+
+    // Pure rename(2), never a copy: `mv` falls back to copy + setattr when a rename crosses into
+    // Android/data, and that crashed MediaProvider's FUSE daemon on Android 17 (whole storage gone
+    // for ~4 s). Creates the target's parent. Returns "" on success, otherwise the error.
+    String rename(String from, String to) = 9;
 }

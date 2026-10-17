@@ -5433,5 +5433,394 @@
   "en": "Back to 100 %",
   "de": "Zurück auf 100 %",
   "plural": false
+ },
+ "sec_cleaner": {
+  "en": "Cleaner",
+  "de": "Reiniger",
+  "plural": false
+ },
+ "sec_cleaner_sub": {
+  "en": "Leftovers, junk, duplicates, storage",
+  "de": "Reste, Müll, Duplikate, Speicher",
+  "plural": false
+ },
+ "cl_corpses": {
+  "en": "Leftover finder",
+  "de": "Leichen-Finder",
+  "plural": false
+ },
+ "cl_system": {
+  "en": "System cleaner",
+  "de": "System-Reiniger",
+  "plural": false
+ },
+ "cl_appcache": {
+  "en": "App cleaner",
+  "de": "App-Cleaner",
+  "plural": false
+ },
+ "cl_dupes": {
+  "en": "Duplicate finder",
+  "de": "Duplikat-Finder",
+  "plural": false
+ },
+ "cl_analysis": {
+  "en": "Storage analysis",
+  "de": "Speicher-Analyse",
+  "plural": false
+ },
+ "cl_auto": {
+  "en": "Automatic cleaning",
+  "de": "Automatische Reinigung",
+  "plural": false
+ },
+ "cl_lock_outside": {
+  "en": "Outside the internal storage",
+  "de": "Außerhalb des internen Speichers",
+  "plural": false
+ },
+ "cl_lock_standard": {
+  "en": "Standard folder – locked",
+  "de": "Standardordner – gesperrt",
+  "plural": false
+ },
+ "cl_lock_trash": {
+  "en": "Part of the trash",
+  "de": "Teil des Papierkorbs",
+  "plural": false
+ },
+ "cl_lock_excluded": {
+  "en": "Excluded by you",
+  "de": "Von dir ausgeschlossen",
+  "plural": false
+ },
+ "cl_lock_system": {
+  "en": "System folder – locked",
+  "de": "Systemordner – gesperrt",
+  "plural": false
+ },
+ "cl_lock_shizuku": {
+  "en": "Shizuku – locked",
+  "de": "Shizuku – gesperrt",
+  "plural": false
+ },
+ "cl_lock_installed": {
+  "en": "Data of an installed app – locked",
+  "de": "Daten einer installierten App – gesperrt",
+  "plural": false
+ },
+ "cl_lock_aicore": {
+  "en": "AI models (AICore) – excluded",
+  "de": "KI-Modelle (AICore) – ausgeschlossen",
+  "plural": false
+ },
+ "cl_trash": {
+  "en": "Trash",
+  "de": "Papierkorb",
+  "plural": false
+ },
+ "cl_trash_sub": {
+  "en": "Empty – everything you clean lands here first",
+  "de": "Leer – alles, was du aufräumst, landet zuerst hier",
+  "plural": false
+ },
+ "cl_trash_n": {
+  "en": {
+   "one": "%1$d item",
+   "other": "%1$d items"
+  },
+  "de": {
+   "one": "%1$d Eintrag",
+   "other": "%1$d Einträge"
+  },
+  "plural": true
+ },
+ "cl_trash_keep": {
+  "en": {
+   "one": "kept for %1$d day",
+   "other": "kept for %1$d days"
+  },
+  "de": {
+   "one": "%1$d Tag wiederherstellbar",
+   "other": "%1$d Tage wiederherstellbar"
+  },
+  "plural": true
+ },
+ "cl_trash_low": {
+  "en": "Storage is tight: the space only becomes free once the trash is emptied.",
+  "de": "Der Speicher wird knapp: Der Platz wird erst frei, wenn der Papierkorb geleert ist.",
+  "plural": false
+ },
+ "cl_trash_empty": {
+  "en": "Empty trash now",
+  "de": "Papierkorb jetzt leeren",
+  "plural": false
+ },
+ "cl_restore_all": {
+  "en": "Restore all",
+  "de": "Alles wiederherstellen",
+  "plural": false
+ },
+ "cl_restore": {
+  "en": "Restore",
+  "de": "Wiederherstellen",
+  "plural": false
+ },
+ "cl_delete_forever": {
+  "en": "Delete for good",
+  "de": "Endgültig löschen",
+  "plural": false
+ },
+ "cl_trash_hint": {
+  "en": "Files are only moved, so it's instant and needs no extra space. After the set days they are deleted for good automatically.",
+  "de": "Dateien werden nur verschoben – das geht sofort und braucht keinen zusätzlichen Platz. Nach Ablauf der Tage werden sie automatisch endgültig gelöscht.",
+  "plural": false
+ },
+ "cl_trash_empty_title": {
+  "en": "The trash is empty",
+  "de": "Der Papierkorb ist leer",
+  "plural": false
+ },
+ "cl_trash_empty_hint": {
+  "en": "What the cleaner tools remove waits here first.",
+  "de": "Was die Reiniger-Werkzeuge entfernen, wartet zuerst hier.",
+  "plural": false
+ },
+ "cl_restored": {
+  "en": {
+   "one": "%1$d item restored ✓",
+   "other": "%1$d items restored ✓"
+  },
+  "de": {
+   "one": "%1$d Eintrag wiederhergestellt ✓",
+   "other": "%1$d Einträge wiederhergestellt ✓"
+  },
+  "plural": true
+ },
+ "cl_freed": {
+  "en": "%1$s freed ✓",
+  "de": "%1$s freigegeben ✓",
+  "plural": false
+ },
+ "cl_purge_q": {
+  "en": "Delete for good?",
+  "de": "Endgültig löschen?",
+  "plural": false
+ },
+ "cl_purge_body": {
+  "en": {
+   "one": "%1$d item (%2$s) will be deleted and cannot be restored.",
+   "other": "%1$d items (%2$s) will be deleted and cannot be restored."
+  },
+  "de": {
+   "one": "%1$d Eintrag (%2$s) wird gelöscht und kann nicht wiederhergestellt werden.",
+   "other": "%1$d Einträge (%2$s) werden gelöscht und können nicht wiederhergestellt werden."
+  },
+  "plural": true
+ },
+ "cl_days_left": {
+  "en": {
+   "one": "%1$d day left",
+   "other": "%1$d days left"
+  },
+  "de": {
+   "one": "noch %1$d Tag",
+   "other": "noch %1$d Tage"
+  },
+  "plural": true
+ },
+ "cl_more": {
+  "en": "Show %1$d more",
+  "de": "%1$d weitere anzeigen",
+  "plural": false
+ },
+ "cl_log": {
+  "en": "Log",
+  "de": "Protokoll",
+  "plural": false
+ },
+ "cl_log_empty": {
+  "en": "Nothing was cleaned yet",
+  "de": "Noch nichts aufgeräumt",
+  "plural": false
+ },
+ "cl_log_trash": {
+  "en": "To trash",
+  "de": "In den Papierkorb",
+  "plural": false
+ },
+ "cl_log_restore": {
+  "en": "Restored",
+  "de": "Wiederhergestellt",
+  "plural": false
+ },
+ "cl_log_delete": {
+  "en": "Deleted",
+  "de": "Gelöscht",
+  "plural": false
+ },
+ "cl_log_expired": {
+  "en": "Expired, deleted",
+  "de": "Abgelaufen, gelöscht",
+  "plural": false
+ },
+ "cl_log_blocked": {
+  "en": "Locked, skipped",
+  "de": "Gesperrt, übersprungen",
+  "plural": false
+ },
+ "cl_log_failed": {
+  "en": "⚠ Failed",
+  "de": "⚠ Fehlgeschlagen",
+  "plural": false
+ },
+ "cl_confirm_title": {
+  "en": "Move to the trash?",
+  "de": "In den Papierkorb verschieben?",
+  "plural": false
+ },
+ "cl_confirm_body": {
+  "en": {
+   "one": "%1$d item · %2$s",
+   "other": "%1$d items · %2$s"
+  },
+  "de": {
+   "one": "%1$d Eintrag · %2$s",
+   "other": "%1$d Einträge · %2$s"
+  },
+  "plural": true
+ },
+ "cl_confirm_days": {
+  "en": {
+   "one": "Restorable for %1$d day, then deleted for good. The space is freed once the trash is emptied.",
+   "other": "Restorable for %1$d days, then deleted for good. The space is freed once the trash is emptied."
+  },
+  "de": {
+   "one": "%1$d Tag wiederherstellbar, danach endgültig gelöscht. Der Platz wird frei, sobald der Papierkorb geleert ist.",
+   "other": "%1$d Tage wiederherstellbar, danach endgültig gelöscht. Der Platz wird frei, sobald der Papierkorb geleert ist."
+  },
+  "plural": true
+ },
+ "cl_to_trash": {
+  "en": "To the trash",
+  "de": "In den Papierkorb",
+  "plural": false
+ },
+ "cl_moved": {
+  "en": {
+   "one": "%1$d item moved to the trash (%2$s) ✓",
+   "other": "%1$d items moved to the trash (%2$s) ✓"
+  },
+  "de": {
+   "one": "%1$d Eintrag in den Papierkorb verschoben (%2$s) ✓",
+   "other": "%1$d Einträge in den Papierkorb verschoben (%2$s) ✓"
+  },
+  "plural": true
+ },
+ "cl_failed": {
+  "en": {
+   "one": "%1$d skipped: %2$s",
+   "other": "%1$d skipped, e.g.: %2$s"
+  },
+  "de": {
+   "one": "%1$d übersprungen: %2$s",
+   "other": "%1$d übersprungen, z. B.: %2$s"
+  },
+  "plural": true
+ },
+ "cl_nothing": {
+  "en": "Nothing to do",
+  "de": "Nichts zu tun",
+  "plural": false
+ },
+ "cl_used": {
+  "en": "used",
+  "de": "belegt",
+  "plural": false
+ },
+ "cl_free": {
+  "en": "free",
+  "de": "frei",
+  "plural": false
+ },
+ "cl_of_total": {
+  "en": "of %1$s internal storage",
+  "de": "von %1$s internem Speicher",
+  "plural": false
+ },
+ "cl_private_hint": {
+  "en": "ShizuBox reaches Android/data and Android/obb through Shizuku. Private app data (/data/data) stays out of reach without root – the system cleans app caches there.",
+  "de": "ShizuBox erreicht Android/data und Android/obb über Shizuku. Private App-Daten (/data/data) bleiben ohne Root unerreichbar – deren Caches räumt das System selbst auf.",
+  "plural": false
+ },
+ "cl_settings": {
+  "en": "Cleaner settings",
+  "de": "Reiniger-Einstellungen",
+  "plural": false
+ },
+ "cl_keep_days": {
+  "en": "Keep deleted items for",
+  "de": "Gelöschtes aufbewahren für",
+  "plural": false
+ },
+ "cl_exclusions": {
+  "en": "Exclusions",
+  "de": "Ausschlüsse",
+  "plural": false
+ },
+ "cl_exclusions_sub": {
+  "en": "Never shown or cleaned by any tool. Also: long-press a finding.",
+  "de": "Werden von keinem Werkzeug angezeigt oder gereinigt. Auch: lange auf einen Fund drücken.",
+  "plural": false
+ },
+ "cl_excl_paths": {
+  "en": "Folders and files",
+  "de": "Ordner und Dateien",
+  "plural": false
+ },
+ "cl_excl_path_hint": {
+  "en": "Path, e.g. Pictures/Keep",
+  "de": "Pfad, z. B. Pictures/Behalten",
+  "plural": false
+ },
+ "cl_excl_apps": {
+  "en": "Apps",
+  "de": "Apps",
+  "plural": false
+ },
+ "cl_excl_add_app": {
+  "en": "Exclude app",
+  "de": "App ausschließen",
+  "plural": false
+ },
+ "cl_add": {
+  "en": "Add",
+  "de": "Hinzufügen",
+  "plural": false
+ },
+ "cl_remove": {
+  "en": "Remove",
+  "de": "Entfernen",
+  "plural": false
+ },
+ "cl_locked_info": {
+  "en": "Always locked: system and standard folders, Android/data and Android/obb of installed apps (except their cache in the app cleaner), Shizuku and the trash itself.",
+  "de": "Immer gesperrt: System- und Standardordner, Android/data und Android/obb installierter Apps (außer deren Cache im App-Cleaner), Shizuku und der Papierkorb selbst.",
+  "plural": false
+ },
+ "cl_aicore": {
+  "en": "Include AI models (AICore)",
+  "de": "KI-Modelle (AICore) einbeziehen",
+  "plural": false
+ },
+ "cl_aicore_sub": {
+  "en": "Off by default: AICore keeps on-device AI models (several GB) in its cache; they would be downloaded again.",
+  "de": "Standardmäßig aus: AICore legt die KI-Modelle auf dem Gerät (mehrere GB) in seinem Cache ab; sie würden neu geladen.",
+  "plural": false
+ },
+ "cl_just_now": {
+  "en": "just now",
+  "de": "gerade eben",
+  "plural": false
  }
 }

@@ -36,6 +36,8 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.battery.BatteryReport.init(this)
         de.emil.shizubox.clipboard.ClipHistory.init(this)
         de.emil.shizubox.audio.AppVolume.init(this)
+        de.emil.shizubox.cleaner.CleanerSettings.init(this)
+        de.emil.shizubox.cleaner.Trash.init(this)
         de.emil.shizubox.util.Unlock.whenUnlocked(this) {
             kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
                 de.emil.shizubox.system.CacheCleaner.cleanStale(this@ShizuBoxApp)
@@ -51,6 +53,7 @@ class ShizuBoxApp : Application() {
             UpdateWorker.schedule(this)
             de.emil.shizubox.privacy.PrivacyWorker.schedule(this)
             de.emil.shizubox.battery.BatteryWorker.schedule(this)
+            de.emil.shizubox.cleaner.TrashWorker.schedule(this)
         } else {
             registerReceiver(object : android.content.BroadcastReceiver() {
                 override fun onReceive(c: android.content.Context, i: android.content.Intent) {
@@ -58,6 +61,7 @@ class ShizuBoxApp : Application() {
                     UpdateWorker.schedule(this@ShizuBoxApp)
                     de.emil.shizubox.privacy.PrivacyWorker.schedule(this@ShizuBoxApp)
                     de.emil.shizubox.battery.BatteryWorker.schedule(this@ShizuBoxApp)
+                    de.emil.shizubox.cleaner.TrashWorker.schedule(this@ShizuBoxApp)
                 }
             }, android.content.IntentFilter(android.content.Intent.ACTION_USER_UNLOCKED))
         }

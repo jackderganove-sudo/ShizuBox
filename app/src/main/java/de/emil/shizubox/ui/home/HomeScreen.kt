@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.AutoMode
 import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material.icons.rounded.CleaningServices
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.PowerSettingsNew
 import androidx.compose.material.icons.rounded.School
@@ -82,6 +83,7 @@ enum class Section(private val titleRes: Int, private val subtitleRes: Int, val 
     Updates(R.string.sec_updates, R.string.sec_updates_sub, Icons.Rounded.SystemUpdate),
     System(R.string.sec_system, R.string.sec_system_sub, Icons.Rounded.Terminal),
     Downloader(R.string.sec_downloader, R.string.sec_downloader_sub, Icons.Rounded.Download),
+    Cleaner(R.string.sec_cleaner, R.string.sec_cleaner_sub, Icons.Rounded.CleaningServices),
     ;
 
     // Resolved on every access, so a language change applies immediately.

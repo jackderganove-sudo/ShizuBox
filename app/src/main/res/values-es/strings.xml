@@ -1123,4 +1123,98 @@
     <string name="av_add">Añadir app</string>
     <string name="av_playing">Sonando ahora</string>
     <string name="av_reset" formatted="false">Volver al 100 %</string>
+    <string name="sec_cleaner">Limpiador</string>
+    <string name="sec_cleaner_sub">Restos, basura, duplicados, almacenamiento</string>
+    <string name="cl_corpses">Buscador de restos</string>
+    <string name="cl_system">Limpiador del sistema</string>
+    <string name="cl_appcache">Limpiador de apps</string>
+    <string name="cl_dupes">Buscador de duplicados</string>
+    <string name="cl_analysis">Análisis de almacenamiento</string>
+    <string name="cl_auto">Limpieza automática</string>
+    <string name="cl_lock_outside">Fuera del almacenamiento interno</string>
+    <string name="cl_lock_standard">Carpeta estándar: bloqueada</string>
+    <string name="cl_lock_trash">Parte de la papelera</string>
+    <string name="cl_lock_excluded">Excluido por ti</string>
+    <string name="cl_lock_system">Carpeta del sistema: bloqueada</string>
+    <string name="cl_lock_shizuku">Shizuku: bloqueado</string>
+    <string name="cl_lock_installed">Datos de una app instalada: bloqueados</string>
+    <string name="cl_lock_aicore">Modelos de IA (AICore): excluidos</string>
+    <string name="cl_trash">Papelera</string>
+    <string name="cl_trash_sub">Vacía: todo lo que limpias llega aquí primero</string>
+    <plurals name="cl_trash_n">
+        <item quantity="one">%1$d elemento</item>
+        <item quantity="other">%1$d elementos</item>
+    </plurals>
+    <plurals name="cl_trash_keep">
+        <item quantity="one">recuperable durante %1$d día</item>
+        <item quantity="other">recuperable durante %1$d días</item>
+    </plurals>
+    <string name="cl_trash_low">Queda poco espacio: solo se libera al vaciar la papelera.</string>
+    <string name="cl_trash_empty">Vaciar la papelera ahora</string>
+    <string name="cl_restore_all">Restaurar todo</string>
+    <string name="cl_restore">Restaurar</string>
+    <string name="cl_delete_forever">Eliminar definitivamente</string>
+    <string name="cl_trash_hint">Los archivos solo se mueven: es instantáneo y no necesita espacio extra. Pasados los días, se eliminan definitivamente de forma automática.</string>
+    <string name="cl_trash_empty_title">La papelera está vacía</string>
+    <string name="cl_trash_empty_hint">Lo que eliminan las herramientas de limpieza espera aquí primero.</string>
+    <plurals name="cl_restored">
+        <item quantity="one">%1$d elemento restaurado ✓</item>
+        <item quantity="other">%1$d elementos restaurados ✓</item>
+    </plurals>
+    <string name="cl_freed">%1$s liberados ✓</string>
+    <string name="cl_purge_q">¿Eliminar definitivamente?</string>
+    <plurals name="cl_purge_body">
+        <item quantity="one">Se eliminará %1$d elemento (%2$s) y no se podrá restaurar.</item>
+        <item quantity="other">Se eliminarán %1$d elementos (%2$s) y no se podrán restaurar.</item>
+    </plurals>
+    <plurals name="cl_days_left">
+        <item quantity="one">queda %1$d día</item>
+        <item quantity="other">quedan %1$d días</item>
+    </plurals>
+    <string name="cl_more">Mostrar %1$d más</string>
+    <string name="cl_log">Registro</string>
+    <string name="cl_log_empty">Aún no se ha limpiado nada</string>
+    <string name="cl_log_trash">A la papelera</string>
+    <string name="cl_log_restore">Restaurado</string>
+    <string name="cl_log_delete">Eliminado</string>
+    <string name="cl_log_expired">Caducado, eliminado</string>
+    <string name="cl_log_blocked">Bloqueado, omitido</string>
+    <string name="cl_log_failed">⚠ Error</string>
+    <string name="cl_confirm_title">¿Mover a la papelera?</string>
+    <plurals name="cl_confirm_body">
+        <item quantity="one">%1$d elemento · %2$s</item>
+        <item quantity="other">%1$d elementos · %2$s</item>
+    </plurals>
+    <plurals name="cl_confirm_days">
+        <item quantity="one">Recuperable durante %1$d día; después se elimina definitivamente. El espacio se libera al vaciar la papelera.</item>
+        <item quantity="other">Recuperable durante %1$d días; después se elimina definitivamente. El espacio se libera al vaciar la papelera.</item>
+    </plurals>
+    <string name="cl_to_trash">A la papelera</string>
+    <plurals name="cl_moved">
+        <item quantity="one">%1$d elemento movido a la papelera (%2$s) ✓</item>
+        <item quantity="other">%1$d elementos movidos a la papelera (%2$s) ✓</item>
+    </plurals>
+    <plurals name="cl_failed">
+        <item quantity="one">%1$d omitido: %2$s</item>
+        <item quantity="other">%1$d omitidos, p. ej.: %2$s</item>
+    </plurals>
+    <string name="cl_nothing">Nada que hacer</string>
+    <string name="cl_used">ocupado</string>
+    <string name="cl_free">libre</string>
+    <string name="cl_of_total">de %1$s de almacenamiento interno</string>
+    <string name="cl_private_hint">ShizuBox accede a Android/data y Android/obb mediante Shizuku. Los datos privados de las apps (/data/data) no son accesibles sin root: sus cachés las limpia el sistema.</string>
+    <string name="cl_settings">Ajustes del limpiador</string>
+    <string name="cl_keep_days">Conservar lo eliminado durante</string>
+    <string name="cl_exclusions">Exclusiones</string>
+    <string name="cl_exclusions_sub">Ninguna herramienta los muestra ni los limpia. También: mantén pulsado un hallazgo.</string>
+    <string name="cl_excl_paths">Carpetas y archivos</string>
+    <string name="cl_excl_path_hint">Ruta, p. ej. Pictures/Guardar</string>
+    <string name="cl_excl_apps">Apps</string>
+    <string name="cl_excl_add_app">Excluir app</string>
+    <string name="cl_add">Añadir</string>
+    <string name="cl_remove">Quitar</string>
+    <string name="cl_locked_info">Siempre bloqueado: carpetas del sistema y estándar, Android/data y Android/obb de apps instaladas (salvo su caché en el limpiador de apps), Shizuku y la propia papelera.</string>
+    <string name="cl_aicore">Incluir modelos de IA (AICore)</string>
+    <string name="cl_aicore_sub">Desactivado por defecto: AICore guarda en su caché los modelos de IA del dispositivo (varios GB); se volverían a descargar.</string>
+    <string name="cl_just_now">ahora mismo</string>
 </resources>

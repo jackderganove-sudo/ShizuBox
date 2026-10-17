@@ -1125,4 +1125,98 @@
     <string name="av_add">Add app</string>
     <string name="av_playing">Playing now</string>
     <string name="av_reset" formatted="false">Back to 100 %</string>
+    <string name="sec_cleaner">Cleaner</string>
+    <string name="sec_cleaner_sub">Leftovers, junk, duplicates, storage</string>
+    <string name="cl_corpses">Leftover finder</string>
+    <string name="cl_system">System cleaner</string>
+    <string name="cl_appcache">App cleaner</string>
+    <string name="cl_dupes">Duplicate finder</string>
+    <string name="cl_analysis">Storage analysis</string>
+    <string name="cl_auto">Automatic cleaning</string>
+    <string name="cl_lock_outside">Outside the internal storage</string>
+    <string name="cl_lock_standard">Standard folder – locked</string>
+    <string name="cl_lock_trash">Part of the trash</string>
+    <string name="cl_lock_excluded">Excluded by you</string>
+    <string name="cl_lock_system">System folder – locked</string>
+    <string name="cl_lock_shizuku">Shizuku – locked</string>
+    <string name="cl_lock_installed">Data of an installed app – locked</string>
+    <string name="cl_lock_aicore">AI models (AICore) – excluded</string>
+    <string name="cl_trash">Trash</string>
+    <string name="cl_trash_sub">Empty – everything you clean lands here first</string>
+    <plurals name="cl_trash_n">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <plurals name="cl_trash_keep">
+        <item quantity="one">kept for %1$d day</item>
+        <item quantity="other">kept for %1$d days</item>
+    </plurals>
+    <string name="cl_trash_low">Storage is tight: the space only becomes free once the trash is emptied.</string>
+    <string name="cl_trash_empty">Empty trash now</string>
+    <string name="cl_restore_all">Restore all</string>
+    <string name="cl_restore">Restore</string>
+    <string name="cl_delete_forever">Delete for good</string>
+    <string name="cl_trash_hint">Files are only moved, so it\'s instant and needs no extra space. After the set days they are deleted for good automatically.</string>
+    <string name="cl_trash_empty_title">The trash is empty</string>
+    <string name="cl_trash_empty_hint">What the cleaner tools remove waits here first.</string>
+    <plurals name="cl_restored">
+        <item quantity="one">%1$d item restored ✓</item>
+        <item quantity="other">%1$d items restored ✓</item>
+    </plurals>
+    <string name="cl_freed">%1$s freed ✓</string>
+    <string name="cl_purge_q">Delete for good?</string>
+    <plurals name="cl_purge_body">
+        <item quantity="one">%1$d item (%2$s) will be deleted and cannot be restored.</item>
+        <item quantity="other">%1$d items (%2$s) will be deleted and cannot be restored.</item>
+    </plurals>
+    <plurals name="cl_days_left">
+        <item quantity="one">%1$d day left</item>
+        <item quantity="other">%1$d days left</item>
+    </plurals>
+    <string name="cl_more">Show %1$d more</string>
+    <string name="cl_log">Log</string>
+    <string name="cl_log_empty">Nothing was cleaned yet</string>
+    <string name="cl_log_trash">To trash</string>
+    <string name="cl_log_restore">Restored</string>
+    <string name="cl_log_delete">Deleted</string>
+    <string name="cl_log_expired">Expired, deleted</string>
+    <string name="cl_log_blocked">Locked, skipped</string>
+    <string name="cl_log_failed">⚠ Failed</string>
+    <string name="cl_confirm_title">Move to the trash?</string>
+    <plurals name="cl_confirm_body">
+        <item quantity="one">%1$d item · %2$s</item>
+        <item quantity="other">%1$d items · %2$s</item>
+    </plurals>
+    <plurals name="cl_confirm_days">
+        <item quantity="one">Restorable for %1$d day, then deleted for good. The space is freed once the trash is emptied.</item>
+        <item quantity="other">Restorable for %1$d days, then deleted for good. The space is freed once the trash is emptied.</item>
+    </plurals>
+    <string name="cl_to_trash">To the trash</string>
+    <plurals name="cl_moved">
+        <item quantity="one">%1$d item moved to the trash (%2$s) ✓</item>
+        <item quantity="other">%1$d items moved to the trash (%2$s) ✓</item>
+    </plurals>
+    <plurals name="cl_failed">
+        <item quantity="one">%1$d skipped: %2$s</item>
+        <item quantity="other">%1$d skipped, e.g.: %2$s</item>
+    </plurals>
+    <string name="cl_nothing">Nothing to do</string>
+    <string name="cl_used">used</string>
+    <string name="cl_free">free</string>
+    <string name="cl_of_total">of %1$s internal storage</string>
+    <string name="cl_private_hint">ShizuBox reaches Android/data and Android/obb through Shizuku. Private app data (/data/data) stays out of reach without root – the system cleans app caches there.</string>
+    <string name="cl_settings">Cleaner settings</string>
+    <string name="cl_keep_days">Keep deleted items for</string>
+    <string name="cl_exclusions">Exclusions</string>
+    <string name="cl_exclusions_sub">Never shown or cleaned by any tool. Also: long-press a finding.</string>
+    <string name="cl_excl_paths">Folders and files</string>
+    <string name="cl_excl_path_hint">Path, e.g. Pictures/Keep</string>
+    <string name="cl_excl_apps">Apps</string>
+    <string name="cl_excl_add_app">Exclude app</string>
+    <string name="cl_add">Add</string>
+    <string name="cl_remove">Remove</string>
+    <string name="cl_locked_info">Always locked: system and standard folders, Android/data and Android/obb of installed apps (except their cache in the app cleaner), Shizuku and the trash itself.</string>
+    <string name="cl_aicore">Include AI models (AICore)</string>
+    <string name="cl_aicore_sub">Off by default: AICore keeps on-device AI models (several GB) in its cache; they would be downloaded again.</string>
+    <string name="cl_just_now">just now</string>
 </resources>

@@ -1123,4 +1123,98 @@
     <string name="av_add">Uygulama ekle</string>
     <string name="av_playing">Şu an çalıyor</string>
     <string name="av_reset" formatted="false">%100\'e geri dön</string>
+    <string name="sec_cleaner">Temizleyici</string>
+    <string name="sec_cleaner_sub">Artıklar, çöp, kopyalar, depolama</string>
+    <string name="cl_corpses">Artık bulucu</string>
+    <string name="cl_system">Sistem temizleyici</string>
+    <string name="cl_appcache">Uygulama temizleyici</string>
+    <string name="cl_dupes">Kopya bulucu</string>
+    <string name="cl_analysis">Depolama analizi</string>
+    <string name="cl_auto">Otomatik temizlik</string>
+    <string name="cl_lock_outside">Dahili depolamanın dışında</string>
+    <string name="cl_lock_standard">Standart klasör – kilitli</string>
+    <string name="cl_lock_trash">Çöp kutusunun parçası</string>
+    <string name="cl_lock_excluded">Senin tarafından hariç tutuldu</string>
+    <string name="cl_lock_system">Sistem klasörü – kilitli</string>
+    <string name="cl_lock_shizuku">Shizuku – kilitli</string>
+    <string name="cl_lock_installed">Yüklü bir uygulamanın verileri – kilitli</string>
+    <string name="cl_lock_aicore">Yapay zekâ modelleri (AICore) – hariç</string>
+    <string name="cl_trash">Çöp kutusu</string>
+    <string name="cl_trash_sub">Boş – temizlediğin her şey önce buraya gelir</string>
+    <plurals name="cl_trash_n">
+        <item quantity="one">%1$d öğe</item>
+        <item quantity="other">%1$d öğe</item>
+    </plurals>
+    <plurals name="cl_trash_keep">
+        <item quantity="one">%1$d gün geri yüklenebilir</item>
+        <item quantity="other">%1$d gün geri yüklenebilir</item>
+    </plurals>
+    <string name="cl_trash_low">Depolama azalıyor: Alan ancak çöp kutusu boşaltıldığında serbest kalır.</string>
+    <string name="cl_trash_empty">Çöp kutusunu şimdi boşalt</string>
+    <string name="cl_restore_all">Tümünü geri yükle</string>
+    <string name="cl_restore">Geri yükle</string>
+    <string name="cl_delete_forever">Kalıcı olarak sil</string>
+    <string name="cl_trash_hint">Dosyalar yalnızca taşınır; bu anında olur ve ek alan gerektirmez. Süre dolunca otomatik olarak kalıcı şekilde silinir.</string>
+    <string name="cl_trash_empty_title">Çöp kutusu boş</string>
+    <string name="cl_trash_empty_hint">Temizleyici araçlarının kaldırdıkları önce burada bekler.</string>
+    <plurals name="cl_restored">
+        <item quantity="one">%1$d öğe geri yüklendi ✓</item>
+        <item quantity="other">%1$d öğe geri yüklendi ✓</item>
+    </plurals>
+    <string name="cl_freed">%1$s boşaltıldı ✓</string>
+    <string name="cl_purge_q">Kalıcı olarak silinsin mi?</string>
+    <plurals name="cl_purge_body">
+        <item quantity="one">%1$d öğe (%2$s) silinecek ve geri yüklenemeyecek.</item>
+        <item quantity="other">%1$d öğe (%2$s) silinecek ve geri yüklenemeyecek.</item>
+    </plurals>
+    <plurals name="cl_days_left">
+        <item quantity="one">%1$d gün kaldı</item>
+        <item quantity="other">%1$d gün kaldı</item>
+    </plurals>
+    <string name="cl_more">%1$d tane daha göster</string>
+    <string name="cl_log">Kayıt</string>
+    <string name="cl_log_empty">Henüz hiçbir şey temizlenmedi</string>
+    <string name="cl_log_trash">Çöp kutusuna</string>
+    <string name="cl_log_restore">Geri yüklendi</string>
+    <string name="cl_log_delete">Silindi</string>
+    <string name="cl_log_expired">Süresi doldu, silindi</string>
+    <string name="cl_log_blocked">Kilitli, atlandı</string>
+    <string name="cl_log_failed">⚠ Başarısız</string>
+    <string name="cl_confirm_title">Çöp kutusuna taşınsın mı?</string>
+    <plurals name="cl_confirm_body">
+        <item quantity="one">%1$d öğe · %2$s</item>
+        <item quantity="other">%1$d öğe · %2$s</item>
+    </plurals>
+    <plurals name="cl_confirm_days">
+        <item quantity="one">%1$d gün geri yüklenebilir, sonra kalıcı olarak silinir. Alan, çöp kutusu boşaltılınca serbest kalır.</item>
+        <item quantity="other">%1$d gün geri yüklenebilir, sonra kalıcı olarak silinir. Alan, çöp kutusu boşaltılınca serbest kalır.</item>
+    </plurals>
+    <string name="cl_to_trash">Çöp kutusuna</string>
+    <plurals name="cl_moved">
+        <item quantity="one">%1$d öğe çöp kutusuna taşındı (%2$s) ✓</item>
+        <item quantity="other">%1$d öğe çöp kutusuna taşındı (%2$s) ✓</item>
+    </plurals>
+    <plurals name="cl_failed">
+        <item quantity="one">%1$d atlandı: %2$s</item>
+        <item quantity="other">%1$d atlandı, ör.: %2$s</item>
+    </plurals>
+    <string name="cl_nothing">Yapılacak bir şey yok</string>
+    <string name="cl_used">dolu</string>
+    <string name="cl_free">boş</string>
+    <string name="cl_of_total">%1$s dahili depolamanın</string>
+    <string name="cl_private_hint">ShizuBox, Android/data ve Android/obb klasörlerine Shizuku ile erişir. Özel uygulama verilerine (/data/data) root olmadan erişilemez – oradaki önbellekleri sistem temizler.</string>
+    <string name="cl_settings">Temizleyici ayarları</string>
+    <string name="cl_keep_days">Silinenleri sakla</string>
+    <string name="cl_exclusions">Hariç tutulanlar</string>
+    <string name="cl_exclusions_sub">Hiçbir araç tarafından gösterilmez veya temizlenmez. Ayrıca: bir bulguya uzun bas.</string>
+    <string name="cl_excl_paths">Klasörler ve dosyalar</string>
+    <string name="cl_excl_path_hint">Yol, ör. Pictures/Sakla</string>
+    <string name="cl_excl_apps">Uygulamalar</string>
+    <string name="cl_excl_add_app">Uygulamayı hariç tut</string>
+    <string name="cl_add">Ekle</string>
+    <string name="cl_remove">Kaldır</string>
+    <string name="cl_locked_info">Her zaman kilitli: sistem ve standart klasörler, yüklü uygulamaların Android/data ve Android/obb klasörleri (uygulama temizleyicideki önbellekleri hariç), Shizuku ve çöp kutusunun kendisi.</string>
+    <string name="cl_aicore">Yapay zekâ modellerini (AICore) dahil et</string>
+    <string name="cl_aicore_sub">Varsayılan olarak kapalı: AICore cihazdaki yapay zekâ modellerini (birkaç GB) önbelleğinde tutar; yeniden indirilirler.</string>
+    <string name="cl_just_now">az önce</string>
 </resources>

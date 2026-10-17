@@ -1123,5 +1123,99 @@
     <string name="av_add">App hinzufügen</string>
     <string name="av_playing">Spielt gerade</string>
     <string name="av_reset" formatted="false">Zurück auf 100 %</string>
+    <string name="sec_cleaner">Reiniger</string>
+    <string name="sec_cleaner_sub">Reste, Müll, Duplikate, Speicher</string>
+    <string name="cl_corpses">Leichen-Finder</string>
+    <string name="cl_system">System-Reiniger</string>
+    <string name="cl_appcache">App-Cleaner</string>
+    <string name="cl_dupes">Duplikat-Finder</string>
+    <string name="cl_analysis">Speicher-Analyse</string>
+    <string name="cl_auto">Automatische Reinigung</string>
+    <string name="cl_lock_outside">Außerhalb des internen Speichers</string>
+    <string name="cl_lock_standard">Standardordner – gesperrt</string>
+    <string name="cl_lock_trash">Teil des Papierkorbs</string>
+    <string name="cl_lock_excluded">Von dir ausgeschlossen</string>
+    <string name="cl_lock_system">Systemordner – gesperrt</string>
+    <string name="cl_lock_shizuku">Shizuku – gesperrt</string>
+    <string name="cl_lock_installed">Daten einer installierten App – gesperrt</string>
+    <string name="cl_lock_aicore">KI-Modelle (AICore) – ausgeschlossen</string>
+    <string name="cl_trash">Papierkorb</string>
+    <string name="cl_trash_sub">Leer – alles, was du aufräumst, landet zuerst hier</string>
+    <plurals name="cl_trash_n">
+        <item quantity="one">%1$d Eintrag</item>
+        <item quantity="other">%1$d Einträge</item>
+    </plurals>
+    <plurals name="cl_trash_keep">
+        <item quantity="one">%1$d Tag wiederherstellbar</item>
+        <item quantity="other">%1$d Tage wiederherstellbar</item>
+    </plurals>
+    <string name="cl_trash_low">Der Speicher wird knapp: Der Platz wird erst frei, wenn der Papierkorb geleert ist.</string>
+    <string name="cl_trash_empty">Papierkorb jetzt leeren</string>
+    <string name="cl_restore_all">Alles wiederherstellen</string>
+    <string name="cl_restore">Wiederherstellen</string>
+    <string name="cl_delete_forever">Endgültig löschen</string>
+    <string name="cl_trash_hint">Dateien werden nur verschoben – das geht sofort und braucht keinen zusätzlichen Platz. Nach Ablauf der Tage werden sie automatisch endgültig gelöscht.</string>
+    <string name="cl_trash_empty_title">Der Papierkorb ist leer</string>
+    <string name="cl_trash_empty_hint">Was die Reiniger-Werkzeuge entfernen, wartet zuerst hier.</string>
+    <plurals name="cl_restored">
+        <item quantity="one">%1$d Eintrag wiederhergestellt ✓</item>
+        <item quantity="other">%1$d Einträge wiederhergestellt ✓</item>
+    </plurals>
+    <string name="cl_freed">%1$s freigegeben ✓</string>
+    <string name="cl_purge_q">Endgültig löschen?</string>
+    <plurals name="cl_purge_body">
+        <item quantity="one">%1$d Eintrag (%2$s) wird gelöscht und kann nicht wiederhergestellt werden.</item>
+        <item quantity="other">%1$d Einträge (%2$s) werden gelöscht und können nicht wiederhergestellt werden.</item>
+    </plurals>
+    <plurals name="cl_days_left">
+        <item quantity="one">noch %1$d Tag</item>
+        <item quantity="other">noch %1$d Tage</item>
+    </plurals>
+    <string name="cl_more">%1$d weitere anzeigen</string>
+    <string name="cl_log">Protokoll</string>
+    <string name="cl_log_empty">Noch nichts aufgeräumt</string>
+    <string name="cl_log_trash">In den Papierkorb</string>
+    <string name="cl_log_restore">Wiederhergestellt</string>
+    <string name="cl_log_delete">Gelöscht</string>
+    <string name="cl_log_expired">Abgelaufen, gelöscht</string>
+    <string name="cl_log_blocked">Gesperrt, übersprungen</string>
+    <string name="cl_log_failed">⚠ Fehlgeschlagen</string>
+    <string name="cl_confirm_title">In den Papierkorb verschieben?</string>
+    <plurals name="cl_confirm_body">
+        <item quantity="one">%1$d Eintrag · %2$s</item>
+        <item quantity="other">%1$d Einträge · %2$s</item>
+    </plurals>
+    <plurals name="cl_confirm_days">
+        <item quantity="one">%1$d Tag wiederherstellbar, danach endgültig gelöscht. Der Platz wird frei, sobald der Papierkorb geleert ist.</item>
+        <item quantity="other">%1$d Tage wiederherstellbar, danach endgültig gelöscht. Der Platz wird frei, sobald der Papierkorb geleert ist.</item>
+    </plurals>
+    <string name="cl_to_trash">In den Papierkorb</string>
+    <plurals name="cl_moved">
+        <item quantity="one">%1$d Eintrag in den Papierkorb verschoben (%2$s) ✓</item>
+        <item quantity="other">%1$d Einträge in den Papierkorb verschoben (%2$s) ✓</item>
+    </plurals>
+    <plurals name="cl_failed">
+        <item quantity="one">%1$d übersprungen: %2$s</item>
+        <item quantity="other">%1$d übersprungen, z. B.: %2$s</item>
+    </plurals>
+    <string name="cl_nothing">Nichts zu tun</string>
+    <string name="cl_used">belegt</string>
+    <string name="cl_free">frei</string>
+    <string name="cl_of_total">von %1$s internem Speicher</string>
+    <string name="cl_private_hint">ShizuBox erreicht Android/data und Android/obb über Shizuku. Private App-Daten (/data/data) bleiben ohne Root unerreichbar – deren Caches räumt das System selbst auf.</string>
+    <string name="cl_settings">Reiniger-Einstellungen</string>
+    <string name="cl_keep_days">Gelöschtes aufbewahren für</string>
+    <string name="cl_exclusions">Ausschlüsse</string>
+    <string name="cl_exclusions_sub">Werden von keinem Werkzeug angezeigt oder gereinigt. Auch: lange auf einen Fund drücken.</string>
+    <string name="cl_excl_paths">Ordner und Dateien</string>
+    <string name="cl_excl_path_hint">Pfad, z. B. Pictures/Behalten</string>
+    <string name="cl_excl_apps">Apps</string>
+    <string name="cl_excl_add_app">App ausschließen</string>
+    <string name="cl_add">Hinzufügen</string>
+    <string name="cl_remove">Entfernen</string>
+    <string name="cl_locked_info">Immer gesperrt: System- und Standardordner, Android/data und Android/obb installierter Apps (außer deren Cache im App-Cleaner), Shizuku und der Papierkorb selbst.</string>
+    <string name="cl_aicore">KI-Modelle (AICore) einbeziehen</string>
+    <string name="cl_aicore_sub">Standardmäßig aus: AICore legt die KI-Modelle auf dem Gerät (mehrere GB) in seinem Cache ab; sie würden neu geladen.</string>
+    <string name="cl_just_now">gerade eben</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

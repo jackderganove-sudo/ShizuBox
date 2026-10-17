@@ -1,0 +1,131 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
+package de.emil.shizubox.ui.cleaner
+
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearWavyProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.emil.shizubox.R
+import de.emil.shizubox.cleaner.StorageAccess
+import de.emil.shizubox.cleaner.Trash
+import de.emil.shizubox.t
+import de.emil.shizubox.tp
+import de.emil.shizubox.ui.glass.GlassCard
+import de.emil.shizubox.ui.motion.RollingText
+import de.emil.shizubox.ui.motion.animatedProgress
+import de.emil.shizubox.ui.motion.openClose
+import kotlinx.coroutines.flow.MutableStateFlow
+
+/** Sub pages of the cleaner; set from outside (notification, debug) through [CleanerNav]. */
+object CleanerPage {
+    const val TRASH = "trash"
+    const val SETTINGS = "settings"
+}
+
+object CleanerNav {
+    val page = MutableStateFlow<String?>(null)
+}
+
+@Composable
+fun CleanerScreen(shizukuReady: Boolean, onBack: () -> Unit) {
+    val page by CleanerNav.page.collectAsStateWithLifecycle()
+    BackHandler(page != null) { CleanerNav.page.value = null }
+    LaunchedEffect(shizukuReady) { if (shizukuReady) StorageAccess.ensure() }
+    AnimatedContent(page, transitionSpec = { openClose(opening = targetState != null) }, label = "cleaner") { p ->
+        val close = { CleanerNav.page.value = null }
+        when (p) {
+            CleanerPage.TRASH -> TrashScreen(shizukuReady, close)
+            CleanerPage.SETTINGS -> CleanerSettingsScreen(close)
+            else -> CleanerHome(shizukuReady, onBack)
+        }
+    }
+}
+
+@Composable
+private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
+    val context = LocalContext.current
+    val trash by Trash.items.collectAsStateWithLifecycle()
+    var numbers by remember { mutableStateOf(StorageAccess.numbers()) }
+    LaunchedEffect(trash.size) { numbers = StorageAccess.numbers() }
+    fun open(p: String) { CleanerNav.page.value = p }
+    LazyColumn(
+        modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        item {
+            PageHeader(t(R.string.sec_cleaner), onBack) {
+                IconButton(onClick = { open(CleanerPage.SETTINGS) }) { Icon(Icons.Rounded.Settings, t(R.string.settings)) }
+            }
+        }
+        item {
+            GlassCard(Modifier.fillMaxWidth()) {
+                Row {
+                    androidx.compose.foundation.layout.Column(Modifier.weight(1f)) {
+                        RollingText(size(context, numbers.used), MaterialTheme.typography.headlineMedium)
+                        Text(t(R.string.cl_used), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    androidx.compose.foundation.layout.Column(Modifier.weight(1f)) {
+                        RollingText(size(context, numbers.free), MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
+                        Text(t(R.string.cl_free), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
+                val progress = animatedProgress(if (numbers.total > 0) numbers.used.toFloat() / numbers.total else 0f)
+                LinearWavyProgressIndicator(progress = progress, modifier = Modifier.fillMaxWidth().padding(top = 12.dp))
+                Text(t(R.string.cl_of_total, size(context, numbers.total)), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
+                if (!shizukuReady) Text(t(R.string.shizuku_must), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 8.dp))
+            }
+        }
+        item {
+            ToolCard(Icons.Rounded.Delete, t(R.string.cl_trash),
+                if (trash.isEmpty()) t(R.string.cl_trash_sub) else tp(R.plurals.cl_trash_n, trash.size, trash.size) + " · " + size(context, trash.sumOf { it.size })) {
+                open(CleanerPage.TRASH)
+            }
+        }
+        item { Hint(t(R.string.cl_private_hint), Modifier.padding(top = 8.dp)) }
+        item { Spacer(Modifier.padding(16.dp)) }
+    }
+}
+
+@Composable
+fun ToolCard(icon: ImageVector, title: String, subtitle: String, found: String? = null, onClick: () -> Unit) {
+    GlassCard(Modifier.fillMaxWidth(), onClick = onClick, contentPadding = 16.dp) {
+        Row {
+            Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(end = 16.dp, top = 2.dp))
+            androidx.compose.foundation.layout.Column(Modifier.weight(1f)) {
+                Text(title, style = MaterialTheme.typography.titleMedium)
+                Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            if (found != null) RollingText(found, MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+        }
+    }
+}

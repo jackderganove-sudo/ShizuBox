@@ -71,6 +71,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        intent.getStringExtra(EXTRA_CLEANER_PAGE)?.let { de.emil.shizubox.ui.cleaner.CleanerNav.page.value = it }
         intent.getIntExtra(de.emil.shizubox.downloader.DownloadService.EXTRA_PAGE, -1).takeIf { it >= 0 }
             ?.let { de.emil.shizubox.ui.downloader.DownloaderNav.page.value = it }
 
@@ -189,6 +190,7 @@ class MainActivity : ComponentActivity() {
                     Section.Customization -> CustomizationScreen(shizukuReady = ready, onBack = back)
                     Section.Downloader -> de.emil.shizubox.ui.downloader.DownloaderScreen(onBack = back)
                     Section.Automations -> de.emil.shizubox.ui.automation.AutomationsScreen(ready, onBack = back)
+                    Section.Cleaner -> de.emil.shizubox.ui.cleaner.CleanerScreen(ready, onBack = back)
                     Section.System -> AnimatedContent(
                         targetState = installUri ?: systemPage,
                         transitionSpec = { openClose(opening = targetState != null) },
@@ -263,6 +265,7 @@ class MainActivity : ComponentActivity() {
     companion object {
         private const val WINDOW_BLUR_RADIUS = 90
         const val EXTRA_SECTION = "section"
+        const val EXTRA_CLEANER_PAGE = "cleaner_page"
         private const val SETTINGS = "settings"
         private var checkedThisProcess = false
     }

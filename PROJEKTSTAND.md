@@ -107,6 +107,16 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Mehr: eigener Ordner (SAF), Cookies-Import | ✅ vom Nutzer bestätigt |
 | Warteschlange: Pause/Fortsetzen bei langen Downloads | ✅ vom Nutzer bestätigt |
 
+### Reiniger (`cleaner/`, `ui/cleaner/`) – nach Vorbild von SD Maid (0.9)
+| Funktion | Status |
+|---|---|
+| Startseiten-Bereich „Reiniger“ (ein-/ausblendbar) mit Speicherübersicht (StatFs, rollende Ziffern) und Werkzeug-Karten; „Alle Dateien verwalten“ erteilt sich ShizuBox per `appops set … MANAGE_EXTERNAL_STORAGE allow` selbst | ✅ |
+| Dateizugriff (`Fs`): Shell-Nutzer darf Android/data + obb (Gruppen ext_data_rw/ext_obb_rw); Listen über **einen** gestreamten `find … -printf '%s\|%T@\|%M\|%p\0'` (neues AIDL `execStream`, kein Binder-Limit, abbrechbar → Prozessbaum wird beendet); ganzer interner Speicher (5300 Einträge) in 0,8 s | ✅ |
+| Papierkorb (`Trash`, `cleaner.db`): nur **reines Umbenennen** (neues AIDL `rename` = `Os.rename`, nie kopieren), drei Papierkorb-Ordner `/.ShizuBoxTrash` (+ `.nomedia`), `Android/data/.ShizuBoxTrash`, `Android/obb/.ShizuBoxTrash`; Wiederherstellen (bei belegtem Ziel „Name (2)“, neu angelegter App-Cache wird ersetzt), endgültig löschen, Aufbewahrung 1–30 Tage (Standard 7), täglicher `TrashWorker` (nur bei ausreichend Akku), Hinweis bei knappem Speicher, Protokoll aller Aktionen (90 Tage) | ✅ getestet mit eigenen Testdateien in Download, Android/data, Android/obb und eigenem Cache: verschieben → wiederherstellen → verschieben → endgültig löschen |
+| ShizuBox' private Temp-Dateien: per `writeFile` in den Papierkorb kopiert, dann gelöscht („internal:“), Wiederherstellen liest mit Allen-Dateien-Zugriff zurück | 🟡 nur Codepfad, wird mit dem System-Reiniger getestet |
+| Schutz (`Guard`, letzte Prüfung vor jedem Verschieben): nur interner Speicher, keine Standard-/Systemordner, nicht der Papierkorb, nie Shizuku, Android/data+obb installierter Apps gesperrt (alle Nutzer/Profile, auch „deinstalliert, Daten behalten“; leere Paketliste bricht ab) außer deren `cache` im App-Cleaner, AICore standardmäßig ausgeschlossen, eigene Ausschlüsse (Pfade + Apps) | ✅ `--es test trash --es mode guard` |
+| Einstellungen (Aufbewahrung, Ausschlüsse, AICore) im Backup (`cleaner`); Papierkorb und Ergebnisse nicht | ✅ |
+
 ### Kacheln & Widget (`tiles/`)
 | Funktion | Status |
 |---|---|
@@ -151,6 +161,7 @@ app/src/main/java/de/emil/shizubox/
   settings/             AppSettings, Language, Backup
   debug/                ScreenRenderer (Offscreen-Screenshots per adb)
   downloader/           Ytdl (yt-dlp/FFmpeg), DownloadQueue, DownloadService, DlStorage, Discover (NewPipe), Settings, ShareActivity
+  cleaner/              Reiniger: Fs (Shell-Dateilisten), Guard (Schutzregeln), Trash (Papierkorb + Protokoll), Einstellungen, Worker
   ui/motion/            Motion (Federn, pressScale, RollingText, Stagger), Shared (Container-Übergang), EmptyState
   ui/                   Compose-Screens je Bereich, ui/glass (GlassCard, GlassBackground), ui/theme
 tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Generator
@@ -181,6 +192,7 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - Nicht exportierte Activities (z. B. Settings-Testmenü unter Android 17) kann nur die App selbst starten – auch nicht per Shizuku
 - APKPure-CDN wird von manchen DNS-Filtern (NextDNS) und VPNs (Google-VPN) blockiert: ShizuBox versucht es ein zweites Mal und zeigt dann einen Hinweis mit Ursache (VPN aktiv / privates DNS mit Namen / sonst Netz). Gemessen 2026-10-16 mit eingeschaltetem Google-VPN: DNS, API (200) und kompletter Download (50-MB-XAPK) funktionieren – Fehler aktuell nicht reproduzierbar, Wiederholung + Hinweis bleiben als Absicherung. Tests: `--es test apkpure`, `--es test apkpurefull [--es pkg <id>]`
 - Stille XAPK-Installationen ließen das Handy 2026-10-16 zweimal hängen (Crunchyroll, Google Home) → `InstallGuard` (Journal, Pause der Version, keine Wiederholung nach Neustart, nur bei Bildschirm aus, Paketverwaltungs-Check, 6-min-Wächter), Fortschritt gedrosselt, harte Shell-Zeitlimits (`execLimited`, Code 124). Diagnose: `--es test updstate` (offene Installationen, liegengebliebene Dateien), `--es test ig`
+- **Reiniger/Dateien (Android 17):** `mv` über die Android/data-Grenze fällt auf Kopieren + setattr zurück – das ließ den FUSE-Dienst von MediaProvider abstürzen (`Check failed: active_nodes_` in `pf_setattr`, gemeinsamer Speicher ~4 s weg, startet selbst neu; 2026-10-17 mit eigenen Testdateien passiert). Deshalb nur `Os.rename` über den Shell-Dienst. Umbenennen in Ordner mit anderer f2fs-Projekt-ID (Kontingent pro App, App-Cache eigene ID) scheitert mit EXDEV – daher die Papierkörbe direkt in Android/data und Android/obb.
 - `pm clear --cache-only` hängt auf Android 17 dauerhaft (auch `cmd package clear --user 0 …`) und löscht nichts
 - APKMirror erlaubt keine automatischen Downloads
 - R8: commons-compress (youtubedl-android) und NewPipe/Rhino brauchen Keep-Regeln, sonst scheitert das Entpacken bzw. die Extraktion

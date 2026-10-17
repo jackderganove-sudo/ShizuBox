@@ -1,5 +1,52 @@
 # Changelog
 
+## 0.9.0 (in Arbeit) – Reiniger
+- Neuer Startseiten-Bereich „Reiniger“ (nach Vorbild von SD Maid) mit Speicherübersicht
+- Papierkorb für alle Reiniger-Werkzeuge: nichts wird sofort gelöscht, 7 Tage (einstellbar) wiederherstellbar,
+  dann automatisch endgültig gelöscht; einzeln oder alles wiederherstellen/löschen, Protokoll, Hinweis bei knappem Speicher
+- Schutzregeln: System-/Standardordner, Daten installierter Apps, Shizuku und der Papierkorb sind fest gesperrt;
+  eigene Ausschlüsse für Pfade und Apps; KI-Modelle (AICore) standardmäßig ausgeschlossen; Einstellungen im Backup
+- Shell-Dienst: Ausgabe als Datenstrom ohne Größenlimit und reines Umbenennen (nie Kopieren – ein kopierendes `mv`
+  nach Android/data brachte den Speicher-Dienst von Android zum Absturz)
+- CHANGELOG sortiert (neueste Version oben)
+
+## 0.8.0 – 2026-10-16
+- Privatsphäre-Protokoll (System): welche App wann Kamera, Mikrofon, Standort, Kontakte, Zwischenablage nutzte –
+  Zeitleiste und pro App, Hervorhebung „Hintergrund“, „Dienst“ und „Bildschirm aus“, Filter, aus jedem Eintrag
+  Berechtigung entziehen / App-Details / Internet sperren, optionale Benachrichtigung bei Kamera/Mikrofon im Hintergrund,
+  stündliche Sammlung, Aufbewahrung 7–365 Tage, nicht im Backup
+- Akku-Report (System): Verbrauch pro App in mAh und % (Vordergrund/Hintergrund/Dienst), Wakelocks, mobile Daten,
+  Weckrufe; „Seit Laden“, „24 Std.“, „Über Nacht“ (Zeitraum einstellbar), Ladestand-Diagramm, Direkt-Aktionen
+  (einschränken, beenden, einfrieren, Internet sperren), optionale Morgen-Zusammenfassung; ShizuBox ehrlich mit aufgeführt
+- Schulmodus-Statistik (Schulmodus-Bereich + Homescreen-Widget): heute/Woche/Monat/insgesamt, 14-Tage-Balken,
+  Durchschnitt, längste Sitzung, Art des Beendens, Bildschirm-Einschaltungen – nur lesend aus dem Schulmodus-Protokoll
+- Zwischenablage-Verlauf (System + Kachel): speichert kopierte Texte und Links auch im Hintergrund (über Shizuku,
+  ohne Dauerabfrage), Suche, Anheften, erneut kopieren mit einem Tipp, Teilen, Löschen; sensible Inhalte und
+  Passwort-Manager werden nie gespeichert, Apps ausschließen, Auto-Löschen, Fingerabdruck-Sperre, nicht im Backup;
+  optional Androids „… hat eingefügt“-Hinweis ausblenden (systemweit, wiederherstellbar)
+- Lautstärke pro App (System + Automations-Aktion): eigener Pegel je App über der Medienlautstärke, echtes Mischen
+  per Shizuku (`PlayerProxy.setVolume` auf jeden Player der App), gerade spielende Apps oben, wird bei jedem neuen
+  Player automatisch wieder angewendet; Aktion „Lautstärke pro App“ mit „Danach zurücksetzen“, im Backup
+- Shell-Dienst kürzt sehr lange Ausgaben (> 512 KB) statt am Binder-Limit zu scheitern (sah aus wie „Shizuku getrennt“)
+
+## 0.7.2 – Stabilitätsrunde (2026-10-16, nicht einzeln veröffentlicht, in 0.8.0 enthalten)
+- Akku: offene App brauchte durch den animierten Hintergrund 70–100 % eines CPU-Kerns, jetzt 7–11 %
+- Fehlerprotokoll unter Einstellungen (Abstürze, ANRs, Hänger; Kopieren/Teilen; 30 Tage; nicht im Backup)
+- Zeitlimits für Massen-Aktionen, Installationen und FFmpeg passend; FFmpeg wird beim Abbrechen beendet
+- Temporäre Dateien werden aufgeräumt; Speicherprüfung vor großen Downloads
+- Download-Liste geht nach einem Neustart nicht mehr verloren (Start vor dem ersten Entsperren)
+- Benachrichtigungen von Boost und Downloads gedrosselt; Download-Dienst übersteht das Android-Zeitbudget
+- Benachrichtigungs-Verlauf mit Größenbremse und Größenanzeige
+- App-Namen und Icons werden nicht mehr beim Zeichnen von der Platte geladen
+- Automationen: Schleifenschutz; keine Installationen während des Schulmodus
+- Details und Messwerte: Stabilitätsbericht in PROJEKTSTAND.md
+
+## 0.7.1 – 2026-10-16 – Selbst-Update 0.7.0 → 0.7.1 vom Nutzer bestätigt
+- Update-Dateien für den System-Installer werden nach 1 Stunde gelöscht (vorher 1 Tag → über 1 GB nach mehreren
+  manuellen Updates), zusätzlich beim App-Start
+- Pausierte Update-Version wird automatisch freigegeben, sobald sie (von Hand) installiert ist
+- „Alles aufräumen“: falsche Warnung zu KI-Modellen entfernt – gemessen: AICore (7,6 GB) bleibt unangetastet, ~4 GB App-Caches frei
+
 ## 0.7.0 – Sitzung 2026-10-15 (Abend) / 2026-10-16 – vom Nutzer auf dem Pixel bestätigt
 - ShizuBox verfolgt seine eigenen GitHub-Releases automatisch: neue Version → Benachrichtigung mit „Installieren“,
   Download und Installation in der App (eigenes, gleich signiertes Update wird nicht von der VirusTotal-Sperre aufgehalten)
@@ -45,43 +92,6 @@
   („VPN kurz pausieren“) und privates DNS wie NextDNS (Domains zum Freigeben werden genannt)
 - Fix: Update-APKs blieben nach der stillen Installation im Cache liegen (bei mir fast 900 MB) – werden jetzt sofort gelöscht
 - Fix: Texte mit „%“ ohne Platzhalter stürzten in `t()` ab
-
-## 0.8.0 – 2026-10-16
-- Privatsphäre-Protokoll (System): welche App wann Kamera, Mikrofon, Standort, Kontakte, Zwischenablage nutzte –
-  Zeitleiste und pro App, Hervorhebung „Hintergrund“, „Dienst“ und „Bildschirm aus“, Filter, aus jedem Eintrag
-  Berechtigung entziehen / App-Details / Internet sperren, optionale Benachrichtigung bei Kamera/Mikrofon im Hintergrund,
-  stündliche Sammlung, Aufbewahrung 7–365 Tage, nicht im Backup
-- Akku-Report (System): Verbrauch pro App in mAh und % (Vordergrund/Hintergrund/Dienst), Wakelocks, mobile Daten,
-  Weckrufe; „Seit Laden“, „24 Std.“, „Über Nacht“ (Zeitraum einstellbar), Ladestand-Diagramm, Direkt-Aktionen
-  (einschränken, beenden, einfrieren, Internet sperren), optionale Morgen-Zusammenfassung; ShizuBox ehrlich mit aufgeführt
-- Schulmodus-Statistik (Schulmodus-Bereich + Homescreen-Widget): heute/Woche/Monat/insgesamt, 14-Tage-Balken,
-  Durchschnitt, längste Sitzung, Art des Beendens, Bildschirm-Einschaltungen – nur lesend aus dem Schulmodus-Protokoll
-- Zwischenablage-Verlauf (System + Kachel): speichert kopierte Texte und Links auch im Hintergrund (über Shizuku,
-  ohne Dauerabfrage), Suche, Anheften, erneut kopieren mit einem Tipp, Teilen, Löschen; sensible Inhalte und
-  Passwort-Manager werden nie gespeichert, Apps ausschließen, Auto-Löschen, Fingerabdruck-Sperre, nicht im Backup;
-  optional Androids „… hat eingefügt“-Hinweis ausblenden (systemweit, wiederherstellbar)
-- Lautstärke pro App (System + Automations-Aktion): eigener Pegel je App über der Medienlautstärke, echtes Mischen
-  per Shizuku (`PlayerProxy.setVolume` auf jeden Player der App), gerade spielende Apps oben, wird bei jedem neuen
-  Player automatisch wieder angewendet; Aktion „Lautstärke pro App“ mit „Danach zurücksetzen“, im Backup
-- Shell-Dienst kürzt sehr lange Ausgaben (> 512 KB) statt am Binder-Limit zu scheitern (sah aus wie „Shizuku getrennt“)
-
-## 0.7.2 – Stabilitätsrunde (2026-10-16, nicht einzeln veröffentlicht, in 0.8.0 enthalten)
-- Akku: offene App brauchte durch den animierten Hintergrund 70–100 % eines CPU-Kerns, jetzt 7–11 %
-- Fehlerprotokoll unter Einstellungen (Abstürze, ANRs, Hänger; Kopieren/Teilen; 30 Tage; nicht im Backup)
-- Zeitlimits für Massen-Aktionen, Installationen und FFmpeg passend; FFmpeg wird beim Abbrechen beendet
-- Temporäre Dateien werden aufgeräumt; Speicherprüfung vor großen Downloads
-- Download-Liste geht nach einem Neustart nicht mehr verloren (Start vor dem ersten Entsperren)
-- Benachrichtigungen von Boost und Downloads gedrosselt; Download-Dienst übersteht das Android-Zeitbudget
-- Benachrichtigungs-Verlauf mit Größenbremse und Größenanzeige
-- App-Namen und Icons werden nicht mehr beim Zeichnen von der Platte geladen
-- Automationen: Schleifenschutz; keine Installationen während des Schulmodus
-- Details und Messwerte: Stabilitätsbericht in PROJEKTSTAND.md
-
-## 0.7.1 – 2026-10-16 – Selbst-Update 0.7.0 → 0.7.1 vom Nutzer bestätigt
-- Update-Dateien für den System-Installer werden nach 1 Stunde gelöscht (vorher 1 Tag → über 1 GB nach mehreren
-  manuellen Updates), zusätzlich beim App-Start
-- Pausierte Update-Version wird automatisch freigegeben, sobald sie (von Hand) installiert ist
-- „Alles aufräumen“: falsche Warnung zu KI-Modellen entfernt – gemessen: AICore (7,6 GB) bleibt unangetastet, ~4 GB App-Caches frei
 
 ## 0.6.0 – Sitzung 2026-10-15 (Nachmittag) – vom Nutzer auf dem Pixel bestätigt
 - Doku: PROJEKTSTAND.md, CHANGELOG.md, CLAUDE.md

@@ -44,6 +44,8 @@ object Backup {
         // Only the settings; copied texts never leave the device.
         "clipboard" to emptySet(),
         "app_volume" to emptySet(),
+        // Only the settings (exclusions, schedule, categories); trash and scan results stay on the device.
+        "cleaner" to emptySet(),
         "privacy" to setOf("since_CAMERA", "since_RECORD_AUDIO", "since_FINE_LOCATION", "since_COARSE_LOCATION"),
     )
 

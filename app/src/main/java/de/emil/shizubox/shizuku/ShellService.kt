@@ -218,6 +218,37 @@ class ShellService : IShellService.Stub() {
         }
     }
 
+    // ------------------------------------------------------------------ files (cleaner)
+
+    override fun execStream(cmd: String, limitMs: Long): ParcelFileDescriptor {
+        val (read, write) = ParcelFileDescriptor.createPipe()
+        val process = ProcessBuilder("sh", "-c", "($cmd) 2>/dev/null").start()
+        process.outputStream.close()
+        thread {
+            // Reader gone (EPIPE) or finished: either way the command must not keep running.
+            runCatching { ParcelFileDescriptor.AutoCloseOutputStream(write).use { process.inputStream.copyTo(it, 64 * 1024) } }
+            if (process.isAlive) {
+                pidOf(process)?.let(::killTree)
+                process.destroyForcibly()
+            }
+        }
+        thread {
+            if (!process.waitFor(limitMs, java.util.concurrent.TimeUnit.MILLISECONDS)) {
+                pidOf(process)?.let(::killTree)
+                process.destroyForcibly()
+            }
+        }
+        return read
+    }
+
+    override fun rename(from: String, to: String): String = try {
+        File(to).parentFile?.mkdirs()
+        android.system.Os.rename(from, to)
+        ""
+    } catch (e: Exception) {
+        e.message ?: e.javaClass.simpleName
+    }
+
     override fun writeFile(fd: ParcelFileDescriptor, path: String): Long = try {
         File(path).parentFile?.mkdirs()
         ParcelFileDescriptor.AutoCloseInputStream(fd).use { input ->

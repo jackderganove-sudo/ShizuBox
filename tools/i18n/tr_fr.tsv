@@ -1061,3 +1061,70 @@ av_empty_hint	Lance de la musique ou une vidéo – l'appli apparaît ici. Ou aj
 av_add	Ajouter une appli
 av_playing	En lecture
 av_reset	Revenir à 100 %
+sec_cleaner	Nettoyeur
+sec_cleaner_sub	Restes, déchets, doublons, stockage
+cl_corpses	Détecteur de restes
+cl_system	Nettoyeur système
+cl_appcache	Nettoyeur d'apps
+cl_dupes	Détecteur de doublons
+cl_analysis	Analyse du stockage
+cl_auto	Nettoyage automatique
+cl_lock_outside	Hors du stockage interne
+cl_lock_standard	Dossier standard – verrouillé
+cl_lock_trash	Fait partie de la corbeille
+cl_lock_excluded	Exclu par toi
+cl_lock_system	Dossier système – verrouillé
+cl_lock_shizuku	Shizuku – verrouillé
+cl_lock_installed	Données d'une app installée – verrouillé
+cl_lock_aicore	Modèles d'IA (AICore) – exclus
+cl_trash	Corbeille
+cl_trash_sub	Vide – tout ce que tu nettoies arrive d'abord ici
+cl_trash_n	%1$d élément|||%1$d éléments
+cl_trash_keep	récupérable pendant %1$d jour|||récupérable pendant %1$d jours
+cl_trash_low	Le stockage est presque plein : l'espace n'est libéré qu'une fois la corbeille vidée.
+cl_trash_empty	Vider la corbeille maintenant
+cl_restore_all	Tout restaurer
+cl_restore	Restaurer
+cl_delete_forever	Supprimer définitivement
+cl_trash_hint	Les fichiers sont seulement déplacés : c'est instantané et ne prend pas de place en plus. Après le délai, ils sont supprimés définitivement automatiquement.
+cl_trash_empty_title	La corbeille est vide
+cl_trash_empty_hint	Ce que les outils de nettoyage retirent attend d'abord ici.
+cl_restored	%1$d élément restauré ✓|||%1$d éléments restaurés ✓
+cl_freed	%1$s libérés ✓
+cl_purge_q	Supprimer définitivement ?
+cl_purge_body	%1$d élément (%2$s) sera supprimé et ne pourra pas être restauré.|||%1$d éléments (%2$s) seront supprimés et ne pourront pas être restaurés.
+cl_days_left	encore %1$d jour|||encore %1$d jours
+cl_more	Afficher %1$d de plus
+cl_log	Journal
+cl_log_empty	Rien n'a encore été nettoyé
+cl_log_trash	Vers la corbeille
+cl_log_restore	Restauré
+cl_log_delete	Supprimé
+cl_log_expired	Expiré, supprimé
+cl_log_blocked	Verrouillé, ignoré
+cl_log_failed	⚠ Échec
+cl_confirm_title	Déplacer vers la corbeille ?
+cl_confirm_body	%1$d élément · %2$s|||%1$d éléments · %2$s
+cl_confirm_days	Récupérable pendant %1$d jour, puis supprimé définitivement. L'espace est libéré une fois la corbeille vidée.|||Récupérable pendant %1$d jours, puis supprimé définitivement. L'espace est libéré une fois la corbeille vidée.
+cl_to_trash	Vers la corbeille
+cl_moved	%1$d élément déplacé vers la corbeille (%2$s) ✓|||%1$d éléments déplacés vers la corbeille (%2$s) ✓
+cl_failed	%1$d ignoré : %2$s|||%1$d ignorés, p. ex. : %2$s
+cl_nothing	Rien à faire
+cl_used	utilisé
+cl_free	libre
+cl_of_total	sur %1$s de stockage interne
+cl_private_hint	ShizuBox accède à Android/data et Android/obb via Shizuku. Les données privées des apps (/data/data) restent inaccessibles sans root – le système nettoie leurs caches.
+cl_settings	Réglages du nettoyeur
+cl_keep_days	Conserver les éléments supprimés pendant
+cl_exclusions	Exclusions
+cl_exclusions_sub	Jamais affichés ni nettoyés par un outil. Aussi : appui long sur un résultat.
+cl_excl_paths	Dossiers et fichiers
+cl_excl_path_hint	Chemin, p. ex. Pictures/Garder
+cl_excl_apps	Apps
+cl_excl_add_app	Exclure une app
+cl_add	Ajouter
+cl_remove	Retirer
+cl_locked_info	Toujours verrouillé : dossiers système et standard, Android/data et Android/obb des apps installées (sauf leur cache dans le nettoyeur d'apps), Shizuku et la corbeille elle-même.
+cl_aicore	Inclure les modèles d'IA (AICore)
+cl_aicore_sub	Désactivé par défaut : AICore garde les modèles d'IA de l'appareil (plusieurs Go) dans son cache ; ils seraient retéléchargés.
+cl_just_now	à l'instant

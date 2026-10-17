@@ -12,6 +12,9 @@ import android.util.Log
 import de.emil.shizubox.BuildConfig
 import de.emil.shizubox.IShellService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.isActive
+import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -42,7 +45,7 @@ enum class ShizukuStatus {
 
 object ShizukuManager {
     /** Bump when IShellService changes. */
-    private const val SERVICE_REV = 4
+    private const val SERVICE_REV = 5
     /** Hard limit for a shell command when the caller gives none. */
     const val DEFAULT_LIMIT = 60_000L
 
@@ -182,6 +185,48 @@ object ShizukuManager {
 
     suspend fun unwatchClipboard() = withContext(Dispatchers.IO) {
         runCatching { awaitService(1000)?.unwatchClipboard() }
+    }
+
+    /**
+     * Output of [cmd] as records split at [sep] (NUL for `find -printf '…\0'`, so any file name
+     * works), without the binder size limit. Leaving [block] or cancelling the caller closes the
+     * pipe, and the service then kills the command. Throws [ShizukuUnavailableException].
+     */
+    suspend fun <T> execRecords(cmd: String, limitMs: Long = DEFAULT_LIMIT, sep: Char = '\u0000', block: (Sequence<String>) -> T): T = withContext(Dispatchers.IO) {
+        val svc = awaitService(3000) ?: throw ShizukuUnavailableException()
+        val pfd = try {
+            svc.execStream(cmd, limitMs)
+        } catch (e: Exception) {
+            Log.e(TAG, "execStream failed: $cmd", e)
+            throw ShizukuUnavailableException()
+        }
+        val ctx = coroutineContext
+        android.os.ParcelFileDescriptor.AutoCloseInputStream(pfd).bufferedReader(Charsets.UTF_8).use { r ->
+            val records = sequence {
+                val sb = StringBuilder()
+                val buf = CharArray(16 * 1024)
+                while (ctx.isActive) {
+                    val n = r.read(buf)
+                    if (n < 0) break
+                    for (i in 0 until n) {
+                        if (buf[i] == sep) { yield(sb.toString()); sb.setLength(0) } else sb.append(buf[i])
+                    }
+                }
+                if (sb.isNotEmpty() && ctx.isActive) yield(sb.toString())
+            }
+            block(records)
+        }.also { ctx.ensureActive() }
+    }
+
+    /** Pure rename as the Shizuku user (never a copy). Returns null on success, else the error. */
+    suspend fun rename(from: String, to: String): String? = withContext(Dispatchers.IO) {
+        val svc = awaitService(3000) ?: throw ShizukuUnavailableException()
+        val r = try {
+            svc.rename(from, to)
+        } catch (e: Exception) {
+            throw ShizukuUnavailableException()
+        }
+        r.ifEmpty { null }
     }
 
     /** Copies [fd] to [path] as the Shizuku user. Returns bytes written or -1. */
