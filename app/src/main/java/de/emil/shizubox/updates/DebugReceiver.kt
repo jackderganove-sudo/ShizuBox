@@ -129,7 +129,17 @@ class DebugReceiver : BroadcastReceiver() {
                             }.toString()
                             val r2 = de.emil.shizubox.settings.Backup.import(context, evil)
                             val privAfter = clipP.all.filterKeys { it == "enabled" || it == "toast_before" }
+                            // 0.11.1: a broken entry (last file) must leave everything unchanged.
+                            val beforeBroken = de.emil.shizubox.settings.Backup.export(context, includeSecrets = false)
+                            val broken = org.json.JSONObject(a).apply {
+                                val pj = getJSONObject("prefs")
+                                pj.getJSONObject("app_settings").put("zz_test_marker", org.json.JSONObject().put("t", "s").put("v", "x"))
+                                pj.put("school_schedule", (pj.optJSONObject("school_schedule") ?: org.json.JSONObject()).put("days", org.json.JSONObject().put("t", "i").put("v", "kaputt")))
+                            }.toString()
+                            val brokenErr = runCatching { de.emil.shizubox.settings.Backup.import(context, broken) }.exceptionOrNull()?.javaClass?.simpleName
+                            val afterBroken = de.emil.shizubox.settings.Backup.export(context, includeSecrets = false)
                             "roundtrip equal=${strip(a) == strip(b)} result=$r size=${a.length} keys=${org.json.JSONObject(a).getJSONObject("prefs").keys().asSequence().toList()} vtKeyKept=${de.emil.shizubox.installer.VirusTotal.apiKey.isNotBlank()} " +
+                                "broken: err=$brokenErr unchanged=${strip(beforeBroken) == strip(afterBroken)} schedule=${org.json.JSONObject(a).getJSONObject("prefs").optJSONObject("school_schedule")?.keys()?.asSequence()?.toList()} " +
                                 "privacy: offers=${r2.offers} clipboard before=$privBefore after=$privAfter unchanged=${privBefore == privAfter} " +
                                 "clip=${de.emil.shizubox.clipboard.ClipHistory.settings.value.enabled} nh=${de.emil.shizubox.notifications.NotifHistory.settings.value.enabled} pv=${de.emil.shizubox.privacy.PrivacyLog.settings.value.enabled}"
                         }

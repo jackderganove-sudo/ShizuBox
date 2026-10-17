@@ -46,6 +46,9 @@
   Akku-Verlauf: Ladestand-Tabelle wird auch ohne Shizuku auf 30 Tage gekürzt
 - Netzwerksperre: nach dem Setzen wird der echte Zustand jeder App (und der Firewall-Kette) zurückgelesen und genau
   der gespeichert; vorher zählte nur der Exit-Code des letzten Befehls (`NetBlockParseTest`, 2 Unit-Tests)
+- Uhrzeit/Zeitzone geändert: Automationen und automatisches Aufräumen planen ihren nächsten Termin neu; der
+  Schulmodus-Zeitplan ist jetzt im Backup; Import erst vollständig prüfen, dann schreiben (ein kaputter Eintrag ließ
+  vorher eine Mischung aus alten und neuen Einstellungen zurück – live geprüft)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

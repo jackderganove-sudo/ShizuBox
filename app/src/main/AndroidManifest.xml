@@ -176,6 +176,16 @@
             android:name=".automation.AutomationAlarmReceiver"
             android:exported="false" />
 
+        <!-- Protected system broadcasts only (time and time zone changed). -->
+        <receiver
+            android:name=".automation.TimeChangeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name=".battery.NightReceiver"
             android:exported="false" />

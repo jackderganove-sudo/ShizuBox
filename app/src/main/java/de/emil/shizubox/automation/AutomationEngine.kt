@@ -447,3 +447,15 @@ class AutomationAlarmReceiver : BroadcastReceiver() {
         }
     }
 }
+
+/**
+ * Clock or time zone changed: alarms are absolute times, so the next time rule and the automatic
+ * cleaning are planned again (Daniel's review, 0.11.1). The school schedule has its own receiver.
+ */
+class TimeChangeReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action != Intent.ACTION_TIME_CHANGED && intent.action != Intent.ACTION_TIMEZONE_CHANGED) return
+        runCatching { AutomationEngine.scheduleNextTime() }
+        runCatching { de.emil.shizubox.cleaner.CleanerSchedule.schedule(context) }
+    }
+}

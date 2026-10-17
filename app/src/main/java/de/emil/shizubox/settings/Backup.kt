@@ -48,6 +48,8 @@ object Backup {
         // Only the settings (exclusions, schedule, categories); trash and scan results stay on the device.
         "cleaner" to emptySet(),
         "hilight" to emptySet(),
+        // Days and time of the planned school mode; "skip the next one" is runtime state.
+        "school_schedule" to setOf("skip_until"),
         "privacy" to setOf("enabled", "since_CAMERA", "since_RECORD_AUDIO", "since_FINE_LOCATION", "since_COARSE_LOCATION"),
     )
 
@@ -116,15 +118,25 @@ object Backup {
             } == true
             inBackup && !s.isOn(prefs(context, s.prefs))
         }
+        // Two phases (Daniel's review, 0.11.1): first decode and check everything, then write – a
+        // broken entry used to leave a half-imported mix of old and new settings.
+        val plan = PREFS.mapNotNull { (name, excluded) ->
+            val o = prefsJson.optJSONObject(name) ?: return@mapNotNull null
+            name to o.keys().asSequence().filter { it !in excluded }.associateWith { k -> decode(o.getJSONObject(k)) }
+        }
+        val school = root.optJSONObject("school")?.let { s ->
+            s.optInt("auto_end", SchoolMode.state.value.autoEndMinutes).coerceAtLeast(0) to
+                s.optBoolean("wait_for_shizuku", SchoolMode.state.value.waitForShizukuAfterReboot)
+        }
         var count = 0
-        for ((name, excluded) in PREFS) {
-            val o = prefsJson.optJSONObject(name) ?: continue
+        for ((name, values) in plan) {
+            val excluded = PREFS.getValue(name)
             val p = prefs(context, name)
             val secret = SECRETS[name].orEmpty()
             val edit = p.edit()
             // Replace everything except excluded keys and secrets the backup does not contain.
-            p.all.keys.filter { it !in excluded && (it !in secret || o.has(it)) }.forEach { edit.remove(it) }
-            o.keys().forEach { k -> if (k !in excluded) put(edit, k, o.getJSONObject(k)) }
+            p.all.keys.filter { it !in excluded && (it !in secret || it in values) }.forEach { edit.remove(it) }
+            values.forEach { (k, v) -> putValue(edit, k, v) }
             edit.commit()
             count++
         }
@@ -148,13 +160,14 @@ object Backup {
         de.emil.shizubox.audio.AppVolume.load()
         de.emil.shizubox.cleaner.CleanerSettings.load()
         de.emil.shizubox.hilight.HiLightSettings.load()
+        de.emil.shizubox.school.SchoolSchedule.init(context)
         runCatching { de.emil.shizubox.cleaner.CleanerSchedule.schedule(context) }
         runCatching { de.emil.shizubox.apps.NetBlock.restore(force = true) }
         Updates.init(context)
         UpdateWorker.schedule(context)
-        root.optJSONObject("school")?.let { s ->
-            SchoolMode.setAutoEndMinutes(s.optInt("auto_end", SchoolMode.state.value.autoEndMinutes))
-            SchoolMode.setWaitForShizukuAfterReboot(s.optBoolean("wait_for_shizuku", SchoolMode.state.value.waitForShizukuAfterReboot))
+        school?.let { (autoEnd, wait) ->
+            SchoolMode.setAutoEndMinutes(autoEnd)
+            SchoolMode.setWaitForShizukuAfterReboot(wait)
         }
         root.optString("language").takeIf { root.has("language") && it != Language.current(context) }?.let { Language.set(context, it) }
         return Result(count, apps, offers)
@@ -169,14 +182,26 @@ object Backup {
         else -> JSONObject().put("t", "s").put("v", v.toString())
     }
 
-    private fun put(edit: SharedPreferences.Editor, key: String, o: JSONObject) {
-        when (o.optString("t")) {
-            "b" -> edit.putBoolean(key, o.getBoolean("v"))
-            "i" -> edit.putInt(key, o.getInt("v"))
-            "l" -> edit.putLong(key, o.getLong("v"))
-            "f" -> edit.putFloat(key, o.getDouble("v").toFloat())
-            "ss" -> edit.putStringSet(key, o.getJSONArray("v").let { a -> (0 until a.length()).map { a.getString(it) }.toSet() })
-            else -> edit.putString(key, o.optString("v"))
+    /** One typed value of the backup; throws on anything malformed (checked before writing). */
+    private fun decode(o: JSONObject): Any = when (val t = o.getString("t")) {
+        "b" -> o.getBoolean("v")
+        "i" -> o.getInt("v")
+        "l" -> o.getLong("v")
+        "f" -> o.getDouble("v").toFloat()
+        "ss" -> o.getJSONArray("v").let { a -> (0 until a.length()).map { a.getString(it) }.toSet() }
+        "s" -> o.getString("v")
+        else -> error("unknown type $t")
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun putValue(edit: SharedPreferences.Editor, key: String, v: Any) {
+        when (v) {
+            is Boolean -> edit.putBoolean(key, v)
+            is Int -> edit.putInt(key, v)
+            is Long -> edit.putLong(key, v)
+            is Float -> edit.putFloat(key, v)
+            is Set<*> -> edit.putStringSet(key, v as Set<String>)
+            else -> edit.putString(key, v.toString())
         }
     }
 }
