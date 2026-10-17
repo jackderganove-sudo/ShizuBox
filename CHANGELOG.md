@@ -20,6 +20,9 @@
   Ziel existiert (sonst „Name (2)“); zwei Einträge mit gleichem Originalpfad kommen beide zurück. Schlägt die
   Existenzprüfung fehl, wird nichts aus dem Index gelöscht (vorher hielt ein Fehler alles für „weg“)
   (`TrashRestoreTest`, 5 Unit-Tests; live auf dem Pixel geprüft)
+- Automationen: Zeit-Regeln feuern pro Termin (Datum + Uhrzeit) nur noch einmal – eine Regel um 10:00 lief mit einer
+  zweiten um 10:01 doppelt (2-Minuten-Toleranz ohne Merker); Verspätung nach Mitternacht zählt zum richtigen Tag
+  (`TimeTrigger`, 5 Unit-Tests)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

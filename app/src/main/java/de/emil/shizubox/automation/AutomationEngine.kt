@@ -261,16 +261,19 @@ object AutomationEngine {
         if (next == null) am.cancel(pi) else am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, next, pi)
     }
 
-    /** Alarm went off: run every time rule of this minute, then schedule the next one. */
+    /**
+     * Alarm went off: run every time rule whose occurrence is due, each occurrence only once
+     * ("time_<id>" = the last one that ran, see [TimeTrigger]), then schedule the next one.
+     */
     suspend fun onAlarm() {
         val now = Calendar.getInstance()
-        val minute = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)
-        val bit = (now.get(Calendar.DAY_OF_WEEK) + 5) % 7
-        Rules.rules.value.filter {
-            it.enabled && it.trigger.kind == TriggerKind.Time && it.trigger.days shr bit and 1 == 1 &&
-                // An alarm may come a little late in doze.
-                (minute - it.trigger.minute + 1440) % 1440 <= 2
-        }.forEach { fire(it) }
+        for (r in Rules.rules.value) {
+            if (!r.enabled || r.trigger.kind != TriggerKind.Time) continue
+            val occ = TimeTrigger.due(r.trigger.days, r.trigger.minute, now, prefs.getLong("time_${r.id}", 0)) ?: continue
+            // Marked before running: a crash in the actions must not repeat them on the next alarm.
+            prefs.edit().putLong("time_${r.id}", occ).commit()
+            fire(r)
+        }
         scheduleNextTime()
     }
 
