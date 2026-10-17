@@ -21,6 +21,10 @@ adb -s <ip:port> install -r app/build/outputs/apk/release/app-release.apk
 - Neue Einstellungen in `Backup` aufnehmen; neue Startseiten-Bereiche über `Section` (ein-/ausblendbar).
 - **Neue Funktionen in den Such-Index aufnehmen**: Eintrag in `search/SearchIndex.kt` (Ziel, Symbol, ggf. Schnellaktion) + Stichwörter `sk_<id>` in 5 Sprachen über `tools/i18n`; Karten, zu denen gesprungen wird, bekommen `Modifier.highlight("<key>")`, ihre Liste `HighlightScroll`.
 - Nach jedem Schritt: bauen, auf dem Pixel testen, committen, PROJEKTSTAND.md + CHANGELOG.md aktualisieren.
+- **Snapshot/Index erst löschen, wenn alles erfolgreich war (fail safe).** Ein fehlgeschlagener oder unklarer
+  Schritt (Exit-Code ≠ 0, Zeitlimit, abgeschnittene Ausgabe) lässt den gespeicherten Zustand stehen.
+- **Paketname und Signatur bei jeder Installation prüfen** (`UpdateGate`): Paket = verfolgte App, Signatur gleich.
+- Reine Logik testbar halten: Unit-Tests unter `app/src/test` (`./gradlew :app:testDebugUnitTest`).
 
 ## i18n
 Alle Texte in 5 Sprachen über `tools/i18n` (README dort): Skript mit `S5(key, en, de, tr, es, fr)` + `save()`,

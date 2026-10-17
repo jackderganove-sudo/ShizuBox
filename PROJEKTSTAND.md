@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.11.0** (versionCode 13, 2026-10-17: Suche + Startseite ordnen; 0.10.1: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
+| Version | **0.11.1** (versionCode 14, 2026-10-17: Bugfixes nach Code-Review von Daniel; 0.11.0: Suche + Startseite ordnen; 0.10.1: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -19,12 +19,12 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Funktion | Status |
 |---|---|
 | Aktivieren per Knopf, Startseiten-Karte und Schnelleinstellungs-Kachel | ✅ |
-| Snapshot aller geänderten Einstellungen, exakte Wiederherstellung | ✅ |
+| Snapshot aller geänderten Einstellungen, exakte Wiederherstellung – Schritt für Schritt mit eigenem Zeitlimit, Snapshot erst gelöscht, wenn alles zurück ist, sonst Benachrichtigung „Erneut versuchen“ (`RestorePlan`, 0.11.1) | ✅ |
 | Flugmodus, WLAN/BT/Daten aus, DND, kein Ton/Vibration, AOD/Sperrbildschirm-Benachrichtigungen/Kamera-Doppeldruck/Gemini/Fingerabdruck aus | ✅ |
 | Apps pausieren (`pm suspend`) außer Telefon/Notruf, Einstellungen, Shizuku, Launcher | ✅ |
 | Schwarzer Bildschirm (`BlackActivity` + Foreground-Service), auch über dem Sperrbildschirm | ✅ |
 | Ausstieg 3× Power (Polling), Auto-Ende nach fester Zeit | ✅ |
-| Neustart: Zustand im geräte­geschützten Speicher, „Sofort schwarz“ oder „Erst mit Shizuku“, Anleitung ohne Shizuku | ✅ |
+| Neustart: Zustand im geräte­geschützten Speicher, „Sofort schwarz“ oder „Erst mit Shizuku“, Anleitung ohne Shizuku; Statusleisten-Sperre wird mit Shizuku neu gesetzt (0.11.1) | ✅ |
 | Zeitplan (Wochentage + Uhrzeit, einmal aussetzen) | ✅ |
 | Notausstieg per adb (`AdbExitReceiver`) | ✅ |
 
@@ -228,6 +228,34 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - APKMirror erlaubt keine automatischen Downloads
 - R8: commons-compress (youtubedl-android) und NewPipe/Rhino brauchen Keep-Regeln, sonst scheitert das Entpacken bzw. die Extraktion
 - uiautomator wird durch die pulsierende Shizuku-Animation nie „idle“ → Koordinaten per Screenshot bestimmen
+
+## Code-Review von Daniel (0.11.1, 2026-10-17) – Befunde zu Commit 4477ef0
+✔ = von Daniel selbst verifiziert. Unit-Tests: `./gradlew :app:testDebugUnitTest` (54 Tests, alle grün);
+„live“ = auf dem Pixel (Android 17) mit eigenen Testdateien bzw. per `DebugReceiver` geprüft.
+
+| # | Befund | Bestätigt? | Fix | Test |
+|---|---|---|---|---|
+| 1 ✔ | Update kann fremde App installieren | ja – Paket nie mit verfolgter App verglichen, „nicht installiert“ galt als Signatur ok | `UpdateGate`: Paket = verfolgte App, nur installierte Apps mit gleicher Signatur still, Self-Update nur ShizuBox + gleiche Signatur, VT-Sperre ohne Schlüssel hält zurück | `UpdateGateTest` (10) |
+| 2 ✔ | Schulmodus-Wiederherstellung gilt trotz Fehlern als erfolgreich | ja – ein Skript, Fehler nur geloggt, danach `store.clear()`; zusätzlich gefunden: fehlende Schlüssel wurden zu `settings delete`, eine deinstallierte pausierte App ließ `pm unsuspend` dauerhaft scheitern (Pixel: Exit 1) | `RestorePlan`: jeder Schritt einzeln (15 s, Entsperren 60 s), Exit 0 = Erfolg, nur Erledigtes verlässt den Snapshot, Rest → Benachrichtigung „Erneut versuchen“ + Fehlerprotokoll; Aktivieren/Schwarzbild/3× Power unverändert | `RestorePlanTest` (11, fehlschlagende/hängende/abbrechende Befehle); Schulmodus auf dem Handy **nicht** aktiviert |
+| 3 ✔ | Duplikate 64–128 KB als gleich gewertet | ja | identisch = immer SHA-256 der ganzen Datei | `DuplicatesTest` (4) + live (2 × 110 KB, anderes Ende → keine Gruppe) |
+| 4 ✔ | Geräte-Backup enthält alle Verläufe | ja (`ALLOW_BACKUP` gesetzt) | `allowBackup="false"` + `data_extraction_rules.xml` schließt alles aus (Cloud und Gerätewechsel); eigenes Backup bleibt – Begründung: Verläufe, Datenschutz-Protokoll, Schulmodus-Snapshot, VT-Schlüssel, Papierkorb-Index gehören nicht in die Cloud/auf ein anderes Handy | live: `dumpsys package` ohne `ALLOW_BACKUP` |
+| 5 ✔ | Papierkorb „Alle wiederherstellen“ überschreibt | ja; `existing()` ignorierte Fehler | Shell-Dienst prüft direkt vor `rename` (nie überschreiben, `EEXIST`), pro Eintrag „Name (2)“ …; `existing()` → null bei Fehler, dann wird nichts gelöscht | `TrashRestoreTest` (5) + live (2 × gleicher Pfad → beide da; simulierter Prüffehler → Index bleibt 10/10) |
+| 6 ✔ | Zeit-Automationen doppelt | ja (Regel 10:00 lief um 10:01 erneut) | letzter ausgeführter Termin (Datum + Uhrzeit) pro Regel | `TimeTriggerTest` (5) |
+| 7 ✔ | Verlaufs-Sperre bleibt nach Home offen | ja (`remember` ohne Lebenszyklus) | `privateScreen()`: sperrt bei ON_STOP, FLAG_SECURE | live: Screenshot der Zwischenablage-Seite schwarz, nach Zurück Flag wieder weg |
+| 8 ✔ | Backup-Import übernimmt `clipboard.enabled`/`toast_before` | ja | Datenschutz-Schalter nie importiert, nur als an/aus gemerkt und danach angeboten; `toast_before` raus | live (altes Backup mit allem an → nichts geändert) |
+| 9 ✔ | Kacheln Clean/Cache im MainScope | ja (onDestroy bricht ab) | über `CleanerJobs` (app-weit, Vordergrunddienst) | Build (kein Live-Lauf: würde echte Caches/Dateien anfassen) |
+| 10 | Statusleisten-Sperre nach Neustart im Schulmodus fehlt | ja – Flags nur im Speicher von system_server (`dumpsys statusbar`: `mDisableRecords`) | bei aktiv + Shizuku bereit erneut setzen (idempotent), nur Wiederherstellung nach Boot | Code-Prüfung; kein Neustart erlaubt → Nutzertest |
+| 11 | InstallActivity liest ZIP im Main-Thread | ja | Prüfung auf `Dispatchers.IO`, Ladeanzeige | live: Nicht-APK-ZIP per „Öffnen mit“ → App-Auswahl ohne ShizuBox |
+| 12 ✔ | VirusTotal-Upload mit Umlauten | ja | Länge in UTF-8-Bytes, Dateiname bereinigt | `VirusTotalUploadTest` (2, lokaler HTTP-Server) |
+| 13 | Ausnahmen schützen nur Android/ | ja | bekannte App-Ordner (/WhatsApp …) und Paket-Ordner im Hauptspeicher | `GuardExclusionTest` (4) |
+| 14 ✔ | FD-Leck Trash, `writeFile = -1` ignoriert | ja | `use {}`; Split-Kopie wird geprüft | Build |
+| 15 | BoostService mehrere Collector; PrivacyLog Statement pro Zeile | ja | ein Collector pro Dienst; Statement einmal kompiliert und geschlossen | live (`--es test privacy`: 43 neue Einträge, fehlerfrei) |
+| 16 | Zwischenablage-Dedupe > 20 000 Zeichen; Ladestand-Tabelle wächst | ja | gekürzt vergleichen; Kürzen auf 30 Tage auch ohne Shizuku | Build |
+| 17 | NetBlock prüft nur letzten Exit-Code | ja | echten Zustand zurücklesen und speichern | `NetBlockParseTest` (2, Ausgabe vom Pixel); Sperren selbst nicht live (Netzwerkänderung) |
+| 18 | Zeit/Zeitzone, `school_schedule` fehlt im Backup, Import nicht atomar | ja | `TimeChangeReceiver`; Zeitplan im Backup (ohne `skip_until`); erst alles prüfen, dann schreiben | live (kaputter Eintrag → nichts geändert) |
+| 19 | Logcat-Freitext, Export-Dateiname, `)` an geteilter URL | ja | `Fs.q` + nur Ziffern als PID; Version bereinigt; Satzzeichen/überzählige Klammern abschneiden | `SharedUrlTest` (4) |
+| 20 | `.pyc` im Repo | ja | `.gitignore` ergänzt, `.pyc` entfernt | `git ls-files` |
+| 21 | Auto-Clean „Logs/Temp“ trifft Documents/Download | ja | automatisch nur außerhalb der eigenen Ordner und nicht lose im Hauptordner; manuell weiter alles, Hinweis in den Einstellungen | `AutoCleanScopeTest` (3) + live (Download/Documents = nur manuell) |
 
 ## Stabilitätsbericht 2 (0.10.1, 2026-10-17) – nach 0.8 (Privatsphäre, Akku, Zwischenablage, Lautstärke), 0.9 (Reiniger), 0.10 (HiLight)
 
