@@ -44,6 +44,8 @@
   Datenschutz-Protokoll nutzt beim Sammeln eine einzige, geschlossene SQL-Anweisung
 - Zwischenablage: Texte über 20 000 Zeichen werden beim erneuten Kopieren wiedererkannt (vorher Duplikate);
   Akku-Verlauf: Ladestand-Tabelle wird auch ohne Shizuku auf 30 Tage gekürzt
+- Netzwerksperre: nach dem Setzen wird der echte Zustand jeder App (und der Firewall-Kette) zurückgelesen und genau
+  der gespeichert; vorher zählte nur der Exit-Code des letzten Befehls (`NetBlockParseTest`, 2 Unit-Tests)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

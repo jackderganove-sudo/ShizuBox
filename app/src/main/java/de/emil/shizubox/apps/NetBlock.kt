@@ -76,8 +76,19 @@ object NetBlock {
             if (next.isEmpty()) add("cmd connectivity set-chain3-enabled false")
         }
         val r = ShizukuManager.exec(cmds.joinToString("; "), 10_000, limitMs = 20_000L + cmds.size * 500L)
-        if (r.code != 0) error(r.err.ifBlank { r.out }.trim())
-        save(next)
+        // "a; b; c" only reports the exit code of c (Daniel's review, 0.11.1): read back what the
+        // system really has (Android 17: "com.android.chrome:allow" / ":deny", "chain:enabled")
+        // and remember exactly that.
+        val back = ShizukuManager.exec(
+            "cmd connectivity get-chain3-enabled; for p in ${targets.joinToString(" ")}; do cmd connectivity get-package-networking-enabled \$p; done",
+            10_000, limitMs = 20_000L + targets.size * 500L,
+        ).out
+        val state = parseNetState(back)
+        val chainOn = state[CHAIN] == true
+        val actual = _blocked.value - targets.toSet() + targets.filter { state[it] == true && chainOn }
+        save(actual)
+        val wrong = targets.filter { (it in actual) != block }
+        if (wrong.isNotEmpty()) error((r.err.ifBlank { r.out }.trim() + "\n" + wrong.joinToString()).trim())
         targets
     }
 
@@ -95,3 +106,20 @@ object NetBlock {
         ShizukuManager.exec(cmds.joinToString("; "), 15_000, limitMs = 20_000L + cmds.size * 500L)
     }
 }
+
+internal const val CHAIN = "chain"
+
+/**
+ * Output of `get-chain3-enabled` and `get-package-networking-enabled` → name to "blocked"
+ * ([CHAIN] → chain enabled). Lines that are not a state (errors) are left out = unknown.
+ */
+internal fun parseNetState(out: String): Map<String, Boolean> = out.lines().mapNotNull { line ->
+    val name = line.substringBeforeLast(':', "").trim()
+    when (line.substringAfterLast(':').trim()) {
+        "deny" -> name to true
+        "allow" -> name to false
+        "enabled" -> name to true
+        "disabled" -> name to false
+        else -> null
+    }?.takeIf { it.first.isNotEmpty() && ' ' !in it.first }
+}.toMap()
