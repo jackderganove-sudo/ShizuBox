@@ -93,7 +93,7 @@ fun ClipboardScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     val version by ClipHistory.version.collectAsStateWithLifecycle()
     var query by rememberSaveable { mutableStateOf("") }
     var showSettings by rememberSaveable { mutableStateOf(false) }
-    var unlocked by remember { mutableStateOf(!s.lock) }
+    var unlocked by privateScreen(s.lock)
     var copied by remember { mutableStateOf<Long?>(null) }
     val clips by produceState<List<Clip>?>(null, version, query) { value = ClipHistory.clips(query) }
     val listStart = rememberListStart(Unit)

@@ -120,7 +120,7 @@ fun NotificationHistoryScreen(shizukuReady: Boolean, onBack: () -> Unit, initial
         access = NotifHistory.hasAccess(context)
         onPauseOrDispose { }
     }
-    var unlocked by remember { mutableStateOf(!s.lock) }
+    var unlocked by privateScreen(s.lock)
     // Opened app (conversations) and opened chat.
     var openPkg by rememberSaveable { mutableStateOf(initialPkg) }
     var openConv by rememberSaveable { mutableStateOf(initialConv) }
