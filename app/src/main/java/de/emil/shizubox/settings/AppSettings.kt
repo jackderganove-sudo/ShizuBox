@@ -57,6 +57,12 @@ data class Settings(
     val showQuickActions: Boolean = true,
     /** Section names hidden from the home screen. */
     val hiddenSections: Set<String> = emptySet(),
+    /** Home screen order of keys ("shizuku", "school", "quick", "sec:<Section>", "fav:<search id>"); empty = default. */
+    val homeOrder: List<String> = emptyList(),
+    /** Pinned sub pages/tools (search index ids). */
+    val favorites: List<String> = emptyList(),
+    /** Section tiles shown full width instead of two per row. */
+    val wideSections: Set<String> = emptySet(),
 )
 
 /** App-wide settings in device-protected storage (also readable before the first unlock). */
@@ -88,6 +94,9 @@ object AppSettings {
             showSchoolCard = prefs.getBoolean("show_school_card", d.showSchoolCard),
             showQuickActions = prefs.getBoolean("show_quick_actions", d.showQuickActions),
             hiddenSections = prefs.getString("hidden_sections", "").orEmpty().split(',').filter { it.isNotBlank() }.toSet(),
+            homeOrder = prefs.getString("home_order", "").orEmpty().split(',').filter { it.isNotBlank() },
+            favorites = prefs.getString("favorites", "").orEmpty().split(',').filter { it.isNotBlank() },
+            wideSections = prefs.getString("wide_sections", "").orEmpty().split(',').filter { it.isNotBlank() }.toSet(),
         )
     }
 
@@ -113,6 +122,9 @@ object AppSettings {
             .putBoolean("show_school_card", s.showSchoolCard)
             .putBoolean("show_quick_actions", s.showQuickActions)
             .putString("hidden_sections", s.hiddenSections.joinToString(","))
+            .putString("home_order", s.homeOrder.joinToString(","))
+            .putString("favorites", s.favorites.joinToString(","))
+            .putString("wide_sections", s.wideSections.joinToString(","))
             .apply()
     }
 

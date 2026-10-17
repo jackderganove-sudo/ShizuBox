@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.10.1** (versionCode 12, 2026-10-17: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
+| Version | **0.11.0** (versionCode 13, 2026-10-17: Suche + Startseite ordnen; 0.10.1: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -119,6 +119,13 @@ Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 | Laden: Laufzeit-Empfänger für Netzteil-Anschluss (Manifest-Empfänger bekommen ihn seit Android 8 nicht mehr) → Balken 5 s; 100 % über den 15-Min.-Akku-Worker | 🟡 nicht am Gerät getestet |
 | Automations-Aktionen „HiLight-Muster abspielen“/„HiLight aus“, Kachel „HiLight“ (an/aus), Farbvorschläge aus dem Hintergrundbild (system_accent), Vorschau mit animierter LED-Leiste auf dem Bildschirm, „LEDs zurücksetzen“, Hinweis wenn HiLight Studio installiert ist, Einstellungen/Regeln im Backup (`hilight`) | ✅ |
 
+### Suche & Startseite (`search/`, `nav/`, `ui/home/HomeLayout.kt`)
+| Funktion | Status |
+|---|---|
+| Suche oben auf der Startseite (Lupe klappt zum Feld auf): Such-Index `SearchIndex` (~60 Einträge: Bereiche, Unterseiten, Karten, Einstellungen, Schnellaktionen) mit Titeln + Stichwörtern/Synonymen `sk_*` in allen 5 Sprachen (alle Sprachen werden durchsucht), dazu installierte Apps (→ App-Details); tippfehlertolerant (Präfix, Teilwort ab 4 Zeichen, Damerau-Levenshtein 1/2 Fehler ab 4/7 Zeichen), Titeltreffer höher gewichtet; Wörter einmal vorbereitet → 0,2–7 ms pro Eingabe | ✅ getestet: Boost, Lauter, Cache, Papierkorb, LED, Firewall, „Internet sperren“, Akku, Zwischenablage, „Schulmodus Zeitplan“, Tippfehler „papierkrob“/„zwischnablage“, „corbeille“, „recycle bin“, „whatsap“ |
+| Ergebnis → `AppNav` springt zur Seite (MainActivity, System-/Reiniger-Unterseiten, Apps-Tabs/Debloat/Launcher/App-Details, Downloader-Seiten, Einstellungen) und lässt die Karte aufleuchten (`Modifier.highlight`, scrollt Listen bis zur Karte – erst wenn sie wirklich platziert ist); Schnellaktionen mit Schalter direkt im Ergebnis; „Zuletzt geöffnet“ (8, lokal); ausgeblendete Bereiche mit Hinweis; Stern = als Favorit anheften | ✅ live getestet: Boost (scrollt + leuchtet), Papierkorb, Sprache (Rahmen sichtbar) |
+| Startseite bearbeiten (Stift): Reihenfolge per langem Drücken + Ziehen (Feder-Animation, Haptik), ein-/ausblenden (Schulmodus-Karte, Schnellaktionen, Bereiche), Kartengröße halb/ganz, Favoriten (angeheftete Unterseiten/Werkzeuge als kleine Karten) hinzufügen/entfernen, „Auf Standard zurücksetzen“ (Favoriten bleiben); Shizuku-Status nur verschiebbar; Reihenfolge, Favoriten, Größen in `app_settings` (Backup) | 🟡 Darstellung getestet; Ziehen am Gerät vom Nutzer zu testen |
+
 ### Reiniger (`cleaner/`, `ui/cleaner/`) – nach Vorbild von SD Maid (0.9)
 | Funktion | Status |
 |---|---|
@@ -184,6 +191,7 @@ app/src/main/java/de/emil/shizubox/
   debug/                ScreenRenderer (Offscreen-Screenshots per adb)
   downloader/           Ytdl (yt-dlp/FFmpeg), DownloadQueue, DownloadService, DlStorage, Discover (NewPipe), Settings, ShareActivity
   hilight/              HiLight: LightsIo/HiLightEngine/PrivacyWatcher (Shell-Prozess), HiLight (Sperren), Quellen, Einstellungen
+  search/ nav/          Such-Index + Suche (alle Sprachen, Tippfehler), AppNav (Springen) + Highlight
   cleaner/              Reiniger: Fs (Shell-Dateilisten), Guard (Schutzregeln), Trash (Papierkorb + Protokoll), Einstellungen, Worker
   ui/motion/            Motion (Federn, pressScale, RollingText, Stagger), Shared (Container-Übergang), EmptyState
   ui/                   Compose-Screens je Bereich, ui/glass (GlassCard, GlassBackground), ui/theme

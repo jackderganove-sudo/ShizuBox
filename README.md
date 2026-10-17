@@ -6,6 +6,10 @@ Entwickelt und getestet auf einem Pixel mit Android 17.
 
 ## Funktionen
 
+### Suche & Startseite
+- **Suche** oben auf der Startseite: alle Funktionen, Unterseiten, Einstellungen und Apps – in allen 5 Sprachen, auch mit Tippfehlern; springt direkt hin und lässt die Einstellung aufleuchten, Schnellaktionen direkt schaltbar
+- **Startseite bearbeiten** (Stift): Karten per Ziehen sortieren, ein-/ausblenden, groß/klein, **Favoriten** (z. B. Papierkorb, Boost) anheften
+
 ### Schulmodus
 Das Handy bleibt an, aber es passiert absolut nichts – als wäre es aus.
 - Flugmodus, WLAN/Bluetooth/mobile Daten aus, „Bitte nicht stören“ ohne Ausnahmen, kein Ton, keine Vibration

@@ -2,6 +2,7 @@
 
 package de.emil.shizubox.ui.settings
 
+import de.emil.shizubox.nav.highlight
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import android.content.Intent
@@ -100,7 +101,13 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         return
     }
 
+    val highlightList = androidx.compose.foundation.lazy.rememberLazyListState()
+
+    de.emil.shizubox.nav.HighlightScroll(highlightList, setOf("language", "design", "glass", "home", "installer", "vt", "errorlog", "self_update", "backup"))
+
     LazyColumn(
+
+        state = highlightList,
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -112,7 +119,7 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
 
         // ------------------------------------------------------------ appearance
         item { Header(t(R.string.set_appearance)) }
-        if (Language.supported) item {
+        if (Language.supported) item { androidx.compose.foundation.layout.Box(Modifier.highlight("language")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.set_language), style = MaterialTheme.typography.titleMedium)
                 val current = remember { Language.current(context) }
@@ -127,8 +134,8 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                 }
                 Text(t(R.string.lang_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
             }
-        }
-        item {
+        } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("design")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.set_design), style = MaterialTheme.typography.titleMedium)
                 SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(top = 8.dp)) {
@@ -145,7 +152,7 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     Switch(checked = s.amoled, onCheckedChange = { v -> AppSettings.update { it.copy(amoled = v) } })
                 }
             }
-        }
+        } }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.set_colors), style = MaterialTheme.typography.titleMedium)
@@ -178,7 +185,7 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                 }
             }
         }
-        item {
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("glass")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.set_glass), style = MaterialTheme.typography.titleMedium)
                 SwitchRow(t(R.string.set_glass_blur), s.glass) { v -> AppSettings.update { it.copy(glass = v) } }
@@ -200,13 +207,13 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-        }
+        } }
 
         // ------------------------------------------------------------ installer & security
         item { Header(t(R.string.home_title)) }
-        item { HomeSettingsCard(s) }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("home")) { HomeSettingsCard(s) } }
         item { Header(t(R.string.set_installer_security)) }
-        item {
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("installer")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.set_install_method), style = MaterialTheme.typography.titleMedium)
                 InstallMethod.entries.forEach { m ->
@@ -233,8 +240,8 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                 SwitchRow(t(R.string.opt_grant_all), s.defaultGrantAll) { v -> AppSettings.update { it.copy(defaultGrantAll = v) } }
                 SwitchRow(t(R.string.opt_play), s.defaultPlayStoreSource) { v -> AppSettings.update { it.copy(defaultPlayStoreSource = v) } }
             }
-        }
-        item {
+        } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("vt")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text("VirusTotal", style = MaterialTheme.typography.titleMedium)
                 Text(
@@ -271,7 +278,7 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                 )
                 message?.let { Text(it, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 4.dp)) }
             }
-        }
+        } }
 
         // ------------------------------------------------------------ other areas
         item { Header(t(R.string.set_areas)) }
@@ -315,13 +322,13 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
 
         // ------------------------------------------------------------ about
         item { Header(t(R.string.bk_title)) }
-        item { BackupCard() }
-        item {
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("backup")) { BackupCard() } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("errorlog")) {
             val errors by de.emil.shizubox.debug.ErrorLog.entries.collectAsStateWithLifecycle()
             LinkCard(t(R.string.el_title), if (errors.isEmpty()) t(R.string.el_none) else de.emil.shizubox.tp(R.plurals.el_n, errors.size, errors.size)) { errorLog = true }
-        }
+        } }
         item { Header(t(R.string.set_about)) }
-        item {
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("self_update")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text("ShizuBox ${BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.titleLarge)
                 Text(t(R.string.set_license), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -354,7 +361,7 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
                     )
                 }
             }
-        }
+        } }
     }
 }
 

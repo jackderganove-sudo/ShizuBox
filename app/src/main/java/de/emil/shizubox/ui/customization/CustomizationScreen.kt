@@ -2,6 +2,7 @@
 
 package de.emil.shizubox.ui.customization
 
+import de.emil.shizubox.nav.highlight
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import androidx.compose.foundation.layout.Arrangement
@@ -73,7 +74,13 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         }
     }
 
+    val highlightList = androidx.compose.foundation.lazy.rememberLazyListState()
+
+    de.emil.shizubox.nav.HighlightScroll(highlightList, setOf("cust_anim", "cust_refresh", "cust_font", "cust_dpi", "cust_resolution", "cust_statusbar"))
+
     LazyColumn(
+
+        state = highlightList,
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -104,7 +111,7 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             return@LazyColumn
         }
 
-        item {
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("cust_anim")) {
             ChipCard(
                 title = t(R.string.cust_anim),
                 hint = t(R.string.cust_anim_hint),
@@ -113,8 +120,8 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 label = { if (it == 0f) t(R.string.off) else "${fmt(it)}×" },
                 onSelect = { v -> change { Customization.setAnimationScale(v) } },
             )
-        }
-        item {
+        } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("cust_refresh")) {
             ChipCard(
                 title = t(R.string.cust_refresh),
                 hint = when (s.refresh) {
@@ -127,8 +134,8 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 label = { it.label },
                 onSelect = { v -> change { Customization.setRefresh(v) } },
             )
-        }
-        item {
+        } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("cust_font")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.cust_font), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(8.dp))
@@ -143,9 +150,9 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 }
                 ToggleRow(t(R.string.cust_bold), s.boldText) { b -> change { Customization.setBoldText(b) } }
             }
-        }
-        item { DensityCard(s, enabled = pending == null) { d -> change { Customization.setDensity(it, d) } } }
-        item {
+        } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("cust_dpi")) { DensityCard(s, enabled = pending == null) { d -> change { Customization.setDensity(it, d) } } } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("cust_resolution")) {
             ChipCard(
                 title = t(R.string.cust_resolution),
                 hint = t(R.string.cust_res_hint, "${s.width}×${s.height}"),
@@ -155,8 +162,8 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 enabled = pending == null,
                 onSelect = { v -> change { Customization.setResolution(it, v) } },
             )
-        }
-        item {
+        } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("cust_statusbar")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.cust_statusbar), style = MaterialTheme.typography.titleMedium)
                 Text(
@@ -176,7 +183,7 @@ fun CustomizationScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                     change { Customization.setStatusBar(sb.copy(notificationIcons = !show)) }
                 }
             }
-        }
+        } }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.cust_immersive), style = MaterialTheme.typography.titleMedium)

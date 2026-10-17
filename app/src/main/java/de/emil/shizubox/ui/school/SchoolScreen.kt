@@ -2,6 +2,7 @@
 
 package de.emil.shizubox.ui.school
 
+import de.emil.shizubox.nav.highlight
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import androidx.compose.foundation.layout.Arrangement
@@ -56,7 +57,10 @@ fun SchoolScreen(
     onBack: () -> Unit,
 ) {
     val colors = MaterialTheme.colorScheme
+    val highlightList = androidx.compose.foundation.lazy.rememberLazyListState()
+    de.emil.shizubox.nav.HighlightScroll(highlightList, setOf("school_schedule", "school_stats"))
     LazyColumn(
+        state = highlightList,
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -114,9 +118,9 @@ fun SchoolScreen(
                 }
             }
         }
-        item { ScheduleCard(state.autoEndMinutes) }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("school_schedule")) { ScheduleCard(state.autoEndMinutes) } }
         // Read-only statistics from school mode's own log (no change to school mode).
-        item { SchoolStatsCard() }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("school_stats")) { SchoolStatsCard() } }
         item {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.school_after_reboot), style = MaterialTheme.typography.titleMedium)

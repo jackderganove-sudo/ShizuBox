@@ -19,6 +19,7 @@ adb -s <ip:port> install -r app/build/outputs/apk/release/app-release.apk
 - Shell-Befehle nur über `ShizukuManager.exec()`; Einstellungen im geräte­geschützten Speicher.
 - UI: vorhandene Bausteine nutzen (`GlassCard`, `GlassBackground`, Theme, Strings über `t()`/`tp()`).
 - Neue Einstellungen in `Backup` aufnehmen; neue Startseiten-Bereiche über `Section` (ein-/ausblendbar).
+- **Neue Funktionen in den Such-Index aufnehmen**: Eintrag in `search/SearchIndex.kt` (Ziel, Symbol, ggf. Schnellaktion) + Stichwörter `sk_<id>` in 5 Sprachen über `tools/i18n`; Karten, zu denen gesprungen wird, bekommen `Modifier.highlight("<key>")`, ihre Liste `HighlightScroll`.
 - Nach jedem Schritt: bauen, auf dem Pixel testen, committen, PROJEKTSTAND.md + CHANGELOG.md aktualisieren.
 
 ## i18n

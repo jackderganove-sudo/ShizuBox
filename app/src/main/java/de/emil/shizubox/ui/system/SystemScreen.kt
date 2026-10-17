@@ -2,6 +2,7 @@
 
 package de.emil.shizubox.ui.system
 
+import de.emil.shizubox.nav.highlight
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import android.net.Uri
@@ -76,7 +77,10 @@ fun SystemScreen(
     onOpenUniversalInstaller: (Uri) -> Unit,
     onBack: () -> Unit,
 ) {
+    val highlightList = androidx.compose.foundation.lazy.rememberLazyListState()
+    de.emil.shizubox.nav.HighlightScroll(highlightList, setOf("gaming", "boost", "tweaks", "installer"))
     LazyColumn(
+        state = highlightList,
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .imePadding(),
@@ -140,10 +144,10 @@ fun SystemScreen(
                 }
             }
         }
-        item { GamingCard(shizukuReady) }
-        item { BoostCard(shizukuReady) }
-        item { TweaksCard(shizukuReady) }
-        item { InstallerCard(shizukuReady, onOpenUniversalInstaller) }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("gaming")) { GamingCard(shizukuReady) } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("boost")) { BoostCard(shizukuReady) } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("tweaks")) { TweaksCard(shizukuReady) } }
+        item { androidx.compose.foundation.layout.Box(Modifier.highlight("installer")) { InstallerCard(shizukuReady, onOpenUniversalInstaller) } }
     }
 }
 

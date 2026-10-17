@@ -81,9 +81,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /** Pseudo package that opens the Activity Launcher instead of app details. */
-private const val LAUNCHER = "#launcher"
+const val LAUNCHER = "#launcher"
 /** Pseudo package that opens the debloat suggestions. */
-private const val DEBLOAT = "#debloat"
+const val DEBLOAT = "#debloat"
 
 private enum class AppFilter(private val labelRes: Int) {
     User(R.string.f_user), System(R.string.system), Frozen(R.string.f_frozen), NoInternet(R.string.nb_filter);
@@ -97,11 +97,22 @@ private enum class AppSort(private val labelRes: Int) {
 
 private val dateFormat = java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM)
 
+/** Opens a page inside Apps from outside (search, favourites): a package, [DEBLOAT], [LAUNCHER] or "tab:<n>". */
+object AppsNav {
+    val open = kotlinx.coroutines.flow.MutableStateFlow<String?>(null)
+}
+
 @OptIn(ExperimentalLayoutApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun AppsScreen(shizukuReady: Boolean, onBack: () -> Unit) {
     val tabState = rememberSaveable { mutableStateOf(0) }
     val selectedState = rememberSaveable { mutableStateOf<String?>(null) }
+    val requested by AppsNav.open.collectAsStateWithLifecycle()
+    LaunchedEffect(requested) {
+        val r = requested ?: return@LaunchedEffect
+        if (r.startsWith("tab:")) { selectedState.value = null; tabState.value = r.removePrefix("tab:").toIntOrNull() ?: 0 } else selectedState.value = r
+        AppsNav.open.value = null
+    }
     val appsState = remember { mutableStateOf<List<AppEntry>?>(null) }
     val reloadState = remember { mutableStateOf(0) }
     LaunchedEffect(reloadState.value) { appsState.value = Apps.list() }

@@ -1320,3 +1320,91 @@ hl_r_lower	daha önemli bir şey gösteriliyor
 hl_a_play	HiLight desenini oynat
 hl_a_off	HiLight kapat
 hl_a_hint	Süre: HiLight ayarlarındaki otomasyon efektleri
+sx_search	Ara
+sx_field	Özellik, ayar, uygulama ara
+sx_recent	Son açılanlar
+sx_clear	Temizle
+sx_hint	Ör. “boost”, “çöp”, “LED” ya da bir uygulama adı yaz.
+sx_none	“%1$s” için sonuç yok
+sx_hidden	ana ekranda gizli
+sx_pin	Ana ekrana sabitle
+sx_unpin	Sabitlemeyi kaldır
+sx_area	Bölüm
+sx_app	Uygulama · ayrıntılar
+sx_netblock	Uygulama başına interneti engelle
+sx_logcat	Logcat görüntüleyici
+sx_hilight	HiLight (LED çubuğu)
+sx_installer	Evrensel yükleyici
+he_title	Ana ekranı düzenle
+he_done	Bitti
+he_hint	Bir karta uzun bas ve sürükle. Göz: göster/gizle, kareler: yarım veya tam genişlik, yıldız: favoriler.
+he_add_fav	Favori ekle
+he_reset	Varsayılana sıfırla
+he_reset_q	Ana ekran sıfırlansın mı?
+he_reset_body	Sıra, boyutlar ve gizli bölümler varsayılana döner. Favoriler kalır.
+he_school_card	Okul modu kartı
+he_favorite	Favori
+he_fixed	Her zaman görünür – yalnızca taşınabilir
+he_drag	Sürükle
+he_wide	Tam genişlik
+he_small	Yarım genişlik
+he_hide	Gizle
+he_show	Göster
+sk_school	okul,ders,odak,çevrimdışı,uçak,sessiz
+sk_custom	özelleştir,görünüm,ekran
+sk_auto	otomasyon,kural,tetikleyici,makro,rutin
+sk_apps	uygulamalar,dondur,kaldır,devre dışı
+sk_updates	güncelleme,güncelle,yeni sürüm
+sk_system	sistem,araçlar,cihaz
+sk_downloader	indir,video,müzik,youtube
+sk_cleaner	temizle,temizleyici,çöp,depolama,alan
+sk_school_schedule	okul zamanlama,program,otomatik başlat
+sk_school_stats	okul istatistik,saat,widget
+sk_anim	animasyon,hız,geçiş
+sk_refresh	yenileme hızı,hz,akıcı
+sk_font	yazı tipi,metin boyutu,kalın
+sk_dpi	dpi,ekran boyutu,yoğunluk
+sk_resolution	çözünürlük,piksel
+sk_statusbar	durum çubuğu,simgeler,saat
+sk_profiles	profiller,gruplar,birlikte dondur
+sk_permissions	izinler,kamera,mikrofon,konum,iptal
+sk_debloat	şişirme,önceden yüklü,gereksiz
+sk_launcher	aktivite başlatıcı,gizli menü,kısayol
+sk_netblock	güvenlik duvarı,internet,engelle,veri,ağ
+sk_self_update	shizubox güncelle,yeni sürüm
+sk_virustotal	virustotal,virüs,kötü amaçlı,tarama,api anahtarı
+sk_device	cihaz bilgisi,pil sıcaklığı,ram,cpu,donanım
+sk_processes	işlemler,çalışan uygulamalar,ram,görev yöneticisi
+sk_terminal	terminal,kabuk,komut,adb
+sk_logcat	logcat,günlük,hata ayıklama
+sk_screentime	ekran süresi,kullanım
+sk_privacy	gizlilik,kamera,mikrofon,konum
+sk_battery	pil,batarya,tüketim,mah,şarj
+sk_clipboard	pano,kopyala,yapıştır,geçmiş
+sk_appvolume	uygulama sesi,ses,daha sessiz,daha yüksek,mikser
+sk_hilight	hilight,led,ışık,bildirim ışığı,kamera çubuğu
+sk_notifhistory	bildirim geçmişi,silinen mesajlar
+sk_gaming	oyun modu,oyun,performans
+sk_boost	ses yükseltme,daha yüksek,amplifikatör,hoparlör
+sk_tweaks	hızlı anahtarlar,pil tasarrufu,karanlık mod,ekran zaman aşımı
+sk_stayawake	uyanık kal,kafein,ekranı açık tut
+sk_installer	yükleyici,apk,xapk,yükle
+sk_analysis	depolama analizi,en büyük dosyalar,klasörler
+sk_syscleaner	sistem temizleyici,küçük resimler,boş klasörler,geçici dosyalar
+sk_corpses	artıklar,kaldırılan uygulamalar,yetim dosyalar
+sk_appcache	önbellek,önbelleği temizle,alan
+sk_dupes	kopyalar,yinelenen fotoğraflar,benzer resimler
+sk_trash	çöp kutusu,geri dönüşüm,geri yükle,silinen dosyalar
+sk_clean	temizle,şimdi temizle,kutucuk
+sk_cleaner_settings	temizleyici ayarları,istisnalar,zamanlanmış temizlik
+sk_dl_downloads	indirilenler,indirme listesi
+sk_dl_queue	indirme kuyruğu,duraklat
+sk_dl_more	indirme ayarları,klasör,çerezler,mp3
+sk_language	dil,ingilizce,almanca,türkçe
+sk_design	tema,karanlık mod,aydınlık,amoled,renkler
+sk_glass	cam,bulanıklık,şeffaf
+sk_home	ana ekran,bölümler,gizle,hızlı eylemler
+sk_backup	yedek,geri yükle,dışa aktar,içe aktar
+sk_errorlog	hata günlüğü,çökme,hata
+sk_installsettings	yükleme yöntemi,imza,güvenlik
+he_school_tile	Kutucuk yalnızca okul modu kartı gizliyken görünür

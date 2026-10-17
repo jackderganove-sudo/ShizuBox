@@ -6806,5 +6806,445 @@
   "en": "Length: automation effects in the HiLight settings",
   "de": "Dauer: Automations-Effekte in den HiLight-Einstellungen",
   "plural": false
+ },
+ "sx_search": {
+  "en": "Search",
+  "de": "Suchen",
+  "plural": false
+ },
+ "sx_field": {
+  "en": "Search features, settings, apps",
+  "de": "Funktionen, Einstellungen, Apps suchen",
+  "plural": false
+ },
+ "sx_recent": {
+  "en": "Recently opened",
+  "de": "Zuletzt geöffnet",
+  "plural": false
+ },
+ "sx_clear": {
+  "en": "Clear",
+  "de": "Leeren",
+  "plural": false
+ },
+ "sx_hint": {
+  "en": "Type e.g. “boost”, “trash”, “LED” or an app name.",
+  "de": "Tippe z. B. „Boost“, „Papierkorb“, „LED“ oder einen App-Namen.",
+  "plural": false
+ },
+ "sx_none": {
+  "en": "Nothing found for “%1$s”",
+  "de": "Nichts gefunden für „%1$s“",
+  "plural": false
+ },
+ "sx_hidden": {
+  "en": "hidden on the home screen",
+  "de": "auf der Startseite ausgeblendet",
+  "plural": false
+ },
+ "sx_pin": {
+  "en": "Pin to home screen",
+  "de": "Auf der Startseite anheften",
+  "plural": false
+ },
+ "sx_unpin": {
+  "en": "Unpin",
+  "de": "Lösen",
+  "plural": false
+ },
+ "sx_area": {
+  "en": "Section",
+  "de": "Bereich",
+  "plural": false
+ },
+ "sx_app": {
+  "en": "App · details",
+  "de": "App · Details",
+  "plural": false
+ },
+ "sx_netblock": {
+  "en": "Block internet per app",
+  "de": "Internet pro App sperren",
+  "plural": false
+ },
+ "sx_logcat": {
+  "en": "Logcat viewer",
+  "de": "Logcat-Viewer",
+  "plural": false
+ },
+ "sx_hilight": {
+  "en": "HiLight (LED bar)",
+  "de": "HiLight (LED-Leiste)",
+  "plural": false
+ },
+ "sx_installer": {
+  "en": "Universal installer",
+  "de": "Universal Installer",
+  "plural": false
+ },
+ "he_title": {
+  "en": "Edit home screen",
+  "de": "Startseite bearbeiten",
+  "plural": false
+ },
+ "he_done": {
+  "en": "Done",
+  "de": "Fertig",
+  "plural": false
+ },
+ "he_hint": {
+  "en": "Long-press a card and drag it. Eye: show/hide, squares: half or full width, star: favourites.",
+  "de": "Karte lange drücken und ziehen. Auge: ein-/ausblenden, Kacheln: halbe oder ganze Breite, Stern: Favoriten.",
+  "plural": false
+ },
+ "he_add_fav": {
+  "en": "Add favourite",
+  "de": "Favorit hinzufügen",
+  "plural": false
+ },
+ "he_reset": {
+  "en": "Reset to default",
+  "de": "Auf Standard zurücksetzen",
+  "plural": false
+ },
+ "he_reset_q": {
+  "en": "Reset the home screen?",
+  "de": "Startseite zurücksetzen?",
+  "plural": false
+ },
+ "he_reset_body": {
+  "en": "Order, sizes and hidden sections return to the default. Favourites stay.",
+  "de": "Reihenfolge, Größen und ausgeblendete Bereiche werden zurückgesetzt. Favoriten bleiben.",
+  "plural": false
+ },
+ "he_school_card": {
+  "en": "School mode card",
+  "de": "Schulmodus-Karte",
+  "plural": false
+ },
+ "he_favorite": {
+  "en": "Favourite",
+  "de": "Favorit",
+  "plural": false
+ },
+ "he_fixed": {
+  "en": "Always shown – can only be moved",
+  "de": "Immer sichtbar – nur verschiebbar",
+  "plural": false
+ },
+ "he_drag": {
+  "en": "Drag",
+  "de": "Ziehen",
+  "plural": false
+ },
+ "he_wide": {
+  "en": "Full width",
+  "de": "Ganze Breite",
+  "plural": false
+ },
+ "he_small": {
+  "en": "Half width",
+  "de": "Halbe Breite",
+  "plural": false
+ },
+ "he_hide": {
+  "en": "Hide",
+  "de": "Ausblenden",
+  "plural": false
+ },
+ "he_show": {
+  "en": "Show",
+  "de": "Einblenden",
+  "plural": false
+ },
+ "sk_school": {
+  "en": "school,lesson,class,focus,offline,airplane,quiet,silent",
+  "de": "schule,unterricht,schulmodus,fokus,offline,flugmodus,ruhe,stumm",
+  "plural": false
+ },
+ "sk_custom": {
+  "en": "customize,look,display,screen,personalize",
+  "de": "anpassen,aussehen,bildschirm,anzeige,personalisieren",
+  "plural": false
+ },
+ "sk_auto": {
+  "en": "automation,rules,trigger,when,then,macro,tasker,routine",
+  "de": "automation,automatisierung,regeln,auslöser,wenn,dann,makro,routine",
+  "plural": false
+ },
+ "sk_apps": {
+  "en": "apps,applications,freeze,uninstall,disable,app info",
+  "de": "apps,anwendungen,einfrieren,deinstallieren,deaktivieren,app info",
+  "plural": false
+ },
+ "sk_updates": {
+  "en": "updates,update,obtainium,github,fdroid,apkpure,new version",
+  "de": "updates,aktualisieren,obtainium,github,fdroid,apkpure,neue version",
+  "plural": false
+ },
+ "sk_system": {
+  "en": "system,tools,device,tweaks",
+  "de": "system,werkzeuge,gerät,tweaks",
+  "plural": false
+ },
+ "sk_downloader": {
+  "en": "download,video,music,youtube,mp3,mp4,yt-dlp",
+  "de": "download,herunterladen,video,musik,youtube,mp3,mp4,yt-dlp",
+  "plural": false
+ },
+ "sk_cleaner": {
+  "en": "clean,cleaner,junk,storage,space,sd maid,free up",
+  "de": "reinigen,reiniger,müll,speicher,platz,sd maid,aufräumen,freigeben",
+  "plural": false
+ },
+ "sk_school_schedule": {
+  "en": "school schedule,timer,automatic start,weekdays,plan",
+  "de": "schulmodus zeitplan,zeitplan,automatisch starten,wochentage,uhrzeit",
+  "plural": false
+ },
+ "sk_school_stats": {
+  "en": "school statistics,hours,widget,time in school mode",
+  "de": "schulmodus statistik,stunden,widget,zeit",
+  "plural": false
+ },
+ "sk_anim": {
+  "en": "animations,animation speed,faster,transition,scale",
+  "de": "animationen,animationsgeschwindigkeit,schneller,übergang",
+  "plural": false
+ },
+ "sk_refresh": {
+  "en": "refresh rate,hz,120hz,60hz,smooth,frame rate",
+  "de": "bildwiederholrate,hz,120hz,60hz,flüssig,bildrate",
+  "plural": false
+ },
+ "sk_font": {
+  "en": "font,text size,bold,font size,bigger text",
+  "de": "schrift,schriftgröße,fett,textgröße,größerer text",
+  "plural": false
+ },
+ "sk_dpi": {
+  "en": "dpi,display size,density,smaller,bigger,zoom",
+  "de": "dpi,anzeigegröße,dichte,kleiner,größer,zoom",
+  "plural": false
+ },
+ "sk_resolution": {
+  "en": "resolution,render,pixels,qhd,fhd",
+  "de": "auflösung,render,pixel,qhd,fhd",
+  "plural": false
+ },
+ "sk_statusbar": {
+  "en": "status bar,icons,clock,hide icons",
+  "de": "statusleiste,symbole,uhr,icons ausblenden",
+  "plural": false
+ },
+ "sk_profiles": {
+  "en": "profiles,groups,freeze together,app groups",
+  "de": "profile,gruppen,gemeinsam einfrieren",
+  "plural": false
+ },
+ "sk_permissions": {
+  "en": "permissions,camera,microphone,location,revoke,appops",
+  "de": "berechtigungen,kamera,mikrofon,standort,entziehen,appops",
+  "plural": false
+ },
+ "sk_debloat": {
+  "en": "debloat,bloatware,preinstalled,remove google apps,uad",
+  "de": "debloat,bloatware,vorinstalliert,google apps entfernen,uad",
+  "plural": false
+ },
+ "sk_launcher": {
+  "en": "activity launcher,activities,hidden menus,shortcut,secret settings",
+  "de": "activity launcher,aktivitäten,versteckte menüs,verknüpfung,geheime einstellungen",
+  "plural": false
+ },
+ "sk_netblock": {
+  "en": "firewall,internet,block,offline,no internet,data,network",
+  "de": "firewall,internet,sperren,blockieren,kein internet,daten,netzwerk",
+  "plural": false
+ },
+ "sk_self_update": {
+  "en": "shizubox update,update shizubox,new version,release",
+  "de": "shizubox aktualisieren,neue version,release,selbst-update",
+  "plural": false
+ },
+ "sk_virustotal": {
+  "en": "virustotal,virus,malware,scan,api key,security",
+  "de": "virustotal,virus,schadsoftware,scan,api schlüssel,sicherheit",
+  "plural": false
+ },
+ "sk_device": {
+  "en": "device info,battery temperature,ram,cpu,storage,specs,hardware",
+  "de": "geräteinfo,akku temperatur,ram,cpu,speicher,hardware",
+  "plural": false
+ },
+ "sk_processes": {
+  "en": "processes,running apps,ram usage,kill,task manager,memory",
+  "de": "prozesse,laufende apps,ram verbrauch,beenden,task manager,arbeitsspeicher",
+  "plural": false
+ },
+ "sk_terminal": {
+  "en": "terminal,shell,command,adb,console",
+  "de": "terminal,shell,befehl,adb,konsole",
+  "plural": false
+ },
+ "sk_logcat": {
+  "en": "logcat,logs,debug,errors,log",
+  "de": "logcat,logs,protokoll,debug,fehler",
+  "plural": false
+ },
+ "sk_screentime": {
+  "en": "screen time,usage,digital wellbeing,how long",
+  "de": "bildschirmzeit,nutzung,digital wellbeing,wie lange",
+  "plural": false
+ },
+ "sk_privacy": {
+  "en": "privacy,camera,microphone,location,who used,tracking,spy",
+  "de": "privatsphäre,datenschutz,kamera,mikrofon,standort,wer hat,überwachung",
+  "plural": false
+ },
+ "sk_battery": {
+  "en": "battery,drain,mah,wakelocks,battery usage,overnight,charge",
+  "de": "akku,batterie,verbrauch,mah,wakelocks,akkuverbrauch,über nacht,laden",
+  "plural": false
+ },
+ "sk_clipboard": {
+  "en": "clipboard,copy,paste,copied text,history",
+  "de": "zwischenablage,kopieren,einfügen,kopierter text,verlauf",
+  "plural": false
+ },
+ "sk_appvolume": {
+  "en": "volume per app,app volume,quieter,louder,mixer,sound",
+  "de": "lautstärke pro app,app lautstärke,leiser,lauter,mixer,ton",
+  "plural": false
+ },
+ "sk_hilight": {
+  "en": "hilight,led,lights,notification light,camera bar,glyph,pixel 11",
+  "de": "hilight,led,licht,benachrichtigungslicht,kameraleiste,glyph,pixel 11",
+  "plural": false
+ },
+ "sk_notifhistory": {
+  "en": "notification history,deleted messages,whatsapp deleted,notifications log",
+  "de": "benachrichtigungsverlauf,gelöschte nachrichten,whatsapp gelöscht,benachrichtigungen",
+  "plural": false
+ },
+ "sk_gaming": {
+  "en": "gaming mode,game,performance,do not disturb,brawl stars",
+  "de": "gaming modus,spiel,spielen,leistung,nicht stören",
+  "plural": false
+ },
+ "sk_boost": {
+  "en": "volume boost,louder,amplifier,sound,speaker,quiet phone",
+  "de": "lautstärke boost,lauter,verstärker,ton,lautsprecher,zu leise",
+  "plural": false
+ },
+ "sk_tweaks": {
+  "en": "quick switches,battery saver,show taps,pointer location,dark mode,screen timeout",
+  "de": "schnelle schalter,energiesparmodus,berührungen anzeigen,zeigerposition,dunkles design,bildschirm timeout",
+  "plural": false
+ },
+ "sk_stayawake": {
+  "en": "stay awake,caffeine,keep screen on,no sleep",
+  "de": "wach bleiben,koffein,bildschirm an lassen,nicht ausschalten",
+  "plural": false
+ },
+ "sk_installer": {
+  "en": "installer,apk,xapk,apks,apkm,install,split apk",
+  "de": "installer,apk,xapk,apks,apkm,installieren,split apk",
+  "plural": false
+ },
+ "sk_analysis": {
+  "en": "storage analysis,what uses space,biggest files,folders,disk usage",
+  "de": "speicher analyse,was belegt platz,größte dateien,ordner,speicherplatz",
+  "plural": false
+ },
+ "sk_syscleaner": {
+  "en": "system cleaner,thumbnails,empty folders,logs,temp files,old apks",
+  "de": "system reiniger,thumbnails,leere ordner,logs,temp dateien,alte apks",
+  "plural": false
+ },
+ "sk_corpses": {
+  "en": "leftovers,corpses,uninstalled apps,orphaned files,residue",
+  "de": "leichen,reste,deinstallierte apps,verwaiste dateien,überreste",
+  "plural": false
+ },
+ "sk_appcache": {
+  "en": "cache,clear cache,app cache,free space",
+  "de": "cache,cache leeren,app cache,cache aufräumen,platz freigeben",
+  "plural": false
+ },
+ "sk_dupes": {
+  "en": "duplicates,duplicate photos,same files,similar pictures,double",
+  "de": "duplikate,doppelte fotos,gleiche dateien,ähnliche bilder,doppelt",
+  "plural": false
+ },
+ "sk_trash": {
+  "en": "trash,recycle bin,restore,deleted files,bin,undo delete",
+  "de": "papierkorb,mülleimer,wiederherstellen,gelöschte dateien,rückgängig",
+  "plural": false
+ },
+ "sk_clean": {
+  "en": "clean up,clean now,one tap clean,tile",
+  "de": "reinigen,jetzt reinigen,ein tipp,kachel",
+  "plural": false
+ },
+ "sk_cleaner_settings": {
+  "en": "cleaner settings,exclusions,scheduled cleaning,whitelist,keep days",
+  "de": "reiniger einstellungen,ausschlüsse,geplante reinigung,whitelist,aufbewahrung",
+  "plural": false
+ },
+ "sk_dl_downloads": {
+  "en": "downloaded videos,downloads list,my downloads,files",
+  "de": "heruntergeladene videos,downloads liste,meine downloads,dateien",
+  "plural": false
+ },
+ "sk_dl_queue": {
+  "en": "download queue,running downloads,pause,waiting",
+  "de": "download warteschlange,laufende downloads,pausieren,wartend",
+  "plural": false
+ },
+ "sk_dl_more": {
+  "en": "download settings,folder,cookies,yt-dlp update,convert to mp3",
+  "de": "download einstellungen,ordner,cookies,yt-dlp aktualisieren,in mp3 umwandeln",
+  "plural": false
+ },
+ "sk_language": {
+  "en": "language,english,deutsch,türkçe,español,français,translate",
+  "de": "sprache,englisch,deutsch,türkisch,spanisch,französisch,übersetzen",
+  "plural": false
+ },
+ "sk_design": {
+  "en": "design,theme,dark mode,light mode,amoled,colors,palette",
+  "de": "design,thema,dunkel,hell,amoled,farben,palette",
+  "plural": false
+ },
+ "sk_glass": {
+  "en": "glass,blur,transparent,background animation",
+  "de": "glas,unschärfe,transparent,hintergrund animation",
+  "plural": false
+ },
+ "sk_home": {
+  "en": "home screen,start page,sections,hide,quick actions,order",
+  "de": "startseite,bereiche,ausblenden,schnellaktionen,reihenfolge",
+  "plural": false
+ },
+ "sk_backup": {
+  "en": "backup,restore,export,import,settings file,save settings",
+  "de": "sicherung,backup,wiederherstellen,exportieren,importieren,einstellungen speichern",
+  "plural": false
+ },
+ "sk_errorlog": {
+  "en": "error log,crash,bug,errors,report problem,anr",
+  "de": "fehlerprotokoll,absturz,fehler,bug,problem melden,anr",
+  "plural": false
+ },
+ "sk_installsettings": {
+  "en": "install method,signature,security,downgrade,grant permissions",
+  "de": "installationsart,signatur,sicherheit,downgrade,berechtigungen erteilen",
+  "plural": false
+ },
+ "he_school_tile": {
+  "en": "Tile only shows when the school mode card is hidden",
+  "de": "Kachel erscheint nur, wenn die Schulmodus-Karte ausgeblendet ist",
+  "plural": false
  }
 }

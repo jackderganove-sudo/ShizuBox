@@ -49,11 +49,15 @@ class DebugReceiver : BroadcastReceiver() {
             ) {
                 val noop = {}
                 when (name) {
-                    "home" -> de.emil.shizubox.ui.home.HomeScreen(
+                    "home" -> {
+                        de.emil.shizubox.ui.home.HomeDebug.query = intent.getStringExtra("query")
+                        de.emil.shizubox.ui.home.HomeDebug.editing = intent.getBooleanExtra("edit", false)
+                        de.emil.shizubox.ui.home.HomeScreen(
                         shizukuStatus = ShizukuManager.status.value, serverMode = ShizukuManager.serverMode,
                         school = de.emil.shizubox.school.SchoolMode.state.value, busy = false, updateCount = Updates.updateCount(),
                         onShizukuAction = noop, onActivateSchool = noop, onOpenSection = {}, onOpenSettings = noop,
-                    )
+                        )
+                    }
                     "settings" -> de.emil.shizubox.ui.settings.SettingsScreen(noop, noop, noop)
                     "system" -> de.emil.shizubox.ui.system.SystemScreen(shizukuReady = ready, onOpenPage = {}, onOpenUniversalInstaller = {}, onBack = noop)
                     "device" -> de.emil.shizubox.ui.system.DeviceInfoScreen(noop)
@@ -336,6 +340,25 @@ class DebugReceiver : BroadcastReceiver() {
                             de.emil.shizubox.cleaner.CleanerJobs.cancel(tool)
                             kotlinx.coroutines.delay(1500)
                             "find before cancel=$before after=" + ShizukuManager.exec("ps -A -o NAME | grep -c '^find'", 3000, 10_000).out + " running=" + de.emil.shizubox.cleaner.CleanerJobs.running.value.keys
+                        }
+                        "nav" -> de.emil.shizubox.search.SearchIndex.byId(intent.getStringExtra("id") ?: "boost")?.let { de.emil.shizubox.ui.home.openEntry(it); "went to ${it.target}" } ?: "unknown id"
+                        // --es mode reset: only the order (hidden sections and sizes stay)
+                        "homeorder" -> {
+                            if (intent.getStringExtra("mode") == "reset") de.emil.shizubox.settings.AppSettings.update { it.copy(homeOrder = emptyList()) }
+                            de.emil.shizubox.settings.AppSettings.current.let { "order=${it.homeOrder} favs=${it.favorites} hidden=${it.hiddenSections} wide=${it.wideSections}" }
+                        }
+                        "search" -> {
+                            de.emil.shizubox.search.Search.prepare()
+                            (intent.getStringExtra("q") ?: "boost").split('|').joinToString(" ## ") { q ->
+                                val t0 = System.nanoTime()
+                                val r = de.emil.shizubox.search.Search.search(q)
+                                "$q (${(System.nanoTime() - t0) / 1000} µs): " + r.take(4).joinToString { x ->
+                                    when (x) {
+                                        is de.emil.shizubox.search.SearchResult.Feature -> x.entry.id + "=" + x.score
+                                        is de.emil.shizubox.search.SearchResult.App -> "app:" + x.label + "=" + x.score
+                                    }
+                                }
+                            }
                         }
                         "cleanercfg" -> {
                             // Writes the current cleaner settings unchanged (creates the prefs file for the backup test).

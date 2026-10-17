@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
+- Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,
+  Stichwörter und Synonyme in allen 5 Sprachen, tippfehlertolerant, Ergebnisse beim Tippen; Tippen springt direkt
+  zur Seite und lässt die Einstellung kurz aufleuchten; Schnellaktionen direkt im Ergebnis schaltbar; zuletzt geöffnet;
+  ausgeblendete Bereiche mit Hinweis; Stern heftet als Favorit an
+- Startseite bearbeiten: Karten per Ziehen sortieren (federnd, mit Vibration), ein-/ausblenden, halbe oder ganze Breite,
+  Favoriten (z. B. Papierkorb, Boost, Activity Launcher) als kleine Karten, auf Standard zurücksetzen; im Backup
+- Regel für künftige Funktionen: in den Such-Index aufnehmen (CLAUDE.md)
+
 ## 0.10.1 – 2026-10-17 – Stabilitätsrunde 2
 - Fix: Starb der Shell-Dienst (z. B. Speichermangel), verband sich ShizuBox bis zum App-Neustart nicht wieder –
   jetzt nach < 2 s automatisch, alle Listener melden sich neu an

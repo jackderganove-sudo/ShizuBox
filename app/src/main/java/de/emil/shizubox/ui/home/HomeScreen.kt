@@ -35,6 +35,11 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.Terminal
 import androidx.compose.material.icons.rounded.Download
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.animation.animateContentSize
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -65,6 +70,7 @@ import de.emil.shizubox.ui.motion.pulse
 import de.emil.shizubox.ui.motion.reduceMotion
 import de.emil.shizubox.ui.motion.sharedSection
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -91,6 +97,12 @@ enum class Section(private val titleRes: Int, private val subtitleRes: Int, val 
     val subtitle get() = t(subtitleRes)
 }
 
+/** Start states for debug screenshots (search open with a query, edit mode). */
+object HomeDebug {
+    var query: String? = null
+    var editing = false
+}
+
 @Composable
 fun HomeScreen(
     shizukuStatus: ShizukuStatus,
@@ -104,19 +116,51 @@ fun HomeScreen(
     onOpenSettings: () -> Unit,
 ) {
     val settings by de.emil.shizubox.settings.AppSettings.state.collectAsStateWithLifecycle()
+    var searching by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(HomeDebug.query != null) }
+    var query by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(HomeDebug.query.orEmpty()) }
+    var editing by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(HomeDebug.editing) }
+    val recent by de.emil.shizubox.search.Search.recent.collectAsStateWithLifecycle()
+    var indexReady by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    androidx.compose.runtime.LaunchedEffect(searching) { if (searching) { de.emil.shizubox.search.Search.prepare(); indexReady = true } }
+    // Results while typing; the index is small and prepared in the background.
+    val results = androidx.compose.runtime.remember(query, searching, indexReady) { if (searching && indexReady) de.emil.shizubox.search.Search.search(query) else emptyList() }
+    androidx.activity.compose.BackHandler(searching) { searching = false; query = "" }
+    androidx.activity.compose.BackHandler(editing) { editing = false }
+    if (editing) {
+        HomeEditor(onDone = { editing = false })
+        return
+    }
+    val focus = androidx.compose.runtime.remember { androidx.compose.ui.focus.FocusRequester() }
     LazyColumn(
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         // Big empty header area keeps everything interactive in the lower, thumb-friendly part.
-        item {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                androidx.compose.material3.IconButton(onClick = onOpenSettings) {
-                    Icon(androidx.compose.material.icons.Icons.Rounded.Settings, t(R.string.settings))
+        item(key = "header") {
+            Row(Modifier.fillMaxWidth().animateContentSize(Motion.bouncy()), verticalAlignment = Alignment.CenterVertically) {
+                if (searching) {
+                    androidx.compose.material3.OutlinedTextField(
+                        value = query, onValueChange = { query = it }, singleLine = true,
+                        placeholder = { Text(t(R.string.sx_field)) },
+                        leadingIcon = { Icon(Icons.Rounded.Search, null) },
+                        shape = RoundedCornerShape(28.dp),
+                        modifier = Modifier.weight(1f).focusRequester(focus),
+                    )
+                    androidx.compose.runtime.LaunchedEffect(Unit) { focus.requestFocus() }
+                    androidx.compose.material3.IconButton(onClick = { searching = false; query = "" }) {
+                        Icon(Icons.Rounded.Close, t(R.string.close))
+                    }
+                } else {
+                    androidx.compose.material3.IconButton(onClick = { searching = true }) { Icon(Icons.Rounded.Search, t(R.string.sx_search)) }
+                    Spacer(Modifier.weight(1f))
+                    androidx.compose.material3.IconButton(onClick = { editing = true }) { Icon(Icons.Rounded.Edit, t(R.string.he_title)) }
+                    androidx.compose.material3.IconButton(onClick = onOpenSettings) {
+                        Icon(androidx.compose.material.icons.Icons.Rounded.Settings, t(R.string.settings))
+                    }
                 }
             }
-            Column(Modifier.padding(start = 8.dp, top = 48.dp, bottom = 20.dp)) {
+            if (!searching) Column(Modifier.padding(start = 8.dp, top = 48.dp, bottom = 20.dp)) {
                 Text("ShizuBox", style = MaterialTheme.typography.displaySmall)
                 Text(
                     t(R.string.home_tagline),
@@ -125,39 +169,61 @@ fun HomeScreen(
                 )
             }
         }
-        item { ShizukuCard(shizukuStatus, serverMode, onShizukuAction) }
-        if (settings.showSchoolCard && Section.School.name !in settings.hiddenSections) {
-            item {
-                SchoolCard(
-                    school = school,
-                    canActivate = shizukuStatus == ShizukuStatus.Ready && !busy && !school.pendingRestore,
-                    busy = busy,
-                    onActivate = onActivateSchool,
-                    onClick = { onOpenSection(Section.School) },
-                )
-            }
+        if (searching) {
+            searchResults(query, results, recent, settings)
+            return@LazyColumn
         }
-        if (settings.showQuickActions && shizukuStatus == ShizukuStatus.Ready) {
-            item { QuickActionsCard() }
-        }
-        // School mode gets a small tile when its big card is turned off.
-        val tiles = Section.entries.filter {
-            it.name !in settings.hiddenSections && (it != Section.School || !settings.showSchoolCard)
-        }
-        tiles.chunked(2).forEach { pair ->
-            item {
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    pair.forEach { sec ->
-                        SectionTile(
-                            sec,
-                            Modifier.weight(1f),
-                            subtitle = if (sec == Section.Updates && updateCount > 0) tp(R.plurals.updates_available, updateCount, updateCount) else null,
-                        ) { onOpenSection(sec) }
+        // The user's order; tiles of half width (small sections, favourites) are paired up.
+        val half = ArrayList<Pair<String, @Composable (Modifier) -> Unit>>()
+        fun flush() {
+            if (half.isEmpty()) return
+            val pairs = half.chunked(2)
+            half.clear()
+            pairs.forEach { pair ->
+                item(key = "row-" + pair.joinToString { it.first }) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.animateItem(fadeInSpec = null, placementSpec = Motion.offset, fadeOutSpec = null)) {
+                        pair.forEach { (_, content) -> content(Modifier.weight(1f)) }
+                        if (pair.size == 1) Spacer(Modifier.weight(1f))
                     }
-                    if (pair.size == 1) androidx.compose.foundation.layout.Spacer(Modifier.weight(1f))
                 }
             }
         }
+        for (key in HomeLayout.order(settings)) {
+            when {
+                key == HomeLayout.SHIZUKU -> { flush(); item(key = key) { ShizukuCard(shizukuStatus, serverMode, onShizukuAction) } }
+                key == HomeLayout.SCHOOL -> if (settings.showSchoolCard && Section.School.name !in settings.hiddenSections) {
+                    flush()
+                    item(key = key) {
+                        SchoolCard(
+                            school = school,
+                            canActivate = shizukuStatus == ShizukuStatus.Ready && !busy && !school.pendingRestore,
+                            busy = busy,
+                            onActivate = onActivateSchool,
+                            onClick = { onOpenSection(Section.School) },
+                        )
+                    }
+                }
+                key == HomeLayout.QUICK -> if (settings.showQuickActions && shizukuStatus == ShizukuStatus.Ready) { flush(); item(key = key) { QuickActionsCard() } }
+                key.startsWith("fav:") -> HomeLayout.favorite(key.removePrefix("fav:"))?.let { e ->
+                    val tile: @Composable (Modifier) -> Unit = { m -> FavoriteTile(e, m) }
+                    half += key to tile
+                }
+                key.startsWith("sec:") -> {
+                    val sec = Section.entries.firstOrNull { it.name == key.removePrefix("sec:") } ?: continue
+                    // School mode gets a tile only when its big card is turned off.
+                    if (sec.name in settings.hiddenSections || (sec == Section.School && settings.showSchoolCard)) continue
+                    val sub = if (sec == Section.Updates && updateCount > 0) tp(R.plurals.updates_available, updateCount, updateCount) else null
+                    if (sec.name in settings.wideSections) {
+                        flush()
+                        item(key = key) { SectionRow(sec, sub) { onOpenSection(sec) } }
+                    } else {
+                        val tile: @Composable (Modifier) -> Unit = { m -> SectionTile(sec, m, subtitle = sub) { onOpenSection(sec) } }
+                        half += key to tile
+                    }
+                }
+            }
+        }
+        flush()
     }
 }
 
@@ -313,15 +379,15 @@ private fun SectionTile(section: Section, modifier: Modifier, subtitle: String? 
 }
 
 @Composable
-private fun SectionRow(section: Section, onClick: () -> Unit) {
+private fun SectionRow(section: Section, subtitle: String? = null, onClick: () -> Unit) {
     val colors = MaterialTheme.colorScheme
-    GlassCard(Modifier.fillMaxWidth(), onClick = onClick) {
+    GlassCard(Modifier.fillMaxWidth().sharedSection("section-${section.name}"), onClick = onClick) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconBubble(section.icon, colors.tertiaryContainer, colors.onTertiaryContainer, 44)
             Spacer(Modifier.width(16.dp))
             Column(Modifier.weight(1f)) {
                 Text(section.title, style = MaterialTheme.typography.titleMedium)
-                Text(section.subtitle, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
+                Text(subtitle ?: section.subtitle, style = MaterialTheme.typography.bodySmall, color = if (subtitle != null) colors.primary else colors.onSurfaceVariant)
             }
             Icon(Icons.Rounded.ChevronRight, contentDescription = null, tint = colors.onSurfaceVariant)
         }

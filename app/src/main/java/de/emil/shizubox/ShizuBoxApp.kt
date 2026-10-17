@@ -41,6 +41,7 @@ class ShizuBoxApp : Application() {
         de.emil.shizubox.cleaner.CleanerJobs.init(this)
         de.emil.shizubox.cleaner.Duplicates.init(this)
         de.emil.shizubox.hilight.HiLightSettings.init(this)
+        de.emil.shizubox.search.Search.init(this)
         // Scheduled cleaning: re-armed at every start (also after a reboot).
         runCatching { de.emil.shizubox.cleaner.CleanerSchedule.schedule(this) }
         de.emil.shizubox.util.Unlock.whenUnlocked(this) {

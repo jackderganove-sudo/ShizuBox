@@ -110,6 +110,25 @@ class MainActivity : ComponentActivity() {
                         busy = false
                     }
                 }
+                // Search and home favourites jump anywhere (sub page + highlighted card).
+                LaunchedEffect(Unit) {
+                    de.emil.shizubox.nav.AppNav.requests.collect { t ->
+                        if (t.settings) {
+                            settingsOpen = true
+                            return@collect
+                        }
+                        settingsOpen = false
+                        installUri = null
+                        when (t.section) {
+                            Section.System -> systemPage = t.page
+                            Section.Cleaner -> de.emil.shizubox.ui.cleaner.CleanerNav.page.value = t.page
+                            Section.Apps -> de.emil.shizubox.ui.apps.AppsNav.open.value = t.page
+                            Section.Downloader -> t.page?.toIntOrNull()?.let { de.emil.shizubox.ui.downloader.DownloaderNav.page.value = it }
+                            else -> Unit
+                        }
+                        section = t.section
+                    }
+                }
                 BackHandler(enabled = settingsOpen) { settingsOpen = false }
                 BackHandler(enabled = section != null && systemPage == null && !settingsOpen) { section = null }
                 BackHandler(enabled = systemPage != null) { systemPage = null }
