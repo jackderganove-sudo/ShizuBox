@@ -322,6 +322,21 @@ class DebugReceiver : BroadcastReceiver() {
                             }
                             else -> de.emil.shizubox.hilight.HiLight.status().toString()
                         }
+                        // Start a cleaner job and cancel it after --el after ms: are all find processes gone?
+                        "cljob" -> {
+                            val tool = de.emil.shizubox.cleaner.CleanTool.valueOf(intent.getStringExtra("tool") ?: "Analysis")
+                            de.emil.shizubox.cleaner.CleanerJobs.start(tool) { report ->
+                                when (tool) {
+                                    de.emil.shizubox.cleaner.CleanTool.Duplicates -> de.emil.shizubox.cleaner.Duplicates.scan(de.emil.shizubox.cleaner.CleanerSettings.current.copy(dupeSimilar = true)) { t, p -> report(t, p) }
+                                    else -> de.emil.shizubox.cleaner.StorageAnalysis.scan(context) { report(it, null) }
+                                }
+                            }
+                            kotlinx.coroutines.delay(intent.getLongExtra("after", 400))
+                            val before = ShizukuManager.exec("ps -A -o NAME | grep -c '^find'", 3000, 10_000).out
+                            de.emil.shizubox.cleaner.CleanerJobs.cancel(tool)
+                            kotlinx.coroutines.delay(1500)
+                            "find before cancel=$before after=" + ShizukuManager.exec("ps -A -o NAME | grep -c '^find'", 3000, 10_000).out + " running=" + de.emil.shizubox.cleaner.CleanerJobs.running.value.keys
+                        }
                         "cleanercfg" -> {
                             // Writes the current cleaner settings unchanged (creates the prefs file for the backup test).
                             de.emil.shizubox.cleaner.CleanerSettings.update { it }

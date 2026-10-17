@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.10.0** (versionCode 11, 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
+| Version | **0.10.1** (versionCode 12, 2026-10-17: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -220,6 +220,52 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - APKMirror erlaubt keine automatischen Downloads
 - R8: commons-compress (youtubedl-android) und NewPipe/Rhino brauchen Keep-Regeln, sonst scheitert das Entpacken bzw. die Extraktion
 - uiautomator wird durch die pulsierende Shizuku-Animation nie „idle“ → Koordinaten per Screenshot bestimmen
+
+## Stabilitätsbericht 2 (0.10.1, 2026-10-17) – nach 0.8 (Privatsphäre, Akku, Zwischenablage, Lautstärke), 0.9 (Reiniger), 0.10 (HiLight)
+
+**Gefunden und behoben**
+- **Shell-Dienst kam nach seinem Tod nie zurück**: wurde `de.emil.shizubox:shell` beendet (Speichermangel, Absturz),
+  startete Shizuku zwar einen neuen Prozess, lieferte ihn aber nie an die alte Verbindung aus – ShizuBox blieb bis zum
+  App-Neustart „nicht verbunden“ (alle Shell-Funktionen, Zwischenablage, Lautstärke pro App, HiLight). Jetzt: eigener
+  Binder-Tod-Wächter, bei Tod neue Verbindung mit neuem Tag (`shell-<n>`), zusätzlich Wächter „hängt 10 s in Verbinden“.
+  Getestet: 3× hintereinander abgeschossen → jedes Mal nach < 2 s wieder verbunden; Zwischenablage, App-Lautstärken und
+  HiLight-Beobachter melden sich über „Ready“ neu an (beim Abmelden räumen sie ihre Zustände)
+- **HiLight-Sicherheitsbegrenzer zählte die Pause zwischen zwei Effekten als „an“** (letztes Bild eines Effekts hell):
+  Auslastung 162 %, LEDs blieben fälschlich dunkel. Jetzt meldet der Renderer am Effektende „dunkel“. Unit-Tests
+  (`SafetyGuardTest`: Dimmen nach 10 s auf 55 %, ≤ 50 % pro 10 Min., Pause zählt nicht, 37 % = 3 LEDs) – erste Tests im Projekt
+- HiLight: `dumpsys lights` (fremde Sessions) lief unter der Sperre, die auch der Render-Thread jedes Bild braucht (bis ~0,3 s Ruckeln) → außerhalb
+- Reiniger-Protokoll wurde nur gekürzt, wenn etwas im Papierkorb ablief → täglich, unabhängig davon (90 Tage)
+- Hash-Cache ähnlicher Bilder wuchs unbegrenzt → Spalte „zuletzt benutzt“, Einträge > 60 Tage weg, höchstens 50 000
+- Papierkorb: Absturz genau zwischen Umbenennen und Index-Update hinterließ einen unsichtbaren Eintrag → `reconcile()` repariert ihn
+  (Datei im Papierkorb → wieder sichtbar, sonst vergessen)
+- **Aufwachvorgänge**: Privatsphäre-Worker (stündlich) und Papierkorb-Worker (täglich) liefen als eigene Jobs → laufen jetzt im
+  ohnehin 15-minütigen Akku-Worker mit (−25 Jobs/Tag); Privatsphäre nicht bei < 15 % Akku. Übrig: 2 Jobs (Akku/Wartung, Updates)
+- UI-Thread: Schnellaktionen der Startseite öffneten bei jedem Lesen ihre Einstellungsdatei (StrictMode, 0–8 ms) → einmal geöffnet, im Hintergrund gelesen
+- StrictMode-Testschalter wirkte erst nach App-Neustart → sofort
+
+**Gemessen auf dem Pixel (Android 17), Vergleich zu 0.7.2**
+| | 0.7.2 | 0.10.1 |
+|---|---|---|
+| CPU Hintergrund (App / Shell-Prozess, 60 s) | 0 % | 0 % / 0,02 % |
+| CPU HiLight-Regenbogen (jedes Bild anders, 30 fps) | – | 0,8 % eines Kerns (Shell-Prozess) |
+| RAM Leerlauf (PSS) | 16 MB | App 29 MB, Shell-Dienst 50 MB (davon Heap 6 MB, Rest geteiltes Framework) |
+| Duplikate inkl. ähnlicher Bilder, kalter Cache | – | ~105 s für alle Bilder, warm 16 s; PSS dabei 29–44 MB |
+| Speicher-Analyse ganzer Speicher | – | 4 s (4718 Dateien, 621 Ordner) |
+| Scan abbrechen | – | `find` sofort beendet (1 → 0 Prozesse) |
+| Akku seit Laden (5,5 h, viel getestet) | 0,37 mAh Hintergrund | 0,43 mAh Hintergrund, Wakelocks 131 ms |
+| Jobs | 1 | vorher 4 Arten (Akku 14×, Privatsphäre 5× à 2,4 s, Papierkorb 1×, Updates) → jetzt 2 |
+- Wecker: Nacht-Start/-Ende (Akku-Report), geplante Reinigung (wöchentlich, falls an), Automationen (falls Zeit-Regeln)
+- Shell-Prozess: 14 Threads im Leerlauf; Clipboard-/Playback-/AppOps-Rückrufe sind `oneway` bzw. kehren sofort zurück (Arbeit in eigenem Thread)
+- HiLight in jedem Fehlerfall dunkel: Shell-Prozess während eines Effekts getötet → Session sofort zu, LED schwarz; App-Absturz
+  (`am crash`) → Shell-Prozess mit beendet (kein Waise), neuer Start räumt per `reset` auf; keine Dauer-Sensoren (Lage nur beim Auslösen)
+- StrictMode beim Durchklicken aller neuen Seiten (Reiniger, HiLight, System, Startseite, Einstellungen): 0 Verstöße; logcat: keine Abstürze/ANRs
+- Datenbanken begrenzt: Privatsphäre (Aufbewahrung 7–365 Tage), Akku-Momentaufnahmen (gekürzt), Zwischenablage (Tage + max. 2000),
+  Benachrichtigungen (50 000 / 300 MB), Fehlerprotokoll (30 Tage), Reiniger-Protokoll (90 Tage), Hash-Cache (60 Tage / 50 000),
+  Schulmodus-Statistik (eine Zeile pro Sitzung, bleibt klein)
+
+**Offen**
+- Ein kompletter Neustart von Shizuku selbst wurde nicht getestet (müsste von Hand neu gestartet werden); der Code bindet dann frisch
+- Aufwachvorgänge über mehrere Stunden nach dem Zusammenlegen noch beobachten
 
 ## Stabilitätsbericht (0.7.2, 2026-10-16)
 

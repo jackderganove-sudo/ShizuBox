@@ -26,7 +26,8 @@ enum class QuickAction(private val labelRes: Int, private val shortRes: Int) {
 
 /** One-tap switches shared by the quick settings tiles and the home screen. */
 object QuickActions {
-    private val prefs get() = Str.context.createDeviceProtectedStorageContext().getSharedPreferences("tiles", android.content.Context.MODE_PRIVATE)
+    // Opened once (it used to be looked up on every read – a disk access on the main thread).
+    private val prefs by lazy { Str.context.createDeviceProtectedStorageContext().getSharedPreferences("tiles", android.content.Context.MODE_PRIVATE) }
 
     private fun onOff(active: Boolean) = TileInfo(active, if (active) t(R.string.on) else t(R.string.off))
 

@@ -20,13 +20,9 @@ class TrashWorker(context: Context, params: WorkerParameters) : CoroutineWorker(
     }
 
     companion object {
+        /** Since 0.10.1 the daily cleanup runs in the 15-minute BatteryWorker; this only removes the old job. */
         fun schedule(context: Context) {
-            WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-                "cleaner_trash", ExistingPeriodicWorkPolicy.KEEP,
-                PeriodicWorkRequestBuilder<TrashWorker>(1, TimeUnit.DAYS)
-                    .setConstraints(Constraints.Builder().setRequiresBatteryNotLow(true).build())
-                    .build(),
-            )
+            WorkManager.getInstance(context).cancelUniqueWork("cleaner_trash")
         }
     }
 }

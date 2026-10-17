@@ -359,14 +359,38 @@ object BatteryReport {
 }
 
 /** Every 15 minutes: battery level; at most hourly: the per-app snapshot (Shizuku). */
+/**
+ * ShizuBox' one periodic wake-up (every 15 min). Since 0.10.1 it also carries the hourly privacy
+ * collection and the daily trash cleanup, which used to wake the phone with their own jobs
+ * (~25 extra wake-ups a day).
+ */
 class BatteryWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
+        val ctx = applicationContext
         runCatching { BatteryReport.sampleLevel() }
-        runCatching { de.emil.shizubox.hilight.HiLightCharging.check(applicationContext) }
+        runCatching { de.emil.shizubox.hilight.HiLightCharging.check(ctx) }
         // Also takes school-mode sessions over before its small log rotates them away.
         runCatching { de.emil.shizubox.schoolstats.SchoolStats.collect() }
         if (de.emil.shizubox.school.SchoolMode.state.value.active) return Result.success()
-        if (System.currentTimeMillis() - BatteryReport.lastSnapshot() > 55 * 60_000L) runCatching { BatteryReport.snapshot() }
+        val now = System.currentTimeMillis()
+        if (now - BatteryReport.lastSnapshot() > 55 * 60_000L) runCatching { BatteryReport.snapshot() }
+        val prefs = ctx.createDeviceProtectedStorageContext().getSharedPreferences("maintenance", Context.MODE_PRIVATE)
+        val bm = ctx.getSystemService(android.os.BatteryManager::class.java)
+        val batteryLow = !bm.isCharging && bm.getIntProperty(android.os.BatteryManager.BATTERY_PROPERTY_CAPACITY) in 0 until 15
+        // Hourly: privacy log (the most expensive part, ~2.5 s – not on a low battery).
+        if (de.emil.shizubox.privacy.PrivacyLog.settings.value.enabled && !batteryLow && now - prefs.getLong("privacy", 0) > 55 * 60_000L) {
+            runCatching { de.emil.shizubox.privacy.PrivacyLog.collect() }
+            prefs.edit().putLong("privacy", now).apply()
+        }
+        // Daily: trash items past their days, cleaner log older than 90 days.
+        if (now - prefs.getLong("trash", 0) > 23 * 3_600_000L) {
+            runCatching { de.emil.shizubox.cleaner.Trash.pruneLog() }
+            // Shizuku may still be connecting in a freshly started process: the shell call waits for it.
+            if (de.emil.shizubox.cleaner.Trash.items.value.isNotEmpty()) {
+                runCatching { de.emil.shizubox.cleaner.Trash.purgeExpired() }
+            }
+            prefs.edit().putLong("trash", now).apply()
+        }
         return Result.success()
     }
 

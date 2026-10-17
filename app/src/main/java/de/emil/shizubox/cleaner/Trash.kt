@@ -226,13 +226,28 @@ object Trash {
     suspend fun purgeExpired(days: Int = CleanerSettings.current.trashDays): Long {
         val cutoff = System.currentTimeMillis() - days * 86_400_000L
         val ids = _items.value.filter { it.time < cutoff }.map { it.id }
-        pruneLog()
         return if (ids.isEmpty()) 0L else purge(ids, expired = true)
     }
 
-    /** Forgets entries whose files were removed by someone else (e.g. a file manager). */
+    /**
+     * Forgets entries whose files were removed by someone else (e.g. a file manager), and repairs
+     * a move that was interrupted between the rename and the index update (process killed): such a
+     * row has no location yet – if the file is in the trash it is shown again, otherwise forgotten.
+     */
     suspend fun reconcile() = lock.withLock {
         withContext(Dispatchers.IO) {
+            val half = db.rawQuery("SELECT id, orig FROM trash WHERE loc = ''", null).use { c ->
+                buildList { while (c.moveToNext()) add(c.getLong(0) to c.getString(1)) }
+            }
+            if (half.isNotEmpty()) {
+                val guess = half.associate { (id, orig) -> id to (if (orig.startsWith(INTERNAL)) Guard.TRASH_DIRS[0] else zoneDir(orig)) + "/$id" }
+                val there = existing(guess.values.toList()).toSet()
+                for ((id, loc) in guess) {
+                    if (loc in there) db.update("trash", ContentValues().apply { put("loc", loc) }, "id = ?", arrayOf(id.toString()))
+                    else db.delete("trash", "id = ?", arrayOf(id.toString()))
+                }
+            }
+            _items.value = query()
             val all = _items.value
             if (all.isEmpty()) return@withContext
             val present = existing(all.map { it.loc }).toSet()
@@ -270,7 +285,8 @@ object Trash {
         })
     }
 
-    private fun pruneLog() = db.delete("log", "time < ?", arrayOf((System.currentTimeMillis() - LOG_KEEP_MS).toString()))
+    /** The log keeps 90 days – also when the trash is empty (it used to be pruned only with expired items). */
+    fun pruneLog() = db.delete("log", "time < ?", arrayOf((System.currentTimeMillis() - LOG_KEEP_MS).toString()))
 
     suspend fun logEntries(limit: Int = 500): List<LogEntry> = withContext(Dispatchers.IO) {
         db.rawQuery("SELECT time, action, tool, path, size, msg FROM log ORDER BY time DESC LIMIT $limit", null).use { c ->

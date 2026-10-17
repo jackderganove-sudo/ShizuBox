@@ -67,37 +67,50 @@ object ShizukuManager {
     private var service: IShellService? = null
     private var binding = false
 
-    private val serviceArgs by lazy {
+    /**
+     * Bumped whenever the service died: a new tag makes Shizuku treat the next bind as a new user
+     * service. Rebinding under the old tag (and the old connection) started a process whose binder
+     * was never delivered – ShizuBox stayed disconnected until it was restarted (stability round 2).
+     */
+    private var generation = 0
+
+    private fun makeArgs() =
         Shizuku.UserServiceArgs(ComponentName(appContext.packageName, ShellService::class.java.name))
             .daemon(false)
             .processNameSuffix("shell")
+            .tag("shell-$generation")
             .debuggable(BuildConfig.DEBUG)
             // + service revision: a changed AIDL needs a fresh service process even within one app version.
             .version(BuildConfig.VERSION_CODE * 100 + SERVICE_REV)
-    }
 
-    private val connection = object : ServiceConnection {
+    private var serviceArgs: Shizuku.UserServiceArgs? = null
+    private var connection: ServiceConnection? = null
+
+    private fun newConnection(): ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+            Log.i(TAG, "service connected (generation $generation)")
+            if (connection !== this) return
             binding = false
             if (binder != null && binder.pingBinder()) {
                 service = IShellService.Stub.asInterface(binder)
+                // Shizuku does not always report a dead user service: watch the binder ourselves.
+                runCatching { binder.linkToDeath({ serviceDied(binder) }, 0) }
             }
             refresh()
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            service = null
-            binding = false
-            refresh()
+            if (connection !== this) return
+            service?.asBinder()?.let { serviceDied(it) } ?: run { binding = false; refresh() }
         }
     }
 
     fun init(context: Context) {
         appContext = context.applicationContext
         Shizuku.addBinderReceivedListenerSticky { refresh() }
+        // Shizuku itself stopped: forget the binding, a restarted Shizuku gets a fresh one.
         Shizuku.addBinderDeadListener {
-            service = null
-            binding = false
+            dropBinding()
             refresh()
         }
         Shizuku.addRequestPermissionResultListener { _, _ -> refresh() }
@@ -146,11 +159,36 @@ object ShizukuManager {
     fun shizukuLaunchIntent(): Intent? =
         shizukuPackage?.let { appContext.packageManager.getLaunchIntentForPackage(it) }
 
+    private fun serviceDied(binder: IBinder) {
+        android.os.Handler(android.os.Looper.getMainLooper()).post {
+            if (service?.asBinder() != binder) return@post
+            Log.w(TAG, "shell service died – reconnecting")
+            dropBinding()
+            refresh()
+        }
+    }
+
+    /** Forgets the current binding; the next bind uses a new connection and a new tag. */
+    private fun dropBinding() {
+        val args = serviceArgs
+        val conn = connection
+        service = null
+        binding = false
+        serviceArgs = null
+        connection = null
+        generation++
+        if (args != null && conn != null) runCatching { Shizuku.unbindUserService(args, conn, true) }
+    }
+
+    private var connectingSince = 0L
+
     private fun bindService() {
         if (binding) return
         binding = true
         try {
-            Shizuku.bindUserService(serviceArgs, connection)
+            val args = serviceArgs ?: makeArgs().also { serviceArgs = it }
+            val conn = connection ?: newConnection().also { connection = it }
+            Shizuku.bindUserService(args, conn)
         } catch (e: Exception) {
             Log.e(TAG, "bindUserService failed", e)
             binding = false
@@ -160,10 +198,23 @@ object ShizukuManager {
     /** Waits up to [timeoutMs] for the shell service and returns it, or null. */
     private suspend fun awaitService(timeoutMs: Long): IShellService? {
         service?.let { return it }
-        return withTimeoutOrNull(timeoutMs) {
+        val got = withTimeoutOrNull(timeoutMs) {
             _status.first { it == ShizukuStatus.Ready }
             service
         }
+        if (got == null) rebindIfStuck()
+        return got
+    }
+
+    /** Still "connecting" after 10 s although Shizuku runs: drop the binding and start over. */
+    private fun rebindIfStuck() {
+        if (_status.value != ShizukuStatus.Connecting) { connectingSince = 0; return }
+        val now = android.os.SystemClock.elapsedRealtime()
+        if (connectingSince == 0L) { connectingSince = now; return }
+        if (now - connectingSince < 10_000) return
+        connectingSince = 0
+        Log.w(TAG, "shell service stuck connecting – rebinding")
+        android.os.Handler(android.os.Looper.getMainLooper()).post { dropBinding(); refresh() }
     }
 
     val isReady get() = _status.value == ShizukuStatus.Ready

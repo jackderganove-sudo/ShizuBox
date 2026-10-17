@@ -341,16 +341,9 @@ class PrivacyWorker(context: Context, params: WorkerParameters) : CoroutineWorke
     companion object {
         private const val WORK = "privacy_log"
 
+        /** Since 0.10.1 the 15-minute BatteryWorker collects hourly; this only removes the old job. */
         fun schedule(context: Context) {
-            val wm = WorkManager.getInstance(context)
-            if (!PrivacyLog.settings.value.enabled) {
-                wm.cancelUniqueWork(WORK)
-                return
-            }
-            val request = PeriodicWorkRequestBuilder<PrivacyWorker>(1, TimeUnit.HOURS)
-                .setConstraints(Constraints.Builder().setRequiresBatteryNotLow(true).build())
-                .build()
-            wm.enqueueUniquePeriodicWork(WORK, ExistingPeriodicWorkPolicy.KEEP, request)
+            WorkManager.getInstance(context).cancelUniqueWork(WORK)
         }
     }
 }

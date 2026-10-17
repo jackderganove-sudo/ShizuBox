@@ -79,8 +79,9 @@ object HiLightEngine {
         val limit = kindLimit[kind] ?: 60_000L
         val duration = cmd.optLong("durationMs", 10_000L).coerceIn(500L, limit)
         val colors = cmd.optJSONArray("colors")?.let { a -> IntArray(a.length()) { a.optLong(it).toInt() } } ?: intArrayOf(cmd.optLong("color", 0xFFFFFFFFL).toInt())
+        // `dumpsys` takes ~0.1–0.3 s: outside the lock the render thread needs every frame.
+        if (io?.isOpen != true && foreignSessions() > 0) return "busy"
         synchronized(lock) {
-            if (io?.isOpen != true && foreignSessions() > 0) return "busy"
             val now = SystemClock.elapsedRealtime()
             effect = Effect(
                 cmd.optString("id", "x"), kind, Pattern.of(cmd.optString("pattern", "solid")), colors,
@@ -111,6 +112,9 @@ object HiLightEngine {
                 val now = SystemClock.elapsedRealtime()
                 val e = synchronized(lock) { effect?.takeIf { now < it.until } ?: run { effect = null; null } }
                 if (e == null) {
+                    // Tell the safety guard the LEDs are dark now – otherwise the pause until the
+                    // next effect would count as lit time (seen: duty 162 %, LEDs wrongly resting).
+                    guard.apply(intArrayOf(Patterns.BLACK), now)
                     runCatching { io?.clearAndClose() }
                     lastFrame = null
                     synchronized(lock) {
@@ -141,6 +145,7 @@ object HiLightEngine {
             }
         } catch (t: Throwable) {
             lastError = t.toString()
+            guard.apply(intArrayOf(Patterns.BLACK), SystemClock.elapsedRealtime())
             runCatching { io?.clearAndClose() }
             lastFrame = null
             synchronized(lock) {
@@ -165,16 +170,21 @@ object HiLightEngine {
         }.onFailure { lastError = it.toString() }
     }
 
-    fun status(): JSONObject = synchronized(lock) {
+    fun status(): JSONObject {
+        val foreign = foreignSessions()
+        return synchronized(lock) { statusLocked(foreign) }
+    }
+
+    private fun statusLocked(foreign: Int): JSONObject {
         val e = effect
-        JSONObject()
+        return JSONObject()
             .put("active", e != null)
             .put("id", e?.id)
             .put("kind", e?.kind)
             .put("pattern", e?.pattern?.key)
             .put("remainingMs", e?.let { (it.until - SystemClock.elapsedRealtime()).coerceAtLeast(0) } ?: 0)
             .put("session", io?.isOpen == true)
-            .put("foreignSessions", foreignSessions())
+            .put("foreignSessions", foreign)
             .put("duty", guard.dutyPercent)
             .put("resting", guard.resting)
             .put("leds", runCatching { JSONArray(io().ids.map { Integer.toHexString(io().get(it) ?: 0) }) }.getOrNull())

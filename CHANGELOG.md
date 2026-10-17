@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.10.1 – 2026-10-17 – Stabilitätsrunde 2
+- Fix: Starb der Shell-Dienst (z. B. Speichermangel), verband sich ShizuBox bis zum App-Neustart nicht wieder –
+  jetzt nach < 2 s automatisch, alle Listener melden sich neu an
+- Fix HiLight: Pausen zwischen Effekten zählten als „an“, die LEDs blieben dadurch fälschlich dunkel; kein Ruckeln mehr
+  durch die Sitzungs-Prüfung; erste Unit-Tests für die Sicherheitsgrenzen
+- Weniger Aufwachen: Privatsphäre-Protokoll und Papierkorb laufen im 15-Minuten-Worker mit (2 statt 4 Jobs)
+- Reiniger: Protokoll wird immer nach 90 Tagen gekürzt, Bild-Hash-Cache begrenzt, abgebrochene Verschiebungen werden repariert
+- Startseite: Schnellaktionen lesen nicht mehr auf dem UI-Thread
+- Details und Messwerte: Stabilitätsbericht 2 in PROJEKTSTAND.md
+
 ## 0.10.0 – 2026-10-17 – HiLight (Pixel 11 Pro)
 - Neue Karte „HiLight“ unter System (nur Pixel 11 Pro / Pro XL / Pro Fold mit Android 17): steuert die 8 LEDs der
   Kameraleiste über ShizuBox' Shell-Dienst (Shell-Nutzer hat `CONTROL_DEVICE_LIGHTS`), Code/Logik aus HiLight Studio

@@ -112,7 +112,17 @@ object ErrorLog {
     }
 
     /** Developer switch (DebugReceiver `--es strict on|off`): logs disk/network on the main thread and leaks. */
-    fun setStrict(on: Boolean) = prefs.edit().putBoolean("strict", on).apply()
+    /** Takes effect at once (the thread policy belongs to the main thread) and after restarts. */
+    fun setStrict(on: Boolean) {
+        prefs.edit().putBoolean("strict", on).apply()
+        android.os.Handler(android.os.Looper.getMainLooper()).post {
+            if (on) enableStrictMode()
+            else {
+                StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.LAX)
+                StrictMode.setVmPolicy(StrictMode.VmPolicy.LAX)
+            }
+        }
+    }
 
     private fun enableStrictMode() {
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().detectCustomSlowCalls().penaltyLog().build())

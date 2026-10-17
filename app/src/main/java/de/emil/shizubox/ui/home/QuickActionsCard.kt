@@ -61,7 +61,7 @@ fun QuickActionsCard() {
     val scope = rememberCoroutineScope()
     val states = remember { mutableStateMapOf<QuickAction, TileInfo>() }
     LaunchedEffect(Unit) {
-        QuickAction.entries.forEach { a -> runCatching { QuickActions.read(a) }.onSuccess { states[a] = it } }
+        QuickAction.entries.forEach { a -> runCatching { kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { QuickActions.read(a) } }.onSuccess { states[a] = it } }
     }
     GlassCard(Modifier.fillMaxWidth(), contentPadding = 12.dp) {
         Text(
@@ -82,7 +82,7 @@ fun QuickActionsCard() {
                         .clickable(enabled = info != null) {
                             scope.launch {
                                 runCatching { QuickActions.toggle(a, info!!) }
-                                runCatching { QuickActions.read(a) }.onSuccess { states[a] = it }
+                                runCatching { kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { QuickActions.read(a) } }.onSuccess { states[a] = it }
                             }
                         }
                         .padding(vertical = 8.dp),

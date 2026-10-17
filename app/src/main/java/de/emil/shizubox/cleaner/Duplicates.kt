@@ -94,6 +94,7 @@ object Duplicates {
             val inExact = exact.flatten().map { it.path }.toSet()
             val images = unique.filter { it.name.substringAfterLast('.', "").lowercase() in IMAGES && it.path !in inExact }.take(20_000)
             groups += similar(images, rule, report)
+            pruneCache()
         }
         val sorted = groups.sortedByDescending { it.waste }
         _result.value = sorted
@@ -168,7 +169,10 @@ object Duplicates {
     /** 9×8 grey picture → 64 bits (is each pixel brighter than its right neighbour?). Cached. */
     private fun dHash(e: FsEntry): Triple<Long, Int, Int>? {
         cache.rawQuery("SELECT hash, w, h FROM d WHERE path = ? AND size = ? AND mtime = ?", arrayOf(e.path, e.size.toString(), e.mtime.toString())).use { c ->
-            if (c.moveToFirst()) return Triple(c.getLong(0), c.getInt(1), c.getInt(2))
+            if (c.moveToFirst()) {
+                cache.execSQL("UPDATE d SET seen = ? WHERE path = ?", arrayOf<Any>(System.currentTimeMillis(), e.path))
+                return Triple(c.getLong(0), c.getInt(1), c.getInt(2))
+            }
         }
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         BitmapFactory.decodeFile(e.path, bounds)
@@ -185,7 +189,7 @@ object Duplicates {
         if (small !== bmp) small.recycle()
         bmp.recycle()
         cache.insertWithOnConflict("d", null, ContentValues().apply {
-            put("path", e.path); put("size", e.size); put("mtime", e.mtime); put("hash", hash); put("w", bounds.outWidth); put("h", bounds.outHeight)
+            put("path", e.path); put("size", e.size); put("mtime", e.mtime); put("hash", hash); put("w", bounds.outWidth); put("h", bounds.outHeight); put("seen", System.currentTimeMillis())
         }, SQLiteDatabase.CONFLICT_REPLACE)
         return Triple(hash, bounds.outWidth, bounds.outHeight)
     }
@@ -199,11 +203,21 @@ object Duplicates {
         return r
     }
 
-    private class CacheDb(context: Context) : SQLiteOpenHelper(context, "dupe_cache.db", null, 1) {
+    /** Fingerprints not used for 60 days (deleted or moved pictures) are dropped; at most 50 000 rows. */
+    fun pruneCache() = runCatching {
+        cache.delete("d", "seen < ?", arrayOf((System.currentTimeMillis() - 60 * 86_400_000L).toString()))
+        cache.execSQL("DELETE FROM d WHERE path NOT IN (SELECT path FROM d ORDER BY seen DESC LIMIT 50000)")
+    }
+
+    /** v2: "seen" column for pruning – it is only a cache, so an upgrade simply starts empty. */
+    private class CacheDb(context: Context) : SQLiteOpenHelper(context, "dupe_cache.db", null, 2) {
         override fun onCreate(db: SQLiteDatabase) {
-            db.execSQL("CREATE TABLE d (path TEXT PRIMARY KEY, size INTEGER NOT NULL, mtime INTEGER NOT NULL, hash INTEGER NOT NULL, w INTEGER NOT NULL, h INTEGER NOT NULL)")
+            db.execSQL("CREATE TABLE d (path TEXT PRIMARY KEY, size INTEGER NOT NULL, mtime INTEGER NOT NULL, hash INTEGER NOT NULL, w INTEGER NOT NULL, h INTEGER NOT NULL, seen INTEGER NOT NULL DEFAULT 0)")
         }
 
-        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) = Unit
+        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+            db.execSQL("DROP TABLE IF EXISTS d")
+            onCreate(db)
+        }
     }
 }
