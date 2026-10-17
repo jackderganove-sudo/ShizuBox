@@ -477,6 +477,25 @@ class DebugReceiver : BroadcastReceiver() {
                                     "rename ${from.removePrefix(R0)} -> ${to.removePrefix(R0)}: " + (ShizukuManager.rename(from, to) ?: "OK")
                                 }
                                 "purge" -> "freed=" + T.purge(T.items.value.filter { mine(it.orig) }.map { it.id })
+                                // 0.11.1: two items with the same original path, then "restore all" → both must come back.
+                                "same" -> {
+                                    val f = "$R0/Download/sbx_test/same.txt"
+                                    for (c in listOf("first", "second")) {
+                                        ShizukuManager.exec("mkdir -p $R0/Download/sbx_test && echo $c > $f", 5000, 15_000)
+                                        T.move(listOf(de.emil.shizubox.cleaner.Candidate(f, -1, false)), de.emil.shizubox.cleaner.CleanTool.System)
+                                    }
+                                    "restored=" + T.restore(T.items.value.filter { mine(it.orig) }.map { it.id }) + " " +
+                                        ShizukuManager.exec("for x in $R0/Download/sbx_test/same*; do echo \"\$x: \$(cat \"\$x\")\"; done", 5000, 15_000).out.replace('\n', ' ')
+                                }
+                                // 0.11.1: a failing existence check must not shrink the index.
+                                "failcheck" -> {
+                                    val before = T.items.value.size
+                                    T.failExistingForTest = true
+                                    try { T.reconcile() } finally { T.failExistingForTest = false }
+                                    val afterFail = T.items.value.size
+                                    T.reconcile()
+                                    "index before=$before after failed check=$afterFail after real check=${T.items.value.size}"
+                                }
                                 "clean" -> ShizukuManager.exec("rm -rf ${testPaths.joinToString(" ")}", 5000, 30_000).code.toString()
                                 "guard" -> {
                                     de.emil.shizubox.cleaner.Guard.installedPackages(true)

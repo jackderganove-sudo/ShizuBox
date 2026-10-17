@@ -37,7 +37,8 @@ interface IShellService {
 
     // Pure rename(2), never a copy: `mv` falls back to copy + setattr when a rename crosses into
     // Android/data, and that crashed MediaProvider's FUSE daemon on Android 17 (whole storage gone
-    // for ~4 s). Creates the target's parent. Returns "" on success, otherwise the error.
+    // for ~4 s). Creates the target's parent. Never overwrites: an existing target returns
+    // "EEXIST" (ShizukuManager.RENAME_EXISTS). Returns "" on success, otherwise the error.
     String rename(String from, String to) = 9;
 
     // HiLight (Pixel 11 Pro LED bar) through the hidden ILightsManager – the shell user holds

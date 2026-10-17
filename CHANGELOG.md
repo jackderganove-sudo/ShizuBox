@@ -16,6 +16,10 @@
   ausgeschlossen): Verläufe, Datenschutz-Protokoll, Schulmodus-Snapshot, VirusTotal-Schlüssel und Papierkorb-Index
   gehören nicht in die Cloud oder auf ein anderes Handy; ShizuBox hat ein eigenes Backup nur für Einstellungen.
   Geprüft: `ALLOW_BACKUP` fehlt jetzt in `dumpsys package`
+- Papierkorb: Wiederherstellen überschreibt nie mehr – der Shell-Dienst prüft direkt vor jedem Umbenennen, ob das
+  Ziel existiert (sonst „Name (2)“); zwei Einträge mit gleichem Originalpfad kommen beide zurück. Schlägt die
+  Existenzprüfung fehl, wird nichts aus dem Index gelöscht (vorher hielt ein Fehler alles für „weg“)
+  (`TrashRestoreTest`, 5 Unit-Tests; live auf dem Pixel geprüft)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

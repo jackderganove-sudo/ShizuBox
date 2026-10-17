@@ -45,7 +45,7 @@ enum class ShizukuStatus {
 
 object ShizukuManager {
     /** Bump when IShellService changes. */
-    private const val SERVICE_REV = 7
+    private const val SERVICE_REV = 8
     /** Hard limit for a shell command when the caller gives none. */
     const val DEFAULT_LIMIT = 60_000L
 
@@ -282,7 +282,10 @@ object ShizukuManager {
 
     suspend fun unwatchPrivacy() = withContext(Dispatchers.IO) { runCatching { awaitService(1000)?.unwatchPrivacy() } }
 
-    /** Pure rename as the Shizuku user (never a copy). Returns null on success, else the error. */
+    /** [rename]'s answer when the target exists – it never overwrites. */
+    const val RENAME_EXISTS = "EEXIST"
+
+    /** Pure rename(2) as the shell user; null on success, otherwise the error ([RENAME_EXISTS] if the target exists). */
     suspend fun rename(from: String, to: String): String? = withContext(Dispatchers.IO) {
         val svc = awaitService(3000) ?: throw ShizukuUnavailableException()
         val r = try {

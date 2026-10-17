@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import de.emil.shizubox.shizuku.ShizukuManager
+import de.emil.shizubox.shizuku.ShizukuUnavailableException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -153,7 +154,6 @@ object Trash {
     suspend fun restore(ids: Collection<Long>): Int = lock.withLock {
         withContext(Dispatchers.IO) {
             val items = _items.value.filter { it.id in ids }
-            val taken = existing(items.filterNot { it.orig.startsWith(INTERNAL) }.map { it.orig })
             var ok = 0
             for (it in items) {
                 if (it.orig.startsWith(INTERNAL)) {
@@ -170,21 +170,19 @@ object Trash {
                     }
                     continue
                 }
-                var target = it.orig
                 // An emptied app cache was recreated by the app meanwhile: the old one replaces it.
-                if (it.orig in taken && it.dir && Regex("""^${Regex.escape(Fs.DATA)}/[^/]+/cache$""").matches(it.orig)) {
-                    Fs.remove(listOf(it.orig))
-                } else if (it.orig in taken) {
-                    val base = it.orig.substringAfterLast('/')
-                    val dot = base.lastIndexOf('.').takeIf { d -> d > 0 && !it.dir } ?: base.length
-                    var n = 2
-                    do {
-                        target = it.orig.substringBeforeLast('/') + "/" + base.substring(0, dot) + " ($n)" + base.substring(dot)
-                        n++
-                    } while (existing(listOf(target)).isNotEmpty() && n < 100)
+                if (it.dir && Regex("""^${Regex.escape(Fs.DATA)}/[^/]+/cache$""").matches(it.orig)) {
+                    val there = existing(listOf(it.orig))
+                    if (there == null) {
+                        log(LogAction.Failed, it.tool, it.orig, it.size, "restore: check failed")
+                        continue
+                    }
+                    if (there.isNotEmpty()) Fs.remove(listOf(it.orig))
                 }
-                val err = ShizukuManager.rename(it.loc, target)
-                if (err == null) {
+                // Checked freshly for every item by the shell service right before the rename, which
+                // never overwrites: two items with the same original place both come back (0.11.1).
+                val (target, err) = restoreInto(it.orig, it.dir) { to -> ShizukuManager.rename(it.loc, to) }
+                if (target != null) {
                     db.delete("trash", "id = ?", arrayOf(it.id.toString()))
                     ok++
                     log(LogAction.Restore, it.tool, target, it.size, "")
@@ -205,7 +203,8 @@ object Trash {
             // Never anything outside the trash folders, whatever the index says.
             val safe = items.filter { i -> Guard.TRASH_DIRS.any { i.loc.startsWith("$it/") } }
             Fs.remove(safe.map { it.loc })
-            val left = existing(safe.map { it.loc }).toSet()
+            // Unknown whether anything is left: keep every row (fail safe), the next purge tries again.
+            val left = existing(safe.map { it.loc }) ?: safe.map { it.loc }.toSet()
             var freed = 0L
             for (i in safe) {
                 if (i.loc in left) {
@@ -241,7 +240,8 @@ object Trash {
             }
             if (half.isNotEmpty()) {
                 val guess = half.associate { (id, orig) -> id to (if (orig.startsWith(INTERNAL)) Guard.TRASH_DIRS[0] else zoneDir(orig)) + "/$id" }
-                val there = existing(guess.values.toList()).toSet()
+                // Without a working check nothing is forgotten (fail safe).
+                val there = existing(guess.values.toList()) ?: return@withContext
                 for ((id, loc) in guess) {
                     if (loc in there) db.update("trash", ContentValues().apply { put("loc", loc) }, "id = ?", arrayOf(id.toString()))
                     else db.delete("trash", "id = ?", arrayOf(id.toString()))
@@ -250,21 +250,37 @@ object Trash {
             _items.value = query()
             val all = _items.value
             if (all.isEmpty()) return@withContext
-            val present = existing(all.map { it.loc }).toSet()
-            all.filter { it.loc !in present }.forEach { db.delete("trash", "id = ?", arrayOf(it.id.toString())) }
+            val present = existing(all.map { it.loc })
+            staleRows(all, present).forEach { id -> db.delete("trash", "id = ?", arrayOf(id.toString())) }
             _items.value = query()
         }
     }
 
-    /** Which of [paths] exist right now (one shell call per 200). */
-    private suspend fun existing(paths: List<String>): List<String> {
-        val out = ArrayList<String>()
+    /** Test hook (DebugReceiver): [existing] fails as if the shell call broke. */
+    @Volatile internal var failExistingForTest = false
+
+    /**
+     * Which of [paths] exist right now (one shell call per 200); null if that could not be checked
+     * (Shizuku gone, timeout, cut-off output) – callers then change nothing. Before 0.11.1 a failed
+     * call looked like "nothing exists" and reconcile dropped the whole index.
+     */
+    private suspend fun existing(paths: List<String>): Set<String>? {
+        if (failExistingForTest) return null
+        val out = HashSet<String>()
         for (chunk in paths.chunked(200)) {
-            val r = ShizukuManager.exec("for p in ${chunk.joinToString(" ") { Fs.q(it) }}; do [ -e \"\$p\" ] && echo \"\$p\"; done", 5000, 60_000)
-            out += r.out.lines().filter { it.isNotEmpty() }
+            val r = try {
+                ShizukuManager.exec("for p in ${chunk.joinToString(" ") { Fs.q(it) }}; do [ -e \"\$p\" ] && echo \"\$p\"; done; echo $END", 5000, 60_000)
+            } catch (_: ShizukuUnavailableException) {
+                return null
+            }
+            val lines = r.out.lines()
+            if (!r.ok || lines.lastOrNull() != END) return null
+            out += lines.dropLast(1).filter { it.isNotEmpty() }
         }
         return out
     }
+
+    private const val END = "--sbx-end--"
 
     val totalBytes get() = _items.value.sumOf { it.size }
 
@@ -309,3 +325,29 @@ object Trash {
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) = Unit
     }
 }
+
+/** "a.jpg", then "a (2).jpg" … "a (99).jpg" (folders without splitting off an extension). */
+internal fun restoreCandidates(orig: String, dir: Boolean): Sequence<String> = sequence {
+    yield(orig)
+    val parent = orig.substringBeforeLast('/')
+    val base = orig.substringAfterLast('/')
+    val dot = base.lastIndexOf('.').takeIf { it > 0 && !dir } ?: base.length
+    for (n in 2..99) yield("$parent/${base.substring(0, dot)} ($n)${base.substring(dot)}")
+}
+
+/**
+ * Tries the [restoreCandidates] one after another with a [rename] that never overwrites; returns
+ * the place used, or null and the last error. Any error other than "exists" stops at once.
+ */
+internal suspend fun restoreInto(orig: String, dir: Boolean, rename: suspend (String) -> String?): Pair<String?, String?> {
+    var err: String? = null
+    for (to in restoreCandidates(orig, dir)) {
+        err = rename(to) ?: return to to null
+        if (err != ShizukuManager.RENAME_EXISTS) break
+    }
+    return null to err
+}
+
+/** Index rows whose file is gone; none if [present] is unknown (failed check → fail safe). */
+internal fun staleRows(all: List<TrashItem>, present: Set<String>?): List<Long> =
+    if (present == null) emptyList() else all.filter { it.loc !in present }.map { it.id }

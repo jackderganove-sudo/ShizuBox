@@ -243,9 +243,21 @@ class ShellService : IShellService.Stub() {
     }
 
     override fun rename(from: String, to: String): String = try {
-        File(to).parentFile?.mkdirs()
-        android.system.Os.rename(from, to)
-        ""
+        // rename(2) silently replaces an existing file (Daniel's review, 0.11.1): checked right
+        // before, in this process. Anything but "does not exist" counts as taken (fail safe).
+        val taken = try {
+            android.system.Os.lstat(to)
+            true
+        } catch (e: android.system.ErrnoException) {
+            e.errno != android.system.OsConstants.ENOENT
+        }
+        if (taken) {
+            de.emil.shizubox.shizuku.ShizukuManager.RENAME_EXISTS
+        } else {
+            File(to).parentFile?.mkdirs()
+            android.system.Os.rename(from, to)
+            ""
+        }
     } catch (e: Exception) {
         e.message ?: e.javaClass.simpleName
     }
