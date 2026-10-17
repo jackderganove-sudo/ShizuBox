@@ -4,14 +4,19 @@ Zuerst **PROJEKTSTAND.md** lesen (Funktionen, Struktur, Technik, bekannte Proble
 
 ## Build & Installation
 ```sh
-JAVA_HOME=$HOME/Android/jdk ./gradlew assembleRelease -q   # Zeitstempel der APK prüfen!
+JAVA_HOME=$HOME/Android/jdk ./gradlew assembleFullRelease -q   # Zeitstempel der APK prüfen! (Lite: assembleLiteRelease)
 export PATH=$HOME/Android/Sdk/platform-tools:$PATH
 adb mdns services && adb connect <ip:port>                   # kabelloses Debugging
-adb -s <ip:port> install -r app/build/outputs/apk/release/app-release.apk
+adb -s <ip:port> install -r app/build/outputs/apk/full/release/app-full-release.apk   # das Handy hat Full: nie Lite drüber installieren
 ```
 - Release-Signierung kommt automatisch aus `~/Android/keys/shizubox-release.properties` (nie committen).
 - Debug-signierte Builds können die installierte Release-Version nicht ersetzen.
 - Push/Release: `git -c credential.helper= -c "credential.helper=!gh auth git-credential" push origin main`, `gh release create`.
+- Varianten (0.12.0): `full` und `lite`, gleiche applicationId und Signatur; Lite ohne Benachrichtigungs-Listener
+  (dessen Manifest-Eintrag liegt in `src/full`). Was den Listener braucht, fragt `hasNotificationListener`
+  (`BuildConfig.NOTIFICATION_LISTENER`) ab und zeigt sonst `FullOnlyNote`.
+- Release-Assets: `ShizuBox-<v>-full.apk`, `ShizuBox-<v>-lite.apk` **und** `ShizuBox-<v>.apk` (= Full). Updater bis
+  0.11.2 nehmen das letzte APK, GitHub sortiert nach Namen – ohne die dritte Datei bekämen sie Lite.
 
 ## Regeln
 - **Schulmodus (`school/`) nicht kaputtmachen.** Auf dem Handy nie den Schulmodus aktivieren, keine Netzwerk-/adb_wifi-/DPI-Änderungen, keine Neustarts – die adb-Verbindung kann abbrechen.
@@ -24,7 +29,8 @@ adb -s <ip:port> install -r app/build/outputs/apk/release/app-release.apk
 - **Snapshot/Index erst löschen, wenn alles erfolgreich war (fail safe).** Ein fehlgeschlagener oder unklarer
   Schritt (Exit-Code ≠ 0, Zeitlimit, abgeschnittene Ausgabe) lässt den gespeicherten Zustand stehen.
 - **Paketname und Signatur bei jeder Installation prüfen** (`UpdateGate`): Paket = verfolgte App, Signatur gleich.
-- Reine Logik testbar halten: Unit-Tests unter `app/src/test` (`./gradlew :app:testDebugUnitTest`).
+- Reine Logik testbar halten: Unit-Tests unter `app/src/test` (`./gradlew :app:testFullDebugUnitTest :app:testLiteDebugUnitTest`,
+  nacheinander statt zusammen mit den assemble-Tasks – parallel stürzte der Kotlin-Compiler einmal ab).
 
 ## i18n
 Alle Texte in 5 Sprachen über `tools/i18n` (README dort): Skript mit `S5(key, en, de, tr, es, fr)` + `save()`,

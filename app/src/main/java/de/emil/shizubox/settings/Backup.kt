@@ -116,7 +116,8 @@ object Backup {
             val inBackup = if (switches != null) switches.optBoolean(s.name) else prefsJson.optJSONObject(s.prefs)?.let { o ->
                 if (s == PrivacySwitch.ClipboardHint) o.has(s.key) else o.optJSONObject(s.key)?.optBoolean("v") == true
             } == true
-            inBackup && !s.isOn(prefs(context, s.prefs))
+            // Lite has no notification listener: nothing to offer for the history.
+            inBackup && !s.isOn(prefs(context, s.prefs)) && (s != PrivacySwitch.NotifHistory || BuildConfig.NOTIFICATION_LISTENER)
         }
         // Two phases (Daniel's review, 0.11.1): first decode and check everything, then write – a
         // broken entry used to leave a half-imported mix of old and new settings.

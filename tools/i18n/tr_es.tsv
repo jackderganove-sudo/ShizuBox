@@ -1421,3 +1421,5 @@ bk_priv_text	Estaban activadas en la copia. Registran datos privados o cambian u
 bk_priv_open	Abrir
 bk_priv_later	Ahora no
 cs_logs_scope	Registros/Temp: automáticamente solo fuera de tus propias carpetas (Documents, Download, DCIM, Pictures, Music …); el análisis manual sigue mostrándolo todo.
+lite_full_only	Solo en Full
+lite_full_only_sub	necesita el acceso a notificaciones, que ShizuBox Lite no tiene. La versión Full se instala con adb o Shizuku.

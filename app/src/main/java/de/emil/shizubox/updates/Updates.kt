@@ -220,7 +220,12 @@ object Updates {
         } else {
             try {
                 val r = source.latest(app)
-                val keepPreferred = app.chosenApk?.let { c -> r.apks.indexOfFirst { it.name == c.name } } ?: -1
+                val keepPreferred = if (isSelf(app)) {
+                    // Own releases carry both variants: always the one installed (-1 = older release, last APK).
+                    selfAssetIndex(r.apks.map { it.name }, de.emil.shizubox.BuildConfig.FLAVOR)
+                } else {
+                    app.chosenApk?.let { c -> r.apks.indexOfFirst { it.name == c.name } } ?: -1
+                }
                 app.copy(
                     id = app.id.ifBlank { r.appId ?: "" },
                     latestVersion = r.version,

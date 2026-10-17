@@ -13,8 +13,8 @@ android {
         applicationId = "de.emil.shizubox"
         minSdk = 31
         targetSdk = 37
-        versionCode = 15
-        versionName = "0.11.2"
+        versionCode = 16
+        versionName = "0.12.0"
         // The downloader bundles Python/yt-dlp and FFmpeg per ABI; only 64-bit ARM keeps the APK small.
         ndk { abiFilters += "arm64-v8a" }
     }
@@ -50,6 +50,21 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfigs.findByName("release")?.let { signingConfig = it }
+        }
+    }
+
+    // Same applicationId and signature: "lite" lacks only the notification listener (its manifest
+    // entry lives in src/full), so Android lets it be installed from a browser without the
+    // "restricted setting" block; "full" is installed via adb or Shizuku.
+    flavorDimensions += "variant"
+    productFlavors {
+        create("full") {
+            dimension = "variant"
+            buildConfigField("boolean", "NOTIFICATION_LISTENER", "true")
+        }
+        create("lite") {
+            dimension = "variant"
+            buildConfigField("boolean", "NOTIFICATION_LISTENER", "false")
         }
     }
 

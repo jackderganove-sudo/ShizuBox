@@ -151,17 +151,6 @@
             </intent-filter>
         </service>
 
-        <!-- Notification history: records notifications locally (access granted via Shizuku or settings). -->
-        <service
-            android:name=".notifications.HistoryListener"
-            android:exported="true"
-            android:label="@string/nh_title"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
-
         <!-- Automations: sensors (battery, audio devices, Wi-Fi, foreground app) while rules are on. -->
         <service
             android:name=".automation.AutomationService"

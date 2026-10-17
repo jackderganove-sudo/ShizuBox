@@ -161,7 +161,7 @@ fun HiLightScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 }
                 if (!shizukuReady) Text(t(R.string.shizuku_must), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                 if (studio) Text(t(R.string.hl_studio_warn), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 4.dp))
-                if (!access) {
+                if (hasNotificationListener && !access) {
                     Text(t(R.string.hl_access), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 4.dp))
                     TextButton(enabled = shizukuReady, onClick = { scope.launch { NotifHistory.setAccess(context, true); message = "access" } }) { Text(t(R.string.hl_grant)) }
                 }
@@ -208,6 +208,11 @@ fun HiLightScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                 Text(t(R.string.hl_progress), style = MaterialTheme.typography.titleMedium)
                 Text(t(R.string.hl_progress_sub), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 SwitchRow(t(R.string.hl_own), t(R.string.hl_own_sub), cfg.ownProgress) { v -> set { it.copy(ownProgress = v) } }
+                // Progress of other apps comes from their notifications.
+                if (!hasNotificationListener) {
+                    FullOnlyNote()
+                    return@GlassCard
+                }
                 val sources = (HiLightConfig.DEFAULT_PROGRESS + cfg.progressSources).sorted()
                 sources.forEach { src ->
                     val label = when (src) {
@@ -228,6 +233,10 @@ fun HiLightScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.hl_apps), style = MaterialTheme.typography.titleMedium)
                 Text(t(R.string.hl_apps_sub), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (!hasNotificationListener) {
+                    FullOnlyNote()
+                    return@GlassCard
+                }
                 cfg.appRules.forEach { r ->
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable { editApp = r }.padding(vertical = 4.dp)) {
                         AppIcon(r.pkg, 32)
@@ -246,6 +255,10 @@ fun HiLightScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text(t(R.string.hl_contacts), style = MaterialTheme.typography.titleMedium)
                 Text(t(R.string.hl_contacts_sub), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (!hasNotificationListener) {
+                    FullOnlyNote()
+                    return@GlassCard
+                }
                 cfg.contactRules.forEach { r ->
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable { editContact = r }.padding(vertical = 4.dp)) {
                         ColorDot(r.color, 28) { editContact = r }

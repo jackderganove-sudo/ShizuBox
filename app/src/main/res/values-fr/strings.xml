@@ -1525,4 +1525,6 @@
     <string name="bk_priv_open">Ouvrir</string>
     <string name="bk_priv_later">Pas maintenant</string>
     <string name="cs_logs_scope">Journaux/Temp : automatiquement seulement hors de tes propres dossiers (Documents, Download, DCIM, Pictures, Music …) – l\'analyse manuelle montre toujours tout.</string>
+    <string name="lite_full_only">Uniquement dans Full</string>
+    <string name="lite_full_only_sub">nécessite l\'accès aux notifications, que ShizuBox Lite n\'a pas. La version Full s\'installe via adb ou Shizuku.</string>
 </resources>

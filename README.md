@@ -110,11 +110,28 @@ Ohne Shizuku funktionieren: App-Updates, Universal Installer (über den System-D
 - [Shizuku](https://shizuku.rikka.app/) (oder ein Fork) über kabelloses Debugging gestartet
 
 ## Installation
-APK aus den [Releases](../../releases) laden und installieren, ShizuBox öffnen und den Shizuku-Zugriff erlauben.
+Jedes [Release](../../releases) enthält zwei Varianten mit gleichem Paketnamen und gleicher Signatur. Sie lassen sich
+gegenseitig ersetzen, Einstellungen bleiben erhalten.
+
+| Variante | Datei | Installation |
+|---|---|---|
+| **Lite** | `ShizuBox-<version>-lite.apk` | direkt aus dem Browser bzw. Dateimanager |
+| **Full** | `ShizuBox-<version>-full.apk` | per **adb** oder **Shizuku** |
+
+Lite ist alles außer dem, was den Benachrichtigungszugriff braucht: Benachrichtigungs-Verlauf sowie die HiLight-Regeln
+für Benachrichtigungen und für den Fortschritt anderer Apps (dort steht „Nur in Full“). Android sperrt diesen
+Zugriff für Apps, die aus dem Browser installiert wurden („eingeschränkte Einstellung“), deshalb wird Full anders
+installiert:
+- **adb:** `adb install ShizuBox-<version>-full.apk`
+- **Shizuku:** die Full-APK mit einem Installer öffnen, der über Shizuku installiert – z. B. mit dem Universal Installer
+  von ShizuBox Lite selbst; Full ersetzt Lite dann direkt.
+
+Danach ShizuBox öffnen und den Shizuku-Zugriff erlauben. Der eingebaute Updater lädt immer die installierte Variante.
+`ShizuBox-<version>.apk` ist dieselbe Datei wie Full, nur für den Updater von Versionen bis 0.11.2.
 
 ## Bauen
 ```bash
-./gradlew assembleDebug
+./gradlew assembleFullDebug     # oder assembleLiteDebug
 ```
 Für signierte Release-Builds wird eine Datei `~/Android/keys/shizubox-release.properties` mit `storeFile`, `storePassword`, `keyAlias` und `keyPassword` erwartet; ohne sie entsteht ein unsigniertes Release.
 

@@ -1525,4 +1525,6 @@
     <string name="bk_priv_open">Abrir</string>
     <string name="bk_priv_later">Ahora no</string>
     <string name="cs_logs_scope">Registros/Temp: automáticamente solo fuera de tus propias carpetas (Documents, Download, DCIM, Pictures, Music …); el análisis manual sigue mostrándolo todo.</string>
+    <string name="lite_full_only">Solo en Full</string>
+    <string name="lite_full_only_sub">necesita el acceso a notificaciones, que ShizuBox Lite no tiene. La versión Full se instala con adb o Shizuku.</string>
 </resources>

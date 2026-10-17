@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.12.0 – 2026-10-17 – Lite-Variante
+- Zwei Varianten, gleiche applicationId und Signatur: **Full** (wie bisher, Installation per adb oder Shizuku) und
+  **Lite** ohne Benachrichtigungs-Listener (aus dem Browser installierbar). In Lite zeigen Benachrichtigungs-Verlauf und
+  die HiLight-Regeln für Benachrichtigungen und fremden Fortschritt „Nur in Full“; geprüft: im Lite-Manifest kein
+  `BIND_NOTIFICATION_LISTENER_SERVICE`
+- Release-Assets `ShizuBox-<version>-full.apk` und `-lite.apk`; der Updater lädt die installierte Variante
+  (`SelfAssetTest`). Dazu `ShizuBox-<version>.apk` (= Full) für Updater bis 0.11.2, die sonst Lite gewählt hätten
+- README: Lite aus dem Browser, Full per adb oder Shizuku
+
 ## 0.11.2 – 2026-10-17 – Paketprüfung auf allen Installationswegen
 - Updates: dieselbe Paketprüfung wie beim einzelnen Update jetzt auch bei „Alle aktualisieren“ ohne Shizuku, beim
   „Installieren“ aus der Benachrichtigung und bei Downloads im eingebauten Browser – alle über eine gemeinsame

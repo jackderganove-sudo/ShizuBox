@@ -7317,5 +7317,15 @@
   "en": "Logs/Temp: automatically only outside your own folders (Documents, Download, DCIM, Pictures, Music …) – the manual scan still shows everything.",
   "de": "Logs/Temp: automatisch nur außerhalb deiner eigenen Ordner (Documents, Download, DCIM, Pictures, Music …) – die manuelle Suche zeigt weiter alles.",
   "plural": false
+ },
+ "lite_full_only": {
+  "en": "Only in Full",
+  "de": "Nur in Full",
+  "plural": false
+ },
+ "lite_full_only_sub": {
+  "en": "needs notification access, which ShizuBox Lite does not have. The Full version is installed via adb or Shizuku.",
+  "de": "braucht den Benachrichtigungszugriff, den ShizuBox Lite nicht hat. Die Full-Version wird per adb oder Shizuku installiert.",
+  "plural": false
  }
 }

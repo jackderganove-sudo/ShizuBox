@@ -113,6 +113,13 @@ private enum class NhMode { All, Apps, Removed }
 
 @Composable
 fun NotificationHistoryScreen(shizukuReady: Boolean, onBack: () -> Unit, initialPkg: String? = null, initialConv: String? = null) {
+    if (!hasNotificationListener) {
+        Column(Modifier.windowInsetsPadding(WindowInsets.safeDrawing).padding(16.dp)) {
+            Header(t(R.string.nh_title), onBack)
+            GlassCard(Modifier.fillMaxWidth().padding(top = 8.dp)) { FullOnlyNote() }
+        }
+        return
+    }
     val context = LocalContext.current
     val s by NotifHistory.settings.collectAsStateWithLifecycle()
     var access by remember { mutableStateOf(NotifHistory.hasAccess(context)) }

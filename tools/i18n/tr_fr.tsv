@@ -1421,3 +1421,5 @@ bk_priv_text	Elles étaient activées dans la sauvegarde. Elles enregistrent des
 bk_priv_open	Ouvrir
 bk_priv_later	Pas maintenant
 cs_logs_scope	Journaux/Temp : automatiquement seulement hors de tes propres dossiers (Documents, Download, DCIM, Pictures, Music …) – l'analyse manuelle montre toujours tout.
+lite_full_only	Uniquement dans Full
+lite_full_only_sub	nécessite l'accès aux notifications, que ShizuBox Lite n'a pas. La version Full s'installe via adb ou Shizuku.

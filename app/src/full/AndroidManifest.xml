@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only in the "full" variant: the notification listener (history, HiLight notification rules and
+     progress of other apps). "lite" leaves it out, see build.gradle.kts. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <!-- Notification history: records notifications locally (access granted via Shizuku or settings). -->
+        <service
+            android:name=".notifications.HistoryListener"
+            android:exported="true"
+            android:label="@string/nh_title"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

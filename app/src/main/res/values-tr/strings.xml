@@ -1525,4 +1525,6 @@
     <string name="bk_priv_open">Aç</string>
     <string name="bk_priv_later">Şimdi değil</string>
     <string name="cs_logs_scope">Loglar/Geçici: otomatik olarak yalnızca kendi klasörlerinin dışında (Documents, Download, DCIM, Pictures, Music …) – manuel tarama yine her şeyi gösterir.</string>
+    <string name="lite_full_only">Yalnızca Full\'da</string>
+    <string name="lite_full_only_sub">ShizuBox Lite\'ta olmayan bildirim erişimi gerekir. Full sürümü adb veya Shizuku ile yüklenir.</string>
 </resources>

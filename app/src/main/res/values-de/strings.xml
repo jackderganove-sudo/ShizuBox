@@ -1525,5 +1525,7 @@
     <string name="bk_priv_open">Öffnen</string>
     <string name="bk_priv_later">Nicht jetzt</string>
     <string name="cs_logs_scope">Logs/Temp: automatisch nur außerhalb deiner eigenen Ordner (Documents, Download, DCIM, Pictures, Music …) – die manuelle Suche zeigt weiter alles.</string>
+    <string name="lite_full_only">Nur in Full</string>
+    <string name="lite_full_only_sub">braucht den Benachrichtigungszugriff, den ShizuBox Lite nicht hat. Die Full-Version wird per adb oder Shizuku installiert.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

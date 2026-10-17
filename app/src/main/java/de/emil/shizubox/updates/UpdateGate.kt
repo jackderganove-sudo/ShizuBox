@@ -63,3 +63,11 @@ object UpdateGate {
         return Decision.Install(trustedSelf, virusTotal = virusTotalGate && !trustedSelf)
     }
 }
+
+/**
+ * ShizuBox' own release assets since 0.12.0: `ShizuBox-<version>-full.apk`, `-lite.apk` and, for
+ * updaters up to 0.11.2 (they take the last APK, GitHub sorts by name), `ShizuBox-<version>.apk`
+ * = full. Index of the asset for [flavor], or -1 (older release without variants).
+ */
+fun selfAssetIndex(names: List<String>, flavor: String): Int =
+    names.indexOfFirst { it.endsWith("-$flavor.apk", ignoreCase = true) }

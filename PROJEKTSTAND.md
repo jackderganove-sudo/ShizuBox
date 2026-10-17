@@ -6,10 +6,15 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.11.2** (versionCode 15, 2026-10-17: Paketprüfung auf allen Installationswegen, BootReceiver nur Boot-Broadcasts; 0.11.1: Bugfixes nach Code-Review von Daniel; 0.11.0: Suche + Startseite ordnen; 0.10.1: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
+| Version | **0.12.0** (versionCode 16, 2026-10-17: Lite-Variante ohne Benachrichtigungs-Listener; 0.11.2: Paketprüfung auf allen Installationswegen, BootReceiver nur Boot-Broadcasts; 0.11.1: Bugfixes nach Code-Review von Daniel; 0.11.0: Suche + Startseite ordnen; 0.10.1: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
+
+Varianten (0.12.0): **full** (alles, Installation per adb/Shizuku) und **lite** (ohne Benachrichtigungs-Listener → kein
+Benachrichtigungs-Verlauf, keine HiLight-Regeln für Benachrichtigungen/fremden Fortschritt, dort „Nur in Full“; aus dem
+Browser installierbar). Gleiche applicationId und Signatur. Release-Assets: `-full.apk`, `-lite.apk`, `ShizuBox-<v>.apk`
+(= Full, für Updater ≤ 0.11.2). Lite wurde nur gebaut und am Manifest geprüft, nicht auf dem Pixel installiert (dort läuft Full).
 
 Legende: ✅ fertig & getestet · 🟡 teilweise · ⬜ Platzhalter
 

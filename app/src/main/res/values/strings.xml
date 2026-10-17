@@ -1527,4 +1527,6 @@
     <string name="bk_priv_open">Open</string>
     <string name="bk_priv_later">Not now</string>
     <string name="cs_logs_scope">Logs/Temp: automatically only outside your own folders (Documents, Download, DCIM, Pictures, Music …) – the manual scan still shows everything.</string>
+    <string name="lite_full_only">Only in Full</string>
+    <string name="lite_full_only_sub">needs notification access, which ShizuBox Lite does not have. The Full version is installed via adb or Shizuku.</string>
 </resources>

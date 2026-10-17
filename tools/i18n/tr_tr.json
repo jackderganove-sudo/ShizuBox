@@ -1523,5 +1523,7 @@
 "bk_priv_text": "Bunlar yedekte açıktı. Özel verileri kaydettikleri veya bir sistem ayarını değiştirdikleri için otomatik olarak açılmazlar – burada açmak için onları aç.",
 "bk_priv_open": "Aç",
 "bk_priv_later": "Şimdi değil",
-"cs_logs_scope": "Loglar/Geçici: otomatik olarak yalnızca kendi klasörlerinin dışında (Documents, Download, DCIM, Pictures, Music …) – manuel tarama yine her şeyi gösterir."
+"cs_logs_scope": "Loglar/Geçici: otomatik olarak yalnızca kendi klasörlerinin dışında (Documents, Download, DCIM, Pictures, Music …) – manuel tarama yine her şeyi gösterir.",
+"lite_full_only": "Yalnızca Full'da",
+"lite_full_only_sub": "ShizuBox Lite'ta olmayan bildirim erişimi gerekir. Full sürümü adb veya Shizuku ile yüklenir."
 }
