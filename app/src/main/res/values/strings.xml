@@ -1511,4 +1511,8 @@
     <string name="sk_errorlog">error log,crash,bug,errors,report problem,anr</string>
     <string name="sk_installsettings">install method,signature,security,downgrade,grant permissions</string>
     <string name="he_school_tile">Tile only shows when the school mode card is hidden</string>
+    <string name="ug_wrong_package">⚠ The downloaded APK belongs to another app (%1$s) – not installed</string>
+    <string name="ug_not_installed">⚠ App not installed – only installed with your confirmation (tap “Update” in the updater)</string>
+    <string name="ug_sig_unknown">⚠ Signature could not be checked – not installed automatically</string>
+    <string name="ug_no_vt_key">⚠ VirusTotal check is on, but no API key is set – nothing is checked, so automatic installs are held back.</string>
 </resources>

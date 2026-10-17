@@ -1408,3 +1408,7 @@ sk_backup	yedek,geri yükle,dışa aktar,içe aktar
 sk_errorlog	hata günlüğü,çökme,hata
 sk_installsettings	yükleme yöntemi,imza,güvenlik
 he_school_tile	Kutucuk yalnızca okul modu kartı gizliyken görünür
+ug_wrong_package	⚠ İndirilen APK başka bir uygulamaya ait (%1$s) – yüklenmedi
+ug_not_installed	⚠ Uygulama yüklü değil – yalnızca onayınla yüklenir (Güncelleyicide “Güncelle”)
+ug_sig_unknown	⚠ İmza kontrol edilemedi – otomatik yüklenmedi
+ug_no_vt_key	⚠ VirusTotal denetimi açık ama API anahtarı yok – hiçbir şey denetlenmiyor, otomatik yüklemeler bekletiliyor.

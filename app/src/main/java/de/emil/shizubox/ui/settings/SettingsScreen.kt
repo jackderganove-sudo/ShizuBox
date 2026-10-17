@@ -244,6 +244,8 @@ fun SettingsScreen(onBack: () -> Unit, onOpenUpdates: () -> Unit, onOpenSchool: 
         item { androidx.compose.foundation.layout.Box(Modifier.highlight("vt")) {
             GlassCard(Modifier.fillMaxWidth()) {
                 Text("VirusTotal", style = MaterialTheme.typography.titleMedium)
+                val gate by de.emil.shizubox.updates.Updates.settings.collectAsStateWithLifecycle()
+                if (gate.virusTotalGate && vtKey.isBlank()) Text(t(R.string.ug_no_vt_key), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                 Text(
                     t(R.string.set_vt_hint),
                     style = MaterialTheme.typography.bodySmall,

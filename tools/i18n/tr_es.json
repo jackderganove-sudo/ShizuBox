@@ -1507,5 +1507,9 @@
 "sk_backup": "copia de seguridad,restaurar,exportar,importar",
 "sk_errorlog": "registro de errores,fallo,error",
 "sk_installsettings": "método de instalación,firma,seguridad",
-"he_school_tile": "El mosaico solo aparece si la tarjeta del modo escuela está oculta"
+"he_school_tile": "El mosaico solo aparece si la tarjeta del modo escuela está oculta",
+"ug_wrong_package": "⚠ El APK descargado pertenece a otra app (%1$s): no se instaló",
+"ug_not_installed": "⚠ App no instalada: solo se instala con tu confirmación (“Actualizar” en el actualizador)",
+"ug_sig_unknown": "⚠ No se pudo comprobar la firma: no se instaló automáticamente",
+"ug_no_vt_key": "⚠ La comprobación de VirusTotal está activa pero no hay clave API: no se comprueba nada y las instalaciones automáticas se retienen."
 }

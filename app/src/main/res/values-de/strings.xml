@@ -1509,5 +1509,9 @@
     <string name="sk_errorlog">fehlerprotokoll,absturz,fehler,bug,problem melden,anr</string>
     <string name="sk_installsettings">installationsart,signatur,sicherheit,downgrade,berechtigungen erteilen</string>
     <string name="he_school_tile">Kachel erscheint nur, wenn die Schulmodus-Karte ausgeblendet ist</string>
+    <string name="ug_wrong_package">⚠ Die geladene APK gehört zu einer anderen App (%1$s) – nicht installiert</string>
+    <string name="ug_not_installed">⚠ App nicht installiert – Installation nur mit deiner Bestätigung („Aktualisieren“ im Updater)</string>
+    <string name="ug_sig_unknown">⚠ Signatur konnte nicht geprüft werden – nicht automatisch installiert</string>
+    <string name="ug_no_vt_key">⚠ VirusTotal-Prüfung ist an, aber kein API-Schlüssel hinterlegt – es wird nichts geprüft, automatische Installationen werden zurückgehalten.</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

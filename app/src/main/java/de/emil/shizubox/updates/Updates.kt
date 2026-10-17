@@ -363,14 +363,26 @@ object Updates {
         }
     }
 
+    /** Why [UpdateGate] refused, for the user. */
+    fun refusal(d: UpdateGate.Decision.Refuse): String = when (d.reason) {
+        UpdateGate.Reason.WrongPackage -> t(R.string.ug_wrong_package, d.detail.ifEmpty { "?" })
+        UpdateGate.Reason.NotInstalled -> t(R.string.ug_not_installed)
+        UpdateGate.Reason.WrongSignature -> t(R.string.h_sig)
+        UpdateGate.Reason.SignatureUnknown -> t(R.string.ug_sig_unknown)
+        UpdateGate.Reason.NoVirusTotalKey -> t(R.string.ug_no_vt_key)
+    }
+
     private suspend fun installDownloaded(current: TrackedApp, uri: Uri): String? {
         val info = ApkParser.parse(appContext, uri)
-        if (info.signatureMismatch == true) return t(R.string.h_sig)
         val vt = de.emil.shizubox.installer.VirusTotal
-        // ShizuBox's own update is signed with the same key as the running app (checked just above),
-        // and a fresh release is usually still unknown to VirusTotal: the gate would always hold it.
-        val trustedSelf = isSelf(current) && info.signatureMismatch == false
-        if (_settings.value.virusTotalGate && vt.apiKey.isNotBlank() && !trustedSelf) {
+        // Package, installation, signature, VirusTotal key – see UpdateGate (Daniel's review, 0.11.1).
+        val decision = UpdateGate.check(
+            trackedPackage = current.id, apkPackage = info.packageName, installed = info.installedVersionName != null,
+            signatureMismatch = info.signatureMismatch, selfPackage = appContext.packageName,
+            virusTotalGate = _settings.value.virusTotalGate, hasVirusTotalKey = vt.apiKey.isNotBlank(),
+        )
+        if (decision is UpdateGate.Decision.Refuse) return refusal(decision)
+        if ((decision as UpdateGate.Decision.Install).virusTotal) {
             val sha = appContext.contentResolver.openInputStream(uri)!!.use { vt.sha256(it) }
             val r = vt.lookup(sha)
             if (r.status != de.emil.shizubox.installer.VtStatus.CLEAN) {
@@ -531,6 +543,9 @@ object Updates {
                     val now = android.os.SystemClock.uptimeMillis()
                     if (now - last > 250) { last = now; _downloads.update { it + (app.key to p) } }
                 }
+                // The installer screen asks the user anyway – but an asset of another app is refused right here.
+                val pkg = runCatching { ApkParser.parse(appContext, uri).packageName }.getOrDefault("")
+                if (app.id.isNotBlank() && pkg != app.id) error(t(R.string.ug_wrong_package, pkg.ifEmpty { "?" }))
                 withContext(Dispatchers.Main) { de.emil.shizubox.ui.updates.openInstaller(appContext, uri) }
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e

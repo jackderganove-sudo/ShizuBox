@@ -7246,5 +7246,25 @@
   "en": "Tile only shows when the school mode card is hidden",
   "de": "Kachel erscheint nur, wenn die Schulmodus-Karte ausgeblendet ist",
   "plural": false
+ },
+ "ug_wrong_package": {
+  "en": "⚠ The downloaded APK belongs to another app (%1$s) – not installed",
+  "de": "⚠ Die geladene APK gehört zu einer anderen App (%1$s) – nicht installiert",
+  "plural": false
+ },
+ "ug_not_installed": {
+  "en": "⚠ App not installed – only installed with your confirmation (tap “Update” in the updater)",
+  "de": "⚠ App nicht installiert – Installation nur mit deiner Bestätigung („Aktualisieren“ im Updater)",
+  "plural": false
+ },
+ "ug_sig_unknown": {
+  "en": "⚠ Signature could not be checked – not installed automatically",
+  "de": "⚠ Signatur konnte nicht geprüft werden – nicht automatisch installiert",
+  "plural": false
+ },
+ "ug_no_vt_key": {
+  "en": "⚠ VirusTotal check is on, but no API key is set – nothing is checked, so automatic installs are held back.",
+  "de": "⚠ VirusTotal-Prüfung ist an, aber kein API-Schlüssel hinterlegt – es wird nichts geprüft, automatische Installationen werden zurückgehalten.",
+  "plural": false
  }
 }

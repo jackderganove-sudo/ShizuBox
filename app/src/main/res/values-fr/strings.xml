@@ -1509,4 +1509,8 @@
     <string name="sk_errorlog">journal d\'erreurs,plantage,bug</string>
     <string name="sk_installsettings">méthode d\'installation,signature,sécurité</string>
     <string name="he_school_tile">La tuile n\'apparaît que si la carte du mode école est masquée</string>
+    <string name="ug_wrong_package">⚠ L\'APK téléchargé appartient à une autre app (%1$s) – non installé</string>
+    <string name="ug_not_installed">⚠ App non installée – installée seulement avec ta confirmation (« Mettre à jour » dans l\'outil)</string>
+    <string name="ug_sig_unknown">⚠ Signature non vérifiable – pas installé automatiquement</string>
+    <string name="ug_no_vt_key">⚠ La vérification VirusTotal est activée, mais aucune clé API n\'est définie – rien n\'est vérifié, les installations automatiques sont retenues.</string>
 </resources>

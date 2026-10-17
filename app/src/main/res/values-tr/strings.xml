@@ -1509,4 +1509,8 @@
     <string name="sk_errorlog">hata günlüğü,çökme,hata</string>
     <string name="sk_installsettings">yükleme yöntemi,imza,güvenlik</string>
     <string name="he_school_tile">Kutucuk yalnızca okul modu kartı gizliyken görünür</string>
+    <string name="ug_wrong_package">⚠ İndirilen APK başka bir uygulamaya ait (%1$s) – yüklenmedi</string>
+    <string name="ug_not_installed">⚠ Uygulama yüklü değil – yalnızca onayınla yüklenir (Güncelleyicide “Güncelle”)</string>
+    <string name="ug_sig_unknown">⚠ İmza kontrol edilemedi – otomatik yüklenmedi</string>
+    <string name="ug_no_vt_key">⚠ VirusTotal denetimi açık ama API anahtarı yok – hiçbir şey denetlenmiyor, otomatik yüklemeler bekletiliyor.</string>
 </resources>

@@ -1408,3 +1408,7 @@ sk_backup	sauvegarde,restaurer,exporter,importer
 sk_errorlog	journal d'erreurs,plantage,bug
 sk_installsettings	méthode d'installation,signature,sécurité
 he_school_tile	La tuile n'apparaît que si la carte du mode école est masquée
+ug_wrong_package	⚠ L'APK téléchargé appartient à une autre app (%1$s) – non installé
+ug_not_installed	⚠ App non installée – installée seulement avec ta confirmation (« Mettre à jour » dans l'outil)
+ug_sig_unknown	⚠ Signature non vérifiable – pas installé automatiquement
+ug_no_vt_key	⚠ La vérification VirusTotal est activée, mais aucune clé API n'est définie – rien n'est vérifié, les installations automatiques sont retenues.

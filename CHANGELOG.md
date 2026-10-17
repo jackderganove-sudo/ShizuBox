@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.11.1 (in Arbeit) – Bugfixes nach Code-Review von Daniel
+- Updates: Paketname der geladenen APK muss zur verfolgten App passen (sonst Abbruch); stille Installation nur für
+  installierte Apps mit gleicher Signatur; Self-Update nur bei Paket ShizuBox + gleicher Signatur; VirusTotal-Sperre
+  ohne Schlüssel wird angezeigt und hält automatische Installationen zurück (`UpdateGate`, 10 Unit-Tests)
+
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,
   Stichwörter und Synonyme in allen 5 Sprachen, tippfehlertolerant, Ergebnisse beim Tippen; Tippen springt direkt

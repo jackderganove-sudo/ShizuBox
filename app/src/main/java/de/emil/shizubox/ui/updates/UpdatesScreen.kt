@@ -546,6 +546,10 @@ private fun SettingsPage() {
                     s.virusTotalGate,
                 ) { Updates.setSettings(s.copy(virusTotalGate = it)) }
             }
+            // The gate without a key checks nothing: say so, automatic installs are held back (UpdateGate).
+            if (s.virusTotalGate && de.emil.shizubox.installer.VirusTotal.apiKey.isBlank()) item {
+                Text(t(R.string.ug_no_vt_key), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(horizontal = 16.dp))
+            }
         }
         item { SettingRow(t(R.string.us_wifi), null, s.wifiOnly) { Updates.setSettings(s.copy(wifiOnly = it)) } }
         item { SettingRow(t(R.string.us_charging), null, s.chargingOnly) { Updates.setSettings(s.copy(chargingOnly = it)) } }
