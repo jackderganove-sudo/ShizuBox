@@ -3,6 +3,10 @@
 ## 0.10.0 (in Arbeit) – HiLight
 - Untersuchung: HiLight (8 LEDs, Pixel 11 Pro) lässt sich über ShizuBox' Shell-Dienst steuern
   (`ILightsManager`, Shell-Nutzer hat `CONTROL_DEVICE_LIGHTS`); Test eine LED grün → sauber schwarz, Session freigegeben
+  (vom Nutzer am Gerät bestätigt)
+- Übernahme aus HiLight Studio (MIT, Lizenz in NOTICE und den Dateien): Licht-Session, Schwarz-Löschfolge,
+  Muster (Dauerlicht, Pulsieren, Atmen, Blinken, Lauflicht, Komet, Welle, Herzschlag, Regenbogen) plus Fortschrittsbalken,
+  Sicherheitsbegrenzer; Renderer im Shell-Dienst mit fester Höchstdauer je Art und „nur ein Renderer“
 
 ## 0.9.0 – 2026-10-17 – Reiniger
 - Neuer Startseiten-Bereich „Reiniger“ (nach Vorbild von SD Maid) mit Speicherübersicht

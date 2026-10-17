@@ -1,3 +1,8 @@
+/*
+ * Based on HiLight Studio's LightsBackend.java and ForcedBlackClear.java
+ * (https://github.com/DhananjayBhosale/hilight-studio).
+ * MIT License – Copyright (c) 2026 HiLight Studio contributors. Full licence text: NOTICE.
+ */
 package de.emil.shizubox.hilight
 
 import android.hardware.lights.Light

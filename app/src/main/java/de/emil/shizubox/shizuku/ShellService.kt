@@ -17,6 +17,7 @@ class ShellService : IShellService.Stub() {
     }
 
     override fun destroy() {
+        runCatching { de.emil.shizubox.hilight.HiLightEngine.stop(); Thread.sleep(150) }
         exitProcess(0)
     }
 
@@ -252,22 +253,7 @@ class ShellService : IShellService.Stub() {
     // ------------------------------------------------------------------ HiLight
 
     override fun hilight(commandJson: String): String = try {
-        val cmd = org.json.JSONObject(commandJson)
-        when (cmd.getString("op")) {
-            "info" -> de.emil.shizubox.hilight.LightsIo().describe()
-            // First test only: one LED in one colour for a moment, then the full clear and close.
-            "test" -> {
-                val io = de.emil.shizubox.hilight.LightsIo()
-                io.open(cmd.optInt("priority", 0))
-                val colors = IntArray(io.ids.size) { if (it == cmd.optInt("led", 0)) cmd.optInt("color", 0xFF00FF00.toInt()) else 0 }
-                io.set(colors)
-                Thread.sleep(cmd.optLong("ms", 1500).coerceIn(100, 5000))
-                val during = io.ids.map { io.get(it) }
-                io.clearAndClose()
-                "during=${during.map { Integer.toHexString(it ?: -1) }} after=${io.ids.map { Integer.toHexString(io.get(it) ?: -1) }}"
-            }
-            else -> "unknown op"
-        }
+        de.emil.shizubox.hilight.HiLightEngine.handle(org.json.JSONObject(commandJson))
     } catch (e: Throwable) {
         "error: " + (e.cause ?: e).toString()
     }
