@@ -76,14 +76,7 @@ object Duplicates {
         var done = 0
         val exact = ArrayList<List<FsEntry>>()
         for (sameSize in bySize) {
-            val byQuick = sameSize.groupBy { e -> done++; report(t(R.string.du_hashing, done, candidates), done.toFloat() / candidates.coerceAtLeast(1)); quickHash(e) }
-                .filterKeys { it != null }.values.filter { it.size > 1 }
-            for (q in byQuick) {
-                coroutineContext.ensureActive()
-                // Up to 128 KB the quick hash already covered the whole file.
-                if (q.first().size <= 2 * PART) exact.add(q)
-                else exact.addAll(q.groupBy { fullHash(it) }.filterKeys { it != null }.values.filter { it.size > 1 })
-            }
+            exact += identicalGroups(sameSize) { done++; report(t(R.string.du_hashing, done, candidates), done.toFloat() / candidates.coerceAtLeast(1)) }
         }
         val groups = ArrayList<DupGroup>()
         exact.forEachIndexed { i, l ->
@@ -115,7 +108,21 @@ object Duplicates {
         }
     }
 
-    private fun quickHash(e: FsEntry): String? = runCatching {
+    /**
+     * Files of the same size → groups of byte-identical files. The quick hash only sorts out
+     * obvious differences; identical always means the same SHA-256 of the whole file. Before 0.11.1
+     * files up to 128 KB were taken as identical after the quick hash, which for 64–128 KB only read
+     * the first 64 KB (Daniel's review).
+     */
+    internal suspend fun identicalGroups(sameSize: List<FsEntry>, onHashed: () -> Unit = {}): List<List<FsEntry>> {
+        val byQuick = sameSize.groupBy { onHashed(); quickHash(it) }.filterKeys { it != null }.values.filter { it.size > 1 }
+        return byQuick.flatMap { q ->
+            coroutineContext.ensureActive()
+            q.groupBy { fullHash(it) }.filterKeys { it != null }.values.filter { it.size > 1 }
+        }
+    }
+
+    internal fun quickHash(e: FsEntry): String? = runCatching {
         RandomAccessFile(File(e.path), "r").use { f ->
             val md = MessageDigest.getInstance("SHA-256")
             val buf = ByteArray(PART)
@@ -130,7 +137,7 @@ object Duplicates {
         }
     }.getOrNull()
 
-    private fun fullHash(e: FsEntry): String? = runCatching {
+    internal fun fullHash(e: FsEntry): String? = runCatching {
         File(e.path).inputStream().buffered(256 * 1024).use { input ->
             val md = MessageDigest.getInstance("SHA-256")
             val buf = ByteArray(256 * 1024)

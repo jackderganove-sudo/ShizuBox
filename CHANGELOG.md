@@ -9,6 +9,9 @@
   ist; sonst Benachrichtigung „X Einstellungen konnten nicht zurückgesetzt werden“ mit „Erneut versuchen“ + Eintrag im
   Fehlerprotokoll. Fehlende Snapshot-Schlüssel werden nie mehr gelöscht; eine während des Schulmodus deinstallierte App
   blockiert das Entsperren der anderen nicht mehr (`RestorePlan`, 11 Unit-Tests)
+- Duplikate: identisch heißt immer gleicher SHA-256 über die ganze Datei – Dateien mit 64–128 KB wurden nach den
+  ersten 64 KB als gleich gewertet (`DuplicatesTest`, 4 Unit-Tests; live: zwei 110-KB-Dateien mit anderem Ende
+  werden nicht mehr gruppiert)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

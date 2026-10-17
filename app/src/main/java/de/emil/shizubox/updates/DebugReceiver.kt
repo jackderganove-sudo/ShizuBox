@@ -386,7 +386,9 @@ class DebugReceiver : BroadcastReceiver() {
                             val T = "$R0/Download/sbx_test_dup"
                             when (intent.getStringExtra("mode")) {
                                 "mk" -> ShizukuManager.exec("mkdir -p $T/sub && head -c 300000 /dev/urandom > $T/a.bin && cp $T/a.bin $T/sub/a_copy.bin && cp $T/a.bin $T/b.bin && touch -d '2026-01-01 10:00' $T/sub/a_copy.bin && " +
-                                    "head -c 300000 /dev/urandom > $T/c.bin && head -c 299999 $T/c.bin > $T/c_short.bin", 5000, 30_000).code.toString()
+                                    "head -c 300000 /dev/urandom > $T/c.bin && head -c 299999 $T/c.bin > $T/c_short.bin && " +
+                                    // 110 KB, same start, different end: must not count as duplicates (0.11.1).
+                                    "head -c 112640 /dev/urandom > $T/d1.bin && cp $T/d1.bin $T/d2.bin && printf X | dd of=$T/d2.bin bs=1 seek=112000 conv=notrunc 2>/dev/null", 5000, 30_000).code.toString()
                                 "clean" -> {
                                     val g = de.emil.shizubox.cleaner.Duplicates.result.value.orEmpty().filter { gr -> gr.files.all { it.path.startsWith(T) } }
                                     de.emil.shizubox.cleaner.Duplicates.clean(de.emil.shizubox.cleaner.Duplicates.toRemove(g)).toString()
