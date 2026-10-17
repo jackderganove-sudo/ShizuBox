@@ -24,7 +24,8 @@ enum class CleanTool(val labelRes: Int) {
  * - `Android/data` and `Android/obb` of installed apps (any user/profile, also apps uninstalled
  *   with "keep data") are locked – except their `cache` folder for the app cleaner
  * - inside `Android/` only app folders, nothing else
- * plus the user's exclusions (paths and apps).
+ * plus the user's exclusions (paths and apps – an excluded app also protects its known folders in the
+ * main storage, e.g. /WhatsApp, and a top-level folder named like it, 0.11.1).
  */
 object Guard {
     const val SELF = "de.emil.shizubox"
@@ -38,6 +39,28 @@ object Guard {
         "Android/data", "Android/obb", "Android/media",
     )
     val TRASH_DIRS = listOf("${Fs.ROOT}/.ShizuBoxTrash", "${Fs.DATA}/.ShizuBoxTrash", "${Fs.OBB}/.ShizuBoxTrash")
+
+    /**
+     * Known top-level folders of specific apps (hand-checked): folder → app name and its packages.
+     * Used by the corpse finder and for the user's app exclusions.
+     */
+    val APP_FOLDERS = mapOf(
+        "WhatsApp" to ("WhatsApp" to listOf("com.whatsapp", "com.whatsapp.w4b")),
+        "Telegram" to ("Telegram" to listOf("org.telegram.messenger", "org.telegram.messenger.web")),
+        "tencent" to ("WeChat / QQ" to listOf("com.tencent.mm", "com.tencent.mobileqq")),
+        "MT2" to ("MT Manager" to listOf("bin.mt.plus", "bin.mt.plus.canary")),
+        "Snapseed" to ("Snapseed" to listOf("com.niksoftware.snapseed")),
+        "Viber" to ("Viber" to listOf("com.viber.voip")),
+        "TitaniumBackup" to ("Titanium Backup" to listOf("com.keramidas.TitaniumBackup")),
+        "osmand" to ("OsmAnd" to listOf("net.osmand", "net.osmand.plus")),
+        "SHAREit" to ("SHAREit" to listOf("com.lenovo.anyshare.gps")),
+        "UCDownloads" to ("UC Browser" to listOf("com.UCMobile.intl")),
+        // Aliucord can also keep the package name of the Discord app it patches.
+        "Aliucord" to ("Aliucord" to listOf("com.aliucord", "com.aliucord.manager", "com.discord")),
+        "VidMate" to ("VidMate" to listOf("com.nemo.vidmate")),
+        "Tachiyomi" to ("Tachiyomi" to listOf("eu.kanade.tachiyomi")),
+        "SwiftBackup" to ("Swift Backup" to listOf("org.swiftapps.swiftbackup")),
+    )
 
     @Volatile private var installed: Set<String> = emptySet()
     @Volatile private var installedAt = 0L
@@ -67,6 +90,7 @@ object Guard {
         if (TRASH_DIRS.any { path == it || path.startsWith("$it/") }) return t(R.string.cl_lock_trash)
         cfg.excludedPaths.firstOrNull { ex -> val e = ex.trim('/'); e.isNotEmpty() && (rel == e || rel.startsWith("$e/")) }
             ?.let { return t(R.string.cl_lock_excluded) }
+        if (excludedByApp(rel, cfg.excludedApps)) return t(R.string.cl_lock_excluded)
         if (rel.startsWith("Android/")) {
             val seg = rel.split('/')
             if (seg.size < 3 || seg[1] !in setOf("data", "obb", "media")) return t(R.string.cl_lock_system)
@@ -89,4 +113,18 @@ object Guard {
         }
         return null
     }
+}
+
+/**
+ * Is the first folder of [rel] one of an excluded app outside `Android/`? Known app folders
+ * ([Guard.APP_FOLDERS], e.g. "WhatsApp") and folders named like the package itself.
+ * (`Android/data|obb|media/<pkg>` is checked in [Guard.blockReason].)
+ */
+internal fun excludedByApp(rel: String, excludedApps: Set<String>): Boolean {
+    if (excludedApps.isEmpty()) return false
+    val top = rel.substringBefore('/')
+    if (top == "Android") return false
+    if (top in excludedApps) return true
+    val known = Guard.APP_FOLDERS.entries.firstOrNull { it.key.equals(top, ignoreCase = true) }?.value ?: return false
+    return known.second.any { it in excludedApps }
 }

@@ -36,6 +36,8 @@
 - „Öffnen mit ShizuBox“: geteilte Dateien werden im Hintergrund geprüft (Ladeanzeige), nicht mehr im Main-Thread
 - VirusTotal-Upload: Länge in UTF-8-Bytes statt Zeichen (Dateinamen mit Umlauten scheiterten), Anführungszeichen und
   Zeilenumbrüche im Namen werden ersetzt (`VirusTotalUploadTest` gegen lokalen HTTP-Server, 2 Unit-Tests)
+- Cleaner-Schutz: eine ausgenommene App schützt jetzt auch ihre bekannten Ordner im Hauptspeicher (z. B. /WhatsApp,
+  /Telegram) und einen gleichnamigen Paket-Ordner, nicht nur Android/… (`GuardExclusionTest`, 4 Unit-Tests)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

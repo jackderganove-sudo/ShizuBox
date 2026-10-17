@@ -23,25 +23,6 @@ object CorpseFinder {
     private val _result = MutableStateFlow<Map<CorpseZone, List<Finding>>?>(null)
     val result: StateFlow<Map<CorpseZone, List<Finding>>?> = _result.asStateFlow()
 
-    /** Top-level folder → app name and the packages it belongs to. */
-    private val KNOWN = mapOf(
-        "WhatsApp" to ("WhatsApp" to listOf("com.whatsapp", "com.whatsapp.w4b")),
-        "Telegram" to ("Telegram" to listOf("org.telegram.messenger", "org.telegram.messenger.web")),
-        "tencent" to ("WeChat / QQ" to listOf("com.tencent.mm", "com.tencent.mobileqq")),
-        "MT2" to ("MT Manager" to listOf("bin.mt.plus", "bin.mt.plus.canary")),
-        "Snapseed" to ("Snapseed" to listOf("com.niksoftware.snapseed")),
-        "Viber" to ("Viber" to listOf("com.viber.voip")),
-        "TitaniumBackup" to ("Titanium Backup" to listOf("com.keramidas.TitaniumBackup")),
-        "osmand" to ("OsmAnd" to listOf("net.osmand", "net.osmand.plus")),
-        "SHAREit" to ("SHAREit" to listOf("com.lenovo.anyshare.gps")),
-        "UCDownloads" to ("UC Browser" to listOf("com.UCMobile.intl")),
-        // Aliucord can also keep the package name of the Discord app it patches.
-        "Aliucord" to ("Aliucord" to listOf("com.aliucord", "com.aliucord.manager", "com.discord")),
-        "VidMate" to ("VidMate" to listOf("com.nemo.vidmate")),
-        "Tachiyomi" to ("Tachiyomi" to listOf("eu.kanade.tachiyomi")),
-        "SwiftBackup" to ("Swift Backup" to listOf("org.swiftapps.swiftbackup")),
-    )
-
     fun clear(paths: Collection<String>) {
         val set = paths.toSet()
         _result.value = _result.value?.mapValues { (_, l) -> l.filterNot { it.path in set } }
@@ -66,7 +47,7 @@ object CorpseFinder {
             for (e in seq) {
                 val n = e.name
                 if (n.startsWith(".") || n == "Android") continue
-                val known = KNOWN[n]
+                val known = Guard.APP_FOLDERS[n]
                 val note = when {
                     known != null && known.second.none { it in installed } -> t(R.string.cf_known, known.first)
                     known == null && n.count { it == '.' } >= 2 && Guard.PKG.matches(n) && n !in installed && !Guard.isInstalled(n) -> names[n]?.let { "$it · $n" } ?: n
