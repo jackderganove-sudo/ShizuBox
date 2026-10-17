@@ -6,7 +6,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.emil.shizubox.shizuku.ShizukuManager
 import de.emil.shizubox.shizuku.ShizukuStatus
@@ -15,6 +27,7 @@ import de.emil.shizubox.ui.system.UniversalInstallerScreen
 import de.emil.shizubox.ui.theme.ShizuBoxTheme
 
 /** Opened from file managers / browsers ("Öffnen mit ShizuBox") for APK, APKS, XAPK, APKM. */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 class InstallActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -27,15 +40,22 @@ class InstallActivity : ComponentActivity() {
             finish()
             return
         }
-        if (!isPackageFile(uri)) {
-            forwardToOtherApps(uri)
-            return
+        // Reading a shared zip can take long (generic files, several hundred MB): never on the main
+        // thread (Daniel's review, 0.11.1) – a spinner until it is clear what the file is.
+        var isPackage by mutableStateOf<Boolean?>(null)
+        lifecycleScope.launch {
+            val ok = withContext(Dispatchers.IO) { isPackageFile(uri) }
+            if (ok) isPackage = true else forwardToOtherApps(uri)
         }
         setContent {
             ShizuBoxTheme {
                 val status by ShizukuManager.status.collectAsStateWithLifecycle()
                 GlassBackground(windowBlurActive = false) {
-                    UniversalInstallerScreen(uri, status == ShizukuStatus.Ready, onClose = ::finish)
+                    if (isPackage == true) {
+                        UniversalInstallerScreen(uri, status == ShizukuStatus.Ready, onClose = ::finish)
+                    } else {
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { LoadingIndicator() }
+                    }
                 }
             }
         }
