@@ -143,6 +143,12 @@ class DebugReceiver : BroadcastReceiver() {
                                 "privacy: offers=${r2.offers} clipboard before=$privBefore after=$privAfter unchanged=${privBefore == privAfter} " +
                                 "clip=${de.emil.shizubox.clipboard.ClipHistory.settings.value.enabled} nh=${de.emil.shizubox.notifications.NotifHistory.settings.value.enabled} pv=${de.emil.shizubox.privacy.PrivacyLog.settings.value.enabled}"
                         }
+                        // 0.11.2: the shared installer path refuses a file of another package (ShizuBox' own APK as "com.example.other").
+                        "pkgcheck" -> {
+                            val uri = android.net.Uri.fromFile(java.io.File(context.packageCodePath))
+                            runCatching { de.emil.shizubox.updates.Updates.openInstallerChecked(context, "com.example.other", uri) }
+                                .fold({ "NOT refused (bug)" }, { "refused: ${it.message}" })
+                        }
                         "schedule" -> {
                             val sch = de.emil.shizubox.school.SchoolSchedule
                             fun f(t: Long?) = t?.let { java.util.Date(it).toString() } ?: "none"

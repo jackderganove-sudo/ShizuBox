@@ -128,7 +128,8 @@ private sealed interface Route {
     data object Search : Route
     data object UrlList : Route
     data object Stars : Route
-    data class Browser(val url: String) : Route
+    /** [pkg]: the tracked app the page belongs to – a download of another app is refused. */
+    data class Browser(val url: String, val pkg: String) : Route
 }
 
 @Composable
@@ -147,14 +148,14 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
         is Route.Detail -> {
             BackHandler { route = null }
             val app = Updates.apps.collectAsStateWithLifecycle().value.firstOrNull { it.key == r.key }
-            if (app == null) route = null else UpdateDetailScreen(app, resumeTick, onBack = { route = null }, onOpenBrowser = { route = Route.Browser(it) })
+            if (app == null) route = null else UpdateDetailScreen(app, resumeTick, onBack = { route = null }, onOpenBrowser = { route = Route.Browser(it, app.id) })
             return
         }
         Route.ImportDevice -> { BackHandler { route = null }; ImportFlowScreen(onDone = { route = null; page = 0 }); return }
         Route.Search -> { BackHandler { route = null }; SearchScreen(onBack = { route = null }); return }
         Route.UrlList -> { BackHandler { route = null }; UrlListScreen(onBack = { route = null }); return }
         Route.Stars -> { BackHandler { route = null }; StarsScreen(onBack = { route = null }); return }
-        is Route.Browser -> { BrowserScreen(r.url, onClose = { route = null }); return }
+        is Route.Browser -> { BrowserScreen(r.url, r.pkg, onClose = { route = null }); return }
         null -> {}
     }
 
@@ -169,7 +170,7 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             label = "updPage",
         ) { p ->
             when (p) {
-                0 -> AppsPage(resumeTick, onBack, onOpen = { route = Route.Detail(it.key) }, onBrowser = { route = Route.Browser(it) })
+                0 -> AppsPage(resumeTick, onBack, onOpen = { route = Route.Detail(it.key) }, onBrowser = { url, pkg -> route = Route.Browser(url, pkg) })
                 1 -> AddPage(onRoute = { route = it }, onAdded = { page = 0 })
                 2 -> ImportExportPage()
                 else -> SettingsPage()
@@ -201,7 +202,14 @@ fun UpdatesScreen(shizukuReady: Boolean, onBack: () -> Unit) {
                                 // Without Shizuku: open the installer (system dialog) for each update in turn.
                                 scope.launch {
                                     for (app in apps.filter { Updates.state(it) == UpdateState.Update && Source.forUrl(it.url)?.trackOnly != true }) {
-                                        runCatching { Updates.download(app) {} }.onSuccess { (_, uri) -> openInstaller(context, uri) }
+                                        // Same package check as a single update; a failure shows up on the app's card.
+                                        try {
+                                            Updates.downloadToInstaller(context, app)
+                                        } catch (e: kotlinx.coroutines.CancellationException) {
+                                            throw e
+                                        } catch (e: Exception) {
+                                            Updates.apps.value.firstOrNull { it.key == app.key }?.let { Updates.update(it.copy(error = e.message ?: e.toString())) }
+                                        }
                                     }
                                 }
                             }
@@ -266,7 +274,7 @@ private fun PageTitle(title: String, onBack: (() -> Unit)? = null, actions: @Com
 // ------------------------------------------------------------------ Apps
 
 @Composable
-private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -> Unit, onBrowser: (String) -> Unit) {
+private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -> Unit, onBrowser: (url: String, pkg: String) -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val apps by Updates.apps.collectAsStateWithLifecycle()
@@ -299,7 +307,7 @@ private fun AppsPage(resumeTick: Int, onBack: () -> Unit, onOpen: (TrackedApp) -
 
     fun install(app: TrackedApp) {
         if (Source.forUrl(app.url)?.trackOnly == true) {
-            onBrowser(app.releaseUrl ?: app.url)
+            onBrowser(app.releaseUrl ?: app.url, app.id)
             return
         }
         Updates.downloadAndInstall(app)

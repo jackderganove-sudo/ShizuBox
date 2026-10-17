@@ -537,24 +537,43 @@ object Updates {
         if (app.key in _downloads.value) return
         _downloads.update { it + (app.key to 0f) }
         ioScope.launch {
-            var last = 0L
             try {
-                val (_, uri) = download(app) { p ->
-                    val now = android.os.SystemClock.uptimeMillis()
-                    if (now - last > 250) { last = now; _downloads.update { it + (app.key to p) } }
-                }
-                // The installer screen asks the user anyway – but an asset of another app is refused right here.
-                val pkg = runCatching { ApkParser.parse(appContext, uri).packageName }.getOrDefault("")
-                if (app.id.isNotBlank() && pkg != app.id) error(t(R.string.ug_wrong_package, pkg.ifEmpty { "?" }))
-                withContext(Dispatchers.Main) { de.emil.shizubox.ui.updates.openInstaller(appContext, uri) }
+                downloadToInstaller(appContext, app)
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {
                 _apps.value.firstOrNull { it.key == app.key }?.let { update(it.copy(error = e.message ?: e.toString())) }
-            } finally {
-                _downloads.update { it - app.key }
             }
         }
+    }
+
+    /**
+     * Downloads [app] and hands it to the installer screen, with the package check of
+     * [openInstallerChecked]. Shows the progress in [downloads]; throws on any failure.
+     */
+    suspend fun downloadToInstaller(context: Context, app: TrackedApp) {
+        _downloads.update { it + (app.key to 0f) }
+        try {
+            var last = 0L
+            val (_, uri) = download(app) { p ->
+                val now = android.os.SystemClock.uptimeMillis()
+                if (now - last > 250) { last = now; _downloads.update { it + (app.key to p) } }
+            }
+            openInstallerChecked(context, app.id, uri)
+        } finally {
+            _downloads.update { it - app.key }
+        }
+    }
+
+    /**
+     * The only way a downloaded update reaches the installer (update screen, "update all" without
+     * Shizuku, the notification, the in-app browser): the installer asks the user anyway, but a
+     * file of another app than [trackedPackage] is refused right here ([UpdateGate.packageMatches]).
+     */
+    suspend fun openInstallerChecked(context: Context, trackedPackage: String, uri: android.net.Uri) {
+        val pkg = runCatching { ApkParser.parse(appContext, uri).packageName }.getOrDefault("")
+        if (!UpdateGate.packageMatches(trackedPackage, pkg)) error(t(R.string.ug_wrong_package, pkg.ifEmpty { "?" }))
+        withContext(Dispatchers.Main) { de.emil.shizubox.ui.updates.openInstaller(context, uri) }
     }
 
     private fun saveAsync() {

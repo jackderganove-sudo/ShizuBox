@@ -13,8 +13,8 @@ android {
         applicationId = "de.emil.shizubox"
         minSdk = 31
         targetSdk = 37
-        versionCode = 14
-        versionName = "0.11.1"
+        versionCode = 15
+        versionName = "0.11.2"
         // The downloader bundles Python/yt-dlp and FFmpeg per ABI; only 64-bit ARM keeps the APK small.
         ndk { abiFilters += "arm64-v8a" }
     }

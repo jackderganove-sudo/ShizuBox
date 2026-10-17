@@ -28,6 +28,14 @@ object UpdateGate {
     }
 
     /**
+     * May a downloaded file go to the installer at all (also with the user's confirmation)?
+     * Its package must be the tracked app's; while the tracked package is still unknown ("", a
+     * newly added app) the installer screen shows it and the user decides.
+     */
+    fun packageMatches(trackedPackage: String, apkPackage: String): Boolean =
+        trackedPackage.isBlank() || apkPackage == trackedPackage
+
+    /**
      * @param trackedPackage package of the tracked app ("" = not known yet)
      * @param apkPackage package inside the downloaded APK
      * @param installed whether [apkPackage] is installed on this device

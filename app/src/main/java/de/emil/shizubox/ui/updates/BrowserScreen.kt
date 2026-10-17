@@ -1,5 +1,6 @@
 package de.emil.shizubox.ui.updates
 
+import de.emil.shizubox.updates.Updates
 import de.emil.shizubox.R
 import de.emil.shizubox.t
 import android.annotation.SuppressLint
@@ -49,7 +50,7 @@ import java.net.URL
  */
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun BrowserScreen(startUrl: String, onClose: () -> Unit) {
+fun BrowserScreen(startUrl: String, trackedPackage: String, onClose: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var title by remember { mutableStateOf("") }
@@ -110,10 +111,9 @@ fun BrowserScreen(startUrl: String, onClose: () -> Unit) {
                                         }
                                     }
                                     FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-                                }
-                            }.onSuccess { uri ->
+                                }.also { uri -> Updates.openInstallerChecked(context, trackedPackage, uri) }
+                            }.onSuccess {
                                 download = null
-                                openInstaller(context, uri)
                                 onClose()
                             }.onFailure {
                                 download = null

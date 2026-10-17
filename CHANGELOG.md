@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.2 – 2026-10-17 – Paketprüfung auf allen Installationswegen
+- Updates: dieselbe Paketprüfung wie beim einzelnen Update jetzt auch bei „Alle aktualisieren“ ohne Shizuku, beim
+  „Installieren“ aus der Benachrichtigung und bei Downloads im eingebauten Browser – alle über eine gemeinsame
+  Funktion (`Updates.openInstallerChecked`, Regel `UpdateGate.packageMatches`); Fehler erscheinen an der App-Karte
+  (`UpdateGateTest` +1; live: ShizuBox-APK als „com.example.other“ wird abgelehnt)
+- Schulmodus-BootReceiver reagiert nur noch auf `BOOT_COMPLETED`/`LOCKED_BOOT_COMPLETED`; er ist für diese
+  System-Broadcasts exportiert, ein expliziter Aufruf mit anderer Action wird ignoriert (`BootReceiverTest`;
+  live: gefälschte Broadcasts ohne Wirkung)
+
 ## 0.11.1 – 2026-10-17 – Bugfixes nach Code-Review von Daniel
 - Updates: Paketname der geladenen APK muss zur verfolgten App passen (sonst Abbruch); stille Installation nur für
   installierte Apps mit gleicher Signatur; Self-Update nur bei Paket ShizuBox + gleicher Signatur; VirusTotal-Sperre

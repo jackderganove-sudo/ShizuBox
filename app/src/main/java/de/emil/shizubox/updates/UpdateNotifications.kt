@@ -19,7 +19,6 @@ import de.emil.shizubox.shizuku.ShizukuManager
 import de.emil.shizubox.shizuku.ShizukuStatus
 import de.emil.shizubox.t
 import de.emil.shizubox.tp
-import de.emil.shizubox.ui.updates.openInstaller
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
@@ -119,8 +118,8 @@ class UpdateInstallActivity : Activity() {
                 return@launch
             }
             Toast.makeText(this@UpdateInstallActivity, t(R.string.downloading), Toast.LENGTH_SHORT).show()
-            runCatching { Updates.download(app) {} }
-                .onSuccess { (_, uri) -> openInstaller(this@UpdateInstallActivity, uri) }
+            // Same package check as everywhere else (Updates.openInstallerChecked).
+            runCatching { Updates.downloadToInstaller(this@UpdateInstallActivity, app) }
                 .onFailure { Toast.makeText(this@UpdateInstallActivity, t(R.string.download_failed, it.message), Toast.LENGTH_LONG).show() }
             finish()
         }

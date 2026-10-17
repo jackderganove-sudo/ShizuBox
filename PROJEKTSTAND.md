@@ -6,7 +6,7 @@ Glas-Design (Haze) mit Material You, 5 Sprachen (de, en, tr, es, fr).
 | | |
 |---|---|
 | Paketname | `de.emil.shizubox` |
-| Version | **0.11.1** (versionCode 14, 2026-10-17: Bugfixes nach Code-Review von Daniel; 0.11.0: Suche + Startseite ordnen; 0.10.1: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
+| Version | **0.11.2** (versionCode 15, 2026-10-17: Paketprüfung auf allen Installationswegen, BootReceiver nur Boot-Broadcasts; 0.11.1: Bugfixes nach Code-Review von Daniel; 0.11.0: Suche + Startseite ordnen; 0.10.1: Stabilitätsrunde 2; 0.10.0: 2026-10-17: HiLight; 0.9.0: Reiniger; 0.8.0: Stabilität, Privatsphäre, Akku-Report, Schulmodus-Statistik, Zwischenablage, Lautstärke pro App) |
 | Ziel-Gerät | Pixel 11 Pro, Android 17 (SDK 37), Shizuku-Fork „Shevery“ |
 | minSdk / targetSdk | 31 / 37 |
 | Repo | https://github.com/jackderganove-sudo/ShizuBox (öffentlich, GPL-3.0) |
@@ -230,7 +230,7 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 - uiautomator wird durch die pulsierende Shizuku-Animation nie „idle“ → Koordinaten per Screenshot bestimmen
 
 ## Code-Review von Daniel (0.11.1, 2026-10-17) – Befunde zu Commit 4477ef0
-✔ = von Daniel selbst verifiziert. Unit-Tests: `./gradlew :app:testDebugUnitTest` (54 Tests, alle grün);
+✔ = von Daniel selbst verifiziert. Unit-Tests: `./gradlew :app:testDebugUnitTest` (54 Tests in 0.11.1, 56 in 0.11.2, alle grün);
 „live“ = auf dem Pixel (Android 17) mit eigenen Testdateien bzw. per `DebugReceiver` geprüft.
 
 | # | Befund | Bestätigt? | Fix | Test |
@@ -255,6 +255,8 @@ tools/i18n/             Übersetzungen (strings.json + tr_<lang>.tsv) und Genera
 | 18 | Zeit/Zeitzone, `school_schedule` fehlt im Backup, Import nicht atomar | ja | `TimeChangeReceiver`; Zeitplan im Backup (ohne `skip_until`); erst alles prüfen, dann schreiben | live (kaputter Eintrag → nichts geändert) |
 | 19 | Logcat-Freitext, Export-Dateiname, `)` an geteilter URL | ja | `Fs.q` + nur Ziffern als PID; Version bereinigt; Satzzeichen/überzählige Klammern abschneiden | `SharedUrlTest` (4) |
 | 20 | `.pyc` im Repo | ja | `.gitignore` ergänzt, `.pyc` entfernt | `git ls-files` |
+| 1b (0.11.2) | Paketprüfung fehlte bei „Alle aktualisieren“ ohne Shizuku, Benachrichtigung, Browser | ja | gemeinsame `Updates.openInstallerChecked` für alle Wege | `UpdateGateTest` + live |
+| – (0.11.2) | BootReceiver reagierte auf jeden expliziten Aufruf | ja (exportiert) | nur `BOOT_COMPLETED`/`LOCKED_BOOT_COMPLETED` | `BootReceiverTest` + live |
 | 21 | Auto-Clean „Logs/Temp“ trifft Documents/Download | ja | automatisch nur außerhalb der eigenen Ordner und nicht lose im Hauptordner; manuell weiter alles, Hinweis in den Einstellungen | `AutoCleanScopeTest` (3) + live (Download/Documents = nur manuell) |
 
 ## Stabilitätsbericht 2 (0.10.1, 2026-10-17) – nach 0.8 (Privatsphäre, Akku, Zwischenablage, Lautstärke), 0.9 (Reiniger), 0.10 (HiLight)
