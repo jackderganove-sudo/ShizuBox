@@ -45,7 +45,7 @@ enum class ShizukuStatus {
 
 object ShizukuManager {
     /** Bump when IShellService changes. */
-    private const val SERVICE_REV = 5
+    private const val SERVICE_REV = 6
     /** Hard limit for a shell command when the caller gives none. */
     const val DEFAULT_LIMIT = 60_000L
 
@@ -216,6 +216,12 @@ object ShizukuManager {
             }
             block(records)
         }.also { ctx.ensureActive() }
+    }
+
+    /** HiLight command in the shell service (JSON, see hilight/). */
+    suspend fun hilight(json: String, timeoutMs: Long = 3000): String = withContext(Dispatchers.IO) {
+        val svc = awaitService(timeoutMs) ?: throw ShizukuUnavailableException()
+        try { svc.hilight(json) } catch (e: Exception) { throw ShizukuUnavailableException() }
     }
 
     /** Pure rename as the Shizuku user (never a copy). Returns null on success, else the error. */

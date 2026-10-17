@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.0 (in Arbeit) – HiLight
+- Untersuchung: HiLight (8 LEDs, Pixel 11 Pro) lässt sich über ShizuBox' Shell-Dienst steuern
+  (`ILightsManager`, Shell-Nutzer hat `CONTROL_DEVICE_LIGHTS`); Test eine LED grün → sauber schwarz, Session freigegeben
+
 ## 0.9.0 – 2026-10-17 – Reiniger
 - Neuer Startseiten-Bereich „Reiniger“ (nach Vorbild von SD Maid) mit Speicherübersicht
 - Papierkorb für alle Reiniger-Werkzeuge: nichts wird sofort gelöscht, 7 Tage (einstellbar) wiederherstellbar,

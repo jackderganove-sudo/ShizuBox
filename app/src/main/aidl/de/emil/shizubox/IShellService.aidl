@@ -38,4 +38,8 @@ interface IShellService {
     // Android/data, and that crashed MediaProvider's FUSE daemon on Android 17 (whole storage gone
     // for ~4 s). Creates the target's parent. Returns "" on success, otherwise the error.
     String rename(String from, String to) = 9;
+
+    // HiLight (Pixel 11 Pro LED bar) through the hidden ILightsManager – the shell user holds
+    // CONTROL_DEVICE_LIGHTS. JSON in, JSON out; see hilight/ for the commands.
+    String hilight(String commandJson) = 10;
 }

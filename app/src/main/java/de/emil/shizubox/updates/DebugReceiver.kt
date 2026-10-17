@@ -280,6 +280,11 @@ class DebugReceiver : BroadcastReceiver() {
                                 "cats=${a.categories.map { "${it.key}=${it.value / 1_000_000}MB" }} top3=${a.top.take(3).map { "${it.path.substringAfterLast('/')}=${it.size / 1_000_000}MB" }} " +
                                 "apps=${a.apps.size} topApps=${a.apps.take(3).map { "${it.pkg}=${it.total / 1_000_000}MB ext=${it.extData / 1_000_000}" }}"
                         }
+                        // --es op info|test|… plus --ei/--es extras, passed on as one JSON command
+                        "hilight" -> ShizukuManager.hilight(org.json.JSONObject().apply {
+                            intent.extras?.keySet()?.filter { it != "test" }?.forEach { k -> put(k, intent.extras!!.get(k)) }
+                            if (!has("op")) put("op", "info")
+                        }.toString(), 8000)
                         "cleanercfg" -> {
                             // Writes the current cleaner settings unchanged (creates the prefs file for the backup test).
                             de.emil.shizubox.cleaner.CleanerSettings.update { it }
