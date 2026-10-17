@@ -1524,4 +1524,5 @@
     <string name="bk_priv_text">Bunlar yedekte açıktı. Özel verileri kaydettikleri veya bir sistem ayarını değiştirdikleri için otomatik olarak açılmazlar – burada açmak için onları aç.</string>
     <string name="bk_priv_open">Aç</string>
     <string name="bk_priv_later">Şimdi değil</string>
+    <string name="cs_logs_scope">Loglar/Geçici: otomatik olarak yalnızca kendi klasörlerinin dışında (Documents, Download, DCIM, Pictures, Music …) – manuel tarama yine her şeyi gösterir.</string>
 </resources>

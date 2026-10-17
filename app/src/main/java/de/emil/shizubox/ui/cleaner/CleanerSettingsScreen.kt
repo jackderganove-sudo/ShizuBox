@@ -182,5 +182,8 @@ internal fun ScheduleCard() {
             }
         }
         Text(t(R.string.cs_what_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
+        if (de.emil.shizubox.cleaner.SysCat.LogsTemp.name in cfg.autoKeys) {
+            Text(t(R.string.cs_logs_scope), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
+        }
     }
 }

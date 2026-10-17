@@ -394,7 +394,13 @@ class DebugReceiver : BroadcastReceiver() {
                             // Only the category "broken downloads" (empty on the test phone) plus a test file; --es mode next shows the schedule
                             val R0 = de.emil.shizubox.cleaner.Fs.ROOT
                             val base = de.emil.shizubox.cleaner.CleanerSettings.current
-                            if (intent.getStringExtra("mode") == "next") {
+                            if (intent.getStringExtra("mode") == "logs") {
+                                // 0.11.1, read-only: which .log files would the auto clean take? Test files only, removed afterwards.
+                                ShizukuManager.exec("mkdir -p $R0/Download/sbx_test_auto $R0/Documents/sbx_test_auto $R0/sbx_test_logs && echo x > $R0/Download/sbx_test_auto/a.log && echo x > $R0/Documents/sbx_test_auto/b.log && echo x > $R0/sbx_test_logs/c.log", 5000, 15_000)
+                                val found = de.emil.shizubox.cleaner.SystemCleaner.scan(context, setOf(de.emil.shizubox.cleaner.SysCat.LogsTemp)).values.flatten().map { it.path }.filter { "sbx_test" in it }
+                                ShizukuManager.exec("rm -rf $R0/Download/sbx_test_auto $R0/Documents/sbx_test_auto $R0/sbx_test_logs", 5000, 15_000)
+                                found.joinToString(" ") { p -> p.removePrefix(R0) + "=" + (if (de.emil.shizubox.cleaner.autoCleanAllowed(de.emil.shizubox.cleaner.SysCat.LogsTemp, de.emil.shizubox.cleaner.Fs.rel(p))) "auto" else "manual-only") }
+                            } else if (intent.getStringExtra("mode") == "next") {
                                 val S = de.emil.shizubox.cleaner.CleanerSchedule
                                 val c = base.copy(schedule = true)
                                 "sun3=${java.util.Date(S.next(c.copy(scheduleDays = 1 shl 6, scheduleMinute = 180))!!)} weekday2230=${java.util.Date(S.next(c.copy(scheduleDays = 0b11111, scheduleMinute = 22 * 60 + 30))!!)} off=${S.next(base.copy(schedule = false))} real=${S.next(base)?.let { java.util.Date(it) }}"

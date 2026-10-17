@@ -1420,3 +1420,4 @@ bk_priv_title	Funciones de privacidad
 bk_priv_text	Estaban activadas en la copia. Registran datos privados o cambian un ajuste del sistema, así que no se activan solas: ábrelas para activarlas aquí.
 bk_priv_open	Abrir
 bk_priv_later	Ahora no
+cs_logs_scope	Registros/Temp: automáticamente solo fuera de tus propias carpetas (Documents, Download, DCIM, Pictures, Music …); el análisis manual sigue mostrándolo todo.

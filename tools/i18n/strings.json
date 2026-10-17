@@ -7312,5 +7312,10 @@
   "en": "Not now",
   "de": "Nicht jetzt",
   "plural": false
+ },
+ "cs_logs_scope": {
+  "en": "Logs/Temp: automatically only outside your own folders (Documents, Download, DCIM, Pictures, Music …) – the manual scan still shows everything.",
+  "de": "Logs/Temp: automatisch nur außerhalb deiner eigenen Ordner (Documents, Download, DCIM, Pictures, Music …) – die manuelle Suche zeigt weiter alles.",
+  "plural": false
  }
 }

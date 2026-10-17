@@ -54,6 +54,9 @@
   `SharedUrlTest`, 4 Unit-Tests)
 - Repo: `.gitignore` um `*.pyc`, `__pycache__/`, `*.jks`, `*.keystore`, `*.apk`, `*.aab` ergänzt, versehentlich
   eingecheckte `.pyc` entfernt
+- Automatisches Aufräumen: „Logs/Temp“ nimmt nur noch Dateien außerhalb der eigenen Ordner (Documents, Download, DCIM,
+  Pictures, Music …) und nicht lose im Speicher-Hauptordner; die manuelle Suche zeigt weiter alles, Hinweis in den
+  Einstellungen (`AutoCleanScopeTest`, 3 Unit-Tests; live mit Testdateien geprüft)
 
 ## 0.11.0 – 2026-10-17 – Suche + Startseite ordnen
 - Suche oben auf der Startseite: findet Funktionen, Unterseiten, Einstellungen, Schnellaktionen und installierte Apps,

@@ -1526,4 +1526,5 @@
     <string name="bk_priv_text">These were on in the backup. They record private data or change a system setting, so they are not switched on automatically – open them to turn them on here.</string>
     <string name="bk_priv_open">Open</string>
     <string name="bk_priv_later">Not now</string>
+    <string name="cs_logs_scope">Logs/Temp: automatically only outside your own folders (Documents, Download, DCIM, Pictures, Music …) – the manual scan still shows everything.</string>
 </resources>

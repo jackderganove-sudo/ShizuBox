@@ -1524,4 +1524,5 @@
     <string name="bk_priv_text">Estaban activadas en la copia. Registran datos privados o cambian un ajuste del sistema, así que no se activan solas: ábrelas para activarlas aquí.</string>
     <string name="bk_priv_open">Abrir</string>
     <string name="bk_priv_later">Ahora no</string>
+    <string name="cs_logs_scope">Registros/Temp: automáticamente solo fuera de tus propias carpetas (Documents, Download, DCIM, Pictures, Music …); el análisis manual sigue mostrándolo todo.</string>
 </resources>

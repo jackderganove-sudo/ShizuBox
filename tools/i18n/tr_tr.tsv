@@ -1420,3 +1420,4 @@ bk_priv_title	Gizlilik özellikleri
 bk_priv_text	Bunlar yedekte açıktı. Özel verileri kaydettikleri veya bir sistem ayarını değiştirdikleri için otomatik olarak açılmazlar – burada açmak için onları aç.
 bk_priv_open	Aç
 bk_priv_later	Şimdi değil
+cs_logs_scope	Loglar/Geçici: otomatik olarak yalnızca kendi klasörlerinin dışında (Documents, Download, DCIM, Pictures, Music …) – manuel tarama yine her şeyi gösterir.

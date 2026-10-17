@@ -46,7 +46,7 @@ object AutoClean {
         val cats = cfg.autoKeys.mapNotNull { runCatching { SysCat.valueOf(it) }.getOrNull() }.toSet()
         if (cats.isNotEmpty()) {
             val found = SystemCleaner.scan(context, cats)
-            add(SystemCleaner.clean(found.values.flatten(), CleanTool.Auto))
+            add(SystemCleaner.clean(found.flatMap { (c, l) -> l.filter { autoCleanAllowed(c, Fs.rel(it.path)) } }, CleanTool.Auto))
         }
         if (AutoKeys.APP_CACHES in cfg.autoKeys) {
             val apps = AppCleaner.scan(context).filter { AppCleaner.blockReason(it) == null && !it.running }
@@ -165,4 +165,22 @@ class AutoCleanWorker(context: Context, params: WorkerParameters) : CoroutineWor
         AutoClean.notify(applicationContext, r)
         return Result.success()
     }
+}
+
+/** Folders with the user's own files: a `.log`/`.tmp` there may be wanted (an export, a notes file). */
+private val USER_FOLDERS = setOf(
+    "Documents", "Download", "DCIM", "Pictures", "Movies", "Music", "Recordings", "Audiobooks", "Podcasts",
+    "Ringtones", "Alarms", "Notifications",
+)
+
+/**
+ * Auto clean (schedule, tile, home button) without anyone looking: "Logs/Temp" only at clear junk
+ * places – never in the user's own folders or loose in the storage root (Daniel's review, 0.11.1).
+ * The manual system cleaner still shows everything. [rel] is relative to the storage root.
+ */
+internal fun autoCleanAllowed(cat: SysCat, rel: String): Boolean {
+    if (cat != SysCat.LogsTemp) return true
+    val parts = rel.trim('/').split('/')
+    if (parts.size < 2) return false
+    return parts[0].lowercase() !in USER_FOLDERS.map { it.lowercase() }
 }
