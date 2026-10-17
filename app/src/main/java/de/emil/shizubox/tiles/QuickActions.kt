@@ -2,6 +2,8 @@ package de.emil.shizubox.tiles
 
 import de.emil.shizubox.R
 import de.emil.shizubox.Str
+import de.emil.shizubox.cleaner.CleanTool
+import de.emil.shizubox.cleaner.CleanerJobs
 import de.emil.shizubox.customization.Customization
 import de.emil.shizubox.customization.RefreshMode
 import de.emil.shizubox.system.BoostService
@@ -58,11 +60,17 @@ object QuickActions {
                 Customization.setRefresh(entries[(entries.indexOf(Customization.refreshMode()) + 1) % entries.size])
             }
             QuickAction.StayAwake -> Tweaks.setCaffeine(!current.active)
-            QuickAction.Cache -> prefs.edit().putLong("cache_freed", de.emil.shizubox.system.CacheCleaner.clearAll(Str.context)).apply()
+            // Both can take a while: they run app-wide in CleanerJobs (foreground service) – a tile's
+            // own scope is cancelled as soon as the shade closes (Daniel's review, 0.11.1).
+            QuickAction.Cache -> longJob(CleanTool.AppCache, a) {
+                prefs.edit().putLong("cache_freed", de.emil.shizubox.system.CacheCleaner.clearAll(Str.context)).apply()
+            }
             // The cleaner's automatic categories, into the trash (restorable).
-            QuickAction.Clean -> de.emil.shizubox.cleaner.AutoClean.run(Str.context).let { r ->
-                if (r.skipped == null) prefs.edit().putLong("clean_moved", r.bytes).apply()
-                de.emil.shizubox.cleaner.AutoClean.notify(Str.context, r)
+            QuickAction.Clean -> longJob(CleanTool.Auto, a) {
+                de.emil.shizubox.cleaner.AutoClean.run(Str.context).let { r ->
+                    if (r.skipped == null) prefs.edit().putLong("clean_moved", r.bytes).apply()
+                    de.emil.shizubox.cleaner.AutoClean.notify(Str.context, r)
+                }
             }
             QuickAction.Boost -> {
                 VolumeBoost.update { it.copy(enabled = !current.active) }
@@ -70,5 +78,18 @@ object QuickActions {
             }
         }
         QuickWidgets.refreshAsync(Str.context)
+    }
+
+    private fun longJob(tool: CleanTool, a: QuickAction, block: suspend () -> Unit) {
+        CleanerJobs.start(tool) { report ->
+            report(a.label, null)
+            block()
+            QuickWidgets.refreshAsync(Str.context)
+            val tile = when (a) {
+                QuickAction.Cache -> CacheTile::class.java
+                else -> CleanTile::class.java
+            }
+            runCatching { android.service.quicksettings.TileService.requestListeningState(Str.context, android.content.ComponentName(Str.context, tile)) }
+        }
     }
 }
