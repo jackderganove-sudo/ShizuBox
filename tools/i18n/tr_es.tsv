@@ -1198,3 +1198,15 @@ cf_intro	Encuentra carpetas en Android/data, obb, media y el almacenamiento cuya
 cf_none	No se encontraron restos
 cf_none_hint	Cada carpeta de app pertenece a una app instalada.
 cf_hint	Antes de mover, ShizuBox vuelve a comprobar que la app sigue sin estar instalada. Mantén pulsado para excluir una carpeta.
+ac_progress	Midiendo cachés de apps …
+ac_ext_part	de ello, %1$s en Android/data (a la papelera por app)
+ac_stop_running	Detener primero las apps en ejecución
+ac_stop_running_sub	Desactivado: se omiten las apps en ejecución
+ac_clean_selected	%1$d apps · %2$s a la papelera
+ac_hint	“Limpiar todo” pide a Android vaciar las cachés privadas de todas las apps (pm trim-caches): no pasa por la papelera y no se puede deshacer. Caché privada de una app: tócala → Almacenamiento.
+ac_confirm_extra	Las apps crean una carpeta de caché nueva y vacía cuando la necesitan.
+ac_trim_note	Esto no pasa por la papelera (lo hace Android) y no se puede deshacer. Android conserva los modelos de IA.
+ac_ext	Android/data %1$s
+ac_running	en ejecución
+ac_self	ShizuBox: ver Limpiador del sistema → restos
+ac_skipped_running	la app está en ejecución

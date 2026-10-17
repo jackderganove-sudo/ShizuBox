@@ -1290,5 +1290,17 @@
     <string name="cf_none">Keine Reste gefunden</string>
     <string name="cf_none_hint">Jeder App-Ordner gehört zu einer installierten App.</string>
     <string name="cf_hint">Vor dem Verschieben prüft ShizuBox erneut, dass die App weiterhin nicht installiert ist. Lange drücken schließt einen Ordner aus.</string>
+    <string name="ac_progress">App-Caches werden gemessen …</string>
+    <string name="ac_ext_part">davon %1$s in Android/data (pro App in den Papierkorb)</string>
+    <string name="ac_stop_running">Laufende Apps vorher beenden</string>
+    <string name="ac_stop_running_sub">Aus: laufende Apps werden übersprungen</string>
+    <string name="ac_clean_selected">%1$d Apps · %2$s in den Papierkorb</string>
+    <string name="ac_hint">„Alles aufräumen“ lässt Android die privaten Caches aller Apps leeren (pm trim-caches) – das geht nicht über den Papierkorb und ist nicht rückgängig zu machen. Privaten Cache einzelner Apps: App antippen → Speicher.</string>
+    <string name="ac_confirm_extra">Die Apps legen bei Bedarf einen neuen, leeren Cache-Ordner an.</string>
+    <string name="ac_trim_note">Das geht am Papierkorb vorbei (Android erledigt es selbst) und ist nicht rückgängig zu machen. KI-Modelle behält Android.</string>
+    <string name="ac_ext">Android/data %1$s</string>
+    <string name="ac_running">läuft</string>
+    <string name="ac_self">ShizuBox: siehe System-Reiniger → Reste</string>
+    <string name="ac_skipped_running">App läuft</string>
     <string name="installer_label">ShizuBox Installer</string>
 </resources>

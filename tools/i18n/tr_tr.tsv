@@ -1198,3 +1198,15 @@ cf_intro	Uygulaması kaldırılmış Android/data, obb, media ve depolama klasö
 cf_none	Artık bulunamadı
 cf_none_hint	Her uygulama klasörü yüklü bir uygulamaya ait.
 cf_hint	Taşımadan önce ShizuBox uygulamanın hâlâ yüklü olmadığını tekrar kontrol eder. Bir klasörü hariç tutmak için uzun bas.
+ac_progress	Uygulama önbellekleri ölçülüyor …
+ac_ext_part	bunun %1$s kadarı Android/data'da (uygulama başına çöp kutusuna)
+ac_stop_running	Çalışan uygulamaları önce durdur
+ac_stop_running_sub	Kapalı: çalışan uygulamalar atlanır
+ac_clean_selected	%1$d uygulama · %2$s çöp kutusuna
+ac_hint	“Her şeyi temizle”, Android'den tüm uygulamaların özel önbelleklerini temizlemesini ister (pm trim-caches) – bu çöp kutusuna gitmez ve geri alınamaz. Tek uygulamanın özel önbelleği: uygulamaya dokun → Depolama.
+ac_confirm_extra	Uygulamalar gerektiğinde yeni, boş bir önbellek klasörü oluşturur.
+ac_trim_note	Bu çöp kutusunu atlar (Android kendisi yapar) ve geri alınamaz. Yapay zekâ modellerini Android korur.
+ac_ext	Android/data %1$s
+ac_running	çalışıyor
+ac_self	ShizuBox: Sistem temizleyici → artıklar
+ac_skipped_running	uygulama çalışıyor

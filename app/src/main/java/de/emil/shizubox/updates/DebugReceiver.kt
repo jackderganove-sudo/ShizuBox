@@ -71,7 +71,6 @@ class DebugReceiver : BroadcastReceiver() {
                     "clipboard" -> de.emil.shizubox.ui.system.ClipboardScreen(ready, noop)
                     "appvolume" -> de.emil.shizubox.ui.system.AppVolumeScreen(ready, noop)
                     "errorlog" -> de.emil.shizubox.ui.settings.ErrorLogScreen(noop)
-                    "cache" -> de.emil.shizubox.ui.system.CacheScreen(ready, noop)
                     "cleaner" -> {
                         de.emil.shizubox.ui.cleaner.CleanerNav.page.value = intent.getStringExtra("page")
                         de.emil.shizubox.ui.cleaner.CleanerNav.tab = intent.getIntExtra("tab", 0)
@@ -280,6 +279,18 @@ class DebugReceiver : BroadcastReceiver() {
                             "ms=${System.currentTimeMillis() - t0} files=${a.files} dirs=${a.dirSizes.size} used=${a.numbers.used / 1_000_000}MB " +
                                 "cats=${a.categories.map { "${it.key}=${it.value / 1_000_000}MB" }} top3=${a.top.take(3).map { "${it.path.substringAfterLast('/')}=${it.size / 1_000_000}MB" }} " +
                                 "apps=${a.apps.size} topApps=${a.apps.take(3).map { "${it.pkg}=${it.total / 1_000_000}MB ext=${it.extData / 1_000_000}" }}"
+                        }
+                        "appclean" -> {
+                            // Scan; --es mode test: moves the cache of the not installed test package sbx.test.corpse (created here)
+                            val R0 = de.emil.shizubox.cleaner.Fs.ROOT
+                            if (intent.getStringExtra("mode") == "test") {
+                                ShizukuManager.exec("mkdir -p $R0/Android/data/sbx.test.corpse/cache && head -c 30000 /dev/urandom > $R0/Android/data/sbx.test.corpse/cache/c.bin", 5000, 15_000)
+                                de.emil.shizubox.cleaner.AppCleaner.clean(listOf(de.emil.shizubox.cleaner.AppCacheInfo("sbx.test.corpse", "test", 30000, 30000, false)), stopRunning = false).toString()
+                            } else {
+                                val l = de.emil.shizubox.cleaner.AppCleaner.scan(context)
+                                "n=${l.size} total=${l.sumOf { it.total } / 1_000_000}MB ext=${l.sumOf { it.ext } / 1_000_000}MB running=${l.count { it.running }} top=" +
+                                    l.take(6).joinToString { "${it.pkg} ${it.total / 1000}k ext=${it.ext / 1000}k run=${it.running} block=${de.emil.shizubox.cleaner.AppCleaner.blockReason(it)}" }
+                            }
                         }
                         "corpses" -> {
                             // --es mode mk|clean|rm (only the test folders sbx.test.corpse*), otherwise scan

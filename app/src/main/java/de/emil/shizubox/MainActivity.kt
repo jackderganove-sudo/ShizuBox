@@ -208,11 +208,15 @@ class MainActivity : ComponentActivity() {
                             SystemPage.CLIPBOARD -> de.emil.shizubox.ui.system.ClipboardScreen(ready, onBack = close)
                             SystemPage.BATTERY -> de.emil.shizubox.ui.system.BatteryReportScreen(ready, onBack = close)
                             SystemPage.PRIVACY -> de.emil.shizubox.ui.system.PrivacyScreen(ready, onBack = close)
-                            SystemPage.CACHE -> de.emil.shizubox.ui.system.CacheScreen(ready, onBack = close)
                             SystemPage.NOTIF_HISTORY -> de.emil.shizubox.ui.system.NotificationHistoryScreen(ready, onBack = close)
                             else -> SystemScreen(
                                 shizukuReady = ready,
-                                onOpenPage = onSystemPage,
+                                onOpenPage = { p ->
+                                    if (p == SystemPage.CACHE) {
+                                        de.emil.shizubox.ui.cleaner.CleanerNav.page.value = de.emil.shizubox.ui.cleaner.CleanerPage.APPCACHE
+                                        onSection(Section.Cleaner)
+                                    } else onSystemPage(p)
+                                },
                                 onOpenUniversalInstaller = onInstallUri,
                                 onBack = back,
                             )

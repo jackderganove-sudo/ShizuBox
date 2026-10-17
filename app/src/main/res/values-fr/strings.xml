@@ -1290,4 +1290,16 @@
     <string name="cf_none">Aucun reste trouvé</string>
     <string name="cf_none_hint">Chaque dossier d\'app appartient à une app installée.</string>
     <string name="cf_hint">Avant de déplacer, ShizuBox vérifie à nouveau que l\'app n\'est toujours pas installée. Appui long pour exclure un dossier.</string>
+    <string name="ac_progress">Mesure des caches d\'apps …</string>
+    <string name="ac_ext_part">dont %1$s dans Android/data (vers la corbeille par app)</string>
+    <string name="ac_stop_running">Arrêter d\'abord les apps en cours</string>
+    <string name="ac_stop_running_sub">Désactivé : les apps en cours sont ignorées</string>
+    <string name="ac_clean_selected">%1$d apps · %2$s vers la corbeille</string>
+    <string name="ac_hint">« Tout nettoyer » demande à Android de vider les caches privés de toutes les apps (pm trim-caches) – cela ne passe pas par la corbeille et ne peut pas être annulé. Cache privé d\'une app : touche l\'app → Stockage.</string>
+    <string name="ac_confirm_extra">Les apps créent un nouveau dossier de cache vide quand elles en ont besoin.</string>
+    <string name="ac_trim_note">Cela contourne la corbeille (Android le fait lui-même) et ne peut pas être annulé. Android garde les modèles d\'IA.</string>
+    <string name="ac_ext">Android/data %1$s</string>
+    <string name="ac_running">en cours</string>
+    <string name="ac_self">ShizuBox : voir Nettoyeur système → restes</string>
+    <string name="ac_skipped_running">l\'app est en cours</string>
 </resources>

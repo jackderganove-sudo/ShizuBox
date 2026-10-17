@@ -1292,4 +1292,16 @@
     <string name="cf_none">No leftovers found</string>
     <string name="cf_none_hint">Every app folder belongs to an installed app.</string>
     <string name="cf_hint">Before moving, ShizuBox checks again that the app is still not installed. Long-press to exclude a folder.</string>
+    <string name="ac_progress">Measuring app caches …</string>
+    <string name="ac_ext_part">of which %1$s in Android/data (can go to the trash per app)</string>
+    <string name="ac_stop_running">Stop running apps first</string>
+    <string name="ac_stop_running_sub">Off: running apps are skipped</string>
+    <string name="ac_clean_selected">%1$d apps · %2$s to the trash</string>
+    <string name="ac_hint">“Clean up everything” asks Android to clear the private caches of all apps (pm trim-caches) – this cannot go to the trash and cannot be undone. Single apps\' private cache: tap the app → Storage.</string>
+    <string name="ac_confirm_extra">The apps create a new, empty cache folder when they need one.</string>
+    <string name="ac_trim_note">This bypasses the trash (Android does it itself) and cannot be undone. AI models are kept by Android.</string>
+    <string name="ac_ext">Android/data %1$s</string>
+    <string name="ac_running">running</string>
+    <string name="ac_self">ShizuBox: see System cleaner → leftovers</string>
+    <string name="ac_skipped_running">app is running</string>
 </resources>

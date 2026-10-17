@@ -73,12 +73,13 @@ import org.json.JSONArray
 /** Sub pages of the System section. */
 object SystemPage {
     const val LOGCAT = "logcat"
+    /** Moved to the cleaner (app cleaner); the System tile only links there. */
+    const val CACHE = "cache"
     const val DEVICE = "device"
     const val PROCESSES = "processes"
     const val TERMINAL = "terminal"
     const val SCREEN_TIME = "screentime"
     const val NOTIF_HISTORY = "notifhistory"
-    const val CACHE = "cache"
     const val PRIVACY = "privacy"
     const val BATTERY = "battery"
     const val CLIPBOARD = "clipboard"

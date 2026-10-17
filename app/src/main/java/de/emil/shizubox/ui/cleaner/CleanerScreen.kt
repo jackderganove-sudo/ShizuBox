@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CleaningServices
+import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.FolderDelete
 import androidx.compose.material.icons.rounded.PieChart
@@ -53,6 +54,7 @@ object CleanerPage {
     const val ANALYSIS = "analysis"
     const val SYSTEM = "system"
     const val CORPSES = "corpses"
+    const val APPCACHE = "appcache"
     const val SETTINGS = "settings"
 }
 
@@ -74,6 +76,7 @@ fun CleanerScreen(shizukuReady: Boolean, onBack: () -> Unit) {
             CleanerPage.ANALYSIS -> AnalysisScreen(shizukuReady, close)
             CleanerPage.SYSTEM -> SystemCleanerScreen(shizukuReady, close)
             CleanerPage.CORPSES -> CorpseScreen(shizukuReady, close)
+            CleanerPage.APPCACHE -> AppCleanerScreen(shizukuReady, close)
             CleanerPage.SETTINGS -> CleanerSettingsScreen(close)
             else -> CleanerHome(shizukuReady, onBack)
         }
@@ -130,6 +133,11 @@ private fun CleanerHome(shizukuReady: Boolean, onBack: () -> Unit) {
             val corpses by de.emil.shizubox.cleaner.CorpseFinder.result.collectAsStateWithLifecycle()
             ToolCard(Icons.Rounded.FolderDelete, t(R.string.cl_corpses), t(R.string.cf_sub),
                 found = corpses?.values?.flatten()?.let { l -> if (l.isEmpty()) "0" else size(context, l.sumOf { it.size }) }) { open(CleanerPage.CORPSES) }
+        }
+        item {
+            val caches by de.emil.shizubox.cleaner.AppCleaner.result.collectAsStateWithLifecycle()
+            ToolCard(Icons.Rounded.Apps, t(R.string.cl_appcache), t(R.string.cc_sub),
+                found = caches?.let { l -> size(context, l.sumOf { it.total }) }) { open(CleanerPage.APPCACHE) }
         }
         item {
             ToolCard(Icons.Rounded.Delete, t(R.string.cl_trash),

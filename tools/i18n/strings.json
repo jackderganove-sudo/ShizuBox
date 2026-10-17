@@ -6178,5 +6178,65 @@
   "en": "Before moving, ShizuBox checks again that the app is still not installed. Long-press to exclude a folder.",
   "de": "Vor dem Verschieben prüft ShizuBox erneut, dass die App weiterhin nicht installiert ist. Lange drücken schließt einen Ordner aus.",
   "plural": false
+ },
+ "ac_progress": {
+  "en": "Measuring app caches …",
+  "de": "App-Caches werden gemessen …",
+  "plural": false
+ },
+ "ac_ext_part": {
+  "en": "of which %1$s in Android/data (can go to the trash per app)",
+  "de": "davon %1$s in Android/data (pro App in den Papierkorb)",
+  "plural": false
+ },
+ "ac_stop_running": {
+  "en": "Stop running apps first",
+  "de": "Laufende Apps vorher beenden",
+  "plural": false
+ },
+ "ac_stop_running_sub": {
+  "en": "Off: running apps are skipped",
+  "de": "Aus: laufende Apps werden übersprungen",
+  "plural": false
+ },
+ "ac_clean_selected": {
+  "en": "%1$d apps · %2$s to the trash",
+  "de": "%1$d Apps · %2$s in den Papierkorb",
+  "plural": false
+ },
+ "ac_hint": {
+  "en": "“Clean up everything” asks Android to clear the private caches of all apps (pm trim-caches) – this cannot go to the trash and cannot be undone. Single apps' private cache: tap the app → Storage.",
+  "de": "„Alles aufräumen“ lässt Android die privaten Caches aller Apps leeren (pm trim-caches) – das geht nicht über den Papierkorb und ist nicht rückgängig zu machen. Privaten Cache einzelner Apps: App antippen → Speicher.",
+  "plural": false
+ },
+ "ac_confirm_extra": {
+  "en": "The apps create a new, empty cache folder when they need one.",
+  "de": "Die Apps legen bei Bedarf einen neuen, leeren Cache-Ordner an.",
+  "plural": false
+ },
+ "ac_trim_note": {
+  "en": "This bypasses the trash (Android does it itself) and cannot be undone. AI models are kept by Android.",
+  "de": "Das geht am Papierkorb vorbei (Android erledigt es selbst) und ist nicht rückgängig zu machen. KI-Modelle behält Android.",
+  "plural": false
+ },
+ "ac_ext": {
+  "en": "Android/data %1$s",
+  "de": "Android/data %1$s",
+  "plural": false
+ },
+ "ac_running": {
+  "en": "running",
+  "de": "läuft",
+  "plural": false
+ },
+ "ac_self": {
+  "en": "ShizuBox: see System cleaner → leftovers",
+  "de": "ShizuBox: siehe System-Reiniger → Reste",
+  "plural": false
+ },
+ "ac_skipped_running": {
+  "en": "app is running",
+  "de": "App läuft",
+  "plural": false
  }
 }

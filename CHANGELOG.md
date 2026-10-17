@@ -15,6 +15,8 @@
   aufklappbar bis zur Datei, sichere Kategorien vorausgewählt, Vorschau vor dem Verschieben
 - Leichen-Finder: Ordner deinstallierter Apps in Android/data, obb, media und bekannte App-Ordner im Speicher;
   Apps anderer Nutzer/Profile zählen als installiert, im Zweifel wird nichts angezeigt
+- App-Cleaner: „Cache aufräumen“ ist in den Reiniger umgezogen; zusätzlich pro App den Cache in Android/data
+  in den Papierkorb (laufende Apps überspringen oder vorher beenden), KI-Modelle (AICore) standardmäßig ausgenommen
 - Scans laufen im Hintergrund weiter (Benachrichtigung mit Fortschritt und „Abbrechen“)
 - CHANGELOG sortiert (neueste Version oben)
 
